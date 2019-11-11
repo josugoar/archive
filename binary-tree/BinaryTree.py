@@ -1,5 +1,3 @@
-# BINARY TREE SORT
-
 import numpy as np
 
 class Node:
