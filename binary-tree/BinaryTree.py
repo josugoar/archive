@@ -14,7 +14,7 @@ class Node:
         # Node parent
         self.parent = parent
     # Create new node with child value
-    def insert(self, child):
+    def insertNode(self, child):
         # Move left if child value is less than current node value
         if child < self.val:
             # Initialize node if left spot is empty
@@ -80,6 +80,6 @@ class Node:
 root = Node(val=12)
 my_list = [1, 3, 5, 7, 9, 2, 4, 6, 8, 11, 22, 33, 44, 55, 99, 88, 77, 66, 55]
 for n in my_list:
-    root.insert(n)
+    root.insertNode(n)
 root.delNode(1)
 root.printTree()
