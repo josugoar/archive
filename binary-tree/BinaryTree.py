@@ -91,7 +91,7 @@ class Node:
             self.left.printTree_sorted(depth=depth+1)
         print(self.val, end=" ")
         if self.right:
-            self.right.printTree_sorted(depth=depth + 1)
+            self.right.printTree_sorted(depth=depth+1)
         if depth == 0:
             print("")
     # Print tree leafs
@@ -141,8 +141,10 @@ class Node:
         lines = [first_line, second_line] + [a + off * " " + b for a, b in zipped_lines]
         return lines, l_width + r_width + off, max(l_height, r_height) + 2, l_width + off // 2
 class Tree:
+    # Initialize tree root
     def __init__(self, root):
         self.root = Node(val=root)
+    # Class methods
     def insertNode(self, child):
         self.root.insertNode(child=child)
     def insertNodes(self, children):
@@ -161,8 +163,8 @@ class Tree:
 import random
 
 tree = Tree(root=1)
-tree.insertNodes(children=[random.randint(0, 50) for i in range(0, 100)])
+tree.insertNodes(children=[random.randint(0, 20) for i in range(0, 10)])
 
 # tree.delete(val=1)
-tree.sort()
+# tree.sort()
 tree.print()
