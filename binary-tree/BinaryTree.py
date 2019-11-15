@@ -28,7 +28,10 @@ class Node:
     # Create nodes with values of given list
     def insertNodes(self, children):
         for child in children:
-            self.insertNode(child=child)
+            if self.val:
+                self.insertNode(child=child)
+            else:
+                self.val = child
     # Delete node
     def deleteNode(self, val):
         # Search for given child value node
@@ -142,7 +145,7 @@ class Node:
         return lines, l_width + r_width + off, max(l_height, r_height) + 2, l_width + off // 2
 class Tree:
     # Initialize tree root
-    def __init__(self, root):
+    def __init__(self, root=None):
         self.root = Node(val=root)
     # Class methods
     def insertNode(self, child):
@@ -162,8 +165,8 @@ class Tree:
 
 import random
 
-tree = Tree(root=1)
-tree.insertNodes(children=[random.randint(0, 20) for i in range(0, 10)])
+tree = Tree()
+tree.insertNodes(children=[random.randint(0, 75) for i in range(0, 75)])
 
 # tree.delete(val=1)
 # tree.sort()
