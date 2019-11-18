@@ -58,7 +58,7 @@ def hang(max_guess):
         guess = input("Enter guess: ").upper()
         cls()
         # Valid input (letter)
-        if guess.isalpha():
+        if guess.isalpha() and len(guess) == 1:
             print("Guess: " + guess)
             # Correct guess
             if guess in word:
@@ -71,7 +71,7 @@ def hang(max_guess):
                 incorrect += 1
         # Invalid input
         else:
-            print("\33[91m" + "Error: input must be a letter" + "\033[0m")
+            print("\33[91m" + "Error: invalid input" + "\033[0m")
         time.sleep(1)
     # Loose
     time.sleep(1)
