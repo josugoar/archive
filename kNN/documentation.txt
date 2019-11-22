@@ -1,5 +1,9 @@
 1: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 
+# CLASS
 grid1 = kNN(k=3, data_dir="_KNN/data.csv", labelDir="_KNN/label.csv")
 grid1.locatePoint(point=[1.5, 8.5])
 grid1.showPlot()
+
+# CONCATENATE COLUMNS
+pd.concat([read_data["x"], read_data["y"], read_label["label"]], axis=1)
