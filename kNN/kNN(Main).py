@@ -1,7 +1,6 @@
 import math
 import numpy as np
 import pandas as pd
-from cycler import cycler
 import matplotlib.pyplot as plt
 from collections import OrderedDict
 
@@ -30,10 +29,10 @@ def labelData(df):
 def assignColors(labels):
     # Define color assignment
     color = "rbgkm"
-    colors: dict = {}
-    for i in range(0, len(labels.keys())):
-        colors[list(labels.keys())[i]] = color[i]
+    colors = {list(labels.keys())[i]:color[i] for i in range(0, len(labels.keys()))}
     return colors
+
+# colors = {list(labels.keys())[i]:color[i] for i in range(0, len(labels.keys()))}
 
 # Separate df by classes
 def splitClasses(df, labels):
@@ -56,14 +55,14 @@ def plotClasses(classes, colors):
 # Get nearest neighbor labels
 def euclideanDistance(df, point, k):
     # Create dataframe with x, y, label and euclidean distance
-    dist: list = []
-    for i in range(0, len(df)):
-        dist.append([df["x"][i], df["y"][i], df["label"][i], math.sqrt((point[0] - df["x"][i])** 2 + (point[1] - df["y"][i])** 2)])
+    dist = [[df["x"][i], df["y"][i], df["label"][i], math.sqrt((point[0] - df["x"][i])** 2 + (point[1] - df["y"][i])** 2)] for i in range(0, len(df))]
     # Order dist by dist
     dist = pd.DataFrame(dist, columns=["x", "y", "label", "dist"]).sort_values(["dist"])
     # Reset indexing
     dist.index = pd.RangeIndex(len(dist.index))
     return dist
+
+# dist = [[df["x"][i], df["y"][i], df["label"][i], math.sqrt((point[0] - df["x"][i])** 2 + (point[1] - df["y"][i])** 2)] for i in range(0, len(df))]
 
 # Get k nearest neighbors labels
 def nearPoint(dist, k):
@@ -104,7 +103,7 @@ def voronoiDiagram(k, pixels):
             if point_class:
                 ax.scatter(point[0], point[1], color=df_classes_colors[point_class], alpha=0.5, marker="s", s=7.5)
 
-df = readData(data_dir="_kNN/data.csv")
+df = readData(data_dir="_kNN/data copy.csv")
 df_labels = labelData(df=df)
 df_classes = splitClasses(df=df, labels=df_labels)
 df_classes_colors = assignColors(labels=df_labels)
