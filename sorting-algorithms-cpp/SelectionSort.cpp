@@ -22,9 +22,9 @@ int main() {
 			}
 		}
 		// Define values
-		int i; int x; int j; int temp; int min; int loc;		//Iterations
-		int column[101];						//Column array
-		srand(time(NULL));						//Initialize random value to null
+		int i; int x; int j; int temp; int min; int loc;		// Iterations
+		int column[101];						// Column array
+		srand(time(NULL));						// Initialize random value to null
 		// Draw unsorted values
 		for (i = 1; i < 101; i++) {
 			int r = rand() % 100;
