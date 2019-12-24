@@ -40,6 +40,7 @@ class KNeighborsClassifier:
         assert X.ndim == 2, 'Dimension Error: X.shape must be two-dimensional'
         assert y.ndim == 1, 'Dimension Error: y.shape must be one-dimensional'
         assert X.shape[0] == y.size, 'Dimension Error: X and y shapes must respectively be of [n_samples, m_features] and [n_samples,]'
+        assert self.n_neighbors > X.shape[0], 'Dimension Error: n_neighbors must not be larger than X n_rows'
 
         # Activate KNeighborsClassifier.fit() method flag
         KNeighborsClassifier.fit_called = True
