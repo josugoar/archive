@@ -160,11 +160,11 @@ class Tree:
     def print(self):
         self.root.printTree_leaves()
 
-import random
-
-tree = Tree(root=1)
-tree.insertNodes(children=[random.randint(0, 75) for i in range(0, 75)])
-
+ 
+#=============================== Test ===================================#
+# import random
+# tree = Tree(root=1)
+# tree.insertNodes(children=[random.randint(0, 75) for i in range(0, 75)])
 # tree.delete(val=1)
 # tree.sort()
-tree.print()
+# tree.print()
