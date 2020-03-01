@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 /**
  * DeustoCrush
+ * @author JoshGoA (ansi rectangle idea by nullx)
  */
 public class DeustoCrush {
 
@@ -18,6 +19,8 @@ public class DeustoCrush {
     private static final int MIN_STREAK = 3;
     private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+    private int emptyMoves = 0;
+    private int score = 0;
     protected Candy[][] grid;
 
     {
@@ -49,7 +52,7 @@ public class DeustoCrush {
     }
 
     private final void run() {
-        while (true) {
+        while (this.emptyMoves < 5) {
             // Print grid
             System.out.println(this);
             // Advance iter
@@ -57,6 +60,8 @@ public class DeustoCrush {
             // Read user input
             String[] input;
             try {
+                System.out.println(String.format("Score: %d", this.score));
+                System.out.print("Enter movement: ");
                 input = br.readLine().split(" ");
                 if (input.length != 2) {
                     throw new Exception();
@@ -77,6 +82,7 @@ public class DeustoCrush {
                 System.out.println("Invalid neighboring points\n");
             }
         }
+        System.out.println("Too many empty moves");
     }
 
     private final void randomize() {
@@ -156,13 +162,28 @@ public class DeustoCrush {
                 inStreak.get(inStreak.size() - 1).add(this.getGrid()[c.getSeed().x][i]);
             }
         }
-        // Check streaks containing candy
-        for (final List<Candy> candyStreak : inStreak) {
-            if (!candyStreak.contains(this.getGrid()[c.getSeed().x][c.getSeed().y])) {
-                inStreak.remove(candyStreak);
+        // Use fori instead of foreach to avoid ConcurrentModificationException
+        for (int i = 0; i < inStreak.size(); i++) {
+            // Check streaks containing candy
+            if (!inStreak.get(i).contains(this.getGrid()[c.getSeed().x][c.getSeed().y])) {
+                inStreak.remove(inStreak.get(i));
             }
         }
         return inStreak;
+    }
+
+    private final void calcPoints(final List<List<Candy>> inStreak) {
+        // Check for existing streak
+        if (inStreak != null) {
+            // Use fori instead of foreach to avoid ConcurrentModificationException
+            for (int i = 0; i < inStreak.size(); i++) {
+                for (int j = 0; j < inStreak.get(i).size(); j++) {
+                    this.score += 100;
+                }
+            }
+        } else {
+            this.emptyMoves++;
+        }
     }
 
     private final boolean delete(final List<List<Candy>> inStreak) {
@@ -209,7 +230,9 @@ public class DeustoCrush {
             for (int j = 0; j < GRID_N; j++) {
                 // Check for streak and delete it
                 if (!deleted) {
-                    deleted = this.delete(this.check(this.getGrid()[i][j]));
+                    final List<List<Candy>> inStreak = this.check(this.getGrid()[i][j]);
+                    this.calcPoints(inStreak);
+                    deleted = this.delete(inStreak);
                 }
             }
         }
