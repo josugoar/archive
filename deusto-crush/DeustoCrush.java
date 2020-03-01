@@ -49,11 +49,11 @@ public class DeustoCrush {
     }
 
     private final void run() {
-        // TODO: Check entire arra
-        // TODO: Move advance to top
         while (true) {
             // Print grid
             System.out.println(this);
+            // Advance iter
+            this.iterWrapper();
             // Read user input
             String[] input;
             try {
@@ -73,14 +73,7 @@ public class DeustoCrush {
                 points[i] = Stream.of(input[i].split("-")).mapToInt(Integer::parseInt).toArray();
             }
             // Swap input points
-            if (this.swap(this.getGrid()[points[0][0]][points[0][1]], this.getGrid()[points[1][0]][points[1][1]])) {
-                // Check for streak and delete it
-                for (int i = 0; i < 2; i++) {
-                    this.delete(this.check(this.getGrid()[points[i][0]][points[i][1]]));
-                }
-                // Advance empty candies
-                this.advance();
-            } else {
+            if (!this.swap(this.getGrid()[points[0][0]][points[0][1]], this.getGrid()[points[1][0]][points[1][1]])) {
                 System.out.println("Invalid neighboring points\n");
             }
         }
@@ -172,16 +165,21 @@ public class DeustoCrush {
         return inStreak;
     }
 
-    private final void delete(final List<List<Candy>> inStreak) {
+    private final boolean delete(final List<List<Candy>> inStreak) {
+        // Deleted flag
+        boolean deleted = false;
         // Check for existing streak
         if (inStreak != null) {
-            for (final List<Candy> candyStreak : inStreak) {
-                for (final Candy candy : candyStreak) {
+            // Use fori instead of foreach to avoid ConcurrentModificationException
+            for (int i = 0; i < inStreak.size(); i++) {
+                for (int j = 0; j < inStreak.get(i).size(); j++) {
                     // Remove individual candy color
-                    candy.setColor(null);
+                    inStreak.get(i).get(j).setColor(null);
+                    deleted = true;
                 }
             }
         }
+        return deleted;
     }
 
     private final void advance() {
@@ -201,6 +199,26 @@ public class DeustoCrush {
                     }
                 }
             }
+        }
+    }
+
+    private final void iterWrapper() {
+        boolean deleted = false;
+        // Wrap check, delete and advance
+        for (int i = 0; i < GRID_N; i++) {
+            for (int j = 0; j < GRID_N; j++) {
+                // Check for streak and delete it
+                if (!deleted) {
+                    deleted = this.delete(this.check(this.getGrid()[i][j]));
+                }
+            }
+        }
+        // Advance deleted candies
+        this.advance();
+        // Delete new streaks if they appear
+        if (deleted) {
+            System.out.println(this);
+            this.iterWrapper();
         }
     }
 
