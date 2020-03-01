@@ -2,10 +2,8 @@ package _DeustoCrush;
 
 import java.awt.Point;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -16,171 +14,190 @@ import java.util.stream.Stream;
  */
 public class DeustoCrush {
 
-    private static final int GRID_SIZE = 6;
-    private static final int MIN_IN_ROW = 3;
-    private static final BufferedReader BR = new BufferedReader(new InputStreamReader(System.in));
+    private static final int GRID_N = 6;
+    private static final int MIN_STREAK = 3;
+    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    private Candy[][] grid;
+    protected Candy[][] grid;
 
     {
         this.randomize();
     }
 
     public static final void main(final String[] args) {
-        try {
-            new DeustoCrush().run();
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
+        new DeustoCrush().run();
     }
 
     @Override
     public final String toString() {
         String out = "";
-
-        for (int i = 0; i < GRID_SIZE; i++) {
+        // Column number
+        for (int i = 0; i < GRID_N; i++) {
             out += String.format("   %d", i);
         }
         out += "\n";
-
-        for (int i = 0; i < GRID_SIZE; i++) {
+        for (int i = 0; i < GRID_N; i++) {
+            // Row number
             out += i;
-
-            for (int j = 0; j < GRID_SIZE; j++) {
+            for (int j = 0; j < GRID_N; j++) {
+                // Candy
                 out += String.format(" %s", this.getGrid()[i][j]);
             }
             out += "\n";
-
         }
-
         return out;
     }
 
-    private final void run() throws Exception {
+    private final void run() {
+        // TODO: Check entire arra
+        // TODO: Move advance to top
         while (true) {
+            // Print grid
             System.out.println(this);
-
-            final String[] strs = BR.readLine().split(" ");
+            // Read user input
+            String[] input;
+            try {
+                input = br.readLine().split(" ");
+                if (input.length != 2) {
+                    throw new Exception();
+                }
+            } catch (final Exception e) {
+                System.out.println("Invalid input");
+                continue;
+            } finally {
+                System.out.println("");
+            }
+            // Store user input in integer array
             final int[][] points = new int[2][2];
             for (int i = 0; i < 2; i++) {
-                points[i] = Stream.of(strs[i].split("-")).mapToInt(Integer::parseInt).toArray();
+                points[i] = Stream.of(input[i].split("-")).mapToInt(Integer::parseInt).toArray();
             }
-            System.out.println("");
-
-            this.swap(this.getGrid()[points[0][0]][points[0][1]], this.getGrid()[points[1][0]][points[1][1]]);
-            for (int i = 0; i < 2; i++) {
-                this.delete(this.check(this.getGrid()[points[i][0]][points[i][1]]));
+            // Swap input points
+            if (this.swap(this.getGrid()[points[0][0]][points[0][1]], this.getGrid()[points[1][0]][points[1][1]])) {
+                // Check for streak and delete it
+                for (int i = 0; i < 2; i++) {
+                    this.delete(this.check(this.getGrid()[points[i][0]][points[i][1]]));
+                }
+                // Advance empty candies
+                this.advance();
+            } else {
+                System.out.println("Invalid neighboring points\n");
             }
-
-            this.goDown();
-
-            System.out.println("");
         }
     }
 
     private final void randomize() {
-        this.grid = new Candy[GRID_SIZE][GRID_SIZE];
-
-        for (int i = 0; i < GRID_SIZE; i++) {
-            for (int j = 0; j < GRID_SIZE; j++) {
+        // Create new empty grid
+        this.grid = new Candy[GRID_N][GRID_N];
+        // Fill grid with randomly colored candies
+        for (int i = 0; i < GRID_N; i++) {
+            for (int j = 0; j < GRID_N; j++) {
                 grid[i][j] = new Candy(new Point(i, j));
             }
         }
     }
 
     private final boolean swap(final Candy c1, final Candy c2) {
+        // Range through four neighbors
         for (int i = c1.getSeed().x - 1; i <= c1.getSeed().x + 1; i++) {
             for (int j = c1.getSeed().y + Math.abs(c1.getSeed().x - i) - 1; j <= c1.getSeed().y + 1; j += 2) {
-
-                if (i >= 0 && i < GRID_SIZE && j >= 0 && j < GRID_SIZE) {
+                // Check for array index out of bounds
+                if (i >= 0 && i < GRID_N && j >= 0 && j < GRID_N) {
+                    // Check for neighboring candies
                     if (this.getGrid()[i][j] == c2) {
-                        final String tempCandy = this.getGrid()[i][j].candyColor;
-
-                        this.getGrid()[i][j].candyColor = this.getGrid()[c1.getSeed().x][c1.getSeed().y].candyColor;
-                        this.getGrid()[c1.getSeed().x][c1.getSeed().y].candyColor = tempCandy;
-
+                        // Swap colors but not seeds
+                        final String tempColor = this.getGrid()[i][j].getColor();
+                        this.getGrid()[i][j].setColor(c1.color);
+                        c1.setColor(tempColor);
                         return true;
                     }
                 }
             }
         }
-
         return false;
     }
 
-    private final List<List<Candy>> check(final Candy p) {
+    private final List<List<Candy>> check(final Candy c) {
         final List<List<Candy>> inStreak = new ArrayList<List<Candy>>();
-
+        // Check horizontal streaks
         int streak = 0;
-        for (int i = 0; i < GRID_SIZE; i++) {
-            if (this.getGrid()[i][p.getSeed().y] != null) {
-                if (this.getGrid()[p.getSeed().x][p.getSeed().y].getColor() != this.getGrid()[i][p.getSeed().y]
-                        .getColor()) {
-                    streak = 0;
-                    continue;
-                }
+        for (int i = 0; i < GRID_N; i++) {
+            // Reset streak
+            if (this.getGrid()[c.getSeed().x][c.getSeed().y].getColor() != this.getGrid()[i][c.getSeed().y]
+                    .getColor()) {
+                streak = 0;
+                continue;
             }
-
+            // Advance streak
             streak++;
-            if (streak == 3) {
+            if (streak == MIN_STREAK) {
+                // Add new streak
                 inStreak.add(new ArrayList<Candy>());
-                inStreak.get(inStreak.size() - 1).add(this.getGrid()[i - 2][p.getSeed().y]);
-                inStreak.get(inStreak.size() - 1).add(this.getGrid()[i - 1][p.getSeed().y]);
-                inStreak.get(inStreak.size() - 1).add(this.getGrid()[i][p.getSeed().y]);
-            } else if (streak > 3) {
-                inStreak.get(inStreak.size() - 1).add(this.getGrid()[i][p.getSeed().y]);
+                for (int j = 0; j < MIN_STREAK; j++) {
+                    inStreak.get(inStreak.size() - 1).add(this.getGrid()[i - j][c.getSeed().y]);
+                }
+            } else if (streak > MIN_STREAK) {
+                // Add to existing streak
+                inStreak.get(inStreak.size() - 1).add(this.getGrid()[i][c.getSeed().y]);
             }
         }
-
+        // Check vertical streaks
         streak = 0;
-        for (int i = 0; i < GRID_SIZE; i++) {
-            if (this.getGrid()[p.getSeed().x][i] != null) {
-                if (this.getGrid()[p.getSeed().x][p.getSeed().y].getColor() != this.getGrid()[p.getSeed().x][i]
-                        .getColor()) {
-                    streak = 0;
-                    continue;
-                }
+        for (int i = 0; i < GRID_N; i++) {
+            // Reset streak
+            if (this.getGrid()[c.getSeed().x][c.getSeed().y].getColor() != this.getGrid()[c.getSeed().x][i]
+                    .getColor()) {
+                streak = 0;
+                continue;
             }
-
+            // Advance streak
             streak++;
-            if (streak == 3) {
+            if (streak == MIN_STREAK) {
+                // Add new streak
                 inStreak.add(new ArrayList<Candy>());
-                inStreak.get(inStreak.size() - 1).add(this.getGrid()[p.getSeed().x][i - 2]);
-                inStreak.get(inStreak.size() - 1).add(this.getGrid()[p.getSeed().x][i - 1]);
-                inStreak.get(inStreak.size() - 1).add(this.getGrid()[p.getSeed().x][i]);
-            } else if (streak > 3) {
-                inStreak.get(inStreak.size() - 1).add(this.getGrid()[p.getSeed().x][i]);
+                for (int j = 0; j < MIN_STREAK; j++) {
+                    inStreak.get(inStreak.size() - 1).add(this.getGrid()[c.getSeed().x][i - j]);
+                }
+            } else if (streak > MIN_STREAK) {
+                // Add to existing streak
+                inStreak.get(inStreak.size() - 1).add(this.getGrid()[c.getSeed().x][i]);
             }
         }
-
-        for (final List<Candy> arrayList : inStreak) {
-            if (!arrayList.contains(this.getGrid()[p.getSeed().x][p.getSeed().y])) {
-                inStreak.remove(arrayList);
+        // Check streaks containing candy
+        for (final List<Candy> candyStreak : inStreak) {
+            if (!candyStreak.contains(this.getGrid()[c.getSeed().x][c.getSeed().y])) {
+                inStreak.remove(candyStreak);
             }
         }
-
         return inStreak;
     }
 
-    private final void delete(final List<List<Candy>> points) {
-        if (points != null) {
-                for (List<Candy> list : points) {
-                    for (final Candy candy : list) {
-                        this.getGrid()[candy.getSeed().x][candy.getSeed().y].candyColor = "\u001B[37m";
-                    }
+    private final void delete(final List<List<Candy>> inStreak) {
+        // Check for existing streak
+        if (inStreak != null) {
+            for (final List<Candy> candyStreak : inStreak) {
+                for (final Candy candy : candyStreak) {
+                    // Remove individual candy color
+                    candy.setColor(null);
+                }
             }
         }
     }
 
-    private final void goDown() {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid.length; j++) {
-                if (grid[i][j].getColor() == "\u001B[37m") {
-                    if (grid[i][j].getSeed().x == 0) {
-                        grid[i][j].candyColor = Candy.ANSI_COLORS[new Random().nextInt(Candy.ANSI_COLORS.length)];
+    private final void advance() {
+        // Range through each candy
+        for (int i = 0; i < GRID_N; i++) {
+            for (int j = 0; j < GRID_N; j++) {
+                // Check for deleted candy
+                if (this.getGrid()[i][j].getColor() == null) {
+                    // Redefine leading row candies
+                    if (this.getGrid()[i][j].getSeed().x == 0) {
+                        this.getGrid()[i][j] = new Candy(this.getGrid()[i][j].getSeed());
                     } else {
-                        swap(grid[i][j], grid[i - 1][j]);
-                        goDown();
+                        // Swap candy with top candy
+                        swap(this.getGrid()[i][j], this.getGrid()[i - 1][j]);
+                        // Recursively call method until convergence
+                        advance();
                     }
                 }
             }
@@ -193,10 +210,12 @@ public class DeustoCrush {
 
     private static final class Candy {
 
+        // Color strings
         public static final String[] ANSI_COLORS = { "\u001B[31m", "\u001B[32m", "\u001B[34m", "\u001B[35m" };
 
-        private String candyColor = ANSI_COLORS[new Random().nextInt(ANSI_COLORS.length)];
-        private Point candySeed;
+        // Initialize color with random string
+        private String color = ANSI_COLORS[new Random().nextInt(ANSI_COLORS.length)];
+        private Point seed;
 
         public Candy(final Point candySeed) {
             this.setSeed(candySeed);
@@ -204,19 +223,24 @@ public class DeustoCrush {
 
         @Override
         public final String toString() {
-            return String.format(">" + this.candyColor + "\u25A0" + "\u001B[0m" + "<");
+            // Return formatted candy
+            return String.format(">" + this.color + "\u25A0" + "\u001B[0m" + "<");
         }
 
         public final String getColor() {
-            return this.candyColor;
+            return this.color;
+        }
+
+        public final void setColor(final String color) {
+            this.color = color;
         }
 
         public final Point getSeed() {
-            return this.candySeed;
+            return this.seed;
         }
 
-        public final void setSeed(final Point candySeed) {
-            this.candySeed = Objects.requireNonNull(candySeed, "'candySeed' must not be null");
+        public final void setSeed(final Point seed) {
+            this.seed = Objects.requireNonNull(seed, "'seed' must not be null");
         }
 
     }
