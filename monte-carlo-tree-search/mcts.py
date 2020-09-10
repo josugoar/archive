@@ -4,28 +4,42 @@ import math
 import random
 
 
+def upper_confidence_trees(node, child, exploration_weight=math.sqrt(2)):
+    return (child.total_reward / child.visits + exploration_weight
+            * math.sqrt(math.log(node.visits) / child.visits))
+
+
+def uniform_random_distribution(state):
+    return random.choice(state.actions)
+
+
 class MCTS:
+    
+    def __init__(self, bandit_strategy=upper_confidence_trees,
+                 rollout_policy=uniform_random_distribution):
+        self.bandit_strategy = bandit_strategy
+        self.rollout_policy = rollout_policy
 
     def search(self, root):
-        leaf = self._tree_policy(root)
-        reward = self._default_policy(leaf.state)
+        leaf = self._select(root)
+        reward = self._rollout(leaf.state)
         self._backpropagate(leaf, reward)
-
-    def best_child(self, node, exploration_weight=0):
-        partial_policy = functools.partial(_upper_confidence_trees, node,
-                                           exploration_weight=exploration_weight)
+    
+    def best_child(self, node, **kwargs):
+        partial_policy = functools.partial(self.bandit_strategy,
+                                           node, **kwargs)
         return max(node.children, key=partial_policy)
 
-    def _tree_policy(self, node):
+    def _select(self, node):
         while not node.state.terminal:
             if not node.fully_expanded:
                 return node.expand()
-            node = self.best_child(node, exploration_weight=math.sqrt(2))
+            node = self.best_child(node)
         return node
 
-    def _default_policy(self, state):
+    def _rollout(self, state):
         while not state.terminal:
-            action = random.choice(state.actions)
+            action = self.rollout_policy(state)
             state = state.take_action(action)
         return state.reward
 
@@ -94,8 +108,3 @@ class MCTSState(abc.ABC):
 
     @abc.abstractmethod
     def take_action(self, action): ...
-
-
-def _upper_confidence_trees(node, child, exploration_weight):
-    return (child.total_reward / child.visits + exploration_weight
-            * math.sqrt(math.log(node.visits) / child.visits))
