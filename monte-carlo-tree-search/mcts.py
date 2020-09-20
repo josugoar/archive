@@ -21,6 +21,7 @@ class MCTS:
 
     def search(self, root):
         leaf = self._select(root)
+        # TODO: Add inline expansion phase
         reward = self._simulate(leaf.state)
         self._backpropagate(leaf, reward)
 
