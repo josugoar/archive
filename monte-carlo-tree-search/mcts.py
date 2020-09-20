@@ -9,30 +9,35 @@ def uct(node, child, exploration_weight=math.sqrt(2)):
             * math.sqrt(math.log(node.visits) / child.visits))
 
 
+def choice(state):
+    return random.choice(state.actions)
+
+
 class MCTS:
 
-    def __init__(self, bandit_strategy=uct):
-        self.bandit_strategy = bandit_strategy
+    def __init__(self, tree_policy=uct, default_policy=choice):
+        self.tree_policy = tree_policy
+        self.default_policy = default_policy
 
     def search(self, root):
-        leaf = self._tree_policy(root)
-        reward = self._default_policy(leaf.state)
+        leaf = self._select(root)
+        reward = self._simulate(leaf.state)
         self._backpropagate(leaf, reward)
 
     def best_child(self, node):
-        partial_bandit_strategy = functools.partial(self.bandit_strategy, node)
-        return max(node.children, key=partial_bandit_strategy)
+        partial_tree_policy = functools.partial(self.tree_policy, node)
+        return max(node.children, key=partial_tree_policy)
 
-    def _tree_policy(self, node):
+    def _select(self, node):
         while not node.state.terminal:
             if not node.fully_expanded:
                 return node.expand()
-            node = self.best_child(node)
+            node = self.tree_policy(node)
         return node
 
-    def _default_policy(self, state):
+    def _simulate(self, state):
         while not state.terminal:
-            action = random.choice(state.actions)
+            action = self.default_policy(state)
             state = state.step(action)
         return state.reward
 
