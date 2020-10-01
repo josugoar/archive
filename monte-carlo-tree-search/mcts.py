@@ -2,7 +2,7 @@ import abc
 import functools
 import math
 import random
-
+# https://www.scitepress.org/papers/2018/66535/66535.pdf
 
 def uct(node, child, exploration_weight=math.sqrt(2)):
     return (child.exploitation_component + exploration_weight
