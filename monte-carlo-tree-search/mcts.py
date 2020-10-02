@@ -1,12 +1,11 @@
 import abc
-import functools
 import math
 import random
 # https://www.scitepress.org/papers/2018/66535/66535.pdf
 
-def uct(node, child, exploration_weight=math.sqrt(2)):
-    return (child.exploitation_component + exploration_weight
-            * math.sqrt(math.log(node.visits) / child.visits))
+def uct(node, exploration_weight=math.sqrt(2)):
+    return (node.exploitation_component + exploration_weight
+            * math.sqrt(math.log(node.parent.visits) / node.visits))
 
 
 def choice(state):
@@ -26,8 +25,7 @@ class MCTS:
         self._backpropagate(leaf, reward)
 
     def best_child(self, node):
-        partial_tree_policy = functools.partial(self.tree_policy, node)
-        return max(node.children, key=partial_tree_policy)
+        return max(node.children, key=self.tree_policy)
 
     def _select(self, node):
         while not node.state.terminal:
