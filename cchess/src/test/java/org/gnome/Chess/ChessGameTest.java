@@ -220,7 +220,6 @@ public class ChessGameTest {
                 ChessRule.FIFTY_MOVES);
     }
 
-    @Ignore
     @Test
     public void testNeed100HalfmovesFor50MoveRule() {
         testBadMove("p7/8/8/8/8/8/8/P7 w - - 99 1", "draw");
