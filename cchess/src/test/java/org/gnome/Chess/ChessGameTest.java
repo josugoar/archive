@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.gnome.Chess.chess.ChessResult;
-import org.gnome.Chess.chess.ChessRule;
-import org.gnome.Chess.chess.ChessState;
-import org.gnome.Chess.util.Out;
+import org.gnome.chess.chess.ChessResult;
+import org.gnome.chess.chess.ChessRule;
+import org.gnome.chess.chess.ChessState;
+import org.gnome.chess.util.Out;
 import org.junit.Ignore;
 import org.junit.Test;
 
