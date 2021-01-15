@@ -1,5 +1,13 @@
-.settings/
-target/
+# Eclipse
 .classpath
 .project
+.settings/
+
+# Java
 *.jar
+
+# Maven
+target/
+
+# Visual Studio Code
+.vscode/
