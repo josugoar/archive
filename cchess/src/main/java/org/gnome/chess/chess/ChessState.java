@@ -126,7 +126,7 @@ public class ChessState {
         state.pieceMasks[Color.BLACK.ordinal()] = pieceMasks[Color.BLACK.ordinal()];
         state.halfmoveClock = halfmoveClock;
 
-        return null;
+        return state;
     }
 
     @Override

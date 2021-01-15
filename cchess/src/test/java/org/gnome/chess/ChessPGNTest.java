@@ -1,4 +1,4 @@
-package org.gnome.Chess;
+package org.gnome.chess;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

@@ -2,6 +2,9 @@ package org.gnome.chess.chess;
 
 public final class BitBoard {
 
+    private BitBoard() {
+    }
+
     /* Bitboard for each location */
     public static final long[] setLocationMasks = { 0x0000000000000001L, 0x0000000000000002L, 0x0000000000000004L,
             0x0000000000000008L, 0x0000000000000010L, 0x0000000000000020L, 0x0000000000000040L, 0x0000000000000080L,
@@ -1026,9 +1029,6 @@ public final class BitBoard {
             0x0e0a0e0000000000L, 0x1c141c0000000000L, 0x3828380000000000L, 0x7050700000000000L, 0xe0a0e00000000000L,
             0xc040c00000000000L, 0x0203000000000000L, 0x0507000000000000L, 0x0a0e000000000000L, 0x141c000000000000L,
             0x6c38000000000000L, 0x5070000000000000L, 0xa0e0000000000000L, 0x40c0000000000000L };
-
-    private BitBoard() {
-    }
 
     public static String toString(long mask) {
         var string = "+---+---+---+---+---+---+---+---+\n";
