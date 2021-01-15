@@ -1,4 +1,4 @@
-package org.gnome.chess.chess;
+package org.gnome.chess.lib;
 
 import org.gnome.chess.util.Signal;
 import org.gnome.chess.util.SignalSource;

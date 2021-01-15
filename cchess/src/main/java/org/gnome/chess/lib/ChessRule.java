@@ -1,4 +1,4 @@
-package org.gnome.chess.chess;
+package org.gnome.chess.lib;
 
 public enum ChessRule {
     UNKNOWN, CHECKMATE, STALEMATE, FIFTY_MOVES, SEVENTY_FIVE_MOVES, TIMEOUT, THREE_FOLD_REPETITION,

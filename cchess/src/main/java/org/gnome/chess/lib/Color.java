@@ -1,4 +1,4 @@
-package org.gnome.chess.chess;
+package org.gnome.chess.lib;
 
 public enum Color {
     WHITE, BLACK

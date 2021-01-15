@@ -1,6 +1,6 @@
 package org.gnome.chess.ui;
 
-import org.gnome.chess.chess.ChessPiece;
+import org.gnome.chess.lib.ChessPiece;
 
 public class ChessModel {
 

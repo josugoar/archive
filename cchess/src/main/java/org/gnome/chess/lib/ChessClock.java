@@ -1,4 +1,4 @@
-package org.gnome.chess.chess;
+package org.gnome.chess.lib;
 
 import java.util.TimerTask;
 import java.util.function.Supplier;

@@ -1,9 +1,9 @@
-package org.gnome.chess.chess;
+package org.gnome.chess.lib;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gnome.chess.chess.ChessPlayer.DoMoveSource;
+import org.gnome.chess.lib.ChessPlayer.DoMoveSource;
 import org.gnome.chess.util.Handler;
 import org.gnome.chess.util.Out;
 import org.gnome.chess.util.Signal;

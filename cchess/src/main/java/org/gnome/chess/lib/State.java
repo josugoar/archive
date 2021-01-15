@@ -1,4 +1,4 @@
-package org.gnome.chess.chess;
+package org.gnome.chess.lib;
 
 enum State {
     TAGS, MOVE_TEXT, LINE_COMMENT, BRACE_COMMENT, TAG_START, TAG_NAME, PRE_TAG_VALUE, TAG_VALUE, POST_TAG_VALUE, SYMBOL,

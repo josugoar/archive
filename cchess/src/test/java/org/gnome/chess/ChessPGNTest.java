@@ -3,8 +3,8 @@ package org.gnome.chess;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.gnome.chess.chess.PGN;
-import org.gnome.chess.chess.PGNError;
+import org.gnome.chess.lib.PGN;
+import org.gnome.chess.lib.PGNError;
 import org.junit.Test;
 
 public class ChessPGNTest {

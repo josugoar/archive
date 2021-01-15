@@ -1,4 +1,4 @@
-package org.gnome.chess.chess;
+package org.gnome.chess.lib;
 
 import static org.gnome.chess.util.Logging.debug;
 

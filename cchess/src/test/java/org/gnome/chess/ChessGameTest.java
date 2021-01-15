@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.gnome.chess.chess.ChessResult;
-import org.gnome.chess.chess.ChessRule;
-import org.gnome.chess.chess.ChessState;
+import org.gnome.chess.lib.ChessResult;
+import org.gnome.chess.lib.ChessRule;
+import org.gnome.chess.lib.ChessState;
 import org.gnome.chess.util.Out;
 import org.junit.Ignore;
 import org.junit.Test;
