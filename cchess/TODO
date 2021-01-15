@@ -1,3 +1,3 @@
 Add jdk.jfr.Unsigned annotation to unsigned types.
 Add final keyword to all methods
-Change org.gnome.chess.chess package name
+Change org.gnome.chess.chess package name (model)

@@ -23,8 +23,9 @@ public class ChessModel {
     }
 
     public boolean moveTo(double x, double y) {
-        if (targetX == x && targetY == y)
+        if (targetX == x && targetY == y) {
             return false;
+        }
 
         targetX = x;
         targetY = y;
@@ -33,8 +34,9 @@ public class ChessModel {
     }
 
     public boolean animate(double timestep) {
-        if (!getMoving())
+        if (!getMoving()) {
             return false;
+        }
 
         x = updatePosition(timestep, x, targetX);
         y = updatePosition(timestep, y, targetY);
@@ -45,13 +47,15 @@ public class ChessModel {
         var distance = Math.abs(target - value);
         var step = timestep * 4.0;
 
-        if (step > distance)
+        if (step > distance) {
             step = distance;
+        }
 
-        if (target > value)
+        if (target > value) {
             return value + step;
-        else
+        } else {
             return value - step;
+        }
     }
 
 }
