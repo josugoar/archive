@@ -4,6 +4,7 @@ package org.gnome.chess.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.lang.reflect.InvocationTargetException;
 import java.awt.Component;
 import java.awt.Container;
 import java.util.ArrayList;
@@ -13,6 +14,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import org.gnome.chess.lib.ChessGame;
 
 public class ChessWindow extends JFrame {
 
@@ -22,6 +28,26 @@ public class ChessWindow extends JFrame {
         NORMAL, NARROW
     }
 
+    private ChessView view;
+
+    public ChessView getView(ChessView view) {
+        return view;
+    }
+
+    private ChessScene scene;
+
+    public ChessScene getScene(ChessScene scene) {
+        return scene;
+    }
+
+    private ChessGame game;
+
+    public ChessGame getGame(ChessGame game) {
+        return game;
+    }
+
+    private JPanel mainBox;
+
     private JPanel bottomPanel;
     private JPanel topPanel;
     private Font componentFont;
@@ -29,15 +55,29 @@ public class ChessWindow extends JFrame {
 
     private ArrayList<int[]> resolutions; // Access by settings menu
 
+    public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            SwingUtilities.invokeAndWait(() -> {
+                ChessWindow window = new ChessWindow();
+                window.setVisible(true);
+            });
+        } catch (InvocationTargetException | InterruptedException | ClassNotFoundException | InstantiationException
+                | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+    }
+
     public ChessWindow() {
 
         componentFont = new Font("Times New Roman", Font.BOLD, 30);
 
-        setTitle("lol");
-        setResizable(false);
+        setTitle("CHESS");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1280, 960);
+        
 
+        prepMainBox();
         prepBottomPanel();
         prepTopPanel();
 
@@ -45,6 +85,10 @@ public class ChessWindow extends JFrame {
 
         setVisible(true);
 
+    }
+
+    private void prepMainBox() {
+        mainBox = new JPanel();
     }
 
     private void prepBottomPanel() {
@@ -151,5 +195,4 @@ public class ChessWindow extends JFrame {
             }
         }
     }
-
 }
