@@ -2,6 +2,8 @@ package org.gnome.chess.db;
 
 import static org.gnome.chess.util.Logging.warning;
 
+import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,6 +27,14 @@ public class PGNGameDao implements Dao<PGNGame> {
         }
     }
 
+    public static void main(String[] args) {
+        try {
+            new PGNGameDao("pgn.db");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public PGNGameDao() {
     }
 
@@ -32,11 +42,19 @@ public class PGNGameDao implements Dao<PGNGame> {
         connect(url);
     }
 
+    private String getSql(String name) {
+        try {
+            URL resource = getClass().getClassLoader().getResource("queries/" + name);
+            return new String(resource.openStream().readAllBytes());
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     @Override
     public boolean connect(String url) throws SQLException {
         conn = DriverManager.getConnection("jdbc:sqlite:" + url);
-        String sql = "CREATE TABLE IF NOT EXISTS pgn (id INTEGER PRIMARY KEY AUTOINCREMENT, event TEXT NOT NULL, site TEXT NOT NULL, date TEXT NOT NULL, time TEXT, round TEXT NOT NULL, white TEXT NOT NULL, black TEXT NOT NULL, result TEXT NOT NULL, annotator TEXT, timeControl TEXT, whiteTimeLeft TEXT, blackTimeLeft TEXT, clockType TEXT, timerIncrement TEXT, setUp TEXT, fen TEXT, termination TEXT, whiteAi TEXT, whiteLevel TEXT, blackAi TEXT, blackLevel TEXT)";
-        return executeInsideTransaction(connectInsideTransaction, Void.TYPE, sql);
+        return executeInsideTransaction(connectInsideTransaction, Void.TYPE, getSql("connect.sql"));
     }
 
     private static SQLBiFunction<Class<Void>, Boolean> connectInsideTransaction = (PreparedStatement smt,
@@ -46,8 +64,7 @@ public class PGNGameDao implements Dao<PGNGame> {
 
     @Override
     public Optional<PGNGame> get(int id) throws SQLException {
-        String sql = "SELECT * FROM pgn WHERE id = ?";
-        return executeInsideTransaction(getInsideTransaction, id, sql);
+        return executeInsideTransaction(getInsideTransaction, id, getSql("get.sql"));
     }
 
     private static SQLBiFunction<Integer, Optional<PGNGame>> getInsideTransaction = (PreparedStatement smt,
@@ -85,8 +102,7 @@ public class PGNGameDao implements Dao<PGNGame> {
 
     @Override
     public List<PGNGame> getAll() throws SQLException {
-        String sql = "SELECT * FROM pgn ";
-        return executeInsideTransaction(getAllInsideTransaction, Void.TYPE, sql);
+        return executeInsideTransaction(getAllInsideTransaction, Void.TYPE, getSql("getAll.sql"));
     }
 
     private static SQLBiFunction<Class<Void>, List<PGNGame>> getAllInsideTransaction = (PreparedStatement smt,
@@ -123,8 +139,7 @@ public class PGNGameDao implements Dao<PGNGame> {
 
     @Override
     public int save(PGNGame data) throws SQLException {
-        String sql = "INSERT INTO pgn VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        return executeInsideTransaction(saveInsideTransaction, data, sql);
+        return executeInsideTransaction(saveInsideTransaction, data, getSql("save.sql"));
     }
 
     private static SQLBiFunction<PGNGame, Integer> saveInsideTransaction = (PreparedStatement smt, PGNGame data) -> {
@@ -155,8 +170,7 @@ public class PGNGameDao implements Dao<PGNGame> {
 
     @Override
     public int saveAll(List<PGNGame> data) throws SQLException {
-        String sql = "INSERT INTO pgn VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        return executeInsideTransaction(saveAllInsideTransaction, data, sql);
+        return executeInsideTransaction(saveAllInsideTransaction, data, getSql("saveAll.sql"));
     }
 
     private static SQLBiFunction<List<PGNGame>, Integer> saveAllInsideTransaction = (PreparedStatement smt,
@@ -170,8 +184,7 @@ public class PGNGameDao implements Dao<PGNGame> {
 
     @Override
     public int update(PGNGame data) throws SQLException {
-        String sql = "UPDATE pgn SET event = ?, site = ?, date = ?, time = ?, round = ?, white = ?, black = ?, result = ?, annotator = ?, timeControl = ?, whiteTimeLeft = ?, blackTimeLeft = ?, clockType = ?, timerIncrement = ?, setUp = ?, fen = ?, termination = ?, whiteAi = ?, whiteLevel = ?. blackAi = ?, blackLevel = ? WHERE id = ?";
-        return executeInsideTransaction(updateInsideTransaction, data, sql);
+        return executeInsideTransaction(updateInsideTransaction, data, getSql("update.sql"));
     }
 
     private static SQLBiFunction<PGNGame, Integer> updateInsideTransaction = (PreparedStatement smt, PGNGame data) -> {
@@ -202,8 +215,7 @@ public class PGNGameDao implements Dao<PGNGame> {
 
     @Override
     public int delete(PGNGame data) throws SQLException {
-        String sql = "DELETE FROM pgn WHERE id = ?";
-        return executeInsideTransaction(deleteInsideTransaction, data, sql);
+        return executeInsideTransaction(deleteInsideTransaction, data, getSql("delete.sql"));
     }
 
     private static SQLBiFunction<PGNGame, Integer> deleteInsideTransaction = (PreparedStatement smt, PGNGame data) -> {

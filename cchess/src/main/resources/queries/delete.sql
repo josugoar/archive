@@ -1,0 +1,2 @@
+DELETE FROM pgn
+WHERE id = ?
