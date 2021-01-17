@@ -3,11 +3,12 @@ package org.gnome.chess.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
-import java.lang.reflect.InvocationTargetException;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Font;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -75,7 +76,6 @@ public class ChessWindow extends JFrame {
         setTitle("CHESS");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1280, 960);
-        
 
         prepMainBox();
         prepBottomPanel();

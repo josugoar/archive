@@ -1,14 +1,14 @@
 package org.gnome.chess.ai;
 
+import static org.gnome.chess.util.Logging.debug;
+import static org.gnome.chess.util.Logging.warning;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Stream;
-
-import static org.gnome.chess.util.Logging.debug;
-import static org.gnome.chess.util.Logging.warning;
 
 public class AIProfile {
 

@@ -12,12 +12,12 @@ public interface Dao<T> {
 
     public List<T> getAll() throws SQLException;
 
-    public void save(T data) throws SQLException;
+    public int save(T data) throws SQLException;
 
-    public void saveAll(List<T> data) throws SQLException;
+    public int saveAll(List<T> data) throws SQLException;
 
-    public void update(T data) throws SQLException;
+    public int update(T data) throws SQLException;
 
-    public void delete(T data) throws SQLException;
+    public int delete(T data) throws SQLException;
 
 }

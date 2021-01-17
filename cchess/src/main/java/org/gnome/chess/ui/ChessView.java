@@ -1,16 +1,17 @@
 package org.gnome.chess.ui;
 
+import static org.gnome.chess.util.Logging.warning;
+
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
+
 import org.gnome.chess.lib.ChessResult;
-import java.awt.event.MouseEvent;
-import java.awt.Dimension;
-import static org.gnome.chess.util.Logging.warning;
-import java.awt.Graphics;
 
 public class ChessView extends JPanel { // TODO Change to JComponent
 
@@ -91,22 +92,23 @@ public class ChessView extends JPanel { // TODO Change to JComponent
         return new Dimension(shortEdge, shortEdge);
     }
 
-    private void renderPiece (Graphics c1, Graphics c2, String name, int offset) {
+    private void renderPiece(Graphics c1, Graphics c2, String name, int offset) {
         BufferedImage handle;
 
         try {
-            var stream = getClass().getClassLoader().getResourceAsStream("pieces/" + scene.themeName + "/" + name + ".png");
+            var stream = getClass().getClassLoader()
+                    .getResourceAsStream("pieces/" + scene.themeName + "/" + name + ".png");
             handle = ImageIO.read(stream);
         } catch (Exception e) {
-            warning ("Failed to load piece SVG: %s", e.getMessage());
+            warning("Failed to load piece SVG: %s", e.getMessage());
             return;
-        } 
-        
+        }
+
         try {
-            c1.drawImage(handle, squareSize*offset, 0, squareSize, squareSize, this);
-            c2.drawImage(handle, squareSize*offset, 0, selectedSquareSize, selectedSquareSize, this);
+            c1.drawImage(handle, squareSize * offset, 0, squareSize, squareSize, this);
+            c2.drawImage(handle, squareSize * offset, 0, selectedSquareSize, selectedSquareSize, this);
         } catch (Exception e) {
-            warning ("Failed to render piece SVG: %s", e.getMessage());
+            warning("Failed to render piece SVG: %s", e.getMessage());
         }
     }
 
