@@ -62,6 +62,12 @@ public class PGNGame {
     public static final String TERMINATE_TIME_FORFEIT = "time forfeit";
     public static final String TERMINATE_UNTERMINATED = "unterminated";
 
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
     public String getEvent() {
         return tags.get("Event");
     }
@@ -231,7 +237,9 @@ public class PGNGame {
         tags.put("X-GNOME-BlackLevel", blackLevel);
     }
 
-    public PGNGame() {
+    public PGNGame(int id) {
+        this.id = id;
+
         tags = new HashMap<String, String>();
         tags.put("Event", "?");
         tags.put("Site", "?");

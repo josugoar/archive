@@ -8,19 +8,19 @@ public class ChessPiece {
     public ChessPlayer player;
     public PieceType type;
 
-    public Signal<SignalSource<ChessPiece>, Void> moved = new Signal<>();
+    public Signal<SignalSource<ChessPiece>, Class<Void>> moved = new Signal<>();
 
     public void moved() {
         moved.emit(new SignalSource<ChessPiece>(this));
     }
 
-    public Signal<SignalSource<ChessPiece>, Void> promoted = new Signal<>();
+    public Signal<SignalSource<ChessPiece>, Class<Void>> promoted = new Signal<>();
 
     public void promoted() {
         promoted.emit(new SignalSource<ChessPiece>(this));
     }
 
-    public Signal<SignalSource<ChessPiece>, Void> died = new Signal<>();
+    public Signal<SignalSource<ChessPiece>, Class<Void>> died = new Signal<>();
 
     public void died() {
         died.emit(new SignalSource<ChessPiece>(this));

@@ -82,13 +82,13 @@ public class ChessClock {
 
     private int tickTimeoutId = 0;
 
-    public Signal<SignalSource<ChessClock>, Void> tick = new Signal<>();
+    public Signal<SignalSource<ChessClock>, Class<Void>> tick = new Signal<>();
 
     public void tick() {
         tick.emit(new SignalSource<ChessClock>(this));
     }
 
-    public Signal<SignalSource<ChessClock>, Void> expired = new Signal<>();
+    public Signal<SignalSource<ChessClock>, Class<Void>> expired = new Signal<>();
 
     public void expired() {
         expired.emit(new SignalSource<ChessClock>(this));

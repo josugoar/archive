@@ -90,7 +90,7 @@ public class PGN {
 
         State state = State.TAGS;
         State homeState = State.TAGS;
-        PGNGame game = new PGNGame();
+        PGNGame game = new PGNGame(games.size());
         boolean inEscape = false;
         int tokenStart = 0;
         int lineOffset = 0;
@@ -132,7 +132,7 @@ public class PGN {
                         if (ravLevel == 0) {
                             game.setResult(PGNGame.RESULT_IN_PROGRESS);
                             games.add(game);
-                            game = new PGNGame();
+                            game = new PGNGame(games.size());
                             state = State.TAGS;
                         }
                     } else if (c == '.') {
@@ -256,7 +256,7 @@ public class PGN {
                             if (ravLevel == 0) {
                                 game.setResult(symbol);
                                 games.add(game);
-                                game = new PGNGame();
+                                game = new PGNGame(games.size());
                                 state = State.TAGS;
                             }
                         } else if (!isNumber) {

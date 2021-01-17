@@ -37,7 +37,7 @@ public class ChessPlayer {
         return doMove.emit(new DoMoveSource(this, move, apply));
     }
 
-    public Signal<SignalSource<ChessPlayer>, Void> doUndo = new Signal<>();
+    public Signal<SignalSource<ChessPlayer>, Class<Void>> doUndo = new Signal<>();
 
     public void doUndo() {
         doUndo.emit(new SignalSource<ChessPlayer>(this));
@@ -49,7 +49,7 @@ public class ChessPlayer {
         return doResign.emit(new SignalSource<ChessPlayer>(this));
     }
 
-    public Signal<SignalSource<ChessPlayer>, Void> doClaimDraw = new Signal<>();
+    public Signal<SignalSource<ChessPlayer>, Class<Void>> doClaimDraw = new Signal<>();
 
     public void doClaimDraw() {
         doClaimDraw.emit(new SignalSource<ChessPlayer>(this));

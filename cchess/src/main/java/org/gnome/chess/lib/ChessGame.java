@@ -54,37 +54,37 @@ public class ChessGame {
 
     public static final String STANDARD_SETUP = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-    public Signal<TurnStartedSource, Void> turnStarted = new Signal<>();
+    public Signal<TurnStartedSource, Class<Void>> turnStarted = new Signal<>();
 
     public void turnStarted(ChessPlayer player) {
         turnStarted.emit(new TurnStartedSource(this, player));
     }
 
-    public Signal<MovedSource, Void> moved = new Signal<>();
+    public Signal<MovedSource, Class<Void>> moved = new Signal<>();
 
     public void moved(ChessMove move) {
         moved.emit(new MovedSource(this, move));
     }
 
-    public Signal<SignalSource<ChessGame>, Void> paused = new Signal<>();
+    public Signal<SignalSource<ChessGame>, Class<Void>> paused = new Signal<>();
 
     public void paused() {
         paused.emit(new SignalSource<ChessGame>(this));
     }
 
-    public Signal<SignalSource<ChessGame>, Void> unpaused = new Signal<>();
+    public Signal<SignalSource<ChessGame>, Class<Void>> unpaused = new Signal<>();
 
     public void unpaused() {
         unpaused.emit(new SignalSource<ChessGame>(this));
     }
 
-    public Signal<SignalSource<ChessGame>, Void> undo = new Signal<>();
+    public Signal<SignalSource<ChessGame>, Class<Void>> undo = new Signal<>();
 
     public void undo() {
         undo.emit(new SignalSource<ChessGame>(this));
     }
 
-    public Signal<SignalSource<ChessGame>, Void> ended = new Signal<>();
+    public Signal<SignalSource<ChessGame>, Class<Void>> ended = new Signal<>();
 
     public void ended() {
         ended.emit(new SignalSource<ChessGame>(this));
@@ -288,9 +288,9 @@ public class ChessGame {
         turnStarted(getCurrentPlayer());
     }
 
-    private Handler<SignalSource<ChessPlayer>, Void> undoCb = (SignalSource<ChessPlayer> e) -> {
+    private Handler<SignalSource<ChessPlayer>, Class<Void>> undoCb = (SignalSource<ChessPlayer> e) -> {
         undo(e.getSource());
-        return null;
+        return Void.TYPE;
     };
 
     private void undo(ChessPlayer player) {
@@ -366,9 +366,9 @@ public class ChessGame {
         return isFiftyMoveRuleFulfilled() || isThreeFoldRepeat();
     }
 
-    private Handler<SignalSource<ChessPlayer>, Void> claimDrawCb = (SignalSource<ChessPlayer> e) -> {
+    private Handler<SignalSource<ChessPlayer>, Class<Void>> claimDrawCb = (SignalSource<ChessPlayer> e) -> {
         if (!canClaimDraw()) {
-            return null;
+            return Void.TYPE;
         }
 
         if (isFiftyMoveRuleFulfilled()) {
@@ -376,7 +376,7 @@ public class ChessGame {
         } else if (isThreeFoldRepeat()) {
             stop(ChessResult.DRAW, ChessRule.THREE_FOLD_REPETITION);
         }
-        return null;
+        return Void.TYPE;
     };
 
     public void start() {
@@ -397,13 +397,13 @@ public class ChessGame {
         turnStarted(getCurrentPlayer());
     }
 
-    private Handler<SignalSource<ChessClock>, Void> clockExpiredCb = (SignalSource<ChessClock> e) -> {
+    private Handler<SignalSource<ChessClock>, Class<Void>> clockExpiredCb = (SignalSource<ChessClock> e) -> {
         if (clock.getWhiteRemainingSeconds() == 0) {
             stop(ChessResult.BLACK_WON, ChessRule.TIMEOUT);
         } else if (clock.getBlackRemainingSeconds() <= 0) {
             stop(ChessResult.WHITE_WON, ChessRule.TIMEOUT);
         }
-        return null;
+        return Void.TYPE;
     };
 
     public ChessPiece getPiece(int rank, int file) {

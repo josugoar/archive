@@ -9,5 +9,10 @@
 # Maven
 target/
 
+# SQlite
+*.db
+*.sqlite
+*.sqlite3
+
 # Visual Studio Code
 .vscode/
