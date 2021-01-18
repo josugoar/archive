@@ -863,5 +863,4 @@ public class ChessWindow extends JFrame {
             }
         }
     }
-
 }

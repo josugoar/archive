@@ -14,6 +14,9 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.awt.FlowLayout;
 
 public class ChessBoard extends JPanel {
@@ -54,6 +57,22 @@ public class ChessBoard extends JPanel {
         });
     }
 
+    
+    public void recursiveProcessFen(Iterator<ChessPiece> piece, int i) {
+        if (piece.hasNext()) {
+            ChessPiece chessPiece = piece.next();
+            int rank = i/8;
+            int file = i%8;
+            board[rank][file].setPiece(null);
+            if (chessPiece != null) {
+                board[rank][file].setPiece(new Piece(chessPiece.type, chessPiece.getColor()));
+            }
+            board[rank][file].repaint();
+            board[rank][file].revalidate();
+            recursiveProcessFen(piece, i+1);
+        }
+    }
+
     public void processFen(String fen) {
 
         try {
@@ -66,18 +85,8 @@ public class ChessBoard extends JPanel {
         }
 
         ChessPiece[] unprocessedBoard = game.moveStack.get(0).board;
-        // rango * 8 + fila;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                board[i][j].setPiece(null);
-                ChessPiece p = unprocessedBoard[ChessState.getIndex(i, j)];
-                if (p != null) {
-                    board[i][j].setPiece(new Piece(p.type, p.getColor()));
-                }
-                board[i][j].repaint();
-                board[i][j].revalidate();
-            }
-        }
+        Iterator<ChessPiece> list = Arrays.asList(unprocessedBoard).iterator();
+        recursiveProcessFen(list, 0);
     }
 
     public void startingState() {
