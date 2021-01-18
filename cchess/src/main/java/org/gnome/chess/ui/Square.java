@@ -18,9 +18,9 @@ public class Square extends JPanel {
     Piece piece;
 
     public Square(int rank, int file, Piece piece) {
-        setBackground((rank+file)%2==0 ? Color.WHITE : Color.GRAY );
+        setBackground((rank + file) % 2 == 0 ? Color.WHITE : Color.GRAY);
         setPiece(piece);
-        addMouseListener(new MouseInputAdapter(){
+        addMouseListener(new MouseInputAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 System.out.println(Square.this.piece);
@@ -43,30 +43,41 @@ public class Square extends JPanel {
                         }
                     }
                 } else {
-                    if (Square.this.piece != null && Square.this.piece.pieceColor == parent.selectedSquare.piece.pieceColor) {
-                        // TODO 
+                    if (Square.this.piece != null
+                            && Square.this.piece.pieceColor == parent.selectedSquare.piece.pieceColor) {
                         Square tempSquare = parent.selectedSquare;
-                        parent.selectedSquare = Square.this;                        
+                        parent.selectedSquare = Square.this;
                         tempSquare.repaint();
                         tempSquare.revalidate();
                         repaint();
                         revalidate();
                     } else {
-
+                        String move = String.format("%s-%s", parent.selectedSquare.coordinates,
+                                Square.this.coordinates);
+                        System.out.println(move);
+                        if (parent.game.getCurrentPlayer().doMove(move, true)) {
+                            Square tempSquare = parent.selectedSquare;
+                            parent.selectedSquare = null;
+                            tempSquare.repaint();
+                            tempSquare.revalidate();
+                        }
+                        parent.processFen(parent.game.getCurrentState().getFen());
                     }
-                } 
+                }
 
             }
         });
     }
 
-    public Square(int rank, int file){
+    String coordinates;
+
+    public Square(int rank, int file) {
         this(rank, file, null);
+        coordinates = String.format("%c%c", 'a' + file, '1' + rank);
     }
 
-    public void setPiece(Piece piece){
+    public void setPiece(Piece piece) {
         this.piece = piece;
-        System.out.println(piece);
     }
 
     @Override
@@ -76,7 +87,7 @@ public class Square extends JPanel {
             g.drawImage(piece.pieceImage, 0, 0, getWidth(), getHeight(), this);
         }
         if (((ChessBoard) getParent()).selectedSquare == this) {
-            g.drawImage(piece.pieceImage, 0, 0, (int)(getWidth()*0.7), (int)(getHeight()*0.7), this);
+            g.drawImage(piece.pieceImage, 0, 0, (int) (getWidth() * 0.7), (int) (getHeight() * 0.7), this);
         }
     }
 

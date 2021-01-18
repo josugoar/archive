@@ -23,48 +23,55 @@ public class ChessBoard extends JPanel {
     Square selectedSquare = null;
 
     public ChessBoard() {
-        
+
         try {
             game = new ChessGame();
+            game.start();
         } catch (PGNError e) {
             e.printStackTrace();
         }
-        setLayout(new GridLayout(8,8));
+        setLayout(new GridLayout(8, 8));
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Square square = new Square(i, j);
                 board[i][j] = square;
                 add(square);
-            }          
+            }
         }
         processFen(ChessGame.STANDARD_SETUP);
         game.moved.connect((MovedSource s) -> {
-            processFen(s.getSource().moveStack.get(s.getSource().moveStack.size()-1).getFen());
+            processFen(s.getSource().moveStack.get(0).getFen());
             return Void.TYPE;
-        }); 
+        });
     }
 
-    public void processFen(String fen){
+    public void processFen(String fen) {
 
         try {
-            game = new ChessGame(fen);
+            if (game == null) {
+                game = new ChessGame(fen);
+                game.start();
+            }
         } catch (PGNError e) {
             e.printStackTrace();
         }
 
-        ChessPiece[] unprocessedBoard = game.moveStack.get(game.moveStack.size()-1).board;
-        //rango * 8 + fila;
+        ChessPiece[] unprocessedBoard = game.moveStack.get(0).board;
+        // rango * 8 + fila;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
+                board[i][j].setPiece(null);
                 ChessPiece p = unprocessedBoard[ChessState.getIndex(i, j)];
                 if (p != null) {
                     board[i][j].setPiece(new Piece(p.type, p.getColor()));
                 }
+                board[i][j].repaint();
+                board[i][j].revalidate();
             }
         }
     }
 
-    public void startingState(){
+    public void startingState() {
 
         board[6][0].setPiece(Piece.createWhite(PieceType.PAWN));
         board[6][1].setPiece(Piece.createWhite(PieceType.PAWN));
@@ -124,6 +131,4 @@ public class ChessBoard extends JPanel {
         return new Dimension(size, size);
     }
 
-    
-    
 }

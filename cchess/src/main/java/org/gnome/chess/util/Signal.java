@@ -7,12 +7,22 @@ public class Signal<T extends EventObject, S> {
 
     private HashSet<Handler<T, S>> handlers = new HashSet<>();
 
-    public void connect(Handler<T, S> handler) {
+    public long connect(Handler<T, S> handler) {
         handlers.add(handler);
+        return handler.hashCode();
     }
 
     public void disconnect(Handler<T, S> handler) {
         handlers.remove(handler);
+    }
+
+    public void disconnect(long handlerId) {
+        for (Handler<T, S> handler : handlers) {
+            if (handler.hashCode() == handlerId) {
+                handlers.remove(handler);
+                return;
+            }
+        }
     }
 
     public S emit(T e) {

@@ -1,33 +1,39 @@
 
 package org.gnome.chess.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Font;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
+import static org.gnome.chess.util.AssertNotReached.assertNotReached;
 
+import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.net.URL;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.MutableComboBoxModel;
+import javax.swing.SwingWorker;
 
+import org.gnome.chess.lib.ChessClock;
 import org.gnome.chess.lib.ChessGame;
+import org.gnome.chess.lib.ChessMove;
+import org.gnome.chess.lib.Color;
+import org.gnome.chess.util.ColorFactory;
+import org.gnome.chess.util.SignalSource;
 
 public class ChessWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
-
-    public enum LayoutMode {
-        NORMAL, NARROW
-    }
 
     private ChessView view;
 
@@ -47,152 +53,698 @@ public class ChessWindow extends JFrame {
         return game;
     }
 
+    private ChessApplication app;
+
+    private long clockTickSignalId = 0;
+
     private JPanel mainBox;
 
-    private JPanel bottomPanel;
-    private JPanel topPanel;
-    private Font componentFont;
-    private String gameState = "White move"; // TODO Change dynamically as gamestate changes
-
-    private ArrayList<int[]> resolutions; // Access by settings menu
-
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            SwingUtilities.invokeAndWait(() -> {
-                ChessWindow window = new ChessWindow();
-                window.setVisible(true);
-            });
-        } catch (InvocationTargetException | InterruptedException | ClassNotFoundException | InstantiationException
-                | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
+    {
+        mainBox = new JPanel(new BorderLayout(3, 3));
+        mainBox.setFocusable(false);
+        add(mainBox);
     }
 
-    public ChessWindow() {
+    private JPanel infoBar;
 
-        componentFont = new Font("Times New Roman", Font.BOLD, 30);
+    JButton newGameButton;
+    JButton undoButton;
 
-        setTitle("CHESS");
+    {
+        infoBar = new JPanel(new GridBagLayout());
+        infoBar.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 3));
+        infoBar.setFocusable(false);
+        mainBox.add(infoBar, BorderLayout.NORTH);
+
+        newGameButton = new JButton("New Game");
+        GridBagConstraints gbcNewGame = new GridBagConstraints();
+        gbcNewGame.fill = GridBagConstraints.BOTH;
+        gbcNewGame.insets = new Insets(0, 3, 0, 3);
+        gbcNewGame.gridx = 0;
+        // newGameButton.setIcon(defaultIcon); // TODO
+        newGameButton.setVerticalAlignment(JButton.CENTER);
+        infoBar.add(newGameButton, gbcNewGame);
+
+        undoButton = new JButton();
+        GridBagConstraints gbcUndo = new GridBagConstraints();
+        gbcUndo.fill = GridBagConstraints.BOTH;
+        gbcUndo.insets = new Insets(0, 3, 0, 3);
+        gbcUndo.gridx = 2;
+        // undoButton.setIcon(defaultIcon); // TODO
+        undoButton.setToolTipText("Undo your most recent move");
+        undoButton.setVerticalAlignment(JButton.CENTER);
+        infoBar.add(undoButton, gbcUndo);
+
+        JButton appMenuButton = new JButton();
+        GridBagConstraints gbcAppMenu = new GridBagConstraints();
+        gbcAppMenu.fill = GridBagConstraints.BOTH;
+        gbcAppMenu.insets = new Insets(0, 3, 0, 3);
+        gbcAppMenu.gridx = 5;
+        // appMenuButton.addActionListener(l); // TODO
+        // appMenuButton.setIcon(defaultIcon); // TODO
+        infoBar.add(appMenuButton, gbcAppMenu);
+    }
+
+    private JLabel infoBarLabel;
+
+    {
+        infoBarLabel = new JLabel();
+        GridBagConstraints gbcInfoBar = new GridBagConstraints();
+        gbcInfoBar.fill = GridBagConstraints.BOTH;
+        gbcInfoBar.weightx = 1;
+        gbcInfoBar.insets = new Insets(0, 3, 0, 3);
+        gbcInfoBar.gridx = 4;
+        infoBarLabel.setHorizontalAlignment(JLabel.CENTER);
+        infoBar.add(infoBarLabel, gbcInfoBar);
+    }
+
+    private JButton pauseResumeButton;
+
+    {
+        pauseResumeButton = new JButton();
+        GridBagConstraints gbcPauseResume = new GridBagConstraints();
+        gbcPauseResume.fill = GridBagConstraints.BOTH;
+        gbcPauseResume.insets = new Insets(0, 3, 0, 3);
+        gbcPauseResume.gridx = 3;
+        // pauseResumeButton.setIcon(defaultIcon); // TODO
+        pauseResumeButton.setVerticalAlignment(JButton.CENTER);
+        infoBar.add(pauseResumeButton, gbcPauseResume);
+    }
+
+    private JPanel navigationBox;
+
+    private JPanel buttonPanel;
+    private JButton firstMoveButton;
+    private JButton prevMoveButton;
+    private JButton nextMoveButton;
+    private JButton lastMoveButton;
+
+    {
+        navigationBox = new JPanel(new GridBagLayout());
+        navigationBox.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 3));
+        mainBox.add(navigationBox, BorderLayout.SOUTH);
+
+        buttonPanel = new JPanel(new GridLayout(1, 4));
+        GridBagConstraints gbcButton = new GridBagConstraints();
+        gbcButton.fill = GridBagConstraints.BOTH;
+        gbcButton.insets = new Insets(0, 3, 0, 3);
+        gbcButton.gridx = 0;
+        navigationBox.add(buttonPanel, gbcButton);
+
+        firstMoveButton = new JButton();
+        URL firstMoveIcon = getClass().getClassLoader().getResource("icons/material/arrow-collapse-left.png");
+        firstMoveButton.setIcon(new ImageIcon(firstMoveIcon));
+        firstMoveButton.setToolTipText("Rewind to the game start");
+        buttonPanel.add(firstMoveButton);
+
+        prevMoveButton = new JButton();
+        URL prevMoveIcon = getClass().getClassLoader().getResource("icons/material/arrow-left.png");
+        prevMoveButton.setIcon(new ImageIcon(prevMoveIcon));
+        prevMoveButton.setToolTipText("Show the previous move");
+        buttonPanel.add(prevMoveButton);
+
+        nextMoveButton = new JButton();
+        URL nextMoveIcon = getClass().getClassLoader().getResource("icons/material/arrow-right.png");
+        nextMoveButton.setIcon(new ImageIcon(nextMoveIcon));
+        nextMoveButton.setToolTipText("Show the next move");
+        buttonPanel.add(nextMoveButton);
+
+        lastMoveButton = new JButton();
+        URL lastMoveIcon = getClass().getClassLoader().getResource("icons/material/arrow-collapse-right.png");
+        lastMoveButton.setIcon(new ImageIcon(lastMoveIcon));
+        lastMoveButton.setToolTipText("Show the current move");
+        buttonPanel.add(lastMoveButton);
+    }
+
+    private JComboBox<String> historyCombo;
+
+    {
+        historyCombo = new JComboBox<>();
+        GridBagConstraints gbcHistory = new GridBagConstraints();
+        gbcHistory.fill = GridBagConstraints.BOTH;
+        gbcHistory.weightx = 1;
+        gbcHistory.insets = new Insets(0, 3, 0, 3);
+        gbcHistory.gridx = 1;
+        historyCombo.setFocusable(false);
+        navigationBox.add(historyCombo, gbcHistory);
+    }
+
+    private JPanel clockBox;
+
+    {
+        clockBox = new JPanel(new GridLayout(1, 2));
+        GridBagConstraints gbcClock = new GridBagConstraints();
+        gbcClock.fill = GridBagConstraints.BOTH;
+        gbcClock.insets = new Insets(0, 3, 0, 3);
+        gbcClock.gridx = 2;
+        clockBox.setFocusable(false);
+        navigationBox.add(clockBox, gbcClock);
+    }
+
+    private JLabel whiteTimeLabel;
+
+    {
+        whiteTimeLabel = new JLabel();
+        whiteTimeLabel.setBackground(ColorFactory.createWhiteColor());
+        whiteTimeLabel.setFocusable(false);
+        whiteTimeLabel.setForeground(ColorFactory.createBlackColor());
+        whiteTimeLabel.setHorizontalAlignment(JLabel.CENTER);
+        whiteTimeLabel.setPreferredSize(new Dimension(80, 0));
+        whiteTimeLabel.setOpaque(true);
+        clockBox.add(whiteTimeLabel);
+    }
+
+    private JLabel blackTimeLabel;
+
+    {
+        blackTimeLabel = new JLabel();
+        blackTimeLabel.setBackground(ColorFactory.createBlackColor());
+        blackTimeLabel.setFocusable(false);
+        blackTimeLabel.setForeground(ColorFactory.createWhiteColor());
+        blackTimeLabel.setHorizontalAlignment(JLabel.CENTER);
+        blackTimeLabel.setPreferredSize(new Dimension(80, 0));
+        blackTimeLabel.setOpaque(true);
+        clockBox.add(blackTimeLabel);
+    }
+
+    {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1280, 960);
-
-        prepMainBox();
-        prepBottomPanel();
-        prepTopPanel();
-
-        updateFont(this, componentFont);
-
-        setVisible(true);
-
+        setFocusable(false);
+        setLocationByPlatform(true);
+        setPreferredSize(new Dimension(700, getPreferredSize().height));
+        setTitle("Chess");
+        add(mainBox);
+        pack();
     }
 
-    private void prepMainBox() {
-        mainBox = new JPanel();
+    public ChessWindow(ChessApplication app) {
+        newGameButton.addActionListener(app.actionEntries.get(ChessApplication.NEW_GAME_ACTION_NAME));
+        undoButton.addActionListener(app.actionEntries.get(ChessApplication.UNDO_MOVE_ACTION_NAME));
+        pauseResumeButton.addActionListener(app.actionEntries.get(ChessApplication.PAUSE_RESUME_ACTION_NAME));
+        firstMoveButton.addActionListener(app.actionEntries.get(ChessApplication.HISTORY_GO_FIRST_ACTION_NAME));
+        prevMoveButton.addActionListener(app.actionEntries.get(ChessApplication.HISTORY_GO_PREVIOUS_ACTION_NAME));
+        nextMoveButton.addActionListener(app.actionEntries.get(ChessApplication.HISTORY_GO_NEXT_ACTION_NAME));
+        lastMoveButton.addActionListener(app.actionEntries.get(ChessApplication.HISTORY_GO_LAST_ACTION_NAME));
+
+        historyCombo.addItemListener(historyComboChangedCb);
+
+        this.app = app;
+
+        var scene = new ChessScene();
+
+        // TODO
     }
 
-    private void prepBottomPanel() {
-
-        bottomPanel = new JPanel(new BorderLayout());
-
-        // Game state control buttons ( bottom left )
-        // TODO Replace text with icons
-        // TODO Make buttons change the selected state
-        // TODO ?? Dimm (block) buttons that can't be used (If selected state == newest
-        // state, then dimm ">|" and ">" buttons )
-        JPanel buttonPane = new JPanel();
-        JButton toFirst = new JButton("|<");
-        JButton back = new JButton("<");
-        JButton forward = new JButton(">");
-        JButton toLast = new JButton(">|");
-
-        buttonPane.add(toFirst);
-        buttonPane.add(back);
-        buttonPane.add(forward);
-        buttonPane.add(toLast);
-
-        bottomPanel.add(buttonPane, BorderLayout.WEST);
-
-        // ComboBox for selecting specific states (Stages) of an ongoing game
-        // TODO Placeholder text to test ComboBox, dynamically add gamestates to Box
-        // TODO Update center panel to draw selected state
-        // TODO Change selected item as left pannel buttons are used
-        String[] testStrings = { "One", "Two", "Three", "Four", "Five" };
-        JComboBox stateSelector = new JComboBox(testStrings);
-        bottomPanel.add(stateSelector, BorderLayout.CENTER);
-
-        // Panel with timers for both players
-        // TODO Change placeholder text to actual fluent changing timer
-        JPanel timerPane = new JPanel();
-        JLabel whiteTimerLabel = new JLabel("white");
-        JLabel blackTimerlLabel = new JLabel("black");
-        whiteTimerLabel.setOpaque(true);
-        whiteTimerLabel.setBackground(Color.WHITE);
-        blackTimerlLabel.setOpaque(true);
-        blackTimerlLabel.setForeground(Color.WHITE);
-        blackTimerlLabel.setBackground(Color.BLACK);
-        timerPane.add(whiteTimerLabel);
-        timerPane.add(blackTimerlLabel);
-        bottomPanel.add(timerPane, BorderLayout.EAST);
-
-        add(bottomPanel, BorderLayout.SOUTH);
+    public void setClockVisible(boolean visible) {
+        clockBox.setVisible(visible);
     }
 
-    private void prepTopPanel() {
+    public void startGame() {
+        var model = (MutableComboBoxModel<String>) historyCombo.getModel();
+        model.setSelectedItem(null);
+        /* Move History Combo: Go to the start of the game */
+        model.addElement("Game Start");
+        historyCombo.setSelectedItem(model.getSize() - 1);
 
-        topPanel = new JPanel(new BorderLayout());
+        whiteTimeLabel.repaint();
+        blackTimeLabel.repaint();
 
-        // Top left button panel
-        // TODO Make button create a new game
-        // TODO Prompt user to save or discard the ongoing game before creating a new
-        // one
-        // TODO Erase newest state when selecting second button, update bottom comboBox
-        // and Buttons accordingly
-        // TODO Dimm reverse button if selected state != newest state???
-        JPanel leftButtonPane = new JPanel();
-        JButton newGame = new JButton("New Game");
-        JButton undoMove = new JButton("<^^]");
-        leftButtonPane.add(newGame);
-        leftButtonPane.add(undoMove);
-        topPanel.add(leftButtonPane, BorderLayout.WEST);
+        if (clockTickSignalId != 0) {
+            game.getClock().tick.disconnect(clockTickSignalId);
+            clockTickSignalId = 0;
+        }
 
-        // Game state bar, shows current ply player, if game ended and how it ended??
-        // TODO Update when gamestate changes
-        JLabel stateLabel = new JLabel(gameState, SwingConstants.CENTER);
-        topPanel.add(stateLabel, BorderLayout.CENTER);
-
-        // Top right button panel, File control and settings
-        // TODO Change button text for icons
-        // TODO Method to rescale icons as updateFont() does for fonts
-        // TODO Make buttons act accordingly
-        // TODO Setting button pops up a settings menu, settings might be stored in a
-        // .config file??
-        JPanel rightButtonPane = new JPanel();
-        JButton open = new JButton("Open");
-        JButton save = new JButton("Save");
-        JButton settings = new JButton("Settings");
-        rightButtonPane.add(open);
-        rightButtonPane.add(save);
-        rightButtonPane.add(settings);
-        topPanel.add(rightButtonPane, BorderLayout.EAST);
-
-        add(topPanel, BorderLayout.NORTH);
-
-    }
-
-    /**
-     * Method to change font in a component and all its child components
-     *
-     * @param component Top parent component
-     * @param font      Font to replace previous one
-     */
-    private void updateFont(Component component, Font font) {
-
-        component.setFont(font);
-        if (component instanceof Container) {
-            for (Component c : ((Container) component).getComponents()) {
-                updateFont(c, font);
-            }
+        if (game.getClock() != null) {
+            clockTickSignalId = game.getClock().tick.connect((SignalSource<ChessClock> e) -> {
+                whiteTimeLabel.repaint();
+                blackTimeLabel.repaint();
+                return Void.TYPE;
+            });
         }
     }
+
+    private ItemListener historyComboChangedCb = (ItemEvent e) -> {
+    };
+
+    public void setMoveText(MutableComboBoxModel<String> model, ChessMove move) {
+        /*
+         * Note there are no move formats for pieces taking kings and this is not
+         * allowed in Chess rules
+         */
+        final String[] humanDescription = { /*
+                                             * Human Move String: Description of a white pawn moving from %1$s to %2s,
+                                             * e.g. 'c2 to c4'
+                                             */
+                "White pawn moves from %1$s to %2$s",
+                /*
+                 * Human Move String: Description of a white pawn at %1$s capturing a pawn at
+                 * %2$s
+                 */
+                "White pawn at %1$s takes the black pawn at %2$s",
+                /*
+                 * Human Move String: Description of a white pawn at %1$s capturing a rook at
+                 * %2$s
+                 */
+                "White pawn at %1$s takes the black rook at %2$s",
+                /*
+                 * Human Move String: Description of a white pawn at %1$s capturing a knight at
+                 * %2$s
+                 */
+                "White pawn at %1$s takes the black knight at %2$s",
+                /*
+                 * Human Move String: Description of a white pawn at %1$s capturing a bishop at
+                 * %2$s
+                 */
+                "White pawn at %1$s takes the black bishop at %2$s",
+                /*
+                 * Human Move String: Description of a white pawn at %1$s capturing a queen at
+                 * %2$s
+                 */
+                "White pawn at %1$s takes the black queen at %2$s",
+                /*
+                 * Human Move String: Description of a white rook moving from %1$s to %2$s, e.g.
+                 * 'a1 to a5'
+                 */
+                "White rook moves from %1$s to %2$s",
+                /*
+                 * Human Move String: Description of a white rook at %1$s capturing a pawn at
+                 * %2$s
+                 */
+                "White rook at %1$s takes the black pawn at %2$s",
+                /*
+                 * Human Move String: Description of a white rook at %1$s capturing a rook at
+                 * %2$s
+                 */
+                "White rook at %1$s takes the black rook at %2$s",
+                /*
+                 * Human Move String: Description of a white rook at %1$s capturing a knight at
+                 * %2$s
+                 */
+                "White rook at %1$s takes the black knight at %2$s",
+                /*
+                 * Human Move String: Description of a white rook at %1$s capturing a bishop at
+                 * %2$s
+                 */
+                "White rook at %1$s takes the black bishop at %2$s",
+                /*
+                 * Human Move String: Description of a white rook at %1$s capturing a queen at
+                 * %2$s"
+                 */
+                "White rook at %1$s takes the black queen at %2$s",
+                /*
+                 * Human Move String: Description of a white knight moving from %1$s to %2$s,
+                 * e.g. 'b1 to c3'
+                 */
+                "White knight moves from %1$s to %2$s",
+                /*
+                 * Human Move String: Description of a white knight at %1$s capturing a pawn at
+                 * %2$s
+                 */
+                "White knight at %1$s takes the black pawn at %2$s",
+                /*
+                 * Human Move String: Description of a white knight at %1$s capturing a rook at
+                 * %2$s
+                 */
+                "White knight at %1$s takes the black rook at %2$s",
+                /*
+                 * Human Move String: Description of a white knight at %1$s capturing a knight
+                 * at %2$s
+                 */
+                "White knight at %1$s takes the black knight at %2$s",
+                /*
+                 * Human Move String: Description of a white knight at %1$s capturing a bishop
+                 * at %2$s
+                 */
+                "White knight at %1$s takes the black bishop at %2$s",
+                /*
+                 * Human Move String: Description of a white knight at %1$s capturing a queen at
+                 * %2$s
+                 */
+                "White knight at %1$s takes the black queen at %2$s",
+                /*
+                 * Human Move String: Description of a white bishop moving from %1$s to %2$s,
+                 * e.g. 'f1 to b5'
+                 */
+                "White bishop moves from %1$s to %2$s",
+                /*
+                 * Human Move String: Description of a white bishop at %1$s capturing a pawn at
+                 * %2$s
+                 */
+                "White bishop at %1$s takes the black pawn at %2$s",
+                /*
+                 * Human Move String: Description of a white bishop at %1$s capturing a rook at
+                 * %2$s
+                 */
+                "White bishop at %1$s takes the black rook at %2$s",
+                /*
+                 * Human Move String: Description of a white bishop at %1$s capturing a knight
+                 * at %2$s
+                 */
+                "White bishop at %1$s takes the black knight at %2$s",
+                /*
+                 * Human Move String: Description of a white bishop at %1$s capturing a bishop
+                 * at %2$s
+                 */
+                "White bishop at %1$s takes the black bishop at %2$s",
+                /*
+                 * Human Move String: Description of a white bishop at %1$s capturing a queen at
+                 * %2$s
+                 */
+                "White bishop at %1$s takes the black queen at %2$s",
+                /*
+                 * Human Move String: Description of a white queen moving from %1$s to %2$s,
+                 * e.g. 'd1 to d4'
+                 */
+                "White queen moves from %1$s to %2$s",
+                /*
+                 * Human Move String: Description of a white queen at %1$s capturing a pawn at
+                 * %2$s
+                 */
+                "White queen at %1$s takes the black pawn at %2$s",
+                /*
+                 * Human Move String: Description of a white queen at %1$s capturing a rook at
+                 * %2$s
+                 */
+                "White queen at %1$s takes the black rook at %2$s",
+                /*
+                 * Human Move String: Description of a white queen at %1$s capturing a knight at
+                 * %2$s
+                 */
+                "White queen at %1$s takes the black knight at %2$s",
+                /*
+                 * Human Move String: Description of a white queen at %1$s capturing a bishop at
+                 * %2$s
+                 */
+                "White queen at %1$s takes the black bishop at %2$s",
+                /*
+                 * Human Move String: Description of a white queen at %1$s capturing a queen at
+                 * %2$s
+                 */
+                "White queen at %1$s takes the black queen at %2$s",
+                /*
+                 * Human Move String: Description of a white king moving from %1$s to %2$s, e.g.
+                 * 'e1 to f1'
+                 */
+                "White king moves from %1$s to %2$s",
+                /*
+                 * Human Move String: Description of a white king at %1$s capturing a pawn at
+                 * %2$s
+                 */
+                "White king at %1$s takes the black pawn at %2$s",
+                /*
+                 * Human Move String: Description of a white king at %1$s capturing a rook at
+                 * %2$s
+                 */
+                "White king at %1$s takes the black rook at %2$s",
+                /*
+                 * Human Move String: Description of a white king at %1$s capturing a knight at
+                 * %2$s
+                 */
+                "White king at %1$s takes the black knight at %2$s",
+                /*
+                 * Human Move String: Description of a white king at %1$s capturing a bishop at
+                 * %2$s
+                 */
+                "White king at %1$s takes the black bishop at %2$s",
+                /*
+                 * Human Move String: Description of a white king at %1$s capturing a queen at
+                 * %2$s
+                 */
+                "White king at %1$s takes the black queen at %2$s",
+                /*
+                 * Human Move String: Description of a black pawn moving from %1$s to %2$s, e.g.
+                 * 'c8 to c6'
+                 */
+                "Black pawn moves from %1$s to %2$s",
+                /*
+                 * Human Move String: Description of a black pawn at %1$s capturing a pawn at
+                 * %2$s
+                 */
+                "Black pawn at %1$s takes the white pawn at %2$s",
+                /*
+                 * Human Move String: Description of a black pawn at %1$s capturing a rook at
+                 * %2$s
+                 */
+                "Black pawn at %1$s takes the white rook at %2$s",
+                /*
+                 * Human Move String: Description of a black pawn at %1$s capturing a knight at
+                 * %2$s
+                 */
+                "Black pawn at %1$s takes the white knight at %2$s",
+                /*
+                 * Human Move String: Description of a black pawn at %1$s capturing a bishop at
+                 * %2$s
+                 */
+                "Black pawn at %1$s takes the white bishop at %2$s",
+                /*
+                 * Human Move String: Description of a black pawn at %1$s capturing a queen at
+                 * %2$s
+                 */
+                "Black pawn at %1$s takes the white queen at %2$s",
+                /*
+                 * Human Move String: Description of a black rook moving from %1$s to %2$s, e.g.
+                 * 'a8 to a4'
+                 */
+                "Black rook moves from %1$s to %2$s",
+                /*
+                 * Human Move String: Description of a black rook at %1$s capturing a pawn at
+                 * %2$s
+                 */
+                "Black rook at %1$s takes the white pawn at %2$s",
+                /*
+                 * Human Move String: Description of a black rook at %1$s capturing a rook at
+                 * %2$s
+                 */
+                "Black rook at %1$s takes the white rook at %2$s",
+                /*
+                 * Human Move String: Description of a black rook at %1$s capturing a knight at
+                 * %2$s
+                 */
+                "Black rook at %1$s takes the white knight at %2$s",
+                /*
+                 * Human Move String: Description of a black rook at %1$s capturing a bishop at
+                 * %2$s
+                 */
+                "Black rook at %1$s takes the white bishop at %2$s",
+                /*
+                 * Human Move String: Description of a black rook at %1$s capturing a queen at
+                 * %2$s
+                 */
+                "Black rook at %1$s takes the white queen at %2$s",
+                /*
+                 * Human Move String: Description of a black knight moving from %1$s to %2$s,
+                 * e.g. 'b8 to c6'
+                 */
+                "Black knight moves from %1$s to %2$s",
+                /*
+                 * Human Move String: Description of a black knight at %1$s capturing a pawn at
+                 * %2$s
+                 */
+                "Black knight at %1$s takes the white pawn at %2$s",
+                /*
+                 * Human Move String: Description of a black knight at %1$s capturing a rook at
+                 * %2$s
+                 */
+                "Black knight at %1$s takes the white rook at %2$s",
+                /*
+                 * Human Move String: Description of a black knight at %1$s capturing a knight
+                 * at %2$s
+                 */
+                "Black knight at %1$s takes the white knight at %2$s",
+                /*
+                 * Human Move String: Description of a black knight at %1$s capturing a bishop
+                 * at %2$s
+                 */
+                "Black knight at %1$s takes the white bishop at %2$s",
+                /*
+                 * Human Move String: Description of a black knight at %1$s capturing a queen at
+                 * %2$s
+                 */
+                "Black knight at %1$s takes the white queen at %2$s",
+                /*
+                 * Human Move String: Description of a black bishop moving from %1$s to %2$s,
+                 * e.g. 'f8 to b3'
+                 */
+                "Black bishop moves from %1$s to %2$s",
+                /*
+                 * Human Move String: Description of a black bishop at %1$s capturing a pawn at
+                 * %2$s
+                 */
+                "Black bishop at %1$s takes the white pawn at %2$s",
+                /*
+                 * Human Move String: Description of a black bishop at %1$s capturing a rook at
+                 * %2$s
+                 */
+                "Black bishop at %1$s takes the white rook at %2$s",
+                /*
+                 * Human Move String: Description of a black bishop at %1$s capturing a knight
+                 * at %2$s
+                 */
+                "Black bishop at %1$s takes the white knight at %2$s",
+                /*
+                 * Human Move String: Description of a black bishop at %1$s capturing a bishop
+                 * at %2$s
+                 */
+                "Black bishop at %1$s takes the white bishop at %2$s",
+                /*
+                 * Human Move String: Description of a black bishop at %1$s capturing a queen at
+                 * %2$s
+                 */
+                "Black bishop at %1$s takes the white queen at %2$s",
+                /*
+                 * Human Move String: Description of a black queen moving from %1$s to %2$s,
+                 * e.g. 'd8 to d5'
+                 */
+                "Black queen moves from %1$s to %2$s",
+                /*
+                 * Human Move String: Description of a black queen at %1$s capturing a pawn at
+                 * %2$s
+                 */
+                "Black queen at %1$s takes the white pawn at %2$s",
+                /*
+                 * Human Move String: Description of a black queen at %1$s capturing a rook at
+                 * %2$s
+                 */
+                "Black queen at %1$s takes the white rook at %2$s",
+                /*
+                 * Human Move String: Description of a black queen at %1$s capturing a knight at
+                 * %2$s
+                 */
+                "Black queen at %1$s takes the white knight at %2$s",
+                /*
+                 * Human Move String: Description of a black queen at %1$s capturing a bishop at
+                 * %2$s
+                 */
+                "Black queen at %1$s takes the white bishop at %2$s",
+                /*
+                 * Human Move String: Description of a black queen at %1$s capturing a queen at
+                 * %2$s
+                 */
+                "Black queen at %1$s takes the white queen at %2$s",
+                /*
+                 * Human Move String: Description of a black king moving from %1$s to %2$s, e.g.
+                 * 'e8 to f8'
+                 */
+                "Black king moves from %1$s to %2$s",
+                /*
+                 * Human Move String: Description of a black king at %1$s capturing a pawn at
+                 * %2$s
+                 */
+                "Black king at %1$s takes the white pawn at %2$s",
+                /*
+                 * Human Move String: Description of a black king at %1$s capturing a rook at
+                 * %2$s
+                 */
+                "Black king at %1$s takes the white rook at %2$s",
+                /*
+                 * Human Move String: Description of a black king at %1$s capturing a knight at
+                 * %2$s
+                 */
+                "Black king at %1$s takes the white knight at %2$s",
+                /*
+                 * Human Move String: Description of a black king at %1$s capturing a bishop at
+                 * %2$s
+                 */
+                "Black king at %1$s takes the white bishop at %2$s",
+                /*
+                 * Human Move String: Description of a black king at %1$s capturing a queen at
+                 * %2$s"
+                 */
+                "Black king at %1$s takes the white queen at %2$s" };
+
+        var moveText = "";
+        switch (scene.moveFormat) {
+            case "human":
+                if (move.castlingRook != null) {
+                    if (move.f0 < move.f1 && move.r0 == 0) {
+                        moveText = "White castles kingside";
+                    } else if (move.f1 < move.f0 && move.r0 == 0) {
+                        moveText = "White castles queenside";
+                    } else if (move.f0 < move.f1 && move.r0 == 7) {
+                        moveText = "Black castles kingside";
+                    } else if (move.f1 < move.f0 && move.r0 == 7) {
+                        moveText = "Black castles queenside";
+                    } else {
+                        throw assertNotReached();
+                    }
+                } else {
+                    int index;
+                    if (move.victim == null) {
+                        index = 0;
+                    } else {
+                        index = move.victim.type.ordinal() + 1;
+                    }
+                    index += move.piece.type.ordinal() * 6;
+                    if (move.piece.player.color == Color.BLACK) {
+                        index += 36;
+                    }
+
+                    var start = String.format("%c%d", 'a' + move.f0, move.r0 + 1);
+                    var end = String.format("%c%d", 'a' + move.f1, move.r1 + 1);
+                    var template = humanDescription[index];
+                    if (move.enPassant) {
+                        if (move.r0 < move.r1) { /*
+                                                  * Human Move String: Description of a white pawn at %1$s capturing a
+                                                  * pawn at %2$s en passant
+                                                  */
+                            template = "White pawn at %1$s takes the black pawn at %2$s en passant";
+                        } else { /*
+                                  * Human Move String: Description of a black pawn at %1$s capturing a pawn at
+                                  * %2$s en passant
+                                  */
+                            template = "Black pawn at %1$s takes white pawn at %2$s en passant";
+                        }
+                    }
+                    moveText = String.format(template, start, end);
+                }
+
+                break;
+
+            case "san":
+                moveText = move.getSan();
+                break;
+
+            case "fan":
+                moveText = move.getFan();
+                break;
+
+            case "lan":
+                // Fall through
+            default:
+                moveText = move.getLan();
+                break;
+        }
+    }
+
+    public void move(ChessMove m) {
+        /* Automatically return view to the present */
+        scene.moveNumber = -1;
+
+        var model = (MutableComboBoxModel<String>) historyCombo.getModel();
+        setMoveText(model, m);
+
+        /* Follow the latest move */
+        if (m.number == game.getNMoves()) {
+            historyCombo.setSelectedIndex(model.getSize() - 1);
+        }
+    }
+
+    public void undo() {
+        /* Remove from the history */
+        var model = (MutableComboBoxModel<String>) historyCombo.getModel();
+        model.removeElementAt(model.getSize() - 1);
+
+        /* Always undo from the most recent move */
+        scene.moveNumber = -1;
+
+        /* Go back one */
+        historyCombo.setSelectedIndex(model.getSize() - 1);
+        view.repaint();
+    }
+
+    public void end_game() {
+        whiteTimeLabel.repaint();
+        blackTimeLabel.repaint();
+    }
+
 }

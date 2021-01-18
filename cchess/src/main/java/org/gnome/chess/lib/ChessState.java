@@ -14,17 +14,17 @@ public class ChessState {
         return currentPlayer.color == Color.WHITE ? players[Color.BLACK.ordinal()] : players[Color.WHITE.ordinal()];
     };
 
-    public boolean canCastleKingside[] = new boolean[2];
-    public boolean canCastleQueenside[] = new boolean[2];
+    public boolean[] canCastleKingside = new boolean[2];
+    public boolean[] canCastleQueenside = new boolean[2];
     public int enPassantIndex = -1;
     public CheckState checkState;
     public int halfmoveClock;
 
-    public ChessPiece board[] = new ChessPiece[64];
+    public ChessPiece[] board = new ChessPiece[64];
     public ChessMove lastMove = null;
 
     /* Bitmap of all the pieces */
-    private long pieceMasks[] = new long[2];
+    private long[] pieceMasks = new long[2];
 
     private ChessState() {
     }

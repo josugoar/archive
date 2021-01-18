@@ -119,7 +119,7 @@ public class ChessGame {
     }
 
     public ChessState getCurrentState() {
-        return moveStack.get(moveStack.size() - 1);
+        return moveStack.get(0);
     }
 
     public ChessPlayer getWhite() {
@@ -305,7 +305,7 @@ public class ChessGame {
         }
 
         /* Pop off the move state */
-        moveStack.remove(moveStack.get(moveStack.size() - 1));
+        moveStack.remove(0);
 
         /* Restart the game if undo was done after end of the game */
         if (result != ChessResult.IN_PROGRESS) {
@@ -415,7 +415,7 @@ public class ChessGame {
             moveNumber += (int) moveStack.size();
         }
 
-        var state = moveStack.get(moveStack.size() - moveNumber - 1);
+        var state = moveStack.get(0);
 
         return state.board[ChessState.getIndex(rank, file)];
     }
