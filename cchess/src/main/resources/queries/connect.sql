@@ -20,5 +20,6 @@ CREATE TABLE IF NOT EXISTS pgn (
     whiteAi TEXT,
     whiteLevel TEXT,
     blackAi TEXT,
-    blackLevel TEXT
+    blackLevel TEXT,
+    movetext TEXT
 )

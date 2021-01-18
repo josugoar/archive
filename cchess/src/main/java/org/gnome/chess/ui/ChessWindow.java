@@ -12,28 +12,51 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+import java.awt.Container;
+import java.awt.Component;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.MutableComboBoxModel;
 import javax.swing.SwingWorker;
 
+import org.gnome.chess.db.PGNGameDao;
 import org.gnome.chess.lib.ChessClock;
 import org.gnome.chess.lib.ChessGame;
 import org.gnome.chess.lib.ChessMove;
+import org.gnome.chess.lib.ChessState;
 import org.gnome.chess.lib.Color;
+import org.gnome.chess.lib.PGNError;
+import org.gnome.chess.lib.PGNGame;
 import org.gnome.chess.util.ColorFactory;
+import org.gnome.chess.util.Out;
 import org.gnome.chess.util.SignalSource;
+
+import jdk.javadoc.internal.doclets.formats.html.SystemPropertiesWriter;
 
 public class ChessWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
+
+    private PGNGameDao db = new PGNGameDao();
 
     private ChessView view;
 
@@ -43,11 +66,15 @@ public class ChessWindow extends JFrame {
 
     private ChessScene scene;
 
+    private ChessBoard board = new ChessBoard();
+
     public ChessScene getScene(ChessScene scene) {
         return scene;
     }
 
     private ChessGame game;
+
+    private PGNGame pgnGame = new PGNGame(0); // TODO think of a way of increasing IDs
 
     public ChessGame getGame(ChessGame game) {
         return game;
@@ -69,6 +96,7 @@ public class ChessWindow extends JFrame {
 
     JButton newGameButton;
     JButton undoButton;
+    JButton saveButton;
 
     {
         infoBar = new JPanel(new GridBagLayout());
@@ -103,6 +131,61 @@ public class ChessWindow extends JFrame {
         // appMenuButton.addActionListener(l); // TODO
         // appMenuButton.setIcon(defaultIcon); // TODO
         infoBar.add(appMenuButton, gbcAppMenu);
+
+        saveButton = new JButton("Save");
+        saveButton.addActionListener((ActionEvent e) -> {
+            JFileChooser fil = new JFileChooser();
+
+            if (fil.showSaveDialog(saveButton) == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fil.getSelectedFile();
+                try {
+                    db.connect(selectedFile.getAbsolutePath());
+                    for (ChessState move : board.game.moveStack) {
+                        if (move.lastMove != null) {
+                            pgnGame.moves.add(move.lastMove.getLan());
+                        }
+                    }
+                    db.save(pgnGame);
+                    db.conn.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+
+        });
+
+        infoBar.add(saveButton);
+
+        JButton openButton = new JButton("Open");
+        openButton.addActionListener((ActionEvent e) -> {
+            JFileChooser fil = new JFileChooser();
+            if (fil.showOpenDialog(openButton) == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fil.getSelectedFile();
+                System.out.println(selectedFile);
+                try {
+                    db.connect(selectedFile.getAbsolutePath());
+                    List<PGNGame> result = db.getAll();
+                    db.conn.close();
+                    System.out.println(result.get(0).moves);
+                    if (result.size()>0) {
+                        ChessGame tempGame = new ChessGame(ChessGame.STANDARD_SETUP);
+                        board.setGame(tempGame);
+                        for (int i = result.get(0).moves.size() - 1; i>=0; i--) {
+                            board.game.getCurrentPlayer().doMove(result.get(0).moves.get(i), true);
+                        }
+                    }
+
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                } catch (PGNError e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+        infoBar.add(openButton);
+        
     }
 
     private JLabel infoBarLabel;
@@ -238,6 +321,7 @@ public class ChessWindow extends JFrame {
     }
 
     public ChessWindow(ChessApplication app) {
+
         newGameButton.addActionListener(app.actionEntries.get(ChessApplication.NEW_GAME_ACTION_NAME));
         undoButton.addActionListener(app.actionEntries.get(ChessApplication.UNDO_MOVE_ACTION_NAME));
         pauseResumeButton.addActionListener(app.actionEntries.get(ChessApplication.PAUSE_RESUME_ACTION_NAME));
@@ -248,9 +332,28 @@ public class ChessWindow extends JFrame {
 
         historyCombo.addItemListener(historyComboChangedCb);
 
+        addComponentListener(new ComponentAdapter(){
+            public void componentResized(ComponentEvent e){
+                Font f = new Font("Sans-Serif", Font.PLAIN, (int)(ChessWindow.this.getHeight()*0.03));
+                updateFont(ChessWindow.this, f);
+            }
+        });
+
         this.app = app;
 
         var scene = new ChessScene();
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        JPanel secondPanel = new JPanel();
+        mainPanel.add(Box.createVerticalGlue());
+        mainPanel.add(secondPanel);
+        mainPanel.add(Box.createVerticalGlue());
+        secondPanel.add(board);
+        secondPanel.setAlignmentX(CENTER_ALIGNMENT);
+        secondPanel.setAlignmentY(CENTER_ALIGNMENT);
+        mainBox.add(mainPanel);
+        
 
         // TODO
     }
@@ -745,6 +848,16 @@ public class ChessWindow extends JFrame {
     public void end_game() {
         whiteTimeLabel.repaint();
         blackTimeLabel.repaint();
+    }
+
+    // Recursive method
+    public void updateFont(Component comp, Font font){
+        comp.setFont(font);
+        if (comp instanceof Container) {
+            for (Component comp2  : ((Container) comp).getComponents()) {
+                updateFont(comp2, font);
+            }
+        }
     }
 
 }

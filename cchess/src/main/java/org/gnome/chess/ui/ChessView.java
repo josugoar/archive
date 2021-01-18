@@ -34,8 +34,8 @@ public class ChessView extends JPanel { // TODO Change to JComponent
 
     public void setScene(ChessScene scene) {
         this.scene = scene;
-        scene.changed.connect(sceneChangedCb);
-        queueDraw();
+        // scene.changed.connect(sceneChangedCb);
+        // queueDraw();
     }
 
     private double getBorderSize() {

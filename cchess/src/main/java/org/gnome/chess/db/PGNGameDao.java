@@ -17,7 +17,7 @@ import org.gnome.chess.lib.PGNGame;
 
 public class PGNGameDao implements Dao<PGNGame> {
 
-    private Connection conn;
+    public Connection conn;
 
     static {
         try {
@@ -73,6 +73,7 @@ public class PGNGameDao implements Dao<PGNGame> {
         ResultSet result = smt.executeQuery();
         Optional<PGNGame> game = Optional.empty();
         if (result.next()) {
+            System.out.println("sdAHJKL");
             PGNGame pgnGame = new PGNGame(result.getInt("id"));
             game = Optional.of(pgnGame);
             pgnGame.setEvent(result.getString("event"));
@@ -96,6 +97,9 @@ public class PGNGameDao implements Dao<PGNGame> {
             pgnGame.setWhiteLevel(result.getString("whiteLevel"));
             pgnGame.setBlackAi(result.getString("blackAi"));
             pgnGame.setBlackLevel(result.getString("blackLevel"));
+            for (String move : result.getString("movetext").split(" ")) {
+                pgnGame.moves.add(move);
+            }
         }
         return game;
     };
@@ -133,6 +137,9 @@ public class PGNGameDao implements Dao<PGNGame> {
             pgnGame.setWhiteLevel(result.getString("whiteLevel"));
             pgnGame.setBlackAi(result.getString("blackAi"));
             pgnGame.setBlackLevel(result.getString("blackLevel"));
+            for (String move : result.getString("movetext").split(" ")) {
+                pgnGame.moves.add(move);
+            }
         }
         return games;
     };
@@ -165,6 +172,7 @@ public class PGNGameDao implements Dao<PGNGame> {
         smt.setString(20, data.getWhiteLevel());
         smt.setString(21, data.getBlackAi());
         smt.setString(22, data.getBlackLevel());
+        smt.setString(23, String.join(" ", data.moves));
         return smt.executeUpdate();
     };
 
@@ -209,7 +217,8 @@ public class PGNGameDao implements Dao<PGNGame> {
         smt.setString(19, data.getWhiteLevel());
         smt.setString(20, data.getBlackAi());
         smt.setString(21, data.getBlackLevel());
-        smt.setInt(22, data.getId());
+        smt.setString(22, String.join(" ", data.moves));
+        smt.setInt(23, data.getId());
         return smt.executeUpdate();
     };
 

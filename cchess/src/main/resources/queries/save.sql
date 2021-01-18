@@ -20,9 +20,11 @@ INSERT INTO pgn (
         whiteAi,
         whiteLevel,
         blackAi,
-        blackLevel
+        blackLevel,
+        movetext
     )
 VALUES (
+        ?,
         ?,
         ?,
         ?,

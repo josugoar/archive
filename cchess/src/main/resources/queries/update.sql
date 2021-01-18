@@ -19,5 +19,6 @@ SET event = ?,
     whiteAi = ?,
     whiteLevel = ?,
     blackAi = ?,
-    blackLevel = ?
+    blackLevel = ?,
+    movetext = ?
 WHERE id = ?

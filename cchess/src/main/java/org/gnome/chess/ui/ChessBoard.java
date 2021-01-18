@@ -45,6 +45,15 @@ public class ChessBoard extends JPanel {
         });
     }
 
+    public void setGame(ChessGame game){
+        game.start();
+        processFen(game.getCurrentState().getFen());
+        game.moved.connect((MovedSource s) -> {
+            processFen(s.getSource().moveStack.get(0).getFen());
+            return Void.TYPE;
+        });
+    }
+
     public void processFen(String fen) {
 
         try {
