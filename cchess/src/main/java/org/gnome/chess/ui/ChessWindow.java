@@ -850,7 +850,11 @@ public class ChessWindow extends JFrame {
         blackTimeLabel.repaint();
     }
 
-    // Recursive method
+    /**
+     * Constant text scaling for the window
+     * @param comp the window
+     * @param font the font to update
+     */
     public void updateFont(Component comp, Font font){
         comp.setFont(font);
         if (comp instanceof Container) {
