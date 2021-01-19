@@ -1,4 +1,11 @@
-# GNOME Chess
+# CChess
 
-GNOME Chess is a 2D chess game, where games can be played between a combination of human and computer players.
-GNOME Chess detects known third party chess engines for computer players.
+***CChess* lets users play chess locally. That's it.**
+
+*CChess* is built upon the foundations of the gnome-chess chess library with an integrated SQLite DB and an advanced Swing & AWT user interface.
+
+# Authors
+
+- [Aïnhoa Egia](https://github.com/ainhoaegia)
+- [Josu](https://github.com/josugoar)
+- [Julen Casal](https://github.com/julencasazk)
