@@ -72,7 +72,7 @@ public class Square extends JPanel {
 
     public Square(int rank, int file) {
         this(rank, file, null);
-        coordinates = String.format("%c%c", 'a' + file, '1' + rank);
+        coordinates = String.format("%c%c", 'a' + file, '8' - rank);
     }
 
     public void setPiece(Piece piece) {

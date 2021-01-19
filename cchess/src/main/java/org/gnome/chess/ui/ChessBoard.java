@@ -62,8 +62,8 @@ public class ChessBoard extends JPanel {
     public void recursiveProcessFen(Iterator<ChessPiece> piece, int i) {
         if (piece.hasNext()) {
             ChessPiece chessPiece = piece.next();
-            int rank = i / 8;
-            int file = i % 8;
+            int rank = 7 - (i / 8);
+            int file = 7 - (i % 8);
             board[rank][file].setPiece(null);
             if (chessPiece != null) {
                 board[rank][file].setPiece(new Piece(chessPiece.type, chessPiece.getColor()));
