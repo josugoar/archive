@@ -178,7 +178,9 @@ public class ChessWindow extends JFrame {
                         }
                         historyCombo.removeAllItems();
                         for (ChessState state : board.game.moveStack) {
-                            historyCombo.addItem(state.lastMove.getSan());
+                            if (state.lastMove != null) {
+                                historyCombo.addItem(state.lastMove.getSan());
+                            }
                         }
                     }
                     
