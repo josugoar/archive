@@ -40,7 +40,6 @@ import org.ccrew.cchess.lib.ChessState;
 import org.ccrew.cchess.lib.PGNError;
 import org.ccrew.cchess.lib.PGNGame;
 import org.ccrew.cchess.util.ColorFactory;
-import org.ccrew.cchess.util.Handler;
 import org.ccrew.cchess.util.SignalSource;
 
 public class ChessWindow extends JFrame {

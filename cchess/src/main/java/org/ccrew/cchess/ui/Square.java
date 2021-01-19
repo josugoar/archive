@@ -7,8 +7,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
-import org.ccrew.cchess.lib.ChessState;
-
 public class Square extends JPanel {
 
     private static final long serialVersionUID = 1L;
