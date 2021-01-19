@@ -10,13 +10,14 @@ import java.util.Iterator;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
+import org.gnome.chess.lib.ChessClock;
 import org.gnome.chess.lib.ChessGame;
 import org.gnome.chess.lib.ChessGame.MovedSource;
-import org.gnome.chess.util.Handler;
 import org.gnome.chess.lib.ChessPiece;
 import org.gnome.chess.lib.PGNError;
+import org.gnome.chess.util.Handler;
+import org.gnome.chess.util.SignalSource;
 
 public class ChessBoard extends JPanel {
 
@@ -58,14 +59,31 @@ public class ChessBoard extends JPanel {
         processFen(s.getSource().moveStack.get(0).getFen());
         window.historyCombo.addItem(s.getMove().getSan());
         window.historyCombo.setSelectedIndex(window.historyCombo.getModel().getSize()-1);
-        if (game.getCurrentState().isInCheckmate(game.getCurrentPlayer())) {
-            JOptionPane.showMessageDialog(null, "The winner is: " + game.getOpponent().color.toString());
-        }
         return Void.TYPE;
     };
 
     public void setGame(ChessGame game) {
         this.game = game;
+        game.ended.connect(new Handler<SignalSource<ChessGame>,Class<Void>>(){
+			@Override
+			public Class<Void> handle(SignalSource<ChessGame> e) {
+                switch (game.result) {
+                    case WHITE_WON:
+                        JOptionPane.showMessageDialog(null, "The winner is: WHITE");
+                        break;
+                    case BLACK_WON:
+                    JOptionPane.showMessageDialog(null, "The winner is: BLACK");
+                        break;
+                    case DRAW:
+                    JOptionPane.showMessageDialog(null, "DRAW");
+                        break;
+                    default:
+                        break;
+                }
+                return null;
+			}  
+        });
+        game.setClock(new ChessClock(180, 180));
         game.start();
         processFen(game.getCurrentState().getFen());
         game.moved.connect(handler);

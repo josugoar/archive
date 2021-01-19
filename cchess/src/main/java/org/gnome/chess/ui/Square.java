@@ -23,6 +23,9 @@ public class Square extends JPanel {
             public void mousePressed(MouseEvent e) {
                 System.out.println(Square.this.piece);
                 ChessBoard parent = (ChessBoard) getParent();
+                if (parent.game.getClock().getWhiteRemainingSeconds()<=0 || parent.game.getClock().getBlackRemainingSeconds()<=0) {
+                    return;
+                } 
                 if (parent.index != 0) {
                     return;
                 }

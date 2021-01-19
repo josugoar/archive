@@ -40,6 +40,7 @@ import org.gnome.chess.lib.ChessState;
 import org.gnome.chess.lib.PGNError;
 import org.gnome.chess.lib.PGNGame;
 import org.gnome.chess.util.ColorFactory;
+import org.gnome.chess.util.Handler;
 import org.gnome.chess.util.SignalSource;
 
 public class ChessWindow extends JFrame {
@@ -124,7 +125,7 @@ public class ChessWindow extends JFrame {
         undoButton.setVerticalAlignment(JButton.CENTER);
         infoBar.add(undoButton, gbcUndo);
 
-        JButton appMenuButton = new JButton();
+        // JButton appMenuButton = new JButton();
         GridBagConstraints gbcAppMenu = new GridBagConstraints();
         gbcAppMenu.fill = GridBagConstraints.BOTH;
         gbcAppMenu.insets = new Insets(0, 3, 0, 3);
@@ -300,6 +301,14 @@ public class ChessWindow extends JFrame {
         whiteTimeLabel.setPreferredSize(new Dimension(80, 0));
         whiteTimeLabel.setOpaque(true);
         clockBox.add(whiteTimeLabel);
+        board.game.getClock().tick.connect(new Handler<SignalSource<ChessClock>,Class<Void>>(){
+			@Override
+			public Class<Void> handle(SignalSource<ChessClock> e) {
+                int remainingSeconds = e.getSource().getWhiteRemainingSeconds();
+                whiteTimeLabel.setText(String.format("%d:%d",remainingSeconds/60, remainingSeconds%60));
+                return null;
+			}
+        });
     }
 
     private JLabel blackTimeLabel;
@@ -313,6 +322,14 @@ public class ChessWindow extends JFrame {
         blackTimeLabel.setPreferredSize(new Dimension(80, 0));
         blackTimeLabel.setOpaque(true);
         clockBox.add(blackTimeLabel);
+        board.game.getClock().tick.connect(new Handler<SignalSource<ChessClock>,Class<Void>>(){
+			@Override
+			public Class<Void> handle(SignalSource<ChessClock> e) {
+                int remainingSeconds = e.getSource().getBlackRemainingSeconds();
+                blackTimeLabel.setText(String.format("%d:%d",remainingSeconds/60, remainingSeconds%60));
+                return null;
+			}
+        });
     }
 
     {
