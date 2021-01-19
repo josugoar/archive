@@ -62,15 +62,15 @@ public class ChessBoard extends JPanel {
     public void recursiveProcessFen(Iterator<ChessPiece> piece, int i) {
         if (piece.hasNext()) {
             ChessPiece chessPiece = piece.next();
-            int rank = 7 - (i / 8);
-            int file = 7 - (i % 8);
+            int rank = 7 - i / 8;
+            int file = i % 8;
             board[rank][file].setPiece(null);
             if (chessPiece != null) {
                 board[rank][file].setPiece(new Piece(chessPiece.type, chessPiece.getColor()));
             }
             board[rank][file].repaint();
             board[rank][file].revalidate();
-            recursiveProcessFen(piece, i + 1);
+            recursiveProcessFen(piece, i+1);
         }
     }
 
@@ -90,45 +90,45 @@ public class ChessBoard extends JPanel {
         recursiveProcessFen(list, 0);
     }
 
-    public void startingState() {
+    // public void startingState() {
 
-        board[6][0].setPiece(Piece.createWhite(PieceType.PAWN));
-        board[6][1].setPiece(Piece.createWhite(PieceType.PAWN));
-        board[6][2].setPiece(Piece.createWhite(PieceType.PAWN));
-        board[6][3].setPiece(Piece.createWhite(PieceType.PAWN));
-        board[6][4].setPiece(Piece.createWhite(PieceType.PAWN));
-        board[6][5].setPiece(Piece.createWhite(PieceType.PAWN));
-        board[6][6].setPiece(Piece.createWhite(PieceType.PAWN));
-        board[6][7].setPiece(Piece.createWhite(PieceType.PAWN));
+    //     board[6][0].setPiece(Piece.createWhite(PieceType.PAWN));
+    //     board[6][1].setPiece(Piece.createWhite(PieceType.PAWN));
+    //     board[6][2].setPiece(Piece.createWhite(PieceType.PAWN));
+    //     board[6][3].setPiece(Piece.createWhite(PieceType.PAWN));
+    //     board[6][4].setPiece(Piece.createWhite(PieceType.PAWN));
+    //     board[6][5].setPiece(Piece.createWhite(PieceType.PAWN));
+    //     board[6][6].setPiece(Piece.createWhite(PieceType.PAWN));
+    //     board[6][7].setPiece(Piece.createWhite(PieceType.PAWN));
 
-        board[1][0].setPiece(Piece.createBlack(PieceType.PAWN));
-        board[1][1].setPiece(Piece.createBlack(PieceType.PAWN));
-        board[1][2].setPiece(Piece.createBlack(PieceType.PAWN));
-        board[1][3].setPiece(Piece.createBlack(PieceType.PAWN));
-        board[1][4].setPiece(Piece.createBlack(PieceType.PAWN));
-        board[1][5].setPiece(Piece.createBlack(PieceType.PAWN));
-        board[1][6].setPiece(Piece.createBlack(PieceType.PAWN));
-        board[1][7].setPiece(Piece.createBlack(PieceType.PAWN));
+    //     board[1][0].setPiece(Piece.createBlack(PieceType.PAWN));
+    //     board[1][1].setPiece(Piece.createBlack(PieceType.PAWN));
+    //     board[1][2].setPiece(Piece.createBlack(PieceType.PAWN));
+    //     board[1][3].setPiece(Piece.createBlack(PieceType.PAWN));
+    //     board[1][4].setPiece(Piece.createBlack(PieceType.PAWN));
+    //     board[1][5].setPiece(Piece.createBlack(PieceType.PAWN));
+    //     board[1][6].setPiece(Piece.createBlack(PieceType.PAWN));
+    //     board[1][7].setPiece(Piece.createBlack(PieceType.PAWN));
 
-        board[0][0].setPiece(Piece.createBlack(PieceType.ROOK));
-        board[0][1].setPiece(Piece.createBlack(PieceType.KNIGHT));
-        board[0][2].setPiece(Piece.createBlack(PieceType.BISHOP));
-        board[0][3].setPiece(Piece.createBlack(PieceType.QUEEN));
-        board[0][4].setPiece(Piece.createBlack(PieceType.KING));
-        board[0][5].setPiece(Piece.createBlack(PieceType.BISHOP));
-        board[0][6].setPiece(Piece.createBlack(PieceType.KNIGHT));
-        board[0][7].setPiece(Piece.createBlack(PieceType.ROOK));
+    //     board[0][0].setPiece(Piece.createBlack(PieceType.ROOK));
+    //     board[0][1].setPiece(Piece.createBlack(PieceType.KNIGHT));
+    //     board[0][2].setPiece(Piece.createBlack(PieceType.BISHOP));
+    //     board[0][3].setPiece(Piece.createBlack(PieceType.QUEEN));
+    //     board[0][4].setPiece(Piece.createBlack(PieceType.KING));
+    //     board[0][5].setPiece(Piece.createBlack(PieceType.BISHOP));
+    //     board[0][6].setPiece(Piece.createBlack(PieceType.KNIGHT));
+    //     board[0][7].setPiece(Piece.createBlack(PieceType.ROOK));
 
-        board[7][0].setPiece(Piece.createWhite(PieceType.ROOK));
-        board[7][1].setPiece(Piece.createWhite(PieceType.KNIGHT));
-        board[7][2].setPiece(Piece.createWhite(PieceType.BISHOP));
-        board[7][3].setPiece(Piece.createWhite(PieceType.QUEEN));
-        board[7][4].setPiece(Piece.createWhite(PieceType.KING));
-        board[7][5].setPiece(Piece.createWhite(PieceType.BISHOP));
-        board[7][6].setPiece(Piece.createWhite(PieceType.KNIGHT));
-        board[7][7].setPiece(Piece.createWhite(PieceType.ROOK));
+    //     board[7][0].setPiece(Piece.createWhite(PieceType.ROOK));
+    //     board[7][1].setPiece(Piece.createWhite(PieceType.KNIGHT));
+    //     board[7][2].setPiece(Piece.createWhite(PieceType.BISHOP));
+    //     board[7][3].setPiece(Piece.createWhite(PieceType.QUEEN));
+    //     board[7][4].setPiece(Piece.createWhite(PieceType.KING));
+    //     board[7][5].setPiece(Piece.createWhite(PieceType.BISHOP));
+    //     board[7][6].setPiece(Piece.createWhite(PieceType.KNIGHT));
+    //     board[7][7].setPiece(Piece.createWhite(PieceType.ROOK));
 
-    }
+    // }
 
     public static void main(String[] args) {
 

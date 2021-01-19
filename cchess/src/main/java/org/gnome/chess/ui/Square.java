@@ -7,6 +7,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
+import org.gnome.chess.lib.ChessState;
+
 public class Square extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -62,6 +64,9 @@ public class Square extends JPanel {
                         }
                         parent.processFen(parent.game.moveStack.get(parent.index).getFen());
                     }
+                }
+                for (ChessState state : parent.game.moveStack) {
+                    System.out.println(state.getFen());
                 }
 
             }
