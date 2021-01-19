@@ -290,7 +290,7 @@ public class ChessWindow extends JFrame {
         navigationBox.add(clockBox, gbcClock);
     }
 
-    private JLabel whiteTimeLabel;
+    public JLabel whiteTimeLabel;
 
     {
         whiteTimeLabel = new JLabel();
@@ -301,17 +301,9 @@ public class ChessWindow extends JFrame {
         whiteTimeLabel.setPreferredSize(new Dimension(80, 0));
         whiteTimeLabel.setOpaque(true);
         clockBox.add(whiteTimeLabel);
-        board.game.getClock().tick.connect(new Handler<SignalSource<ChessClock>,Class<Void>>(){
-			@Override
-			public Class<Void> handle(SignalSource<ChessClock> e) {
-                int remainingSeconds = e.getSource().getWhiteRemainingSeconds();
-                whiteTimeLabel.setText(String.format("%d:%d",remainingSeconds/60, remainingSeconds%60));
-                return null;
-			}
-        });
     }
 
-    private JLabel blackTimeLabel;
+    public JLabel blackTimeLabel;
 
     {
         blackTimeLabel = new JLabel();
@@ -322,14 +314,6 @@ public class ChessWindow extends JFrame {
         blackTimeLabel.setPreferredSize(new Dimension(80, 0));
         blackTimeLabel.setOpaque(true);
         clockBox.add(blackTimeLabel);
-        board.game.getClock().tick.connect(new Handler<SignalSource<ChessClock>,Class<Void>>(){
-			@Override
-			public Class<Void> handle(SignalSource<ChessClock> e) {
-                int remainingSeconds = e.getSource().getBlackRemainingSeconds();
-                blackTimeLabel.setText(String.format("%d:%d",remainingSeconds/60, remainingSeconds%60));
-                return null;
-			}
-        });
     }
 
     {

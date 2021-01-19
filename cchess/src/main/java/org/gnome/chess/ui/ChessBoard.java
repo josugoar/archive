@@ -62,7 +62,30 @@ public class ChessBoard extends JPanel {
         return Void.TYPE;
     };
 
+    public Handler<SignalSource<ChessClock>, Class<Void>> whiteHandler = new Handler<SignalSource<ChessClock>,Class<Void>>(){
+        @Override
+        public Class<Void> handle(SignalSource<ChessClock> e) {
+            int remainingSeconds = game.getClock().getWhiteRemainingSeconds();
+            window.whiteTimeLabel.setText(String.format("%d:%d",remainingSeconds/60, remainingSeconds%60));
+            return null;
+        }
+    };
+
+    public Handler<SignalSource<ChessClock>, Class<Void>> blackHandler = new Handler<SignalSource<ChessClock>,Class<Void>>(){
+        @Override
+        public Class<Void> handle(SignalSource<ChessClock> e) {
+            int remainingSeconds = game.getClock().getBlackRemainingSeconds();
+            window.blackTimeLabel.setText(String.format("%d:%d",remainingSeconds/60, remainingSeconds%60));
+            return null;
+        }
+    };
+
     public void setGame(ChessGame game) {
+        if (game.getClock() != null) {
+            game.getClock().tick.disconnect(whiteHandler);
+            game.getClock().tick.disconnect(blackHandler);
+            game.getClock().stop();
+        }
         this.game = game;
         game.ended.connect(new Handler<SignalSource<ChessGame>,Class<Void>>(){
 			@Override
@@ -84,6 +107,8 @@ public class ChessBoard extends JPanel {
 			}  
         });
         game.setClock(new ChessClock(180, 180));
+        game.getClock().tick.connect(whiteHandler);
+        game.getClock().tick.connect(blackHandler);
         game.start();
         processFen(game.getCurrentState().getFen());
         game.moved.connect(handler);
