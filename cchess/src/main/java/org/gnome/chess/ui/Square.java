@@ -1,19 +1,15 @@
 package org.gnome.chess.ui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
-import org.gnome.chess.lib.PieceType;
-
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 public class Square extends JPanel {
+
+    private static final long serialVersionUID = 1L;
 
     Piece piece;
 
@@ -25,6 +21,9 @@ public class Square extends JPanel {
             public void mousePressed(MouseEvent e) {
                 System.out.println(Square.this.piece);
                 ChessBoard parent = (ChessBoard) getParent();
+                if (parent.index != 0) {
+                    return;
+                }
                 if (parent.selectedSquare == Square.this) {
                     Square tempSquare = parent.selectedSquare;
                     parent.selectedSquare = null;
@@ -61,7 +60,7 @@ public class Square extends JPanel {
                             tempSquare.repaint();
                             tempSquare.revalidate();
                         }
-                        parent.processFen(parent.game.getCurrentState().getFen());
+                        parent.processFen(parent.game.moveStack.get(parent.index).getFen());
                     }
                 }
 

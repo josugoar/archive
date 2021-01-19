@@ -1,25 +1,24 @@
 package org.gnome.chess.ui;
 
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.util.Arrays;
+import java.util.Iterator;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.gnome.chess.lib.ChessGame;
+import org.gnome.chess.lib.ChessGame.MovedSource;
 import org.gnome.chess.lib.ChessPiece;
-import org.gnome.chess.lib.ChessState;
 import org.gnome.chess.lib.PGNError;
 import org.gnome.chess.lib.PieceType;
-import org.gnome.chess.lib.ChessGame.MovedSource;
-
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.awt.FlowLayout;
 
 public class ChessBoard extends JPanel {
+
+    private static final long serialVersionUID = 1L;
 
     Square[][] board = new Square[8][8];
     ChessGame game = null;
@@ -48,7 +47,10 @@ public class ChessBoard extends JPanel {
         });
     }
 
-    public void setGame(ChessGame game){
+    public int index = 0;
+
+    public void setGame(ChessGame game) {
+        this.game = game;
         game.start();
         processFen(game.getCurrentState().getFen());
         game.moved.connect((MovedSource s) -> {
@@ -57,19 +59,18 @@ public class ChessBoard extends JPanel {
         });
     }
 
-    
     public void recursiveProcessFen(Iterator<ChessPiece> piece, int i) {
         if (piece.hasNext()) {
             ChessPiece chessPiece = piece.next();
-            int rank = i/8;
-            int file = i%8;
+            int rank = i / 8;
+            int file = i % 8;
             board[rank][file].setPiece(null);
             if (chessPiece != null) {
                 board[rank][file].setPiece(new Piece(chessPiece.type, chessPiece.getColor()));
             }
             board[rank][file].repaint();
             board[rank][file].revalidate();
-            recursiveProcessFen(piece, i+1);
+            recursiveProcessFen(piece, i + 1);
         }
     }
 
@@ -84,7 +85,7 @@ public class ChessBoard extends JPanel {
             e.printStackTrace();
         }
 
-        ChessPiece[] unprocessedBoard = game.moveStack.get(0).board;
+        ChessPiece[] unprocessedBoard = game.moveStack.get(index).board;
         Iterator<ChessPiece> list = Arrays.asList(unprocessedBoard).iterator();
         recursiveProcessFen(list, 0);
     }

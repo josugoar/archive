@@ -89,6 +89,13 @@ public class ChessApplication extends Thread {
     };
 
     public ActionListener undoMoveCb = (ActionEvent e) -> {
+        window.board.game.getCurrentPlayer().doUndo();
+        if (window.board.index != 0) {
+            window.board.index += 1;
+        }
+        window.board.processFen(window.board.game.getCurrentState().getFen());
+        window.repaint();
+        window.revalidate();
     };
 
     public ActionListener pauseResumeCb = (ActionEvent e) -> {
@@ -98,15 +105,54 @@ public class ChessApplication extends Thread {
     };
 
     private ActionListener historyGoFirstCb = (ActionEvent e) -> {
+        try {
+            if (window.board.selectedSquare != null) {
+                return;
+            }
+            String fen = window.board.game.moveStack.get(window.board.game.moveStack.size() - 1).getFen();
+            window.board.index = window.board.game.moveStack.size() - 1;
+            window.board.processFen(fen);
+            window.repaint();
+            window.revalidate();
+            System.out.println(fen);
+        } catch (Exception ex) {
+        }
     };
 
     private ActionListener historyGoPreviousCb = (ActionEvent e) -> {
+        try {
+            if (window.board.selectedSquare != null) {
+                return;
+            }
+            String fen = window.board.game.moveStack.get(window.board.index + 1).getFen();
+            window.board.index += 1;
+            window.board.processFen(fen);
+        } catch (Exception ex) {
+        }
     };
 
     private ActionListener historyGoNextCb = (ActionEvent e) -> {
+        try {
+            if (window.board.selectedSquare != null) {
+                return;
+            }
+            String fen = window.board.game.moveStack.get(window.board.index - 1).getFen();
+            window.board.index -= 1;
+            window.board.processFen(fen);
+        } catch (Exception ex) {
+        }
     };
 
     private ActionListener historyGoLastCb = (ActionEvent e) -> {
+        try {
+            if (window.board.selectedSquare != null) {
+                return;
+            }
+            String fen = window.board.game.moveStack.get(0).getFen();
+            window.board.index = 0;
+            window.board.processFen(fen);
+        } catch (Exception ex) {
+        }
     };
 
     private ActionListener preferencesCb = (ActionEvent e) -> {

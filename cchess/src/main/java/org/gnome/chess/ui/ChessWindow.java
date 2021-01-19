@@ -1,29 +1,24 @@
 
 package org.gnome.chess.ui;
 
-import static org.gnome.chess.util.AssertNotReached.assertNotReached;
-
 import java.awt.BorderLayout;
-import java.awt.ComponentOrientation;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import java.awt.Container;
-import java.awt.Component;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -36,21 +31,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.MutableComboBoxModel;
-import javax.swing.SwingWorker;
 
 import org.gnome.chess.db.PGNGameDao;
 import org.gnome.chess.lib.ChessClock;
 import org.gnome.chess.lib.ChessGame;
 import org.gnome.chess.lib.ChessMove;
 import org.gnome.chess.lib.ChessState;
-import org.gnome.chess.lib.Color;
 import org.gnome.chess.lib.PGNError;
 import org.gnome.chess.lib.PGNGame;
 import org.gnome.chess.util.ColorFactory;
-import org.gnome.chess.util.Out;
 import org.gnome.chess.util.SignalSource;
-
-import jdk.javadoc.internal.doclets.formats.html.SystemPropertiesWriter;
 
 public class ChessWindow extends JFrame {
 
@@ -64,9 +54,9 @@ public class ChessWindow extends JFrame {
         return view;
     }
 
-    private ChessScene scene;
+    public ChessScene scene;
 
-    private ChessBoard board = new ChessBoard();
+    public ChessBoard board = new ChessBoard();
 
     public ChessScene getScene(ChessScene scene) {
         return scene;
@@ -80,7 +70,7 @@ public class ChessWindow extends JFrame {
         return game;
     }
 
-    private ChessApplication app;
+    public ChessApplication app;
 
     private long clockTickSignalId = 0;
 
@@ -109,16 +99,24 @@ public class ChessWindow extends JFrame {
         gbcNewGame.fill = GridBagConstraints.BOTH;
         gbcNewGame.insets = new Insets(0, 3, 0, 3);
         gbcNewGame.gridx = 0;
+        newGameButton.addActionListener((ActionEvent e) -> {
+            try {
+                // pgnGame = new PGNGame(pgnGame.getId() + 1);
+                board.index = 0;
+                board.setGame(new ChessGame());
+            } catch (PGNError e1) {
+                e1.printStackTrace();
+            }
+        });
         // newGameButton.setIcon(defaultIcon); // TODO
         newGameButton.setVerticalAlignment(JButton.CENTER);
         infoBar.add(newGameButton, gbcNewGame);
 
-        undoButton = new JButton();
+        undoButton = new JButton("Undo");
         GridBagConstraints gbcUndo = new GridBagConstraints();
         gbcUndo.fill = GridBagConstraints.BOTH;
         gbcUndo.insets = new Insets(0, 3, 0, 3);
         gbcUndo.gridx = 2;
-        // undoButton.setIcon(defaultIcon); // TODO
         undoButton.setToolTipText("Undo your most recent move");
         undoButton.setVerticalAlignment(JButton.CENTER);
         infoBar.add(undoButton, gbcUndo);
@@ -129,7 +127,6 @@ public class ChessWindow extends JFrame {
         gbcAppMenu.insets = new Insets(0, 3, 0, 3);
         gbcAppMenu.gridx = 5;
         // appMenuButton.addActionListener(l); // TODO
-        // appMenuButton.setIcon(defaultIcon); // TODO
         infoBar.add(appMenuButton, gbcAppMenu);
 
         saveButton = new JButton("Save");
@@ -140,6 +137,7 @@ public class ChessWindow extends JFrame {
                 File selectedFile = fil.getSelectedFile();
                 try {
                     db.connect(selectedFile.getAbsolutePath());
+                    pgnGame.moves.clear();
                     for (ChessState move : board.game.moveStack) {
                         if (move.lastMove != null) {
                             pgnGame.moves.add(move.lastMove.getLan());
@@ -168,10 +166,10 @@ public class ChessWindow extends JFrame {
                     List<PGNGame> result = db.getAll();
                     db.conn.close();
                     System.out.println(result.get(0).moves);
-                    if (result.size()>0) {
+                    if (result.size() > 0) {
                         ChessGame tempGame = new ChessGame(ChessGame.STANDARD_SETUP);
                         board.setGame(tempGame);
-                        for (int i = result.get(0).moves.size() - 1; i>=0; i--) {
+                        for (int i = result.get(0).moves.size() - 1; i >= 0; i--) {
                             board.game.getCurrentPlayer().doMove(result.get(0).moves.get(i), true);
                         }
                     }
@@ -185,7 +183,7 @@ public class ChessWindow extends JFrame {
         });
 
         infoBar.add(openButton);
-        
+
     }
 
     private JLabel infoBarLabel;
@@ -332,16 +330,16 @@ public class ChessWindow extends JFrame {
 
         historyCombo.addItemListener(historyComboChangedCb);
 
-        addComponentListener(new ComponentAdapter(){
-            public void componentResized(ComponentEvent e){
-                Font f = new Font("Sans-Serif", Font.PLAIN, (int)(ChessWindow.this.getHeight()*0.03));
+        addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e) {
+                Font f = new Font("Sans-Serif", Font.PLAIN, (int) (ChessWindow.this.getHeight() * 0.03));
                 updateFont(ChessWindow.this, f);
             }
         });
 
         this.app = app;
 
-        var scene = new ChessScene();
+        // var scene = new ChessScene();
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -353,7 +351,6 @@ public class ChessWindow extends JFrame {
         secondPanel.setAlignmentX(CENTER_ALIGNMENT);
         secondPanel.setAlignmentY(CENTER_ALIGNMENT);
         mainBox.add(mainPanel);
-        
 
         // TODO
     }
@@ -394,434 +391,469 @@ public class ChessWindow extends JFrame {
          * Note there are no move formats for pieces taking kings and this is not
          * allowed in Chess rules
          */
-        final String[] humanDescription = { /*
-                                             * Human Move String: Description of a white pawn moving from %1$s to %2s,
-                                             * e.g. 'c2 to c4'
-                                             */
-                "White pawn moves from %1$s to %2$s",
-                /*
-                 * Human Move String: Description of a white pawn at %1$s capturing a pawn at
-                 * %2$s
-                 */
-                "White pawn at %1$s takes the black pawn at %2$s",
-                /*
-                 * Human Move String: Description of a white pawn at %1$s capturing a rook at
-                 * %2$s
-                 */
-                "White pawn at %1$s takes the black rook at %2$s",
-                /*
-                 * Human Move String: Description of a white pawn at %1$s capturing a knight at
-                 * %2$s
-                 */
-                "White pawn at %1$s takes the black knight at %2$s",
-                /*
-                 * Human Move String: Description of a white pawn at %1$s capturing a bishop at
-                 * %2$s
-                 */
-                "White pawn at %1$s takes the black bishop at %2$s",
-                /*
-                 * Human Move String: Description of a white pawn at %1$s capturing a queen at
-                 * %2$s
-                 */
-                "White pawn at %1$s takes the black queen at %2$s",
-                /*
-                 * Human Move String: Description of a white rook moving from %1$s to %2$s, e.g.
-                 * 'a1 to a5'
-                 */
-                "White rook moves from %1$s to %2$s",
-                /*
-                 * Human Move String: Description of a white rook at %1$s capturing a pawn at
-                 * %2$s
-                 */
-                "White rook at %1$s takes the black pawn at %2$s",
-                /*
-                 * Human Move String: Description of a white rook at %1$s capturing a rook at
-                 * %2$s
-                 */
-                "White rook at %1$s takes the black rook at %2$s",
-                /*
-                 * Human Move String: Description of a white rook at %1$s capturing a knight at
-                 * %2$s
-                 */
-                "White rook at %1$s takes the black knight at %2$s",
-                /*
-                 * Human Move String: Description of a white rook at %1$s capturing a bishop at
-                 * %2$s
-                 */
-                "White rook at %1$s takes the black bishop at %2$s",
-                /*
-                 * Human Move String: Description of a white rook at %1$s capturing a queen at
-                 * %2$s"
-                 */
-                "White rook at %1$s takes the black queen at %2$s",
-                /*
-                 * Human Move String: Description of a white knight moving from %1$s to %2$s,
-                 * e.g. 'b1 to c3'
-                 */
-                "White knight moves from %1$s to %2$s",
-                /*
-                 * Human Move String: Description of a white knight at %1$s capturing a pawn at
-                 * %2$s
-                 */
-                "White knight at %1$s takes the black pawn at %2$s",
-                /*
-                 * Human Move String: Description of a white knight at %1$s capturing a rook at
-                 * %2$s
-                 */
-                "White knight at %1$s takes the black rook at %2$s",
-                /*
-                 * Human Move String: Description of a white knight at %1$s capturing a knight
-                 * at %2$s
-                 */
-                "White knight at %1$s takes the black knight at %2$s",
-                /*
-                 * Human Move String: Description of a white knight at %1$s capturing a bishop
-                 * at %2$s
-                 */
-                "White knight at %1$s takes the black bishop at %2$s",
-                /*
-                 * Human Move String: Description of a white knight at %1$s capturing a queen at
-                 * %2$s
-                 */
-                "White knight at %1$s takes the black queen at %2$s",
-                /*
-                 * Human Move String: Description of a white bishop moving from %1$s to %2$s,
-                 * e.g. 'f1 to b5'
-                 */
-                "White bishop moves from %1$s to %2$s",
-                /*
-                 * Human Move String: Description of a white bishop at %1$s capturing a pawn at
-                 * %2$s
-                 */
-                "White bishop at %1$s takes the black pawn at %2$s",
-                /*
-                 * Human Move String: Description of a white bishop at %1$s capturing a rook at
-                 * %2$s
-                 */
-                "White bishop at %1$s takes the black rook at %2$s",
-                /*
-                 * Human Move String: Description of a white bishop at %1$s capturing a knight
-                 * at %2$s
-                 */
-                "White bishop at %1$s takes the black knight at %2$s",
-                /*
-                 * Human Move String: Description of a white bishop at %1$s capturing a bishop
-                 * at %2$s
-                 */
-                "White bishop at %1$s takes the black bishop at %2$s",
-                /*
-                 * Human Move String: Description of a white bishop at %1$s capturing a queen at
-                 * %2$s
-                 */
-                "White bishop at %1$s takes the black queen at %2$s",
-                /*
-                 * Human Move String: Description of a white queen moving from %1$s to %2$s,
-                 * e.g. 'd1 to d4'
-                 */
-                "White queen moves from %1$s to %2$s",
-                /*
-                 * Human Move String: Description of a white queen at %1$s capturing a pawn at
-                 * %2$s
-                 */
-                "White queen at %1$s takes the black pawn at %2$s",
-                /*
-                 * Human Move String: Description of a white queen at %1$s capturing a rook at
-                 * %2$s
-                 */
-                "White queen at %1$s takes the black rook at %2$s",
-                /*
-                 * Human Move String: Description of a white queen at %1$s capturing a knight at
-                 * %2$s
-                 */
-                "White queen at %1$s takes the black knight at %2$s",
-                /*
-                 * Human Move String: Description of a white queen at %1$s capturing a bishop at
-                 * %2$s
-                 */
-                "White queen at %1$s takes the black bishop at %2$s",
-                /*
-                 * Human Move String: Description of a white queen at %1$s capturing a queen at
-                 * %2$s
-                 */
-                "White queen at %1$s takes the black queen at %2$s",
-                /*
-                 * Human Move String: Description of a white king moving from %1$s to %2$s, e.g.
-                 * 'e1 to f1'
-                 */
-                "White king moves from %1$s to %2$s",
-                /*
-                 * Human Move String: Description of a white king at %1$s capturing a pawn at
-                 * %2$s
-                 */
-                "White king at %1$s takes the black pawn at %2$s",
-                /*
-                 * Human Move String: Description of a white king at %1$s capturing a rook at
-                 * %2$s
-                 */
-                "White king at %1$s takes the black rook at %2$s",
-                /*
-                 * Human Move String: Description of a white king at %1$s capturing a knight at
-                 * %2$s
-                 */
-                "White king at %1$s takes the black knight at %2$s",
-                /*
-                 * Human Move String: Description of a white king at %1$s capturing a bishop at
-                 * %2$s
-                 */
-                "White king at %1$s takes the black bishop at %2$s",
-                /*
-                 * Human Move String: Description of a white king at %1$s capturing a queen at
-                 * %2$s
-                 */
-                "White king at %1$s takes the black queen at %2$s",
-                /*
-                 * Human Move String: Description of a black pawn moving from %1$s to %2$s, e.g.
-                 * 'c8 to c6'
-                 */
-                "Black pawn moves from %1$s to %2$s",
-                /*
-                 * Human Move String: Description of a black pawn at %1$s capturing a pawn at
-                 * %2$s
-                 */
-                "Black pawn at %1$s takes the white pawn at %2$s",
-                /*
-                 * Human Move String: Description of a black pawn at %1$s capturing a rook at
-                 * %2$s
-                 */
-                "Black pawn at %1$s takes the white rook at %2$s",
-                /*
-                 * Human Move String: Description of a black pawn at %1$s capturing a knight at
-                 * %2$s
-                 */
-                "Black pawn at %1$s takes the white knight at %2$s",
-                /*
-                 * Human Move String: Description of a black pawn at %1$s capturing a bishop at
-                 * %2$s
-                 */
-                "Black pawn at %1$s takes the white bishop at %2$s",
-                /*
-                 * Human Move String: Description of a black pawn at %1$s capturing a queen at
-                 * %2$s
-                 */
-                "Black pawn at %1$s takes the white queen at %2$s",
-                /*
-                 * Human Move String: Description of a black rook moving from %1$s to %2$s, e.g.
-                 * 'a8 to a4'
-                 */
-                "Black rook moves from %1$s to %2$s",
-                /*
-                 * Human Move String: Description of a black rook at %1$s capturing a pawn at
-                 * %2$s
-                 */
-                "Black rook at %1$s takes the white pawn at %2$s",
-                /*
-                 * Human Move String: Description of a black rook at %1$s capturing a rook at
-                 * %2$s
-                 */
-                "Black rook at %1$s takes the white rook at %2$s",
-                /*
-                 * Human Move String: Description of a black rook at %1$s capturing a knight at
-                 * %2$s
-                 */
-                "Black rook at %1$s takes the white knight at %2$s",
-                /*
-                 * Human Move String: Description of a black rook at %1$s capturing a bishop at
-                 * %2$s
-                 */
-                "Black rook at %1$s takes the white bishop at %2$s",
-                /*
-                 * Human Move String: Description of a black rook at %1$s capturing a queen at
-                 * %2$s
-                 */
-                "Black rook at %1$s takes the white queen at %2$s",
-                /*
-                 * Human Move String: Description of a black knight moving from %1$s to %2$s,
-                 * e.g. 'b8 to c6'
-                 */
-                "Black knight moves from %1$s to %2$s",
-                /*
-                 * Human Move String: Description of a black knight at %1$s capturing a pawn at
-                 * %2$s
-                 */
-                "Black knight at %1$s takes the white pawn at %2$s",
-                /*
-                 * Human Move String: Description of a black knight at %1$s capturing a rook at
-                 * %2$s
-                 */
-                "Black knight at %1$s takes the white rook at %2$s",
-                /*
-                 * Human Move String: Description of a black knight at %1$s capturing a knight
-                 * at %2$s
-                 */
-                "Black knight at %1$s takes the white knight at %2$s",
-                /*
-                 * Human Move String: Description of a black knight at %1$s capturing a bishop
-                 * at %2$s
-                 */
-                "Black knight at %1$s takes the white bishop at %2$s",
-                /*
-                 * Human Move String: Description of a black knight at %1$s capturing a queen at
-                 * %2$s
-                 */
-                "Black knight at %1$s takes the white queen at %2$s",
-                /*
-                 * Human Move String: Description of a black bishop moving from %1$s to %2$s,
-                 * e.g. 'f8 to b3'
-                 */
-                "Black bishop moves from %1$s to %2$s",
-                /*
-                 * Human Move String: Description of a black bishop at %1$s capturing a pawn at
-                 * %2$s
-                 */
-                "Black bishop at %1$s takes the white pawn at %2$s",
-                /*
-                 * Human Move String: Description of a black bishop at %1$s capturing a rook at
-                 * %2$s
-                 */
-                "Black bishop at %1$s takes the white rook at %2$s",
-                /*
-                 * Human Move String: Description of a black bishop at %1$s capturing a knight
-                 * at %2$s
-                 */
-                "Black bishop at %1$s takes the white knight at %2$s",
-                /*
-                 * Human Move String: Description of a black bishop at %1$s capturing a bishop
-                 * at %2$s
-                 */
-                "Black bishop at %1$s takes the white bishop at %2$s",
-                /*
-                 * Human Move String: Description of a black bishop at %1$s capturing a queen at
-                 * %2$s
-                 */
-                "Black bishop at %1$s takes the white queen at %2$s",
-                /*
-                 * Human Move String: Description of a black queen moving from %1$s to %2$s,
-                 * e.g. 'd8 to d5'
-                 */
-                "Black queen moves from %1$s to %2$s",
-                /*
-                 * Human Move String: Description of a black queen at %1$s capturing a pawn at
-                 * %2$s
-                 */
-                "Black queen at %1$s takes the white pawn at %2$s",
-                /*
-                 * Human Move String: Description of a black queen at %1$s capturing a rook at
-                 * %2$s
-                 */
-                "Black queen at %1$s takes the white rook at %2$s",
-                /*
-                 * Human Move String: Description of a black queen at %1$s capturing a knight at
-                 * %2$s
-                 */
-                "Black queen at %1$s takes the white knight at %2$s",
-                /*
-                 * Human Move String: Description of a black queen at %1$s capturing a bishop at
-                 * %2$s
-                 */
-                "Black queen at %1$s takes the white bishop at %2$s",
-                /*
-                 * Human Move String: Description of a black queen at %1$s capturing a queen at
-                 * %2$s
-                 */
-                "Black queen at %1$s takes the white queen at %2$s",
-                /*
-                 * Human Move String: Description of a black king moving from %1$s to %2$s, e.g.
-                 * 'e8 to f8'
-                 */
-                "Black king moves from %1$s to %2$s",
-                /*
-                 * Human Move String: Description of a black king at %1$s capturing a pawn at
-                 * %2$s
-                 */
-                "Black king at %1$s takes the white pawn at %2$s",
-                /*
-                 * Human Move String: Description of a black king at %1$s capturing a rook at
-                 * %2$s
-                 */
-                "Black king at %1$s takes the white rook at %2$s",
-                /*
-                 * Human Move String: Description of a black king at %1$s capturing a knight at
-                 * %2$s
-                 */
-                "Black king at %1$s takes the white knight at %2$s",
-                /*
-                 * Human Move String: Description of a black king at %1$s capturing a bishop at
-                 * %2$s
-                 */
-                "Black king at %1$s takes the white bishop at %2$s",
-                /*
-                 * Human Move String: Description of a black king at %1$s capturing a queen at
-                 * %2$s"
-                 */
-                "Black king at %1$s takes the white queen at %2$s" };
+        // final String[] humanDescription = { /*
+        // * Human Move String: Description of a white pawn moving from %1$s to %2s,
+        // * e.g. 'c2 to c4'
+        // */
+        // "White pawn moves from %1$s to %2$s",
+        // /*
+        // * Human Move String: Description of a white pawn at %1$s capturing a pawn at
+        // * %2$s
+        // */
+        // "White pawn at %1$s takes the black pawn at %2$s",
+        // /*
+        // * Human Move String: Description of a white pawn at %1$s capturing a rook at
+        // * %2$s
+        // */
+        // "White pawn at %1$s takes the black rook at %2$s",
+        // /*
+        // * Human Move String: Description of a white pawn at %1$s capturing a knight
+        // at
+        // * %2$s
+        // */
+        // "White pawn at %1$s takes the black knight at %2$s",
+        // /*
+        // * Human Move String: Description of a white pawn at %1$s capturing a bishop
+        // at
+        // * %2$s
+        // */
+        // "White pawn at %1$s takes the black bishop at %2$s",
+        // /*
+        // * Human Move String: Description of a white pawn at %1$s capturing a queen at
+        // * %2$s
+        // */
+        // "White pawn at %1$s takes the black queen at %2$s",
+        // /*
+        // * Human Move String: Description of a white rook moving from %1$s to %2$s,
+        // e.g.
+        // * 'a1 to a5'
+        // */
+        // "White rook moves from %1$s to %2$s",
+        // /*
+        // * Human Move String: Description of a white rook at %1$s capturing a pawn at
+        // * %2$s
+        // */
+        // "White rook at %1$s takes the black pawn at %2$s",
+        // /*
+        // * Human Move String: Description of a white rook at %1$s capturing a rook at
+        // * %2$s
+        // */
+        // "White rook at %1$s takes the black rook at %2$s",
+        // /*
+        // * Human Move String: Description of a white rook at %1$s capturing a knight
+        // at
+        // * %2$s
+        // */
+        // "White rook at %1$s takes the black knight at %2$s",
+        // /*
+        // * Human Move String: Description of a white rook at %1$s capturing a bishop
+        // at
+        // * %2$s
+        // */
+        // "White rook at %1$s takes the black bishop at %2$s",
+        // /*
+        // * Human Move String: Description of a white rook at %1$s capturing a queen at
+        // * %2$s"
+        // */
+        // "White rook at %1$s takes the black queen at %2$s",
+        // /*
+        // * Human Move String: Description of a white knight moving from %1$s to %2$s,
+        // * e.g. 'b1 to c3'
+        // */
+        // "White knight moves from %1$s to %2$s",
+        // /*
+        // * Human Move String: Description of a white knight at %1$s capturing a pawn
+        // at
+        // * %2$s
+        // */
+        // "White knight at %1$s takes the black pawn at %2$s",
+        // /*
+        // * Human Move String: Description of a white knight at %1$s capturing a rook
+        // at
+        // * %2$s
+        // */
+        // "White knight at %1$s takes the black rook at %2$s",
+        // /*
+        // * Human Move String: Description of a white knight at %1$s capturing a knight
+        // * at %2$s
+        // */
+        // "White knight at %1$s takes the black knight at %2$s",
+        // /*
+        // * Human Move String: Description of a white knight at %1$s capturing a bishop
+        // * at %2$s
+        // */
+        // "White knight at %1$s takes the black bishop at %2$s",
+        // /*
+        // * Human Move String: Description of a white knight at %1$s capturing a queen
+        // at
+        // * %2$s
+        // */
+        // "White knight at %1$s takes the black queen at %2$s",
+        // /*
+        // * Human Move String: Description of a white bishop moving from %1$s to %2$s,
+        // * e.g. 'f1 to b5'
+        // */
+        // "White bishop moves from %1$s to %2$s",
+        // /*
+        // * Human Move String: Description of a white bishop at %1$s capturing a pawn
+        // at
+        // * %2$s
+        // */
+        // "White bishop at %1$s takes the black pawn at %2$s",
+        // /*
+        // * Human Move String: Description of a white bishop at %1$s capturing a rook
+        // at
+        // * %2$s
+        // */
+        // "White bishop at %1$s takes the black rook at %2$s",
+        // /*
+        // * Human Move String: Description of a white bishop at %1$s capturing a knight
+        // * at %2$s
+        // */
+        // "White bishop at %1$s takes the black knight at %2$s",
+        // /*
+        // * Human Move String: Description of a white bishop at %1$s capturing a bishop
+        // * at %2$s
+        // */
+        // "White bishop at %1$s takes the black bishop at %2$s",
+        // /*
+        // * Human Move String: Description of a white bishop at %1$s capturing a queen
+        // at
+        // * %2$s
+        // */
+        // "White bishop at %1$s takes the black queen at %2$s",
+        // /*
+        // * Human Move String: Description of a white queen moving from %1$s to %2$s,
+        // * e.g. 'd1 to d4'
+        // */
+        // "White queen moves from %1$s to %2$s",
+        // /*
+        // * Human Move String: Description of a white queen at %1$s capturing a pawn at
+        // * %2$s
+        // */
+        // "White queen at %1$s takes the black pawn at %2$s",
+        // /*
+        // * Human Move String: Description of a white queen at %1$s capturing a rook at
+        // * %2$s
+        // */
+        // "White queen at %1$s takes the black rook at %2$s",
+        // /*
+        // * Human Move String: Description of a white queen at %1$s capturing a knight
+        // at
+        // * %2$s
+        // */
+        // "White queen at %1$s takes the black knight at %2$s",
+        // /*
+        // * Human Move String: Description of a white queen at %1$s capturing a bishop
+        // at
+        // * %2$s
+        // */
+        // "White queen at %1$s takes the black bishop at %2$s",
+        // /*
+        // * Human Move String: Description of a white queen at %1$s capturing a queen
+        // at
+        // * %2$s
+        // */
+        // "White queen at %1$s takes the black queen at %2$s",
+        // /*
+        // * Human Move String: Description of a white king moving from %1$s to %2$s,
+        // e.g.
+        // * 'e1 to f1'
+        // */
+        // "White king moves from %1$s to %2$s",
+        // /*
+        // * Human Move String: Description of a white king at %1$s capturing a pawn at
+        // * %2$s
+        // */
+        // "White king at %1$s takes the black pawn at %2$s",
+        // /*
+        // * Human Move String: Description of a white king at %1$s capturing a rook at
+        // * %2$s
+        // */
+        // "White king at %1$s takes the black rook at %2$s",
+        // /*
+        // * Human Move String: Description of a white king at %1$s capturing a knight
+        // at
+        // * %2$s
+        // */
+        // "White king at %1$s takes the black knight at %2$s",
+        // /*
+        // * Human Move String: Description of a white king at %1$s capturing a bishop
+        // at
+        // * %2$s
+        // */
+        // "White king at %1$s takes the black bishop at %2$s",
+        // /*
+        // * Human Move String: Description of a white king at %1$s capturing a queen at
+        // * %2$s
+        // */
+        // "White king at %1$s takes the black queen at %2$s",
+        // /*
+        // * Human Move String: Description of a black pawn moving from %1$s to %2$s,
+        // e.g.
+        // * 'c8 to c6'
+        // */
+        // "Black pawn moves from %1$s to %2$s",
+        // /*
+        // * Human Move String: Description of a black pawn at %1$s capturing a pawn at
+        // * %2$s
+        // */
+        // "Black pawn at %1$s takes the white pawn at %2$s",
+        // /*
+        // * Human Move String: Description of a black pawn at %1$s capturing a rook at
+        // * %2$s
+        // */
+        // "Black pawn at %1$s takes the white rook at %2$s",
+        // /*
+        // * Human Move String: Description of a black pawn at %1$s capturing a knight
+        // at
+        // * %2$s
+        // */
+        // "Black pawn at %1$s takes the white knight at %2$s",
+        // /*
+        // * Human Move String: Description of a black pawn at %1$s capturing a bishop
+        // at
+        // * %2$s
+        // */
+        // "Black pawn at %1$s takes the white bishop at %2$s",
+        // /*
+        // * Human Move String: Description of a black pawn at %1$s capturing a queen at
+        // * %2$s
+        // */
+        // "Black pawn at %1$s takes the white queen at %2$s",
+        // /*
+        // * Human Move String: Description of a black rook moving from %1$s to %2$s,
+        // e.g.
+        // * 'a8 to a4'
+        // */
+        // "Black rook moves from %1$s to %2$s",
+        // /*
+        // * Human Move String: Description of a black rook at %1$s capturing a pawn at
+        // * %2$s
+        // */
+        // "Black rook at %1$s takes the white pawn at %2$s",
+        // /*
+        // * Human Move String: Description of a black rook at %1$s capturing a rook at
+        // * %2$s
+        // */
+        // "Black rook at %1$s takes the white rook at %2$s",
+        // /*
+        // * Human Move String: Description of a black rook at %1$s capturing a knight
+        // at
+        // * %2$s
+        // */
+        // "Black rook at %1$s takes the white knight at %2$s",
+        // /*
+        // * Human Move String: Description of a black rook at %1$s capturing a bishop
+        // at
+        // * %2$s
+        // */
+        // "Black rook at %1$s takes the white bishop at %2$s",
+        // /*
+        // * Human Move String: Description of a black rook at %1$s capturing a queen at
+        // * %2$s
+        // */
+        // "Black rook at %1$s takes the white queen at %2$s",
+        // /*
+        // * Human Move String: Description of a black knight moving from %1$s to %2$s,
+        // * e.g. 'b8 to c6'
+        // */
+        // "Black knight moves from %1$s to %2$s",
+        // /*
+        // * Human Move String: Description of a black knight at %1$s capturing a pawn
+        // at
+        // * %2$s
+        // */
+        // "Black knight at %1$s takes the white pawn at %2$s",
+        // /*
+        // * Human Move String: Description of a black knight at %1$s capturing a rook
+        // at
+        // * %2$s
+        // */
+        // "Black knight at %1$s takes the white rook at %2$s",
+        // /*
+        // * Human Move String: Description of a black knight at %1$s capturing a knight
+        // * at %2$s
+        // */
+        // "Black knight at %1$s takes the white knight at %2$s",
+        // /*
+        // * Human Move String: Description of a black knight at %1$s capturing a bishop
+        // * at %2$s
+        // */
+        // "Black knight at %1$s takes the white bishop at %2$s",
+        // /*
+        // * Human Move String: Description of a black knight at %1$s capturing a queen
+        // at
+        // * %2$s
+        // */
+        // "Black knight at %1$s takes the white queen at %2$s",
+        // /*
+        // * Human Move String: Description of a black bishop moving from %1$s to %2$s,
+        // * e.g. 'f8 to b3'
+        // */
+        // "Black bishop moves from %1$s to %2$s",
+        // /*
+        // * Human Move String: Description of a black bishop at %1$s capturing a pawn
+        // at
+        // * %2$s
+        // */
+        // "Black bishop at %1$s takes the white pawn at %2$s",
+        // /*
+        // * Human Move String: Description of a black bishop at %1$s capturing a rook
+        // at
+        // * %2$s
+        // */
+        // "Black bishop at %1$s takes the white rook at %2$s",
+        // /*
+        // * Human Move String: Description of a black bishop at %1$s capturing a knight
+        // * at %2$s
+        // */
+        // "Black bishop at %1$s takes the white knight at %2$s",
+        // /*
+        // * Human Move String: Description of a black bishop at %1$s capturing a bishop
+        // * at %2$s
+        // */
+        // "Black bishop at %1$s takes the white bishop at %2$s",
+        // /*
+        // * Human Move String: Description of a black bishop at %1$s capturing a queen
+        // at
+        // * %2$s
+        // */
+        // "Black bishop at %1$s takes the white queen at %2$s",
+        // /*
+        // * Human Move String: Description of a black queen moving from %1$s to %2$s,
+        // * e.g. 'd8 to d5'
+        // */
+        // "Black queen moves from %1$s to %2$s",
+        // /*
+        // * Human Move String: Description of a black queen at %1$s capturing a pawn at
+        // * %2$s
+        // */
+        // "Black queen at %1$s takes the white pawn at %2$s",
+        // /*
+        // * Human Move String: Description of a black queen at %1$s capturing a rook at
+        // * %2$s
+        // */
+        // "Black queen at %1$s takes the white rook at %2$s",
+        // /*
+        // * Human Move String: Description of a black queen at %1$s capturing a knight
+        // at
+        // * %2$s
+        // */
+        // "Black queen at %1$s takes the white knight at %2$s",
+        // /*
+        // * Human Move String: Description of a black queen at %1$s capturing a bishop
+        // at
+        // * %2$s
+        // */
+        // "Black queen at %1$s takes the white bishop at %2$s",
+        // /*
+        // * Human Move String: Description of a black queen at %1$s capturing a queen
+        // at
+        // * %2$s
+        // */
+        // "Black queen at %1$s takes the white queen at %2$s",
+        // /*
+        // * Human Move String: Description of a black king moving from %1$s to %2$s,
+        // e.g.
+        // * 'e8 to f8'
+        // */
+        // "Black king moves from %1$s to %2$s",
+        // /*
+        // * Human Move String: Description of a black king at %1$s capturing a pawn at
+        // * %2$s
+        // */
+        // "Black king at %1$s takes the white pawn at %2$s",
+        // /*
+        // * Human Move String: Description of a black king at %1$s capturing a rook at
+        // * %2$s
+        // */
+        // "Black king at %1$s takes the white rook at %2$s",
+        // /*
+        // * Human Move String: Description of a black king at %1$s capturing a knight
+        // at
+        // * %2$s
+        // */
+        // "Black king at %1$s takes the white knight at %2$s",
+        // /*
+        // * Human Move String: Description of a black king at %1$s capturing a bishop
+        // at
+        // * %2$s
+        // */
+        // "Black king at %1$s takes the white bishop at %2$s",
+        // /*
+        // * Human Move String: Description of a black king at %1$s capturing a queen at
+        // * %2$s"
+        // */
+        // "Black king at %1$s takes the white queen at %2$s" };
 
-        var moveText = "";
-        switch (scene.moveFormat) {
-            case "human":
-                if (move.castlingRook != null) {
-                    if (move.f0 < move.f1 && move.r0 == 0) {
-                        moveText = "White castles kingside";
-                    } else if (move.f1 < move.f0 && move.r0 == 0) {
-                        moveText = "White castles queenside";
-                    } else if (move.f0 < move.f1 && move.r0 == 7) {
-                        moveText = "Black castles kingside";
-                    } else if (move.f1 < move.f0 && move.r0 == 7) {
-                        moveText = "Black castles queenside";
-                    } else {
-                        throw assertNotReached();
-                    }
-                } else {
-                    int index;
-                    if (move.victim == null) {
-                        index = 0;
-                    } else {
-                        index = move.victim.type.ordinal() + 1;
-                    }
-                    index += move.piece.type.ordinal() * 6;
-                    if (move.piece.player.color == Color.BLACK) {
-                        index += 36;
-                    }
+        // var moveText = "";
+        // switch (scene.moveFormat) {
+        // case "human":
+        // if (move.castlingRook != null) {
+        // if (move.f0 < move.f1 && move.r0 == 0) {
+        // moveText = "White castles kingside";
+        // } else if (move.f1 < move.f0 && move.r0 == 0) {
+        // moveText = "White castles queenside";
+        // } else if (move.f0 < move.f1 && move.r0 == 7) {
+        // moveText = "Black castles kingside";
+        // } else if (move.f1 < move.f0 && move.r0 == 7) {
+        // moveText = "Black castles queenside";
+        // } else {
+        // throw assertNotReached();
+        // }
+        // } else {
+        // int index;
+        // if (move.victim == null) {
+        // index = 0;
+        // } else {
+        // index = move.victim.type.ordinal() + 1;
+        // }
+        // index += move.piece.type.ordinal() * 6;
+        // if (move.piece.player.color == Color.BLACK) {
+        // index += 36;
+        // }
 
-                    var start = String.format("%c%d", 'a' + move.f0, move.r0 + 1);
-                    var end = String.format("%c%d", 'a' + move.f1, move.r1 + 1);
-                    var template = humanDescription[index];
-                    if (move.enPassant) {
-                        if (move.r0 < move.r1) { /*
-                                                  * Human Move String: Description of a white pawn at %1$s capturing a
-                                                  * pawn at %2$s en passant
-                                                  */
-                            template = "White pawn at %1$s takes the black pawn at %2$s en passant";
-                        } else { /*
-                                  * Human Move String: Description of a black pawn at %1$s capturing a pawn at
-                                  * %2$s en passant
-                                  */
-                            template = "Black pawn at %1$s takes white pawn at %2$s en passant";
-                        }
-                    }
-                    moveText = String.format(template, start, end);
-                }
+        // var start = String.format("%c%d", 'a' + move.f0, move.r0 + 1);
+        // var end = String.format("%c%d", 'a' + move.f1, move.r1 + 1);
+        // var template = humanDescription[index];
+        // if (move.enPassant) {
+        // if (move.r0 < move.r1) { /*
+        // * Human Move String: Description of a white pawn at %1$s capturing a
+        // * pawn at %2$s en passant
+        // */
+        // template = "White pawn at %1$s takes the black pawn at %2$s en passant";
+        // } else { /*
+        // * Human Move String: Description of a black pawn at %1$s capturing a pawn at
+        // * %2$s en passant
+        // */
+        // template = "Black pawn at %1$s takes white pawn at %2$s en passant";
+        // }
+        // }
+        // moveText = String.format(template, start, end);
+        // }
 
-                break;
+        // break;
 
-            case "san":
-                moveText = move.getSan();
-                break;
+        // case "san":
+        // moveText = move.getSan();
+        // break;
 
-            case "fan":
-                moveText = move.getFan();
-                break;
+        // case "fan":
+        // moveText = move.getFan();
+        // break;
 
-            case "lan":
-                // Fall through
-            default:
-                moveText = move.getLan();
-                break;
-        }
+        // case "lan":
+        // // Fall through
+        // default:
+        // moveText = move.getLan();
+        // break;
+        // }
     }
 
     public void move(ChessMove m) {
         /* Automatically return view to the present */
-        scene.moveNumber = -1;
+        // scene.moveNumber = -1;
 
         var model = (MutableComboBoxModel<String>) historyCombo.getModel();
         setMoveText(model, m);
@@ -838,7 +870,7 @@ public class ChessWindow extends JFrame {
         model.removeElementAt(model.getSize() - 1);
 
         /* Always undo from the most recent move */
-        scene.moveNumber = -1;
+        // scene.moveNumber = -1;
 
         /* Go back one */
         historyCombo.setSelectedIndex(model.getSize() - 1);
@@ -852,13 +884,14 @@ public class ChessWindow extends JFrame {
 
     /**
      * Constant text scaling for the window
+     *
      * @param comp the window
      * @param font the font to update
      */
-    public void updateFont(Component comp, Font font){
+    public void updateFont(Component comp, Font font) {
         comp.setFont(font);
         if (comp instanceof Container) {
-            for (Component comp2  : ((Container) comp).getComponents()) {
+            for (Component comp2 : ((Container) comp).getComponents()) {
                 updateFont(comp2, font);
             }
         }
