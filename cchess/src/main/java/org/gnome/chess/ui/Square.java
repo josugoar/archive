@@ -83,10 +83,10 @@ public class Square extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (piece != null) {
-            g.drawImage(piece.pieceImage, 0, 0, getWidth(), getHeight(), this);
+            g.drawImage(piece.pieceImage, (int) ((getWidth()-(getWidth() * 0.7))/2), (int) ((getHeight()-(getHeight() * 0.7))/2), (int) (getWidth() * 0.7), (int) (getHeight() * 0.7), this);
         }
         if (((ChessBoard) getParent()).selectedSquare == this) {
-            g.drawImage(piece.pieceImage, 0, 0, (int) (getWidth() * 0.7), (int) (getHeight() * 0.7), this);
+            g.drawImage(piece.pieceImage, 0, 0, getWidth(), getHeight(), this);
         }
     }
 
