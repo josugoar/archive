@@ -13,54 +13,46 @@ public class Piece {
     Color pieceColor;
     BufferedImage pieceImage;
 
-    public Piece(PieceType pieceType, Color pieceColor){
+    public Piece(PieceType pieceType, Color pieceColor) {
         this.pieceColor = pieceColor;
         this.pieceType = pieceType;
         String pieceName = "";
 
-        switch (pieceColor) {
-            case WHITE:
-                pieceName += "white";
-                break;
-            case BLACK:
-                pieceName += "black";
-                break;
-        }
         switch (pieceType) {
             case PAWN:
-                pieceName += "Pawn";
-                break;        
+                pieceName = Config.getPawn(pieceColor == Color.WHITE);
+                break;
             case ROOK:
-                pieceName += "Rook";
+                pieceName = Config.getRook(pieceColor == Color.WHITE);
                 break;
             case KNIGHT:
-                pieceName += "Knight";
+                pieceName = Config.getKnight(pieceColor == Color.WHITE);
                 break;
             case BISHOP:
-                pieceName += "Bishop";
+                pieceName = Config.getBishop(pieceColor == Color.WHITE);
                 break;
             case QUEEN:
-                pieceName += "Queen";
+                pieceName = Config.getQueen(pieceColor == Color.WHITE);
                 break;
             case KING:
-                pieceName += "King";
+                pieceName = Config.getKing(pieceColor == Color.WHITE);
                 break;
         }
 
         try {
-            pieceImage = ImageIO.read(getClass().getClassLoader().getResource("pieces/simple/"+pieceName+".png"));
+            pieceImage = ImageIO.read(getClass().getClassLoader().getResource(pieceName));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public static Piece createWhite(PieceType type){
+    public static Piece createWhite(PieceType type) {
         return new Piece(type, Color.WHITE);
     }
 
-    public static Piece createBlack(PieceType type){
+    public static Piece createBlack(PieceType type) {
         return new Piece(type, Color.BLACK);
     }
-    
+
 }
