@@ -1,20 +1,22 @@
 package org.gnome.chess.ui;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import javax.swing.JFrame;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import org.gnome.chess.lib.ChessGame;
 import org.gnome.chess.lib.ChessGame.MovedSource;
+import org.gnome.chess.util.Handler;
 import org.gnome.chess.lib.ChessPiece;
 import org.gnome.chess.lib.PGNError;
-import org.gnome.chess.lib.PieceType;
 
 public class ChessBoard extends JPanel {
 
@@ -24,14 +26,10 @@ public class ChessBoard extends JPanel {
     ChessGame game = null;
     Square selectedSquare = null;
 
-    public ChessBoard() {
+    private ChessWindow window;
 
-        try {
-            game = new ChessGame();
-            game.start();
-        } catch (PGNError e) {
-            e.printStackTrace();
-        }
+    public ChessBoard( ChessWindow window ) {
+
         setLayout(new GridLayout(8, 8));
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -40,23 +38,37 @@ public class ChessBoard extends JPanel {
                 add(square);
             }
         }
-        processFen(ChessGame.STANDARD_SETUP);
-        game.moved.connect((MovedSource s) -> {
-            processFen(s.getSource().moveStack.get(0).getFen());
-            return Void.TYPE;
-        });
+
+        try {
+            setGame(new ChessGame());
+        } catch (PGNError e) {
+            e.printStackTrace();
+        }
+
+        game.moved.connect(handler);
+
+        this.window = window;
+
+        setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.BLACK));
     }
 
     public int index = 0;
+
+    Handler<MovedSource, Class<Void>> handler = (MovedSource s) -> {
+        processFen(s.getSource().moveStack.get(0).getFen());
+        window.historyCombo.addItem(s.getMove().getSan());
+        window.historyCombo.setSelectedIndex(window.historyCombo.getModel().getSize()-1);
+        if (game.getCurrentState().isInCheckmate(game.getCurrentPlayer())) {
+            JOptionPane.showMessageDialog(null, "The winner is: " + game.getOpponent().color.toString());
+        }
+        return Void.TYPE;
+    };
 
     public void setGame(ChessGame game) {
         this.game = game;
         game.start();
         processFen(game.getCurrentState().getFen());
-        game.moved.connect((MovedSource s) -> {
-            processFen(s.getSource().moveStack.get(0).getFen());
-            return Void.TYPE;
-        });
+        game.moved.connect(handler);
     }
 
     public void recursiveProcessFen(Iterator<ChessPiece> piece, int i) {
@@ -64,12 +76,19 @@ public class ChessBoard extends JPanel {
             ChessPiece chessPiece = piece.next();
             int rank = 7 - i / 8;
             int file = i % 8;
-            board[rank][file].setPiece(null);
             if (chessPiece != null) {
-                board[rank][file].setPiece(new Piece(chessPiece.type, chessPiece.getColor()));
+                if(board[rank][file].piece==null || board[rank][file].piece.pieceType!=chessPiece.type || board[rank][file].piece.pieceColor!=chessPiece.getColor()){
+                    board[rank][file].setPiece(new Piece(chessPiece.type, chessPiece.getColor()));
+                    board[rank][file].repaint();
+                    board[rank][file].revalidate();
+                }
+            } else {
+                if(board[rank][file].piece!=null){
+                    board[rank][file].setPiece(null);
+                    board[rank][file].repaint();
+                    board[rank][file].revalidate();
+                }
             }
-            board[rank][file].repaint();
-            board[rank][file].revalidate();
             recursiveProcessFen(piece, i+1);
         }
     }
@@ -129,17 +148,6 @@ public class ChessBoard extends JPanel {
     //     board[7][7].setPiece(Piece.createWhite(PieceType.ROOK));
 
     // }
-
-    public static void main(String[] args) {
-
-        ChessBoard board = new ChessBoard();
-        JFrame frame = new JFrame();
-        frame.setLayout(new FlowLayout());
-        frame.setVisible(true);
-        frame.add(board);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    }
 
     @Override
     public Dimension getPreferredSize() {

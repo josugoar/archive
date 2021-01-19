@@ -79,6 +79,8 @@ public class ChessApplication extends Thread {
         actionEntries.put(QUIT_ACTION_NAME, quitCb);
 
         window = new ChessWindow(this);
+        window.setBounds(0, 0, 800, 800);
+        window.setLocationRelativeTo(null);
         window.setVisible(true);
     }
 
@@ -89,9 +91,16 @@ public class ChessApplication extends Thread {
     };
 
     public ActionListener undoMoveCb = (ActionEvent e) -> {
+        if(window.board.game.moveStack.size()<=2){
+            return;
+        }
         window.board.game.getCurrentPlayer().doUndo();
         if (window.board.index != 0) {
             window.board.index += 1;
+        }
+        if(window.historyCombo.getModel().getSize()>1){
+            window.historyCombo.removeItemAt(window.historyCombo.getModel().getSize()-1);
+            window.historyCombo.removeItemAt(window.historyCombo.getModel().getSize()-1);
         }
         window.board.processFen(window.board.game.getCurrentState().getFen());
         window.repaint();

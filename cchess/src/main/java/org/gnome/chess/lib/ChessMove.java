@@ -76,7 +76,7 @@ public class ChessMove {
         }
 
         var builder = new StringBuilder();
-        builder.append(pieceNames[promotionPiece.type.ordinal()]);
+        builder.append(pieceNames[piece.type.ordinal()]);
         if (ambiguousFile) {
             builder.append(String.format("%c", 'a' + f0));
         }

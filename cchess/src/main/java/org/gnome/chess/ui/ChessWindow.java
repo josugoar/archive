@@ -56,7 +56,7 @@ public class ChessWindow extends JFrame {
 
     public ChessScene scene;
 
-    public ChessBoard board = new ChessBoard();
+    public ChessBoard board = new ChessBoard( this );
 
     public ChessScene getScene(ChessScene scene) {
         return scene;
@@ -88,6 +88,8 @@ public class ChessWindow extends JFrame {
     JButton undoButton;
     JButton saveButton;
 
+    public JComboBox<String> historyCombo;
+
     {
         infoBar = new JPanel(new GridBagLayout());
         infoBar.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 3));
@@ -104,6 +106,7 @@ public class ChessWindow extends JFrame {
                 // pgnGame = new PGNGame(pgnGame.getId() + 1);
                 board.index = 0;
                 board.setGame(new ChessGame());
+                historyCombo.removeAllItems();
             } catch (PGNError e1) {
                 e1.printStackTrace();
             }
@@ -127,7 +130,7 @@ public class ChessWindow extends JFrame {
         gbcAppMenu.insets = new Insets(0, 3, 0, 3);
         gbcAppMenu.gridx = 5;
         // appMenuButton.addActionListener(l); // TODO
-        infoBar.add(appMenuButton, gbcAppMenu);
+        //infoBar.add(appMenuButton, gbcAppMenu);
 
         saveButton = new JButton("Save");
         saveButton.addActionListener((ActionEvent e) -> {
@@ -153,7 +156,7 @@ public class ChessWindow extends JFrame {
 
         });
 
-        infoBar.add(saveButton);
+        infoBar.add(saveButton, gbcAppMenu);
 
         JButton openButton = new JButton("Open");
         openButton.addActionListener((ActionEvent e) -> {
@@ -172,8 +175,12 @@ public class ChessWindow extends JFrame {
                         for (int i = result.get(0).moves.size() - 1; i >= 0; i--) {
                             board.game.getCurrentPlayer().doMove(result.get(0).moves.get(i), true);
                         }
+                        historyCombo.removeAllItems();
+                        for (ChessState state : board.game.moveStack) {
+                            historyCombo.addItem(state.lastMove.getSan());
+                        }
                     }
-
+                    
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 } catch (PGNError e1) {
@@ -209,7 +216,7 @@ public class ChessWindow extends JFrame {
         gbcPauseResume.gridx = 3;
         // pauseResumeButton.setIcon(defaultIcon); // TODO
         pauseResumeButton.setVerticalAlignment(JButton.CENTER);
-        infoBar.add(pauseResumeButton, gbcPauseResume);
+        //infoBar.add(pauseResumeButton, gbcPauseResume);
     }
 
     private JPanel navigationBox;
@@ -257,7 +264,7 @@ public class ChessWindow extends JFrame {
         buttonPanel.add(lastMoveButton);
     }
 
-    private JComboBox<String> historyCombo;
+    
 
     {
         historyCombo = new JComboBox<>();
