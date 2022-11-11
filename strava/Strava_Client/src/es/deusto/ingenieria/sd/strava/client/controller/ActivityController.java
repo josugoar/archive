@@ -1,3 +1,3 @@
-public class AthleteActiviyController {
+public class ActiviyController {
 
 }
