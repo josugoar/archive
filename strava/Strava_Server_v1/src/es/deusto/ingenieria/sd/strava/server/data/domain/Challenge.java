@@ -8,7 +8,7 @@ public class Challenge {
     private String name;
     private Date startDate;
     private Date endDate;
-    private float distance;
+    private Float distance;
     private Duration time;
     private boolean isCycling;
     private boolean isRunning;
