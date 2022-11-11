@@ -14,9 +14,13 @@ public class Athlete {
     private int maxHeartrate;
     private Date dateofbirth;
     private List<Activity> activities;
+    private List<Challenge> challenges;
 
     public List<Activity> getActivities() {
         return activities;
+    }
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
     }
     public void addActivities(Activity activity) {
         this.activities.add(activity);
@@ -120,6 +124,16 @@ public class Athlete {
         } else if (!activities.equals(other.activities))
             return false;
         return true;
+    }
+    public List<Challenge> getChallenges() {
+        return challenges;
+    }
+    public void setChallenges(List<Challenge> challenges) {
+        this.challenges = challenges;
+    }
+
+    public void addChallenge(Challenge challenge) {
+        this.challenges.add(challenge);
     }
 
 

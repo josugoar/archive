@@ -11,6 +11,10 @@ public class Activity {
     private String type;
     private Date startDate;
 
+    public boolean checkType() {
+        return type.equals("running") || type.equals("cycling");
+    }
+
     public String getName() {
         return name;
     }

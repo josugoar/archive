@@ -1,21 +1,21 @@
-package es.deusto.ingenieria.sd.strava.server.data.domain;
+package es.deusto.ingenieria.sd.strava.server.data.dto;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.util.Date;
 
-public class Challenge {
+//This class implements DTO pattern
+public class ChallengeDTO implements Serializable {
+	//This attribute is needed to implement the "Serializable" interface.
+	private static final long serialVersionUID = 1L;
 
-    private String name;
+	private String name;
     private Date startDate;
     private Date endDate;
     private float distance;
     private Duration time;
     private boolean isCycling;
     private boolean isRunning;
-
-    public boolean isActive() {
-        return new Date().compareTo(endDate) < 0;
-    }
 
     public String getName() {
         return name;
@@ -64,45 +64,4 @@ public class Challenge {
         return "Challenge [name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", distance="
                 + distance + ", time=" + time + ", isCycling=" + isCycling + ", isRunning=" + isRunning + "]";
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Challenge other = (Challenge) obj;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (startDate == null) {
-            if (other.startDate != null)
-                return false;
-        } else if (!startDate.equals(other.startDate))
-            return false;
-        if (endDate == null) {
-            if (other.endDate != null)
-                return false;
-        } else if (!endDate.equals(other.endDate))
-            return false;
-        if (Float.floatToIntBits(distance) != Float.floatToIntBits(other.distance))
-            return false;
-        if (time == null) {
-            if (other.time != null)
-                return false;
-        } else if (!time.equals(other.time))
-            return false;
-        if (isCycling != other.isCycling)
-            return false;
-        if (isRunning != other.isRunning)
-            return false;
-        return true;
-    }
-
-
-
 }
