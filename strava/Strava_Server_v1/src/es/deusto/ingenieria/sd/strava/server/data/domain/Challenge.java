@@ -76,8 +76,11 @@ public class Challenge {
     }
 
     public boolean checkDistance() {
-        if (distance == null) {
+        if (distance == null && time == null || distance != null && time != null) {
             return false;
+        }
+        if (distance == null) {
+            return true;
         }
         return distance >= 0;
     }
@@ -91,8 +94,11 @@ public class Challenge {
     }
 
     public boolean checkTime() {
-        if (time == null) {
+        if (distance == null && time == null || distance != null && time != null) {
             return false;
+        }
+        if (time == null) {
+            return true;
         }
         return !time.isNegative();
     }
