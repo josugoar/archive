@@ -1,14 +1,10 @@
-package es.deusto.ingenieria.sd.auctions.client;
+package es.deusto.ingenieria.sd.strava.client;
 
-import java.util.List;
+import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
+import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
+import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
+import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
 
-import es.deusto.ingenieria.sd.auctions.client.controller.BidController;
-import es.deusto.ingenieria.sd.auctions.client.controller.LoginController;
-import es.deusto.ingenieria.sd.auctions.client.gui.BidWindow;
-import es.deusto.ingenieria.sd.auctions.client.gui.LoginDialog;
-import es.deusto.ingenieria.sd.auctions.client.remote.ServiceLocator;
-import es.deusto.ingenieria.sd.auctions.server.data.dto.ArticleDTO;
-import es.deusto.ingenieria.sd.auctions.server.data.dto.CategoryDTO;
 
 public class MainProgram {
 
