@@ -1,3 +1,3 @@
-public class ActiviyController {
+public class ActivityController {
 
 }
