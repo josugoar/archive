@@ -15,7 +15,7 @@ public class Challenge {
     private boolean isRunning;
 
     public boolean checkChallenge() {
-        return checkId() && checkName() && checkStartDate() && checkEndDate() && checkDistance() && checkTime() && checkType();
+        return checkId() && checkName() && checkDate() && checkDistance() && checkTime() && checkType();
     }
 
     public boolean isActive() {
@@ -50,7 +50,7 @@ public class Challenge {
         this.name = name;
     }
 
-    public boolean checkStartDate() {
+    public boolean checkDate() {
         if (startDate == null) {
             return false;
         }
@@ -67,17 +67,6 @@ public class Challenge {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
-    }
-
-    public boolean checkEndDate() {
-        if (startDate == null) {
-            return false;
-        }
-        if (endDate == null) {
-            return false;
-        }
-
-        return startDate.compareTo(endDate) >= 0;
     }
 
     public Date getEndDate() {

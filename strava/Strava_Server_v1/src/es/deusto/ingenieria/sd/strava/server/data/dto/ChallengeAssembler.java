@@ -28,6 +28,7 @@ public class ChallengeAssembler {
         dto.setRunning(challenge.isRunning());
         dto.setStartDate(challenge.getStartDate());
         dto.setTime(challenge.getTime());
+        dto.setId(challenge.getId());
 
         return dto;
     }
