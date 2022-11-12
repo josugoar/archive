@@ -1,18 +1,19 @@
 package es.deusto.ingenieria.sd.strava.server.test;
 
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
+import es.deusto.ingenieria.sd.strava.server.remote.IRemoteFacade;
 import es.deusto.ingenieria.sd.strava.server.remote.RemoteFacade;
 
-// TODO
 public class LocalTest {
 
-	public static void main(String[] args) {
-		RemoteFacade facade = null;
+	public static void main(String[] args) throws RemoteException {
+		IRemoteFacade facade = new RemoteFacade();
 		long token = 0l;
 		String pasword = org.apache.commons.codec.digest.DigestUtils.sha1Hex("$!9PhNz,");
 
