@@ -8,57 +8,107 @@ public class Challenge {
     private String name;
     private Date startDate;
     private Date endDate;
-    private Float distance;
+    private float distance;
     private Duration time;
     private boolean isCycling;
     private boolean isRunning;
 
+    public boolean checkChallenge() {
+        return checkStartDate() && checkEndDate() && checkDistance() && checkTime() && checkType();
+    }
+
     public boolean isActive() {
+        if (endDate == null) {
+            return false;
+        }
+
         return new Date().compareTo(endDate) < 0;
     }
 
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
+    public boolean checkStartDate() {
+        if (endDate == null) {
+            return false;
+        }
+
+        return startDate.compareTo(endDate) <= 0;
+    }
+
     public Date getStartDate() {
         return startDate;
     }
+
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
+
+    public boolean checkEndDate() {
+        if (startDate == null) {
+            return false;
+        }
+
+        return startDate.compareTo(endDate) >= 0;
+    }
+
     public Date getEndDate() {
         return endDate;
     }
+
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public boolean checkDistance() {
+        return distance >= 0;
+    }
+
     public float getDistance() {
         return distance;
     }
+
     public void setDistance(float distance) {
         this.distance = distance;
     }
+
+    public boolean checkTime() {
+        return !time.isNegative();
+    }
+
     public Duration getTime() {
         return time;
     }
+
     public void setTime(Duration time) {
         this.time = time;
     }
+
+    public boolean checkType() {
+        return isCycling && !isRunning || !isCycling && isRunning;
+    }
+
     public boolean isCycling() {
         return isCycling;
     }
+
     public void setCycling(boolean isCycling) {
         this.isCycling = isCycling;
     }
+
     public boolean isRunning() {
         return isRunning;
     }
+
     public void setRunning(boolean isRunning) {
         this.isRunning = isRunning;
     }
+
     @Override
     public String toString() {
         return "Challenge [name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", distance="
@@ -102,7 +152,5 @@ public class Challenge {
             return false;
         return true;
     }
-
-
 
 }

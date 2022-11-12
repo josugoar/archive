@@ -11,8 +11,8 @@ public class Activity {
     private String type;
     private Date startDate;
 
-    public boolean checkType() {
-        return type.equals("running") || type.equals("cycling");
+    public boolean checkActivity() {
+        return checkDistance() && checkElapsedTime() && checkType() && checkElapsedTime();
     }
 
     public String getName() {
@@ -23,6 +23,10 @@ public class Activity {
         this.name = name;
     }
 
+    public boolean checkDistance() {
+        return distance >= 0;
+    }
+
     public float getDistance() {
         return distance;
     }
@@ -31,12 +35,20 @@ public class Activity {
         this.distance = distance;
     }
 
+    public boolean checkElapsedTime() {
+        return !elapsedTime.isNegative();
+    }
+
     public Duration getElapsedTime() {
         return elapsedTime;
     }
 
     public void setElapsedTime(Duration elapsed_time) {
         this.elapsedTime = elapsed_time;
+    }
+
+    public boolean checkType() {
+        return type.equals("running") || type.equals("cycling");
     }
 
     public String getType() {
@@ -94,6 +106,5 @@ public class Activity {
             return false;
         return true;
     }
-
 
 }

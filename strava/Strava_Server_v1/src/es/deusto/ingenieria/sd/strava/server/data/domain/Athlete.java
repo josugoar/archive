@@ -16,64 +16,133 @@ public class Athlete {
     private List<Activity> activities;
     private List<Challenge> challenges;
 
-    public List<Activity> getActivities() {
-        return activities;
-    }
-    public void setActivities(List<Activity> activities) {
-        this.activities = activities;
-    }
-    public void addActivities(Activity activity) {
-        this.activities.add(activity);
+    public boolean checkAthlete() {
+        return checkEmail() && checkPassword() && checkWeight() && checkHeight() && checkRestingHeartrate() && checkMaxHeartrate();
     }
 
     public String getName() {
         return name;
     }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
+
     public void setName(String name) {
         this.name = name;
     }
+
+    public boolean checkEmail() {
+        if (email == null) {
+            return false;
+        }
+
+        return email.endsWith("@gmail.com");
+    }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public boolean checkPassword() {
+        return true;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean checkWeight() {
+        return weight > 0;
+    }
+
     public float getWeight() {
         return weight;
     }
+
     public void setWeight(float weight) {
         this.weight = weight;
     }
+
+    public boolean checkHeight() {
+        return height > 0;
+    }
+
     public int getHeight() {
         return height;
     }
+
     public void setHeight(int height) {
         this.height = height;
     }
+
+    public boolean checkRestingHeartrate() {
+        if (restingHeartrate > maxHeartrate) {
+            return false;
+        }
+
+        return restingHeartrate >= 0;
+    }
+
     public int getRestingHeartrate() {
         return restingHeartrate;
     }
+
     public void setRestingHeartrate(int restingHeartrate) {
         this.restingHeartrate = restingHeartrate;
     }
+
+    public boolean checkMaxHeartrate() {
+        if (maxHeartrate < restingHeartrate) {
+            return false;
+        }
+
+        return maxHeartrate >= 0;
+    }
+
     public int getMaxHeartrate() {
         return maxHeartrate;
     }
+
     public void setMaxHeartrate(int maxHeartrate) {
         this.maxHeartrate = maxHeartrate;
     }
+
     public Date getDateofbirth() {
         return dateofbirth;
     }
     public void setDateofbirth(Date dateofbirth) {
         this.dateofbirth = dateofbirth;
     }
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
+
+    public void addActivities(Activity activity) {
+        this.activities.add(activity);
+    }
+
+    public List<Challenge> getChallenges() {
+        return challenges;
+    }
+
+    public void setChallenges(List<Challenge> challenges) {
+        this.challenges = challenges;
+    }
+
+    public void addChallenge(Challenge challenge) {
+        this.challenges.add(challenge);
+    }
+
     @Override
     public String toString() {
         return "Athlete [name=" + name + ", email=" + email + ", password=" + password + ", weight=" + weight
@@ -125,17 +194,5 @@ public class Athlete {
             return false;
         return true;
     }
-    public List<Challenge> getChallenges() {
-        return challenges;
-    }
-    public void setChallenges(List<Challenge> challenges) {
-        this.challenges = challenges;
-    }
-
-    public void addChallenge(Challenge challenge) {
-        this.challenges.add(challenge);
-    }
-
-
 
 }
