@@ -19,45 +19,59 @@ public class AthleteDTO implements Serializable {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     public float getWeight() {
         return weight;
     }
+
     public void setWeight(float weight) {
         this.weight = weight;
     }
+
     public int getHeight() {
         return height;
     }
+
     public void setHeight(int height) {
         this.height = height;
     }
+
     public int getRestingHeartrate() {
         return restingHeartrate;
     }
+
     public void setRestingHeartrate(int restingHeartrate) {
         this.restingHeartrate = restingHeartrate;
     }
+
     public int getMaxHeartrate() {
         return maxHeartrate;
     }
+
     public void setMaxHeartrate(int maxHeartrate) {
         this.maxHeartrate = maxHeartrate;
     }
+
     public Date getDateofbirth() {
         return dateofbirth;
     }
+
     public void setDateofbirth(Date dateofbirth) {
         this.dateofbirth = dateofbirth;
     }
+
     @Override
     public String toString() {
         return "Athlete [name=" + name + ", email=" + email + ", weight=" + weight
