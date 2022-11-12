@@ -8,13 +8,13 @@ public class Challenge {
     private String name;
     private Date startDate;
     private Date endDate;
-    private float distance;
+    private Float distance;
     private Duration time;
     private boolean isCycling;
     private boolean isRunning;
 
     public boolean checkChallenge() {
-        return checkStartDate() && checkEndDate() && checkDistance() && checkTime() && checkType();
+        return checkName() && checkStartDate() && checkEndDate() && checkDistance() && checkTime() && checkType();
     }
 
     public boolean isActive() {
@@ -23,6 +23,10 @@ public class Challenge {
         }
 
         return new Date().compareTo(endDate) < 0;
+    }
+
+    public boolean checkName() {
+        return name != null;
     }
 
     public String getName() {
@@ -34,6 +38,9 @@ public class Challenge {
     }
 
     public boolean checkStartDate() {
+        if (startDate == null) {
+            return false;
+        }
         if (endDate == null) {
             return false;
         }
@@ -53,6 +60,9 @@ public class Challenge {
         if (startDate == null) {
             return false;
         }
+        if (endDate == null) {
+            return false;
+        }
 
         return startDate.compareTo(endDate) >= 0;
     }
@@ -66,6 +76,9 @@ public class Challenge {
     }
 
     public boolean checkDistance() {
+        if (distance == null) {
+            return false;
+        }
         return distance >= 0;
     }
 
@@ -78,6 +91,9 @@ public class Challenge {
     }
 
     public boolean checkTime() {
+        if (time == null) {
+            return false;
+        }
         return !time.isNegative();
     }
 

@@ -6,13 +6,17 @@ import java.util.Date;
 public class Activity {
 
     private String name;
-    private float distance;
+    private Float distance;
     private Duration elapsedTime;
     private String type;
     private Date startDate;
 
     public boolean checkActivity() {
-        return checkDistance() && checkElapsedTime() && checkType() && checkElapsedTime();
+        return checkStartDate() && checkName() && checkDistance() && checkElapsedTime() && checkType() && checkElapsedTime();
+    }
+
+    public boolean checkName() {
+        return name != null;
     }
 
     public String getName() {
@@ -24,6 +28,9 @@ public class Activity {
     }
 
     public boolean checkDistance() {
+        if (distance == null) {
+            return false;
+        }
         return distance >= 0;
     }
 
@@ -36,6 +43,9 @@ public class Activity {
     }
 
     public boolean checkElapsedTime() {
+        if (elapsedTime == null) {
+            return false;
+        }
         return !elapsedTime.isNegative();
     }
 
@@ -48,6 +58,9 @@ public class Activity {
     }
 
     public boolean checkType() {
+        if (type == null) {
+            return false;
+        }
         return type.equals("running") || type.equals("cycling");
     }
 
@@ -57,6 +70,10 @@ public class Activity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean checkStartDate() {
+        return startDate != null;
     }
 
     public Date getStartDate() {

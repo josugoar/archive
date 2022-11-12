@@ -1,5 +1,6 @@
 package es.deusto.ingenieria.sd.strava.server.data.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,16 +9,20 @@ public class Athlete {
     private String name;
     private String email;
     private String password;
-    private float weight;
-    private int height;
-    private int restingHeartrate;
-    private int maxHeartrate;
+    private Float weight;
+    private Integer height;
+    private Integer restingHeartrate;
+    private Integer maxHeartrate;
     private Date dateofbirth;
-    private List<Activity> activities;
-    private List<Challenge> challenges;
+    private List<Activity> activities = new ArrayList<>();
+    private List<Challenge> challenges = new ArrayList<>();
 
     public boolean checkAthlete() {
-        return checkEmail() && checkPassword() && checkWeight() && checkHeight() && checkRestingHeartrate() && checkMaxHeartrate();
+        return checkName() && checkDateofbirth() && checkEmail() && checkPassword() && checkWeight() && checkHeight() && checkRestingHeartrate() && checkMaxHeartrate();
+    }
+
+    public boolean checkName() {
+        return name != null;
     }
 
     public String getName() {
@@ -57,6 +62,9 @@ public class Athlete {
     }
 
     public boolean checkWeight() {
+        if (weight == null) {
+            return true;
+        }
         return weight > 0;
     }
 
@@ -69,6 +77,9 @@ public class Athlete {
     }
 
     public boolean checkHeight() {
+        if (height == null) {
+            return true;
+        }
         return height > 0;
     }
 
@@ -81,6 +92,12 @@ public class Athlete {
     }
 
     public boolean checkRestingHeartrate() {
+        if (restingHeartrate == null) {
+            return true;
+        }
+        if (maxHeartrate == null) {
+            return true;
+        }
         if (restingHeartrate > maxHeartrate) {
             return false;
         }
@@ -97,6 +114,12 @@ public class Athlete {
     }
 
     public boolean checkMaxHeartrate() {
+        if (restingHeartrate == null) {
+            return true;
+        }
+        if (maxHeartrate == null) {
+            return true;
+        }
         if (maxHeartrate < restingHeartrate) {
             return false;
         }
@@ -110,6 +133,10 @@ public class Athlete {
 
     public void setMaxHeartrate(int maxHeartrate) {
         this.maxHeartrate = maxHeartrate;
+    }
+
+    public boolean checkDateofbirth() {
+        return dateofbirth != null;
     }
 
     public Date getDateofbirth() {
