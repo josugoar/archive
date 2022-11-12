@@ -2,6 +2,7 @@ package es.deusto.ingenieria.sd.strava.server.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.Duration;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
-import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityDTO;
-import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeAssembler;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 import es.deusto.ingenieria.sd.strava.server.services.ActivityAppService;
@@ -46,7 +45,7 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 				this.serverState.put(token, user);
 				return(token);
 			} else {
-				throw new RemoteException("User is already logged in!");
+				throw new RemoteException("Athlete is already logged in!");
 			}
 		} else {
 			throw new RemoteException("Login fails!");
@@ -62,44 +61,68 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 			//Logout means remove the User from Server State
 			this.serverState.remove(token);
 		} else {
-			throw new RemoteException("User is not logged in!");
+			throw new RemoteException("Athlete is not logged in!");
 		}
 	}
 
 	@Override
-	public long register(String email, String password, String name, Date birthDate) throws RemoteException {
-		return 0;
-	}
-
-	@Override
-	public void createActivity(long token, ActivityDTO activity) throws RemoteException {
-
-	}
-
-	@Override
-	public void createChallenge(long token, ChallengeDTO challenge) throws RemoteException {
-
-	}
-
-	@Override
-	public List<ChallengeDTO> getActiveChallenges(long token) throws RemoteException {
+	public synchronized List<ChallengeDTO> getActiveChallenges(long token) throws RemoteException {
 		if (this.serverState.containsKey(token)) {
-			//Logout means remove the User from Server State
 			return ChallengeAssembler.getInstance().challengeToDTO(challengeService.getActiveChallenges(serverState.get(token)));
 		} else {
-			throw new RemoteException("User is not logged in!");
+			throw new RemoteException("Athlete is not logged in!");
+		}
+	}
+
+		@Override
+	public synchronized long register(String email, String password, String name, Date birthDate, float weight, int height,
+			int restingHeartrate, int maxHeartrate) throws RemoteException {
+		return athleteService.register(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
+	}
+
+	@Override
+	public synchronized void createActivity(long token, String name, float distance, Duration elapsedTime, String type,
+			Date startDate) throws RemoteException {
+		if (this.serverState.containsKey(token)) {
+			if (!activityService.createActivity(serverState.get(token), name, distance, elapsedTime, type, startDate))
+			{
+				throw new RemoteException("Bad arguments in call");
+			}
+		} else {
+			throw new RemoteException("Athlete is not logged in!");
+		}
+
+	}
+
+	@Override
+	public synchronized void createChallenge(long token, Date startDate, Date endDate, float distance, Duration time,
+			boolean isCycling, boolean isRunning) throws RemoteException {
+		if (this.serverState.containsKey(token)) {
+			if (!challengeService.createChallenge(serverState.get(token), startDate, endDate, distance, time, isRunning, isCycling))
+			{
+				throw new RemoteException("Bad arguments in call");
+			}
+		} else {
+			throw new RemoteException("Athlete is not logged in!");
+		}
+
+	}
+
+	@Override
+	public synchronized void acceptChallenge(long token, int challengeId) throws RemoteException {
+		if (this.serverState.containsKey(token)) {
+			Athlete athlete = serverState.get(token);
+			if (!challengeService.acceptChallenge(athlete, challengeService.getChallenge(challengeId)))
+			{
+				throw new RemoteException("Challenge already accepted!");
+			}
+		} else {
+			throw new RemoteException("Athlete is not logged in!");
 		}
 	}
 
 	@Override
-	public void acceptChallenge(long token, ChallengeDTO challenge) throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public float getChallengeState(ChallengeDTO challenge) throws RemoteException {
-		// TODO Auto-generated method stub
-		return 0;
+	public synchronized float getChallengeState(int challengeId) throws RemoteException {
+		return challengeService.getChallengeState(challengeService.getChallenge(challengeId));
 	}
 }
