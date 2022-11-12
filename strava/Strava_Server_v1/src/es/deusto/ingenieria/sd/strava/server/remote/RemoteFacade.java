@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
+import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityAssembler;
+import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityDTO;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeAssembler;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 import es.deusto.ingenieria.sd.strava.server.services.ActivityAppService;
@@ -75,17 +77,18 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 	}
 
 		@Override
-	public synchronized long register(String email, String password, String name, Date birthDate, float weight, int height,
-			int restingHeartrate, int maxHeartrate) throws RemoteException {
+	public synchronized long register(String email, String password, String name, Date birthDate, Float weight, Integer height,
+			Integer restingHeartrate, Integer maxHeartrate) throws RemoteException {
 		return athleteService.register(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
 	}
 
 	@Override
-	public synchronized void createActivity(long token, String name, float distance, Duration elapsedTime, String type,
+	public synchronized ActivityDTO createActivity(long token, String name, float distance, Duration elapsedTime, String type,
 			Date startDate) throws RemoteException {
 		if (this.serverState.containsKey(token)) {
-			if (!activityService.createActivity(serverState.get(token), name, distance, elapsedTime, type, startDate))
-			{
+			try {
+				return ActivityAssembler.getInstance().activityToDTO(activityService.createActivity(serverState.get(token), name, distance, elapsedTime, type, startDate));
+			} catch (Exception e) {
 				throw new RemoteException("Bad arguments in call");
 			}
 		} else {
@@ -95,11 +98,12 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 	}
 
 	@Override
-	public synchronized void createChallenge(long token, String name, Date startDate, Date endDate, float distance, Duration time,
+	public synchronized ChallengeDTO createChallenge(long token, String name, Date startDate, Date endDate, float distance, Duration time,
 			boolean isCycling, boolean isRunning) throws RemoteException {
 		if (this.serverState.containsKey(token)) {
-			if (!challengeService.createChallenge(serverState.get(token), name, startDate, endDate, distance, time, isRunning, isCycling))
-			{
+			try {
+				return ChallengeAssembler.getInstance().challengeToDTO(challengeService.createChallenge(serverState.get(token), name, startDate, endDate, distance, time, isRunning, isCycling));
+			} catch (Exception e) {
 				throw new RemoteException("Bad arguments in call");
 			}
 		} else {

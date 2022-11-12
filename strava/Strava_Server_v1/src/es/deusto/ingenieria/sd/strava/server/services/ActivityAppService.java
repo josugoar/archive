@@ -13,7 +13,8 @@ public class ActivityAppService {
         return athlete.getActivities();
     }
 
-    public boolean createActivity(Athlete athlete, String name, float distance, Duration elapsedTime, String type, Date startDate) {
+    public Activity createActivity(Athlete athlete, String name, float distance, Duration elapsedTime, String type,
+            Date startDate) throws IllegalArgumentException {
         Activity activity = new Activity();
         activity.setDistance(distance);
         activity.setElapsedTime(elapsedTime);
@@ -21,14 +22,13 @@ public class ActivityAppService {
         activity.setStartDate(startDate);
         activity.setType(type);
 
-        if (!activity.checkActivity())
-        {
-            return false;
+        if (!activity.checkActivity()) {
+            throw new IllegalArgumentException("Bad arguments!");
         }
 
         athlete.addActivities(activity);
 
-        return true;
+        return activity;
     }
 
 }

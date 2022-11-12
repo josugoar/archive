@@ -19,7 +19,7 @@ public class ActivityAssembler {
 		return instance;
 	}
 
-	public ActivityDTO ActivityToDTO(Activity activity) {
+	public ActivityDTO activityToDTO(Activity activity) {
 		ActivityDTO dto = new ActivityDTO();
 		dto.setDistance(activity.getDistance());
 		dto.setElapsedTime(activity.getElapsedTime());
@@ -30,11 +30,11 @@ public class ActivityAssembler {
 		return dto;
 	}
 
-	public List<ActivityDTO> ActivityToDTO(List<Activity> activities) {
+	public List<ActivityDTO> activityToDTO(List<Activity> activities) {
 		List<ActivityDTO> dtos = new ArrayList<>();
 
 		for (Activity activity : activities) {
-			dtos.add(this.ActivityToDTO(activity));
+			dtos.add(this.activityToDTO(activity));
 		}
 
 		return dtos;
