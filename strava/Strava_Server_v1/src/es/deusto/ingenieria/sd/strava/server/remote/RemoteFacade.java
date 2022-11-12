@@ -36,7 +36,6 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 	public synchronized long login(String email, String password) throws RemoteException {
 		System.out.println(" * RemoteFacade login(): " + email + " / " + password);
 
-		//Perform login() using LoginAppService
 		Athlete user = athleteService.login(email, password);
 
 		//If login() success user is stored in the Server State
@@ -76,10 +75,17 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 		}
 	}
 
-		@Override
+	@Override
 	public synchronized long register(String email, String password, String name, Date birthDate, Float weight, Integer height,
 			Integer restingHeartrate, Integer maxHeartrate) throws RemoteException {
-		return athleteService.register(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
+		Athlete user = athleteService.register(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
+		if (user != null) {
+			Long token = Calendar.getInstance().getTimeInMillis();
+			this.serverState.put(token, user);
+			return(token);
+		} else {
+			throw new RemoteException("Register fails!");
+		}
 	}
 
 	@Override
