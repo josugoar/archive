@@ -25,8 +25,8 @@ public class ChallengeAppService {
 
     }
 
-    public boolean createChallenge(Athlete athlete, String name, Date startDate, Date endDate, float distance, Duration time,
-            boolean isRunning, boolean isCycling) {
+    public Challenge createChallenge(Athlete athlete, String name, Date startDate, Date endDate, float distance, Duration time,
+            boolean isRunning, boolean isCycling) throws IllegalArgumentException {
         Challenge challenge = new Challenge();
         challenge.setCycling(isCycling);
         challenge.setDistance(distance);
@@ -35,15 +35,16 @@ public class ChallengeAppService {
         challenge.setRunning(isRunning);
         challenge.setStartDate(startDate);
         challenge.setTime(time);
+        challenge.setId(state.size());
 
         if (!challenge.checkChallenge()) {
-            return false;
+            throw new IllegalArgumentException("Bad arguments!");
         }
 
-        state.put(state.size(), challenge);
+        state.put(challenge.getId(), challenge);
         athlete.addChallenge(challenge);
 
-        return true;
+        return challenge;
     }
 
     public void acceptChallenge(Athlete athlete, int challengeId) throws IllegalArgumentException {

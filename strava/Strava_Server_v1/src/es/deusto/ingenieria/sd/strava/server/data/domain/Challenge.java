@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class Challenge {
 
+    private Integer id;
     private String name;
     private Date startDate;
     private Date endDate;
@@ -14,7 +15,7 @@ public class Challenge {
     private boolean isRunning;
 
     public boolean checkChallenge() {
-        return checkName() && checkStartDate() && checkEndDate() && checkDistance() && checkTime() && checkType();
+        return checkId() && checkName() && checkStartDate() && checkEndDate() && checkDistance() && checkTime() && checkType();
     }
 
     public boolean isActive() {
@@ -23,6 +24,18 @@ public class Challenge {
         }
 
         return new Date().compareTo(endDate) < 0;
+    }
+
+    public boolean checkId() {
+        return id != null;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public boolean checkName() {
@@ -146,33 +159,7 @@ public class Challenge {
         if (getClass() != obj.getClass())
             return false;
         Challenge other = (Challenge) obj;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (startDate == null) {
-            if (other.startDate != null)
-                return false;
-        } else if (!startDate.equals(other.startDate))
-            return false;
-        if (endDate == null) {
-            if (other.endDate != null)
-                return false;
-        } else if (!endDate.equals(other.endDate))
-            return false;
-        if (Float.floatToIntBits(distance) != Float.floatToIntBits(other.distance))
-            return false;
-        if (time == null) {
-            if (other.time != null)
-                return false;
-        } else if (!time.equals(other.time))
-            return false;
-        if (isCycling != other.isCycling)
-            return false;
-        if (isRunning != other.isRunning)
-            return false;
-        return true;
+        return id == other.id;
     }
 
 }

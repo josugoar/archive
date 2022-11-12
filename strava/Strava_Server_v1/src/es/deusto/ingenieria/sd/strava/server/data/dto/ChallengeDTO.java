@@ -9,6 +9,7 @@ public class ChallengeDTO implements Serializable {
 	//This attribute is needed to implement the "Serializable" interface.
 	private static final long serialVersionUID = 1L;
 
+    private Integer id;
 	private String name;
     private Date startDate;
     private Date endDate;
@@ -16,6 +17,14 @@ public class ChallengeDTO implements Serializable {
     private Duration time;
     private boolean isCycling;
     private boolean isRunning;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
