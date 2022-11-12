@@ -67,13 +67,17 @@ public class ChallengeAppService {
         }
 
         Date currentDate = new Date();
-        int relation = currentDate.compareTo(challenge.getEndDate());
 
-        if (relation >= 0) {
+        if (currentDate.after(challenge.getEndDate())) {
             return 1;
         }
 
-        return (currentDate.getTime() - challenge.getStartDate().getTime()) / (challenge.getEndDate().getTime() - challenge.getStartDate().getTime());
+        if (currentDate.before(challenge.getStartDate())) {
+            return 0;
+        }
+
+        float relation = ((float)(currentDate.getTime() - challenge.getStartDate().getTime())) / ((float)(challenge.getEndDate().getTime() - challenge.getStartDate().getTime()));
+        return relation;
     }
 
 }
