@@ -5,15 +5,15 @@ import java.util.Date;
 
 //This class implements DTO pattern
 public class AthleteDTO implements Serializable {
-    //This attribute is needed to implement the "Serializable" interface.
+    //This attribute is needed to implement the "Serializable" Integererface.
     private static final long serialVersionUID = 1L;
 
     private String name;
     private String email;
-    private float weight;
-    private int height;
-    private int restingHeartrate;
-    private int maxHeartrate;
+    private Float weight;
+    private Integer height;
+    private Integer restingHeartrate;
+    private Integer maxHeartrate;
     private Date dateofbirth;
 
     public String getName() {
@@ -32,35 +32,35 @@ public class AthleteDTO implements Serializable {
         this.email = email;
     }
 
-    public float getWeight() {
+    public Float getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(Float weight) {
         this.weight = weight;
     }
 
-    public int getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(Integer height) {
         this.height = height;
     }
 
-    public int getRestingHeartrate() {
+    public Integer getRestingHeartrate() {
         return restingHeartrate;
     }
 
-    public void setRestingHeartrate(int restingHeartrate) {
+    public void setRestingHeartrate(Integer restingHeartrate) {
         this.restingHeartrate = restingHeartrate;
     }
 
-    public int getMaxHeartrate() {
+    public Integer getMaxHeartrate() {
         return maxHeartrate;
     }
 
-    public void setMaxHeartrate(int maxHeartrate) {
+    public void setMaxHeartrate(Integer maxHeartrate) {
         this.maxHeartrate = maxHeartrate;
     }
 

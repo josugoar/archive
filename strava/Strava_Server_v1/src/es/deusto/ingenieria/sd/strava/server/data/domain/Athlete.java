@@ -68,11 +68,11 @@ public class Athlete {
         return weight > 0;
     }
 
-    public float getWeight() {
+    public Float getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(Float weight) {
         this.weight = weight;
     }
 
@@ -83,11 +83,11 @@ public class Athlete {
         return height > 0;
     }
 
-    public int getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(Integer height) {
         this.height = height;
     }
 
@@ -105,11 +105,11 @@ public class Athlete {
         return restingHeartrate >= 0;
     }
 
-    public int getRestingHeartrate() {
+    public Integer getRestingHeartrate() {
         return restingHeartrate;
     }
 
-    public void setRestingHeartrate(int restingHeartrate) {
+    public void setRestingHeartrate(Integer restingHeartrate) {
         this.restingHeartrate = restingHeartrate;
     }
 
@@ -127,11 +127,11 @@ public class Athlete {
         return maxHeartrate >= 0;
     }
 
-    public int getMaxHeartrate() {
+    public Integer getMaxHeartrate() {
         return maxHeartrate;
     }
 
-    public void setMaxHeartrate(int maxHeartrate) {
+    public void setMaxHeartrate(Integer maxHeartrate) {
         this.maxHeartrate = maxHeartrate;
     }
 

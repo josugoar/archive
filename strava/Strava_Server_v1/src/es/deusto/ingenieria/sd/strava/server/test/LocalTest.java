@@ -2,6 +2,7 @@ package es.deusto.ingenieria.sd.strava.server.test;
 
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -29,7 +30,7 @@ public class LocalTest {
 		try {
 			token = facade.register("peter.oben@gmail.com", "Peter Oben", pasword, new Date(), null, null, null, null);
 			ChallengeDTO newChallenge = facade.createChallenge(token, "hike", formatter.parse("22-01-2022"), formatter.parse("23-01-2029"), 10,
-					null, true, false);
+					Duration.ofHours(5), true, false);
 			List<ChallengeDTO> challenges = facade.getActiveChallenges(token);
 			for (ChallengeDTO challenge : challenges) {
 				System.out.println(challenge);

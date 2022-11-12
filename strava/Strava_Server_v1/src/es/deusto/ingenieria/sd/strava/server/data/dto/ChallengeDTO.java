@@ -13,7 +13,7 @@ public class ChallengeDTO implements Serializable {
 	private String name;
     private Date startDate;
     private Date endDate;
-    private float distance;
+    private Float distance;
     private Duration time;
     private boolean isCycling;
     private boolean isRunning;
@@ -50,11 +50,11 @@ public class ChallengeDTO implements Serializable {
         this.endDate = endDate;
     }
 
-    public float getDistance() {
+    public Float getDistance() {
         return distance;
     }
 
-    public void setDistance(float distance) {
+    public void setDistance(Float distance) {
         this.distance = distance;
     }
 

@@ -10,7 +10,7 @@ public class ActivityDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String name;
-    private float distance;
+    private Float distance;
     private Duration elapsedTime;
     private String type;
     private Date startDate;
@@ -23,11 +23,11 @@ public class ActivityDTO implements Serializable {
         this.name = name;
     }
 
-    public float getDistance() {
+    public Float getDistance() {
         return distance;
     }
 
-    public void setDistance(float distance) {
+    public void setDistance(Float distance) {
         this.distance = distance;
     }
 

@@ -98,11 +98,11 @@ public class Challenge {
         return distance >= 0;
     }
 
-    public float getDistance() {
+    public Float getDistance() {
         return distance;
     }
 
-    public void setDistance(float distance) {
+    public void setDistance(Float distance) {
         this.distance = distance;
     }
 
