@@ -1,5 +1,7 @@
 package es.deusto.ingenieria.sd.strava.server.services;
 
+import java.time.Duration;
+import java.util.Date;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Activity;
@@ -11,8 +13,22 @@ public class ActivityAppService {
         return athlete.getActivities();
     }
 
-    public void createActivity(Athlete athlete, Activity activity) {
+    public boolean createActivity(Athlete athlete, String name, float distance, Duration elapsedTime, String type, Date startDate) {
+        Activity activity = new Activity();
+        activity.setDistance(distance);
+        activity.setElapsedTime(elapsedTime);
+        activity.setName(name);
+        activity.setStartDate(startDate);
+        activity.setType(type);
+
+        if (!activity.checkActivity())
+        {
+            return false;
+        }
+
         athlete.addActivities(activity);
+
+        return true;
     }
 
 }
