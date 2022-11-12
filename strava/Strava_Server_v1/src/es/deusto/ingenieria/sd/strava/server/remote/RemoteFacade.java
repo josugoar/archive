@@ -95,10 +95,10 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 	}
 
 	@Override
-	public synchronized void createChallenge(long token, Date startDate, Date endDate, float distance, Duration time,
+	public synchronized void createChallenge(long token, String name, Date startDate, Date endDate, float distance, Duration time,
 			boolean isCycling, boolean isRunning) throws RemoteException {
 		if (this.serverState.containsKey(token)) {
-			if (!challengeService.createChallenge(serverState.get(token), startDate, endDate, distance, time, isRunning, isCycling))
+			if (!challengeService.createChallenge(serverState.get(token), name, startDate, endDate, distance, time, isRunning, isCycling))
 			{
 				throw new RemoteException("Bad arguments in call");
 			}
@@ -112,9 +112,10 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 	public synchronized void acceptChallenge(long token, int challengeId) throws RemoteException {
 		if (this.serverState.containsKey(token)) {
 			Athlete athlete = serverState.get(token);
-			if (!challengeService.acceptChallenge(athlete, challengeService.getChallenge(challengeId)))
-			{
-				throw new RemoteException("Challenge already accepted!");
+			try {
+				challengeService.acceptChallenge(athlete, challengeId);
+			} catch (Exception e) {
+				throw new RemoteException(e.getMessage());
 			}
 		} else {
 			throw new RemoteException("Athlete is not logged in!");
@@ -123,6 +124,11 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 
 	@Override
 	public synchronized float getChallengeState(int challengeId) throws RemoteException {
-		return challengeService.getChallengeState(challengeService.getChallenge(challengeId));
+		try
+		{
+			return challengeService.getChallengeState(challengeId);
+		} catch (Exception e) {
+			throw new RemoteException("Challenge does not exist");
+		}
 	}
 }

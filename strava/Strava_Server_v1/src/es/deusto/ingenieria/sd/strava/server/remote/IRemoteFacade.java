@@ -21,7 +21,7 @@ public interface IRemoteFacade extends Remote {
 	public void createActivity(long token, String name, float distance, Duration elapsedTime, String type,
 			Date startDate) throws RemoteException;
 
-	public void createChallenge(long token, Date startDate,
+	public void createChallenge(long token, String name, Date startDate,
 			Date endDate,
 			float distance,
 			Duration time,
