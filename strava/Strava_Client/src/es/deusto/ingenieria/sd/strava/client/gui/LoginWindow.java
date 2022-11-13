@@ -88,10 +88,13 @@ public class LoginWindow extends JFrame {
     public void login() {
         String email = emailField.getText();
         String password = String.valueOf(passField.getPassword());
-        // TODO
+
         if (athleteController.login(email, password))
         {
+            this.setVisible(false);
+            mainWindow.setVisible(true);
         } else {
+            JOptionPane.showMessageDialog(rootPane, "Error in login");
         }
     }
 

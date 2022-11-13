@@ -1,8 +1,9 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
 
-import javax.swing.JDialog;
+import javax.swing.*;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
+import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
 
 public class AthleteDialog extends JDialog {
 
@@ -12,7 +13,9 @@ public class AthleteDialog extends JDialog {
         this.athleteController = athleteController;
     }
 
-    public void getAthlete() {
+
+    public AthleteDTO getAthlete() {
+        return athleteController.getAthlete();
     }
 
 }

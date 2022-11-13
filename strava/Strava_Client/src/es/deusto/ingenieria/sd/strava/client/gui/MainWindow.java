@@ -6,8 +6,6 @@ import java.awt.event.ComponentEvent;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentListener;
-import java.time.Duration;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -21,7 +19,6 @@ import javax.swing.JScrollPane;
 import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
-import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityDTO;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 
@@ -29,11 +26,12 @@ public class MainWindow extends JFrame {
 
     private ChallengeDialog challengeDialog;
     private ActivityDialog activityDialog;
-    private LoginWindow loginWindow;
-    private Long token;
     private ActivityController activityController;
     private AthleteController athleteController;
     private ChallengeController challengeController;
+
+    private RegisterWindow registerWindow;
+
     private JPanel mainPane;
     private JPanel contentPane;
     private JScrollPane scrollPane;
@@ -54,21 +52,31 @@ public class MainWindow extends JFrame {
         getContentPane().addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {
                 getActiveChallenges();
-                getActivities();    
+                getActivities();
+                initPane();
             }
         });
 
-        
+        challengeDialog.getContentPane().addComponentListener(new ComponentAdapter() {
+            public void componentHidden(ComponentEvent e) {
+                getActiveChallenges();
+                getActivities();
+                initPane();
+            }
+        });
 
-        initPane();
+        activityDialog.getContentPane().addComponentListener(new ComponentAdapter() {
+            public void componentHidden(ComponentEvent e) {
+                getActiveChallenges();
+                getActivities();
+                initPane();
+            }
+        });
+
         setTitle("STRAVA");
         setSize(400, 900);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(true);
-
     }
-
-
 
     public void initPane() {
 
@@ -102,6 +110,7 @@ public class MainWindow extends JFrame {
             pane.add(new JLabel("Start Date: " + challengeDTO.getStartDate().toString()));
             pane.add(new JLabel("End Date: " + challengeDTO.getEndDate().toString()));
             pane.add(new JLabel("Time: " + challengeDTO.getTime().toString()));
+            pane.add(new JLabel("Completion :" + getChallengeState(challengeDTO.getId())));
             if (challengeDTO.isCycling()) {
                 pane.add(new JLabel("Cycling"));
             } else if (challengeDTO.isRunning()) {
@@ -109,7 +118,7 @@ public class MainWindow extends JFrame {
             }
             contentPane.add(pane);
         }
-        
+
         bCreateActivity = new JButton("New Activity");
         bCreateChallenge = new JButton("New Challenfge");
         bViewProfile = new JButton("Profile");
@@ -126,9 +135,9 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 activityDialog.setVisible(true);
-                
+
             }
-            
+
         });
 
         bCreateChallenge.addActionListener(new AbstractAction() {
@@ -137,28 +146,26 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 challengeDialog.setVisible(true);
-                
+
             }
-            
+
         });
 
+        bLogout.addActionListener(new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                logout();
+
+            }
+
+        });
 
     }
 
-    public void getActivities() {
-        activityController.getActivities(this.athleteController.getToken());
-    }
-
-    public void getActiveChallenges() {
-        challengeController.getActiveChallenges(this.athleteController.getToken());
-    }
-
-    public void setLoginWindow(LoginWindow loginWindow) {
-        this.loginWindow = loginWindow;
-    }
-
-    public void acceptChallenge() {
-
+    public void setRegisterWindow(RegisterWindow registerWindow) {
+        this.registerWindow = registerWindow;
     }
 
     public void setActivityDialog(ActivityDialog activityDialog) {
@@ -169,7 +176,29 @@ public class MainWindow extends JFrame {
         this.challengeDialog = challengeDialog;
     }
 
+    public void setAthleteDialog(AthleteDialog athleteDialog) {
+    }
+
+    public void getActivities() {
+        activities = activityController.getActivities(this.athleteController.getToken());
+    }
+
+    public void getActiveChallenges() {
+        challenges = challengeController.getActiveChallenges(this.athleteController.getToken());
+    }
+
+    public void acceptChallenge() {
+        // TODO
+    }
+
+    public float getChallengeState(Integer id) {
+        return challengeController.getChallengeState(athleteController.getToken(), id);
+    }
+
     public void logout() {
+        athleteController.logout();
+        setVisible(false);
+        registerWindow.setVisible(true);
     }
 
 }
