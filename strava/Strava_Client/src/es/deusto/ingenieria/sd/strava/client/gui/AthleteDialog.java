@@ -2,14 +2,17 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
-import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
+import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
 
 public class AthleteDialog extends JDialog {
 
     private AthleteController athleteController;
-    private Athlete athlete;
+    private AthleteDTO athlete;
     private JPanel mainPane;
     private JLabel nameLabel, emailLabel, passwordLabel, weightLabel, heightLabel, restingHeartrateLabel, maxHeartrateLabel, dateofBirthLabel;
     private JButton acceptButton;
@@ -21,6 +24,13 @@ public class AthleteDialog extends JDialog {
         setContentPane(mainPane);
         setSize(400,400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        getContentPane().addComponentListener(new ComponentAdapter() {
+            public void componentShown(ComponentEvent e) {
+                getAthlete();
+            }
+        });
+
     }
 
     public void initDialog(){
@@ -36,11 +46,6 @@ public class AthleteDialog extends JDialog {
         JPanel emailLine = new JPanel();
         emailLabel = new JLabel("Email: " + athlete.getEmail());
         emailLine.add(emailLabel, BorderLayout.CENTER);
-
-         // Password
-         JPanel passwordLine = new JPanel();
-         passwordLabel = new JLabel("Password: " + athlete.getPassword());
-         passwordLine.add(passwordLabel, BorderLayout.CENTER);
 
          // Weight
          JPanel weightLine = new JPanel();
@@ -70,7 +75,6 @@ public class AthleteDialog extends JDialog {
          // Add to the main panel
          mainPane.add(nameLine);
          mainPane.add(emailLine);
-         mainPane.add(passwordLine);
          mainPane.add(weightLine);
          mainPane.add(heightLine);
          mainPane.add(restingHeartrateLine);
@@ -89,6 +93,7 @@ public class AthleteDialog extends JDialog {
     }
 
     public void getAthlete() {
+        athlete = athleteController.getAthlete();
     }
 
 }
