@@ -14,7 +14,7 @@ public class AthleteDialog extends JDialog {
     private AthleteController athleteController;
     private AthleteDTO athlete;
     private JPanel mainPane;
-    private JLabel nameLabel, emailLabel, passwordLabel, weightLabel, heightLabel, restingHeartrateLabel, maxHeartrateLabel, dateofBirthLabel;
+    private JLabel nameLabel, emailLabel, weightLabel, heightLabel, restingHeartrateLabel, maxHeartrateLabel, dateofBirthLabel;
     private JButton acceptButton;
 
     public AthleteDialog(AthleteController athleteController) {
