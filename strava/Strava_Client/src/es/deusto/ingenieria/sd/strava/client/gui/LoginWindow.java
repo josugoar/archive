@@ -2,13 +2,12 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 
-public class LoginWindow extends JFrame implements ActionListener {
+public class LoginWindow extends JFrame {
 
     private AthleteController athleteController;
     private RegisterWindow registerWindow;
@@ -56,8 +55,19 @@ public class LoginWindow extends JFrame implements ActionListener {
         JPanel buttonLine = new JPanel();
         loginButton = new JButton("Login");
         registerButton = new JButton("Register");
-        loginButton.addActionListener(this);
-        registerButton.addActionListener(this);
+        loginButton.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                login();
+            }
+        });
+        registerButton.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                registerWindow.setVisible(true);
+                setVisible(false);
+            }
+        });
 
         buttonLine.add(loginButton);
         buttonLine.add(registerButton);
@@ -68,29 +78,14 @@ public class LoginWindow extends JFrame implements ActionListener {
 
     }
 
-    public void login() {
-    }
-
     public void setRegisterWindow(RegisterWindow r) {
         this.registerWindow = r;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        if (e.getSource() == registerButton) {
-
-            registerWindow.setVisible(true);
-            this.setVisible(false);
-
-        } else if (e.getSource() == loginButton) {
-
-            String email = emailField.getText();
-            String password = String.valueOf(passField.getPassword());
-            athleteController.login(email, password);
-
-        }
-
+    public void login() {
+        String email = emailField.getText();
+        String password = String.valueOf(passField.getPassword());
+        athleteController.login(email, password);
     }
 
 }
