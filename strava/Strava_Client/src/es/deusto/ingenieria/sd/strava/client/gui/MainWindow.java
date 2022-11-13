@@ -41,7 +41,7 @@ public class MainWindow extends JFrame {
     private List<ChallengeDTO> challenges;
     private JButton bCreateActivity;
     private JButton bCreateChallenge;
-    private JButton bAthleteDialog;
+    private JButton bAthlete;
     private JButton bViewProfile;
     private JButton bLogout;
 
