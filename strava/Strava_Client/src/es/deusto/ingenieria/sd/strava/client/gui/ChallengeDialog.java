@@ -25,7 +25,7 @@ public class ChallengeDialog extends JDialog {
     private JButton acceptButton, cancelButton;
     private String sport[]={"Running","Cycling"};
 
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-MMm-yyyy", Locale.ENGLISH);
 
     public ChallengeDialog(ChallengeController challengeController, AthleteController athleteController) {
         this.challengeController = challengeController;
@@ -98,8 +98,8 @@ public class ChallengeDialog extends JDialog {
          buttonLine.add(acceptButton);
          buttonLine.add(cancelButton);
          mainPane.add(buttonLine);
- 
-         cancelButton.addActionListener(e -> { 
+
+         cancelButton.addActionListener(e -> {
             this.dispose();
         });
 
@@ -114,7 +114,7 @@ public class ChallengeDialog extends JDialog {
                 endDate = formatter.parse(endDateField.getText());
             } catch (ParseException e1) {
                 startDate = null;
-                showMessageDialog(null, "Wrong date format, use dd-mm-yyyy");
+                showMessageDialog(null, "Wrong date format, use dd-MMm-yyyy");
             }
             String sport = sportCombo.getSelectedItem().toString();
             boolean isCycling;
@@ -126,12 +126,12 @@ public class ChallengeDialog extends JDialog {
                 isCycling = false;
                 isRunning = true;
             }
-            
+
             //Long token = athleteController.getToken();
 
             //challengeController.createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
         });
- 
+
          this.add(mainPane);
     }
 
