@@ -1,5 +1,7 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
 
+import javax.swing.JFrame;
+
 import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
