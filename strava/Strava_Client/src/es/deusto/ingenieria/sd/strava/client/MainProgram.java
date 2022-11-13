@@ -4,6 +4,7 @@ import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
 import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
+import es.deusto.ingenieria.sd.strava.client.gui.LoginWindow;
 
 
 public class MainProgram {
@@ -19,5 +20,6 @@ public class MainProgram {
 		ActivityController activityController = new ActivityController(serviceLocator);
 		AthleteController athleteController = new AthleteController(serviceLocator);
 		ChallengeController challengeController = new ChallengeController(serviceLocator);
+
 	}
 }
