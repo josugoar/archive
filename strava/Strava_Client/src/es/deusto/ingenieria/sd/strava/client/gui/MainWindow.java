@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 
 import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
@@ -57,8 +59,11 @@ public class MainWindow extends JFrame {
                 initPane();
                 getContentPane().add(mainPane);
             }
+        });
+
+        addWindowListener(new WindowAdapter() {
             @Override
-            public void componentHidden(ComponentEvent e) {
+            public void windowClosing(WindowEvent e) {
                 logout();
             }
         });

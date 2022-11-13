@@ -34,7 +34,7 @@ public class RegisterWindow extends JFrame {
         initPane();
         setTitle("Create a new Account");
         setContentPane(mainPane);
-        setSize(400, 400);
+        setSize(600, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
