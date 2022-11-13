@@ -26,6 +26,7 @@ public class MainWindow extends JFrame {
 
     private ChallengeDialog challengeDialog;
     private ActivityDialog activityDialog;
+    private AthleteDialog athleteDialog;
     private ActivityController activityController;
     private AthleteController athleteController;
     private ChallengeController challengeController;
@@ -57,25 +58,9 @@ public class MainWindow extends JFrame {
             }
         });
 
-        challengeDialog.getContentPane().addComponentListener(new ComponentAdapter() {
-            public void componentHidden(ComponentEvent e) {
-                getActiveChallenges();
-                getActivities();
-                initPane();
-            }
-        });
-
-        activityDialog.getContentPane().addComponentListener(new ComponentAdapter() {
-            public void componentHidden(ComponentEvent e) {
-                getActiveChallenges();
-                getActivities();
-                initPane();
-            }
-        });
-
         setTitle("STRAVA");
         setSize(400, 900);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public void initPane() {
@@ -170,13 +155,28 @@ public class MainWindow extends JFrame {
 
     public void setActivityDialog(ActivityDialog activityDialog) {
         this.activityDialog = activityDialog;
+        activityDialog.getContentPane().addComponentListener(new ComponentAdapter() {
+            public void componentHidden(ComponentEvent e) {
+                getActiveChallenges();
+                getActivities();
+                initPane();
+            }
+        });
     }
 
     public void setChallengeDialog( ChallengeDialog challengeDialog) {
         this.challengeDialog = challengeDialog;
+        challengeDialog.getContentPane().addComponentListener(new ComponentAdapter() {
+            public void componentHidden(ComponentEvent e) {
+                getActiveChallenges();
+                getActivities();
+                initPane();
+            }
+        });
     }
 
     public void setAthleteDialog(AthleteDialog athleteDialog) {
+        this.athleteDialog = athleteDialog;
     }
 
     public void getActivities() {

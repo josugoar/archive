@@ -33,7 +33,7 @@ public class RegisterWindow extends JFrame {
         setTitle("Create a new Account");
         setContentPane(mainPane);
         setSize(400,400);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public void initPane() {

@@ -29,7 +29,7 @@ public class LoginWindow extends JFrame {
         setTitle("Welcome to STRAVA");
         setContentPane(mainPane);
         setSize(400,200);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public void initPane() {
