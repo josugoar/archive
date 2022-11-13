@@ -56,12 +56,12 @@ public class MainWindow extends JFrame {
                 getActiveChallenges();
                 getActivities();
                 initPane();
+                setContentPane(mainPane);
             }
         });
 
         setTitle("STRAVA");
         setSize(400, 900);
-        setContentPane(mainPane);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
