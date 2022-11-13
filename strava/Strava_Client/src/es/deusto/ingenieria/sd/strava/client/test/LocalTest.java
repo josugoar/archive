@@ -21,9 +21,5 @@ public class LocalTest {
         registerWindow.setLoginWindow(loginWindow);
 
         
-
-
-
-
     }
 }

@@ -4,7 +4,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.registry.Registry;
-import java.sql.Date;
+import java.util.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import javax.swing.*;
 
@@ -20,14 +24,10 @@ public class RegisterWindow extends JFrame implements ActionListener{
     private JTextField emailField, nameField, heightField, weightField, dateOfBirthField, maxHeartRateField, restingHeartRateField;
     private JLabel emailLabel, passLabel, nameLabel, heightLabel, weightLabel, dateOfBirthLabel, maxHeartRateLabel, restingHeartRateLabel;
     private JPasswordField passField;
-    private String email;
-    private String password;
-    private String name;
-    private Integer height; // Optional
-    private float weight; // Optional
-    private Date datoOfBirth;
-    private Integer maxHeartRate; // Optional
-    private Integer restingHeartRate; // Optional
+    private JLabel warning;
+
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy", Locale.ENGLISH);
+
 
 
     public RegisterWindow(AthleteController athleteController) {
@@ -81,7 +81,7 @@ public class RegisterWindow extends JFrame implements ActionListener{
 
 
         JPanel dateOfBirthLine = new JPanel();
-        dateOfBirthLabel = new JLabel("Date of Birth*");
+        dateOfBirthLabel = new JLabel("Date of Birth* (dd-M-yyyy)");
         dateOfBirthField = new JTextField(20);
         dateOfBirthLine.add(dateOfBirthLabel, BorderLayout.WEST);
         dateOfBirthLine.add(dateOfBirthField, BorderLayout.CENTER);
@@ -107,7 +107,7 @@ public class RegisterWindow extends JFrame implements ActionListener{
         mainPane.add(dateOfBirthLine);
         mainPane.add(maxHeartRateLine);
         mainPane.add(restingHeartRateLine);
-        JLabel warning = new JLabel("All fields with * are NOT optional");
+        warning = new JLabel("All fields with * are NOT optional");
         mainPane.add(warning);
 
 
@@ -136,9 +136,30 @@ public class RegisterWindow extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
-        if (e.getSource()==loginButton) {
+        if (e.getSource() == loginButton) {
             loginWindow.setVisible(true);
             this.setVisible(false);
+        } else if (e.getSource() == registerButton) {
+
+
+            String email = emailField.getText();
+            String password = String.valueOf(passField.getPassword());
+            String name = nameField.getText();
+            Date dateOfBirth;
+            try {
+                dateOfBirth = formatter.parse(dateOfBirthField.getText());
+            } catch (ParseException e1) {
+                dateOfBirth = null;
+                warning.setText("Wrong date format, use dd-M-yyyy");
+
+            }
+            Float weight = Float.parseFloat(weightField.getText());
+            Integer height = Integer.parseInt(heightField.getText());
+            Integer maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
+            Integer restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
+
+            athleteController.register(email, password, name, dateOfBirth, weight, height, restingHeartRate, maxHeartRate);
+
         }
         
     }
