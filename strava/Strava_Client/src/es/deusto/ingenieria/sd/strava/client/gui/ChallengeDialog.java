@@ -105,7 +105,14 @@ public class ChallengeDialog extends JDialog {
         });
 
         acceptButton.addActionListener(e -> {
-            String name = nameField.getText();
+            this.createChallenge();
+        });
+
+         this.add(mainPane);
+    }
+
+    public void createChallenge() {
+        String name = nameField.getText();
             Duration time = Duration.parse(timeField.getText());
             Float distance = Float.parseFloat(distanceField.getText());
             Date startDate = null;
@@ -134,12 +141,6 @@ public class ChallengeDialog extends JDialog {
             if(challenge == null){
                 showMessageDialog(null, "Error creating challenge");
             }
-        });
-
-         this.add(mainPane);
-    }
-
-    public void createChallenge() {
     }
 
 
