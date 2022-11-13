@@ -67,7 +67,7 @@ public class ActivityDialog extends JDialog {
 
          // Elapsed time
          JPanel elapsedTimeLine = new JPanel();
-         elapsedTimeLabel = new JLabel("Elapsed time");
+         elapsedTimeLabel = new JLabel("Elapsed time (days)");
          elapsedTimeField = new JTextField(20);
          elapsedTimeLine.add(elapsedTimeLabel, BorderLayout.WEST);
          elapsedTimeLine.add(elapsedTimeField, BorderLayout.CENTER);
@@ -92,15 +92,15 @@ public class ActivityDialog extends JDialog {
          buttonLine.add(acceptButton);
          buttonLine.add(cancelButton);
          mainPane.add(buttonLine);
- 
-         cancelButton.addActionListener(e -> { 
-            this.setVisible(false);;
+
+         cancelButton.addActionListener(e -> {
+            this.setVisible(false);
         });
 
         acceptButton.addActionListener(e -> {
             this.createActivity();
         });
- 
+
          this.add(mainPane);
 
 
@@ -108,20 +108,32 @@ public class ActivityDialog extends JDialog {
 
     public void createActivity() {
         String name = nameField.getText();
-        Duration elapsedTime = Duration.parse(elapsedTimeField.getText());
-        Float distance = Float.parseFloat(distanceField.getText());
+
+        Duration elapsedTime = null;
+        try {
+            elapsedTime = Duration.parse("P" + elapsedTimeField.getText() + "D");
+        } catch (Exception e) {
+            showMessageDialog(null, "Wrong elapsed time");
+        }
+
+        Float distance = null;
+        try {
+            distance = Float.parseFloat(distanceField.getText());
+        } catch (Exception e) {
+            showMessageDialog(null, "Wrong distance");
+        }
+
         Date startDate = null;
         try {
             startDate = formatter.parse(startDateField.getText());
         } catch (ParseException e1) {
-            startDate = null;
-            showMessageDialog(null, "Wrong date format, use dd-mm-yyyy");
+            showMessageDialog(null, "Wrong date, use dd-mm-yyyy");
         }
         String type = typeCombo.getSelectedItem().toString();
 
-        
+
         Long token = athleteController.getToken();
-        
+
         ActivityDTO activity = activityController.createActivity(token, name, distance, elapsedTime, type, startDate);
         if(activity == null){
             showMessageDialog(null, "Error creating activity");

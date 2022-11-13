@@ -66,14 +66,14 @@ public class ChallengeDialog extends JDialog {
 
         // Distance
         JPanel distanceLine = new JPanel();
-        distanceLabel = new JLabel("Distance (optional)");
+        distanceLabel = new JLabel("Distance");
         distanceField = new JTextField(20);
         distanceLine.add(distanceLabel, BorderLayout.WEST);
         distanceLine.add(distanceField, BorderLayout.CENTER);
 
         // Time
         JPanel timeLine = new JPanel();
-        timeLabel = new JLabel("Time (optional)");
+        timeLabel = new JLabel("Time");
         timeField = new JTextField(20);
         timeLine.add(timeLabel, BorderLayout.WEST);
         timeLine.add(timeField, BorderLayout.CENTER);
@@ -101,7 +101,7 @@ public class ChallengeDialog extends JDialog {
         mainPane.add(buttonLine);
 
         cancelButton.addActionListener(e -> {
-            this.setVisible(false);;
+            this.setVisible(false);
         });
 
         acceptButton.addActionListener(e -> {
@@ -113,35 +113,45 @@ public class ChallengeDialog extends JDialog {
 
     public void createChallenge() {
         String name = nameField.getText();
-            Duration time = Duration.parse(timeField.getText());
-            Float distance = Float.parseFloat(distanceField.getText());
-            Date startDate = null;
-            Date endDate = null;
-            try {
-                startDate = formatter.parse(startDateField.getText());
-                endDate = formatter.parse(endDateField.getText());
-            } catch (ParseException e1) {
-                startDate = null;
-                showMessageDialog(null, "Wrong date format, use dd-mm-yyyy");
-                return;
-            }
-            String sport = sportCombo.getSelectedItem().toString();
-            boolean isCycling;
-            boolean isRunning;
-            if(sport == "Cycling"){
-                isCycling = true;
-                isRunning = false;
-            }else{
-                isCycling = false;
-                isRunning = true;
-            }
 
-            Long token = athleteController.getToken();
+        Duration time = null;
+        try {
+            time = Duration.parse("P" + timeField.getText() + "D");
+        } catch (Exception e) {
+        }
 
-            ChallengeDTO challenge = challengeController.createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
-            if(challenge == null){
-                showMessageDialog(null, "Error creating challenge");
-            }
+        Float distance = null;
+        try {
+            distance = Float.parseFloat(distanceField.getText());
+        } catch (Exception e) {
+        }
+
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = formatter.parse(startDateField.getText());
+            endDate = formatter.parse(endDateField.getText());
+        } catch (ParseException e1) {
+            showMessageDialog(null, "Wrong date, use dd-mm-yyyy");
+        }
+
+        String sport = sportCombo.getSelectedItem().toString();
+        boolean isCycling;
+        boolean isRunning;
+        if(sport == "Cycling"){
+            isCycling = true;
+            isRunning = false;
+        }else{
+            isCycling = false;
+            isRunning = true;
+        }
+
+        Long token = athleteController.getToken();
+
+        ChallengeDTO challenge = challengeController.createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
+        if(challenge == null){
+            showMessageDialog(null, "Error creating challenge");
+        }
     }
 
 
