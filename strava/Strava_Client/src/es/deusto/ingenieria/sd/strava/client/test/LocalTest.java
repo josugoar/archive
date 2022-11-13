@@ -19,5 +19,6 @@ public class LocalTest {
 
         RegisterWindow registerWindow = new RegisterWindow(athleteController);
         LoginWindow loginWindow = new LoginWindow(athleteController);
+        ChallengeDialog challengeDialog = new ChallengeDialog(challengeController);
     }
 }
