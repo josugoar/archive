@@ -139,52 +139,45 @@ public class RegisterWindow extends JFrame {
     }
 
     public void register() {
+        String email = emailField.getText();
+        String password = String.valueOf(passField.getPassword());
+        String name = nameField.getText();
+
+        Date dateOfBirth = null;
         try {
-            String email = emailField.getText();
-            String password = String.valueOf(passField.getPassword());
-            String name = nameField.getText();
+            dateOfBirth = formatter.parse(dateOfBirthField.getText());
+        } catch (ParseException e1) {
+        }
 
-            Date dateOfBirth = null;
-            try {
-                dateOfBirth = formatter.parse(dateOfBirthField.getText());
-            } catch (ParseException e1) {
-                warning.setText("Wrong date format, use dd-MM-yyyy");
-                JOptionPane.showMessageDialog(rootPane, "Error in registration");
-                return;
-            }
-
-            Float weight = null;
-            try {
-                weight = Float.parseFloat(weightField.getText());
-            } catch (Exception e) {
-            }
-
-            Integer height = null;
-            try {
-                height = Integer.parseInt(heightField.getText());
-            } catch (Exception e) {
-            }
-
-            Integer maxHeartRate = null;
-            try {
-                maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
-            } catch (Exception e) {
-            }
-
-            Integer restingHeartRate = null;
-            try {
-                restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
-            } catch (Exception e) {
-            }
-
-            if (athleteController.register(email, password, name, dateOfBirth, weight, height, restingHeartRate,
-                    maxHeartRate)) {
-                this.setVisible(false);
-                mainWindow.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Error in registration");
-            }
+        Float weight = null;
+        try {
+            weight = Float.parseFloat(weightField.getText());
         } catch (Exception e) {
+        }
+
+        Integer height = null;
+        try {
+            height = Integer.parseInt(heightField.getText());
+        } catch (Exception e) {
+        }
+
+        Integer maxHeartRate = null;
+        try {
+            maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
+        } catch (Exception e) {
+        }
+
+        Integer restingHeartRate = null;
+        try {
+            restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
+        } catch (Exception e) {
+        }
+
+        if (athleteController.register(email, password, name, dateOfBirth, weight, height, restingHeartRate,
+                maxHeartRate)) {
+            this.setVisible(false);
+            mainWindow.setVisible(true);
+        } else {
             JOptionPane.showMessageDialog(rootPane, "Error in registration");
         }
     }

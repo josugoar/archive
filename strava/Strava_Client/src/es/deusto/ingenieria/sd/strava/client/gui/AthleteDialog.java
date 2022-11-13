@@ -23,13 +23,13 @@ public class AthleteDialog extends JDialog {
         setSize(400,400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        getContentPane().addComponentListener(new ComponentAdapter() {
+        addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {
                 initDialog();
                 setContentPane(mainPane);
             }
         });
-        
+
     }
 
     public void initDialog(){
