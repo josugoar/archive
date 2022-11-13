@@ -2,6 +2,13 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Date;
+import java.util.Locale;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
@@ -17,6 +24,8 @@ public class ChallengeDialog extends JDialog {
     private JComboBox<String> sportCombo;
     private JButton acceptButton, cancelButton;
     private String sport[]={"Running","Cycling"};
+
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
 
     public ChallengeDialog(ChallengeController challengeController, AthleteController athleteController) {
         this.challengeController = challengeController;
@@ -71,7 +80,7 @@ public class ChallengeDialog extends JDialog {
          // Sport
          JPanel sportLine = new JPanel();
          sportLabel = new JLabel("Sport");
-         sportCombo = new JComboBox<>(sport);
+         sportCombo = new JComboBox<String>(sport);
          sportLine.add(sportLabel, BorderLayout.WEST);
          sportLine.add(sportCombo, BorderLayout.CENTER);
 
@@ -89,12 +98,46 @@ public class ChallengeDialog extends JDialog {
          buttonLine.add(acceptButton);
          buttonLine.add(cancelButton);
          mainPane.add(buttonLine);
+ 
+         cancelButton.addActionListener(e -> { 
+            this.dispose();
+        });
 
+        acceptButton.addActionListener(e -> {
+            String name = nameField.getText();
+            Duration time = Duration.parse(timeField.getText());
+            Float distance = Float.parseFloat(distanceField.getText());
+            Date startDate;
+            Date endDate;
+            try {
+                startDate = formatter.parse(startDateField.getText());
+                endDate = formatter.parse(endDateField.getText());
+            } catch (ParseException e1) {
+                startDate = null;
+                showMessageDialog(null, "Wrong date format, use dd-mm-yyyy");
+            }
+            String sport = sportCombo.getSelectedItem().toString();
+            boolean isCycling;
+            boolean isRunning;
+            if(sport == "Cycling"){
+                isCycling = true;
+                isRunning = false;
+            }else{
+                isCycling = false;
+                isRunning = true;
+            }
+            
+            //Long token = athleteController.getToken();
 
+            //challengeController.createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
+        });
+ 
          this.add(mainPane);
     }
 
     public void createChallenge() {
+        //TODO
     }
+
 
 }
