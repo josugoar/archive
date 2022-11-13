@@ -41,7 +41,6 @@ public class MainWindow extends JFrame {
     private List<ChallengeDTO> challenges;
     private JButton bCreateActivity;
     private JButton bCreateChallenge;
-    private JButton bAthlete;
     private JButton bViewProfile;
     private JButton bLogout;
 
@@ -51,7 +50,7 @@ public class MainWindow extends JFrame {
         this.athleteController = athleteController;
         this.challengeController = challengeController;
 
-        getContentPane().addComponentListener(new ComponentAdapter() {
+        addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {
                 getActiveChallenges();
                 getActivities();
@@ -73,7 +72,7 @@ public class MainWindow extends JFrame {
         mainPane.add(scrollPane, BorderLayout.CENTER);
 
         contentPane = new JPanel();
-        contentPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
 
         scrollPane.add(contentPane);
 
@@ -108,13 +107,11 @@ public class MainWindow extends JFrame {
 
         bCreateActivity = new JButton("New Activity");
         bCreateChallenge = new JButton("New Challenfge");
-        bAthlete = new JButton("Show Athlete");
         bViewProfile = new JButton("Profile");
         bLogout = new JButton("Log Out");
 
         buttonPane.add(bCreateActivity);
         buttonPane.add(bCreateChallenge);
-        buttonPane.add(bAthlete);
         buttonPane.add(bViewProfile);
         buttonPane.add(bLogout);
 
@@ -140,7 +137,7 @@ public class MainWindow extends JFrame {
 
         });
 
-        bAthlete.addActionListener(new AbstractAction() {
+        bViewProfile.addActionListener(new AbstractAction() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -170,7 +167,7 @@ public class MainWindow extends JFrame {
 
     public void setActivityDialog(ActivityDialog activityDialog) {
         this.activityDialog = activityDialog;
-        activityDialog.getContentPane().addComponentListener(new ComponentAdapter() {
+        activityDialog.addComponentListener(new ComponentAdapter() {
             public void componentHidden(ComponentEvent e) {
                 getActiveChallenges();
                 getActivities();
@@ -181,7 +178,7 @@ public class MainWindow extends JFrame {
 
     public void setChallengeDialog( ChallengeDialog challengeDialog) {
         this.challengeDialog = challengeDialog;
-        challengeDialog.getContentPane().addComponentListener(new ComponentAdapter() {
+        challengeDialog.addComponentListener(new ComponentAdapter() {
             public void componentHidden(ComponentEvent e) {
                 getActiveChallenges();
                 getActivities();
