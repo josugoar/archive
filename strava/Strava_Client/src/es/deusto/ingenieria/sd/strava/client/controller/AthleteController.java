@@ -49,7 +49,7 @@ public class AthleteController {
         try {
             return this.serviceLocator.getService().getAthlete(this.token);
         } catch (RemoteException e) {
-            System.out.println("# Error during logout: " + e);
+            System.out.println("# Error getting athlete: " + e);
             return null;
         }
     }
