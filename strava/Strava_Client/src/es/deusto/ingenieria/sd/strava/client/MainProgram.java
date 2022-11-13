@@ -44,6 +44,9 @@ public class MainProgram {
 		loginWindow.setMainWindow(mainWindow);
 
 		mainWindow.setRegisterWindow(registerWindow);
+		mainWindow.setActivityDialog(activityDialog);
+		mainWindow.setChallengeDialog(challengeDialog);
+		mainWindow.setAthleteDialog(athleteDialog);
 
 		registerWindow.setVisible(true);
 	}

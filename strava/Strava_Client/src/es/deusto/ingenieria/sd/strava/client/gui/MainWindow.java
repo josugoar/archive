@@ -161,6 +161,9 @@ public class MainWindow extends JFrame {
         this.challengeDialog = challengeDialog;
     }
 
+    public void setAthleteDialog(AthleteDialog athleteDialog) {
+    }
+
     public void getActivities() {
         activities = activityController.getActivities(this.athleteController.getToken());
     }
