@@ -11,6 +11,7 @@ public class LoginWindow extends JFrame {
 
     private AthleteController athleteController;
     private RegisterWindow registerWindow;
+    private MainWindow mainWindow;
 
     private JPanel mainPane;
     private JButton loginButton;
@@ -80,6 +81,10 @@ public class LoginWindow extends JFrame {
 
     public void setRegisterWindow(RegisterWindow r) {
         this.registerWindow = r;
+    }
+
+    public void setMainWindow(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
     }
 
     public void login() {

@@ -15,6 +15,7 @@ public class RegisterWindow extends JFrame {
 
     private AthleteController athleteController;
     private LoginWindow loginWindow;
+    private MainWindow mainWindow;
 
     private JPanel mainPane;
     private JButton loginButton, registerButton;
@@ -24,8 +25,6 @@ public class RegisterWindow extends JFrame {
     private JLabel warning;
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy", Locale.ENGLISH);
-
-
 
     public RegisterWindow(AthleteController athleteController) {
         this.athleteController = athleteController;
@@ -134,6 +133,10 @@ public class RegisterWindow extends JFrame {
 
     public void setLoginWindow(LoginWindow l) {
         this.loginWindow = l;
+    }
+
+    public void setMainWindow(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
     }
 
     public void register() {
