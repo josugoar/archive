@@ -21,7 +21,6 @@ import javax.swing.JScrollPane;
 import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
-import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityDTO;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 
@@ -32,6 +31,9 @@ public class MainWindow extends JFrame {
     private ActivityController activityController;
     private AthleteController athleteController;
     private ChallengeController challengeController;
+
+    private RegisterWindow registerWindow;
+
     private JPanel mainPane;
     private JPanel contentPane;
     private JScrollPane scrollPane;
@@ -134,6 +136,29 @@ public class MainWindow extends JFrame {
 
         });
 
+        bLogout.addActionListener(new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                logout();;
+
+            }
+
+        });
+
+    }
+
+    public void setRegisterWindow(RegisterWindow registerWindow) {
+        this.registerWindow = registerWindow;
+    }
+
+    public void setActivityDialog(ActivityDialog activityDialog) {
+        this.activityDialog = activityDialog;
+    }
+
+    public void setChallengeDialog( ChallengeDialog challengeDialog) {
+        this.challengeDialog = challengeDialog;
     }
 
     public void getActivities() {
@@ -145,18 +170,13 @@ public class MainWindow extends JFrame {
     }
 
     public void acceptChallenge() {
-
-    }
-
-    public void setActivityDialog(ActivityDialog activityDialog) {
-        this.activityDialog = activityDialog;
-    }
-
-    public void setChallengeDialog( ChallengeDialog challengeDialog) {
-        this.challengeDialog = challengeDialog;
+        // TODO
     }
 
     public void logout() {
+        athleteController.logout();
+        setVisible(false);
+        registerWindow.setVisible(true);
     }
 
 }
