@@ -10,7 +10,7 @@ import es.deusto.ingenieria.sd.strava.client.gui.RegisterWindow;
 import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
 
 public class LocalTest {
-    
+
 
     public static void main(String[] args) {
         ServiceLocator serviceLocator = new ServiceLocator();
@@ -19,11 +19,5 @@ public class LocalTest {
 
         RegisterWindow registerWindow = new RegisterWindow(athleteController);
         LoginWindow loginWindow = new LoginWindow(athleteController);
-
-        RegisterWindow registerWindow = new RegisterWindow(athleteController);
-        
-
-
-        
     }
 }
