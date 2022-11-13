@@ -3,11 +3,13 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 import javax.swing.*;
 import java.awt.*;
 
+import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
 
-public class ChallengeDialog extends JDialog{
+public class ChallengeDialog extends JDialog {
 
     private ChallengeController challengeController;
+    private AthleteController athleteController;
 
     private JPanel mainPane;
     private JLabel nameLabel, startDateLabel, endDateLabel, distanceLabel, timeLabel, sportLabel;
@@ -16,8 +18,9 @@ public class ChallengeDialog extends JDialog{
     private JButton acceptButton, cancelButton;
     private String sport[]={"Running","Cycling"};
 
-    public ChallengeDialog(ChallengeController challengeController) {
+    public ChallengeDialog(ChallengeController challengeController, AthleteController athleteController) {
         this.challengeController = challengeController;
+        this.athleteController = athleteController;
 
         initDialog();
         setContentPane(mainPane);
