@@ -34,7 +34,7 @@ public class ChallengeDialog extends JDialog {
         initDialog();
         setContentPane(mainPane);
         setSize(400,400);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 
     public void initDialog() {
