@@ -36,6 +36,7 @@ public class ChallengeDialog extends JDialog {
         setContentPane(mainPane);
         setSize(400,400);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
+        setModal(true);
     }
 
     public void initDialog() {
@@ -152,6 +153,8 @@ public class ChallengeDialog extends JDialog {
         if(challenge == null){
             showMessageDialog(null, "Error creating challenge");
         }
+
+        setVisible(false);
     }
 
 

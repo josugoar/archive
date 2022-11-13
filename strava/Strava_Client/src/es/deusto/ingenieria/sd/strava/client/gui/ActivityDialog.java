@@ -37,6 +37,7 @@ public class ActivityDialog extends JDialog {
         setContentPane(mainPane);
         setSize(400,400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setModal(true);
     }
 
     public void initDialog() {
@@ -138,6 +139,7 @@ public class ActivityDialog extends JDialog {
         if(activity == null){
             showMessageDialog(null, "Error creating activity");
         }
+        setVisible(false);
     }
 
 }

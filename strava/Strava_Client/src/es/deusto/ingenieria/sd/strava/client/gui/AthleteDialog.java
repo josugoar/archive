@@ -15,13 +15,13 @@ public class AthleteDialog extends JDialog {
     private AthleteDTO athlete;
     private JPanel mainPane;
     private JLabel nameLabel, emailLabel, weightLabel, heightLabel, restingHeartrateLabel, maxHeartrateLabel, dateofBirthLabel;
-    private JButton acceptButton;
 
     public AthleteDialog(AthleteController athleteController) {
         this.athleteController = athleteController;
 
         setSize(400,400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setModal(true);
 
         addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {
@@ -80,13 +80,6 @@ public class AthleteDialog extends JDialog {
          mainPane.add(restingHeartrateLine);
          mainPane.add(maxHeartrateLine);
          mainPane.add(dateofBirthLine);
-
-
-         JPanel buttonLine = new JPanel();
-         acceptButton = new JButton("Accept");
-         buttonLine.add(acceptButton);
-         mainPane.add(buttonLine);
-
 
          this.add(mainPane);
 

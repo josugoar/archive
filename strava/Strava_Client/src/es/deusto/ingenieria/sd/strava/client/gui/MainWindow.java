@@ -57,6 +57,7 @@ public class MainWindow extends JFrame {
                 getActiveChallenges();
                 getActivities();
                 initPane();
+                getContentPane().removeAll();
                 getContentPane().add(mainPane);
             }
         });
@@ -181,6 +182,8 @@ public class MainWindow extends JFrame {
                 getActiveChallenges();
                 getActivities();
                 initPane();
+                getContentPane().removeAll();
+                getContentPane().add(mainPane);
             }
         });
     }
@@ -192,6 +195,8 @@ public class MainWindow extends JFrame {
                 getActiveChallenges();
                 getActivities();
                 initPane();
+                getContentPane().removeAll();
+                getContentPane().add(mainPane);
             }
         });
     }
