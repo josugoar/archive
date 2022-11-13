@@ -1,6 +1,8 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.rmi.registry.Registry;
 import java.sql.Date;
 
@@ -8,9 +10,10 @@ import javax.swing.*;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 
-public class RegisterWindow extends JFrame{
+public class RegisterWindow extends JFrame implements ActionListener{ 
 
     private AthleteController athleteController;
+    private LoginWindow loginWindow;
 
     private JPanel mainPane;
     private JButton loginButton, registerButton;
@@ -31,10 +34,11 @@ public class RegisterWindow extends JFrame{
         this.athleteController = athleteController;
 
         initPane();
+        setTitle("Create a new Account");
         setContentPane(mainPane);
         setSize(400,400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(true);
+        setVisible(false);
 
     }
 
@@ -111,6 +115,8 @@ public class RegisterWindow extends JFrame{
         JPanel buttonLine = new JPanel();
         loginButton = new JButton("Back to Login");
         registerButton = new JButton("Create a new Account");
+        loginButton.addActionListener(this);
+        registerButton.addActionListener(this);
         buttonLine.add(loginButton);
         buttonLine.add(registerButton);
         mainPane.add(buttonLine);
@@ -121,6 +127,20 @@ public class RegisterWindow extends JFrame{
     }
 
     public void login() {
+    }
+
+    public void setLoginWindow(LoginWindow l) {
+        this.loginWindow = l;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        if (e.getSource()==loginButton) {
+            loginWindow.setVisible(true);
+            this.setVisible(false);
+        }
+        
     }
 
 }

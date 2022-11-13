@@ -14,10 +14,14 @@ public class LocalTest {
         ServiceLocator serviceLocator = new ServiceLocator();
         AthleteController athleteController = new AthleteController(serviceLocator);
 
+        RegisterWindow registerWindow = new RegisterWindow(athleteController);
         LoginWindow loginWindow = new LoginWindow(athleteController);
 
-        RegisterWindow registerWindow = new RegisterWindow(athleteController);
+        loginWindow.setRegisterWindow(registerWindow);
+        registerWindow.setLoginWindow(loginWindow);
+
         
+
 
 
 
