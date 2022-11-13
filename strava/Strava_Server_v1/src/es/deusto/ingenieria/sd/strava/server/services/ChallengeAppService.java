@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import es.deusto.ingenieria.sd.strava.server.data.domain.Activity;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 
@@ -60,24 +61,37 @@ public class ChallengeAppService {
         athlete.addChallenge(challenge);
     }
 
-    public float getChallengeState(int challengeId) throws IllegalArgumentException {
+    public float getChallengeState(Athlete athlete, int challengeId) throws IllegalArgumentException {
         Challenge challenge = state.get(challengeId);
         if (challenge == null) {
             throw new IllegalArgumentException("Challenge does not exist!");
         }
 
-        Date currentDate = new Date();
-
-        if (currentDate.after(challenge.getEndDate())) {
-            return 1;
+        float distance = 0;
+        Duration duration = Duration.ZERO;
+        for (Activity activity : athlete.getActivities()) {
+            if (activity.getType().equals("running") && challenge.isRunning() || activity.getType().equals("cycling") && challenge.isCycling()) {
+                if (activity.getStartDate().after(challenge.getStartDate()) && activity.getStartDate().before(challenge.getEndDate())) {
+                    if (challenge.getDistance() != null) {
+                        distance += activity.getDistance();
+                    } else {
+                        duration = duration.plus(activity.getElapsedTime());
+                    }
+                }
+            }
         }
 
-        if (currentDate.before(challenge.getStartDate())) {
-            return 0;
+        if (challenge.getDistance() != null) {
+            if (challenge.getDistance() == 0) {
+                return 1;
+            }
+            return distance / challenge.getDistance();
+        } else {
+            if (challenge.getTime().isZero()) {
+                return 1;
+            }
+            return ((float) duration.toNanos()) / ((float) challenge.getTime().toNanos());
         }
-
-        float relation = ((float)(currentDate.getTime() - challenge.getStartDate().getTime())) / ((float)(challenge.getEndDate().getTime() - challenge.getStartDate().getTime()));
-        return relation;
     }
 
 }

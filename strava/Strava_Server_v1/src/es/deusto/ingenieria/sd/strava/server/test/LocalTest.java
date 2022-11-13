@@ -34,9 +34,9 @@ public class LocalTest {
 			for (ChallengeDTO challenge : challenges) {
 				System.out.println(challenge);
 			}
-			facade.logout(token);
-			float challengeState = facade.getChallengeState(newChallenge.getId());
+			float challengeState = facade.getChallengeState(token, newChallenge.getId());
 			System.out.println(challengeState);
+			facade.logout(token);
 		} catch (Exception e) {
 			System.out.println("\t# Error: " + e.getMessage());
 		}
