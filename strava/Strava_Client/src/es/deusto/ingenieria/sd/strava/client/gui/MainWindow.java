@@ -54,17 +54,16 @@ public class MainWindow extends JFrame {
         getContentPane().addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {
                 getActiveChallenges();
-                getActivities();    
+                getActivities();
+                initPane();
             }
         });
 
         
 
-        initPane();
         setTitle("STRAVA");
         setSize(400, 900);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(true);
 
     }
 
