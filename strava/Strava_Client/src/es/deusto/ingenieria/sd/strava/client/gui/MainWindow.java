@@ -65,7 +65,7 @@ public class MainWindow extends JFrame {
     }
 
     public void initPane() {
-
+        
         mainPane = new JPanel();
 
         scrollPane = new JScrollPane();
