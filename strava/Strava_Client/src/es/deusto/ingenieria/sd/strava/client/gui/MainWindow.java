@@ -1,7 +1,12 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentListener;
 import java.time.Duration;
 import java.util.List;
 
@@ -45,10 +50,15 @@ public class MainWindow extends JFrame {
         this.activityController = activityController;
         this.athleteController = athleteController;
         this.challengeController = challengeController;
-        this.token = athleteController.getToken();
 
-        getActiveChallenges();
-        getActivities();
+        getContentPane().addComponentListener(new ComponentAdapter() {
+            public void componentShown(ComponentEvent e) {
+                getActiveChallenges();
+                getActivities();    
+            }
+        });
+
+        
 
         initPane();
         setTitle("STRAVA");
@@ -136,11 +146,11 @@ public class MainWindow extends JFrame {
     }
 
     public void getActivities() {
-        activityController.getActivities(token);
+        activityController.getActivities(this.athleteController.getToken());
     }
 
     public void getActiveChallenges() {
-        challengeController.getActiveChallenges(token);
+        challengeController.getActiveChallenges(this.athleteController.getToken());
     }
 
     public void setLoginWindow(LoginWindow loginWindow) {
