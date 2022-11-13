@@ -29,7 +29,7 @@ public class AthleteDialog extends JDialog {
                 initDialog();
             }
         });
-
+        
     }
 
     public void initDialog(){
