@@ -17,14 +17,13 @@ public class LocalTest {
         AthleteController athleteController = new AthleteController(serviceLocator);
         ChallengeController challengeController = new ChallengeController(serviceLocator);
 
+        RegisterWindow registerWindow = new RegisterWindow(athleteController);
         LoginWindow loginWindow = new LoginWindow(athleteController);
 
         RegisterWindow registerWindow = new RegisterWindow(athleteController);
-
-        ChallengeDialog challengeDialog = new ChallengeDialog(challengeController);
         
 
 
-
+        
     }
 }
