@@ -12,6 +12,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
+import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 
 public class ChallengeDialog extends JDialog {
 
@@ -98,17 +99,17 @@ public class ChallengeDialog extends JDialog {
          buttonLine.add(acceptButton);
          buttonLine.add(cancelButton);
          mainPane.add(buttonLine);
-
-         cancelButton.addActionListener(e -> {
-            this.dispose();
+ 
+         cancelButton.addActionListener(e -> { 
+            this.setVisible(false);;
         });
 
         acceptButton.addActionListener(e -> {
             String name = nameField.getText();
             Duration time = Duration.parse(timeField.getText());
             Float distance = Float.parseFloat(distanceField.getText());
-            Date startDate;
-            Date endDate;
+            Date startDate = null;
+            Date endDate = null;
             try {
                 startDate = formatter.parse(startDateField.getText());
                 endDate = formatter.parse(endDateField.getText());
@@ -126,17 +127,19 @@ public class ChallengeDialog extends JDialog {
                 isCycling = false;
                 isRunning = true;
             }
-
-            //Long token = athleteController.getToken();
-
-            //challengeController.createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
+            
+            Long token = athleteController.getToken();
+            
+            ChallengeDTO challenge = challengeController.createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
+            if(challenge == null){
+                showMessageDialog(null, "Error creating challenge");
+            }
         });
 
          this.add(mainPane);
     }
 
     public void createChallenge() {
-        //TODO
     }
 
 

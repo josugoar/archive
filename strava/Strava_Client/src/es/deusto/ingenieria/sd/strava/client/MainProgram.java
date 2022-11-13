@@ -37,6 +37,7 @@ public class MainProgram {
         ActivityDialog activityDialog = new ActivityDialog(activityController, athleteController);
         ChallengeDialog challengeDialog = new ChallengeDialog(challengeController, athleteController);
 
+
 		registerWindow.setLoginWindow(loginWindow);
 		registerWindow.setMainWindow(mainWindow);
 
