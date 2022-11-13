@@ -26,7 +26,7 @@ public class RegisterWindow extends JFrame {
     private JPasswordField passField;
     private JLabel warning;
 
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
 
     public RegisterWindow(AthleteController athleteController) {
         this.athleteController = athleteController;

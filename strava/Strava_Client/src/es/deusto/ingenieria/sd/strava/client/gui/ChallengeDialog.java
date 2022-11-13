@@ -26,7 +26,7 @@ public class ChallengeDialog extends JDialog {
     private JButton acceptButton, cancelButton;
     private String sport[]={"Running","Cycling"};
 
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-MMm-yyyy", Locale.ENGLISH);
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
 
     public ChallengeDialog(ChallengeController challengeController, AthleteController athleteController) {
         this.challengeController = challengeController;
@@ -99,8 +99,8 @@ public class ChallengeDialog extends JDialog {
          buttonLine.add(acceptButton);
          buttonLine.add(cancelButton);
          mainPane.add(buttonLine);
- 
-         cancelButton.addActionListener(e -> { 
+
+         cancelButton.addActionListener(e -> {
             this.setVisible(false);;
         });
 
@@ -127,9 +127,9 @@ public class ChallengeDialog extends JDialog {
                 isCycling = false;
                 isRunning = true;
             }
-            
+
             Long token = athleteController.getToken();
-            
+
             ChallengeDTO challenge = challengeController.createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
             if(challenge == null){
                 showMessageDialog(null, "Error creating challenge");
