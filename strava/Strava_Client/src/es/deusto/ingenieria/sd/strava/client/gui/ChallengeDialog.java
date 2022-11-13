@@ -26,7 +26,7 @@ public class ChallengeDialog extends JDialog {
     private JButton acceptButton, cancelButton;
     private String sport[]={"Running","Cycling"};
 
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-MMm-yyyy", Locale.ENGLISH);
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
 
     public ChallengeDialog(ChallengeController challengeController, AthleteController athleteController) {
         this.challengeController = challengeController;
@@ -50,57 +50,57 @@ public class ChallengeDialog extends JDialog {
         nameLine.add(nameLabel, BorderLayout.WEST);
         nameLine.add(nameField, BorderLayout.CENTER);
 
-         // Start date
-         JPanel startDateLine = new JPanel();
-         startDateLabel = new JLabel("Start date (DD/MM/YYYY)");
-         startDateField = new JTextField(20);
-         startDateLine.add(startDateLabel, BorderLayout.WEST);
-         startDateLine.add(startDateField, BorderLayout.CENTER);
+        // Start date
+        JPanel startDateLine = new JPanel();
+        startDateLabel = new JLabel("Start date (DD/MM/YYYY)");
+        startDateField = new JTextField(20);
+        startDateLine.add(startDateLabel, BorderLayout.WEST);
+        startDateLine.add(startDateField, BorderLayout.CENTER);
 
-         // End date
-         JPanel endDateLine = new JPanel();
-         endDateLabel = new JLabel("End date (DD/MM/YYYY)");
-         endDateField = new JTextField(20);
-         endDateLine.add(endDateLabel, BorderLayout.WEST);
-         endDateLine.add(endDateField, BorderLayout.CENTER);
+        // End date
+        JPanel endDateLine = new JPanel();
+        endDateLabel = new JLabel("End date (DD/MM/YYYY)");
+        endDateField = new JTextField(20);
+        endDateLine.add(endDateLabel, BorderLayout.WEST);
+        endDateLine.add(endDateField, BorderLayout.CENTER);
 
-         // Distance
-         JPanel distanceLine = new JPanel();
-         distanceLabel = new JLabel("Distance (optional)");
-         distanceField = new JTextField(20);
-         distanceLine.add(distanceLabel, BorderLayout.WEST);
-         distanceLine.add(distanceField, BorderLayout.CENTER);
+        // Distance
+        JPanel distanceLine = new JPanel();
+        distanceLabel = new JLabel("Distance (optional)");
+        distanceField = new JTextField(20);
+        distanceLine.add(distanceLabel, BorderLayout.WEST);
+        distanceLine.add(distanceField, BorderLayout.CENTER);
 
-         // Time
-         JPanel timeLine = new JPanel();
-         timeLabel = new JLabel("Time (optional)");
-         timeField = new JTextField(20);
-         timeLine.add(timeLabel, BorderLayout.WEST);
-         timeLine.add(timeField, BorderLayout.CENTER);
+        // Time
+        JPanel timeLine = new JPanel();
+        timeLabel = new JLabel("Time (optional)");
+        timeField = new JTextField(20);
+        timeLine.add(timeLabel, BorderLayout.WEST);
+        timeLine.add(timeField, BorderLayout.CENTER);
 
-         // Sport
-         JPanel sportLine = new JPanel();
-         sportLabel = new JLabel("Sport");
-         sportCombo = new JComboBox<String>(sport);
-         sportLine.add(sportLabel, BorderLayout.WEST);
-         sportLine.add(sportCombo, BorderLayout.CENTER);
+        // Sport
+        JPanel sportLine = new JPanel();
+        sportLabel = new JLabel("Sport");
+        sportCombo = new JComboBox<String>(sport);
+        sportLine.add(sportLabel, BorderLayout.WEST);
+        sportLine.add(sportCombo, BorderLayout.CENTER);
 
 
-         mainPane.add(nameLine);
-         mainPane.add(startDateLine);
-         mainPane.add(endDateLine);
-         mainPane.add(distanceLine);
-         mainPane.add(timeLine);
-         mainPane.add(sportLine);
+        mainPane.add(nameLine);
+        mainPane.add(startDateLine);
+        mainPane.add(endDateLine);
+        mainPane.add(distanceLine);
+        mainPane.add(timeLine);
+        mainPane.add(sportLine);
 
-         JPanel buttonLine = new JPanel();
-         acceptButton = new JButton("Accept");
-         cancelButton = new JButton("Cancel");
-         buttonLine.add(acceptButton);
-         buttonLine.add(cancelButton);
-         mainPane.add(buttonLine);
- 
-         cancelButton.addActionListener(e -> { 
+        JPanel buttonLine = new JPanel();
+        acceptButton = new JButton("Accept");
+        cancelButton = new JButton("Cancel");
+        buttonLine.add(acceptButton);
+        buttonLine.add(cancelButton);
+        mainPane.add(buttonLine);
+
+        cancelButton.addActionListener(e -> {
             this.setVisible(false);;
         });
 
@@ -122,7 +122,8 @@ public class ChallengeDialog extends JDialog {
                 endDate = formatter.parse(endDateField.getText());
             } catch (ParseException e1) {
                 startDate = null;
-                showMessageDialog(null, "Wrong date format, use dd-MMm-yyyy");
+                showMessageDialog(null, "Wrong date format, use dd-mm-yyyy");
+                return;
             }
             String sport = sportCombo.getSelectedItem().toString();
             boolean isCycling;
@@ -134,9 +135,9 @@ public class ChallengeDialog extends JDialog {
                 isCycling = false;
                 isRunning = true;
             }
-            
+
             Long token = athleteController.getToken();
-            
+
             ChallengeDTO challenge = challengeController.createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
             if(challenge == null){
                 showMessageDialog(null, "Error creating challenge");

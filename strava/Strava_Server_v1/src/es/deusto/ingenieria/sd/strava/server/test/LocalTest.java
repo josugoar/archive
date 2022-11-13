@@ -17,7 +17,7 @@ public class LocalTest {
 		long token = 0l;
 		String pasword = org.apache.commons.codec.digest.DigestUtils.sha1Hex("$!9PhNz,");
 
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy", Locale.ENGLISH);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
 
 		try {
 			// Login (fails no registered athlete)
