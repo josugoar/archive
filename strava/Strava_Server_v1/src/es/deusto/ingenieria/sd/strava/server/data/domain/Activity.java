@@ -61,7 +61,7 @@ public class Activity {
         if (type == null) {
             return false;
         }
-        return type.equals("running") || type.equals("cycling");
+        return type.equals("Running") || type.equals("Cycling");
     }
 
     public String getType() {

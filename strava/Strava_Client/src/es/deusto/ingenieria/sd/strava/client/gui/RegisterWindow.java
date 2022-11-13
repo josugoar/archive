@@ -2,7 +2,6 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,10 +11,11 @@ import javax.swing.*;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 
-public class RegisterWindow extends JFrame implements ActionListener {
+public class RegisterWindow extends JFrame {
 
     private AthleteController athleteController;
     private LoginWindow loginWindow;
+    private MainWindow mainWindow;
 
     private JPanel mainPane;
     private JButton loginButton, registerButton;
@@ -26,8 +26,6 @@ public class RegisterWindow extends JFrame implements ActionListener {
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy", Locale.ENGLISH);
 
-
-
     public RegisterWindow(AthleteController athleteController) {
         this.athleteController = athleteController;
 
@@ -36,12 +34,9 @@ public class RegisterWindow extends JFrame implements ActionListener {
         setContentPane(mainPane);
         setSize(400,400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(false);
-
     }
 
     public void initPane() {
-
         mainPane = new JPanel();
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
 
@@ -96,7 +91,6 @@ public class RegisterWindow extends JFrame implements ActionListener {
         restingHeartRateLine.add(restingHeartRateLabel, BorderLayout.WEST);
         restingHeartRateLine.add(restingHeartRateField, BorderLayout.CENTER);
 
-
         mainPane.add(emailLine);
         mainPane.add(passLine);
         mainPane.add(nameLine);
@@ -108,58 +102,64 @@ public class RegisterWindow extends JFrame implements ActionListener {
         warning = new JLabel("All fields with * are NOT optional");
         mainPane.add(warning);
 
-
-
         JPanel buttonLine = new JPanel();
         loginButton = new JButton("Back to Login");
         registerButton = new JButton("Create a new Account");
-        loginButton.addActionListener(this);
-        registerButton.addActionListener(this);
+        loginButton.addActionListener(new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                loginWindow.setVisible(true);
+                setVisible(false);
+            }
+
+        });
+        registerButton.addActionListener(new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                register();
+            }
+
+        });
         buttonLine.add(loginButton);
         buttonLine.add(registerButton);
         mainPane.add(buttonLine);
 
 
         this.add(mainPane);
-
-    }
-
-    public void login() {
     }
 
     public void setLoginWindow(LoginWindow l) {
         this.loginWindow = l;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        if (e.getSource() == loginButton) {
-            loginWindow.setVisible(true);
-            this.setVisible(false);
-        } else if (e.getSource() == registerButton) {
+    public void setMainWindow(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
+    }
 
-
-            String email = emailField.getText();
-            String password = String.valueOf(passField.getPassword());
-            String name = nameField.getText();
-            Date dateOfBirth;
-            try {
-                dateOfBirth = formatter.parse(dateOfBirthField.getText());
-            } catch (ParseException e1) {
-                dateOfBirth = null;
-                warning.setText("Wrong date format, use dd-M-yyyy");
-
-            }
-            Float weight = Float.parseFloat(weightField.getText());
-            Integer height = Integer.parseInt(heightField.getText());
-            Integer maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
-            Integer restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
-
-            athleteController.register(email, password, name, dateOfBirth, weight, height, restingHeartRate, maxHeartRate);
+    public void register() {
+        String email = emailField.getText();
+        String password = String.valueOf(passField.getPassword());
+        String name = nameField.getText();
+        Date dateOfBirth;
+        try {
+            dateOfBirth = formatter.parse(dateOfBirthField.getText());
+        } catch (ParseException e1) {
+            dateOfBirth = null;
+            warning.setText("Wrong date format, use dd-M-yyyy");
 
         }
+        Float weight = Float.parseFloat(weightField.getText());
+        Integer height = Integer.parseInt(heightField.getText());
+        Integer maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
+        Integer restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
 
+        // TODO
+        if (!athleteController.register(email, password, name, dateOfBirth, weight, height, restingHeartRate, maxHeartRate))
+        {
+        } else {
+        }
     }
 
 }

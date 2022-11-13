@@ -11,6 +11,7 @@ public class LoginWindow extends JFrame {
 
     private AthleteController athleteController;
     private RegisterWindow registerWindow;
+    private MainWindow mainWindow;
 
     private JPanel mainPane;
     private JButton loginButton;
@@ -29,12 +30,9 @@ public class LoginWindow extends JFrame {
         setContentPane(mainPane);
         setSize(400,200);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(true);
-
     }
 
     public void initPane() {
-
         mainPane = new JPanel();
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
         JPanel emailLine = new JPanel();
@@ -55,12 +53,14 @@ public class LoginWindow extends JFrame {
         JPanel buttonLine = new JPanel();
         loginButton = new JButton("Login");
         registerButton = new JButton("Register");
+
         loginButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 login();
             }
         });
+
         registerButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -75,17 +75,24 @@ public class LoginWindow extends JFrame {
 
 
         this.add(mainPane);
-
     }
 
     public void setRegisterWindow(RegisterWindow r) {
         this.registerWindow = r;
     }
 
+    public void setMainWindow(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
+    }
+
     public void login() {
         String email = emailField.getText();
         String password = String.valueOf(passField.getPassword());
-        athleteController.login(email, password);
+        // TODO
+        if (athleteController.login(email, password))
+        {
+        } else {
+        }
     }
 
 }

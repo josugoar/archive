@@ -13,9 +13,10 @@ import static javax.swing.JOptionPane.showMessageDialog;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
 
-public class ChallengeDialog extends JDialog{
+public class ChallengeDialog extends JDialog {
 
     private ChallengeController challengeController;
+    private AthleteController athleteController;
 
     private JPanel mainPane;
     private JLabel nameLabel, startDateLabel, endDateLabel, distanceLabel, timeLabel, sportLabel;
@@ -26,14 +27,14 @@ public class ChallengeDialog extends JDialog{
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
 
-    public ChallengeDialog(ChallengeController challengeController) {
+    public ChallengeDialog(ChallengeController challengeController, AthleteController athleteController) {
         this.challengeController = challengeController;
+        this.athleteController = athleteController;
 
         initDialog();
         setContentPane(mainPane);
         setSize(400,400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(true);
     }
 
     public void initDialog() {

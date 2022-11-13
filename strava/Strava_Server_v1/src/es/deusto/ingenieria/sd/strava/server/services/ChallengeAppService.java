@@ -70,7 +70,7 @@ public class ChallengeAppService {
         float distance = 0;
         Duration duration = Duration.ZERO;
         for (Activity activity : athlete.getActivities()) {
-            if (activity.getType().equals("running") && challenge.isRunning() || activity.getType().equals("cycling") && challenge.isCycling()) {
+            if (activity.getType().equals("Running") && challenge.isRunning() || activity.getType().equals("Cycling") && challenge.isCycling()) {
                 if (activity.getStartDate().after(challenge.getStartDate()) && activity.getStartDate().before(challenge.getEndDate())) {
                     if (challenge.getDistance() != null) {
                         distance += activity.getDistance();
