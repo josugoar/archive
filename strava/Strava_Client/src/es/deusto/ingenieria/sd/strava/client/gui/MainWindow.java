@@ -57,6 +57,22 @@ public class MainWindow extends JFrame {
             }
         });
 
+        challengeDialog.getContentPane().addComponentListener(new ComponentAdapter() {
+            public void componentHidden(ComponentEvent e) {
+                getActiveChallenges();
+                getActivities();
+                initPane();
+            }
+        });
+
+        activityDialog.getContentPane().addComponentListener(new ComponentAdapter() {
+            public void componentHidden(ComponentEvent e) {
+                getActiveChallenges();
+                getActivities();
+                initPane();
+            }
+        });
+
         setTitle("STRAVA");
         setSize(400, 900);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
