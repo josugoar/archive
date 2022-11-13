@@ -19,8 +19,10 @@ public class RegisterWindow extends JFrame {
 
     private JPanel mainPane;
     private JButton loginButton, registerButton;
-    private JTextField emailField, nameField, heightField, weightField, dateOfBirthField, maxHeartRateField, restingHeartRateField;
-    private JLabel emailLabel, passLabel, nameLabel, heightLabel, weightLabel, dateOfBirthLabel, maxHeartRateLabel, restingHeartRateLabel;
+    private JTextField emailField, nameField, heightField, weightField, dateOfBirthField, maxHeartRateField,
+            restingHeartRateField;
+    private JLabel emailLabel, passLabel, nameLabel, heightLabel, weightLabel, dateOfBirthLabel, maxHeartRateLabel,
+            restingHeartRateLabel;
     private JPasswordField passField;
     private JLabel warning;
 
@@ -32,7 +34,7 @@ public class RegisterWindow extends JFrame {
         initPane();
         setTitle("Create a new Account");
         setContentPane(mainPane);
-        setSize(400,400);
+        setSize(400, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
@@ -71,7 +73,6 @@ public class RegisterWindow extends JFrame {
         weightField = new JTextField(20);
         weightLine.add(weightLabel, BorderLayout.WEST);
         weightLine.add(weightField, BorderLayout.CENTER);
-
 
         JPanel dateOfBirthLine = new JPanel();
         dateOfBirthLabel = new JLabel("Date of Birth* (dd-MM-yyyy)");
@@ -126,7 +127,6 @@ public class RegisterWindow extends JFrame {
         buttonLine.add(registerButton);
         mainPane.add(buttonLine);
 
-
         this.add(mainPane);
     }
 
@@ -139,27 +139,52 @@ public class RegisterWindow extends JFrame {
     }
 
     public void register() {
-        String email = emailField.getText();
-        String password = String.valueOf(passField.getPassword());
-        String name = nameField.getText();
-        Date dateOfBirth;
         try {
-            dateOfBirth = formatter.parse(dateOfBirthField.getText());
-        } catch (ParseException e1) {
-            dateOfBirth = null;
-            warning.setText("Wrong date format, use dd-MM-yyyy");
+            String email = emailField.getText();
+            String password = String.valueOf(passField.getPassword());
+            String name = nameField.getText();
 
-        }
-        Float weight = Float.parseFloat(weightField.getText());
-        Integer height = Integer.parseInt(heightField.getText());
-        Integer maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
-        Integer restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
+            Date dateOfBirth = null;
+            try {
+                dateOfBirth = formatter.parse(dateOfBirthField.getText());
+            } catch (ParseException e1) {
+                warning.setText("Wrong date format, use dd-MM-yyyy");
+                JOptionPane.showMessageDialog(rootPane, "Error in registration");
+                return;
+            }
 
-        if (athleteController.register(email, password, name, dateOfBirth, weight, height, restingHeartRate, maxHeartRate))
-        {
-            this.setVisible(false);
-            mainWindow.setVisible(true);
-        } else {
+            Float weight = null;
+            try {
+                weight = Float.parseFloat(weightField.getText());
+            } catch (Exception e) {
+            }
+
+            Integer height = null;
+            try {
+                height = Integer.parseInt(heightField.getText());
+            } catch (Exception e) {
+            }
+
+            Integer maxHeartRate = null;
+            try {
+                maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
+            } catch (Exception e) {
+            }
+
+            Integer restingHeartRate = null;
+            try {
+                restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
+            } catch (Exception e) {
+            }
+
+            if (athleteController.register(email, password, name, dateOfBirth, weight, height, restingHeartRate,
+                    maxHeartRate)) {
+                this.setVisible(false);
+                mainWindow.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Error in registration");
+            }
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Error in registration");
         }
     }

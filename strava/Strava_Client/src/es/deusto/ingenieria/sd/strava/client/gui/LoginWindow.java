@@ -21,14 +21,13 @@ public class LoginWindow extends JFrame {
     private JPasswordField passField;
     private JLabel passLabel;
 
-
     public LoginWindow(AthleteController athleteController) {
         this.athleteController = athleteController;
 
         initPane();
         setTitle("Welcome to STRAVA");
         setContentPane(mainPane);
-        setSize(400,200);
+        setSize(400, 200);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
@@ -73,7 +72,6 @@ public class LoginWindow extends JFrame {
         buttonLine.add(registerButton);
         mainPane.add(buttonLine);
 
-
         this.add(mainPane);
     }
 
@@ -86,14 +84,18 @@ public class LoginWindow extends JFrame {
     }
 
     public void login() {
-        String email = emailField.getText();
-        String password = String.valueOf(passField.getPassword());
+        try {
 
-        if (athleteController.login(email, password))
-        {
-            this.setVisible(false);
-            mainWindow.setVisible(true);
-        } else {
+            String email = emailField.getText();
+            String password = String.valueOf(passField.getPassword());
+
+            if (athleteController.login(email, password)) {
+                this.setVisible(false);
+                mainWindow.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Error in login");
+            }
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Error in login");
         }
     }
