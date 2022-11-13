@@ -9,7 +9,7 @@ import javax.swing.*;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 
-public class LoginWindow extends JFrame implements ActionListener{ 
+public class LoginWindow extends JFrame implements ActionListener {
 
     private AthleteController athleteController;
     private RegisterWindow registerWindow;
@@ -89,9 +89,9 @@ public class LoginWindow extends JFrame implements ActionListener{
             String email = emailField.getText();
             String password = String.valueOf(passField.getPassword());
             athleteController.login(email, password);
-            
+
         }
-        
+
     }
 
 }

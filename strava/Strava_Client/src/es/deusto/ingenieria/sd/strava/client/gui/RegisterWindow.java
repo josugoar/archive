@@ -3,9 +3,7 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.registry.Registry;
 import java.util.*;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -14,7 +12,7 @@ import javax.swing.*;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 
-public class RegisterWindow extends JFrame implements ActionListener{ 
+public class RegisterWindow extends JFrame implements ActionListener {
 
     private AthleteController athleteController;
     private LoginWindow loginWindow;
@@ -161,7 +159,7 @@ public class RegisterWindow extends JFrame implements ActionListener{
             athleteController.register(email, password, name, dateOfBirth, weight, height, restingHeartRate, maxHeartRate);
 
         }
-        
+
     }
 
 }

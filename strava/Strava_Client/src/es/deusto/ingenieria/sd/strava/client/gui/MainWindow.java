@@ -4,7 +4,7 @@ import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
 
-public class MainWindow {
+public class MainWindow extends JFrame {
 
     private ActivityController activityController;
     private AthleteController athleteController;
