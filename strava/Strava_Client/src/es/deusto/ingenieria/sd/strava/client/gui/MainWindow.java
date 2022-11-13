@@ -55,7 +55,11 @@ public class MainWindow extends JFrame {
                 getActiveChallenges();
                 getActivities();
                 initPane();
-                setContentPane(mainPane);
+                getContentPane().add(mainPane);
+            }
+            @Override
+            public void componentHidden(ComponentEvent e) {
+                logout();
             }
         });
 
