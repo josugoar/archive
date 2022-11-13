@@ -24,6 +24,9 @@ public class MainWindow extends JFrame {
     public void getActiveChallenges() {
     }
 
+    public void acceptChallenge() {
+    }
+
     public void logout() {
     }
 

@@ -4,7 +4,12 @@ import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
 import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
+import es.deusto.ingenieria.sd.strava.client.gui.ActivityDialog;
+import es.deusto.ingenieria.sd.strava.client.gui.AthleteDialog;
+import es.deusto.ingenieria.sd.strava.client.gui.ChallengeDialog;
 import es.deusto.ingenieria.sd.strava.client.gui.LoginWindow;
+import es.deusto.ingenieria.sd.strava.client.gui.MainWindow;
+import es.deusto.ingenieria.sd.strava.client.gui.RegisterWindow;
 
 
 public class MainProgram {
@@ -15,11 +20,27 @@ public class MainProgram {
 		//args[0] = RMIRegistry IP
 		//args[1] = RMIRegistry Port
 		//args[2] = Service Name
-		serviceLocator.setService(args[0], args[1], args[2]);
+		if (args.length >= 3) {
+			serviceLocator.setService(args[0], args[1], args[2]);
+		} else {
+			System.out.println("Enter arguments to locate remote facade");
+		}
 
 		ActivityController activityController = new ActivityController(serviceLocator);
-		AthleteController athleteController = new AthleteController(serviceLocator);
-		ChallengeController challengeController = new ChallengeController(serviceLocator);
+        AthleteController athleteController = new AthleteController(serviceLocator);
+        ChallengeController challengeController = new ChallengeController(serviceLocator);
 
+        RegisterWindow registerWindow = new RegisterWindow(athleteController);
+        LoginWindow loginWindow = new LoginWindow(athleteController);
+        MainWindow mainWindow = new MainWindow(activityController, athleteController, challengeController);
+        AthleteDialog athleteDialog = new AthleteDialog(athleteController);
+        ActivityDialog activityDialog = new ActivityDialog(activityController, athleteController);
+        ChallengeDialog challengeDialog = new ChallengeDialog(challengeController, athleteController);
+
+		registerWindow.setLoginWindow(loginWindow);
+		registerWindow.setMainWindow(mainWindow);
+
+		loginWindow.setRegisterWindow(registerWindow);
+		loginWindow.setMainWindow(mainWindow);
 	}
 }
