@@ -41,6 +41,7 @@ public class MainWindow extends JFrame {
     private List<ChallengeDTO> challenges;
     private JButton bCreateActivity;
     private JButton bCreateChallenge;
+    private JButton bAthleteDialog;
     private JButton bViewProfile;
     private JButton bLogout;
 
@@ -106,11 +107,13 @@ public class MainWindow extends JFrame {
 
         bCreateActivity = new JButton("New Activity");
         bCreateChallenge = new JButton("New Challenfge");
+        bAthlete = new JButton("Show Athlete");
         bViewProfile = new JButton("Profile");
         bLogout = new JButton("Log Out");
 
         buttonPane.add(bCreateActivity);
         buttonPane.add(bCreateChallenge);
+        buttonPane.add(bAthlete);
         buttonPane.add(bViewProfile);
         buttonPane.add(bLogout);
 
@@ -131,6 +134,17 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 challengeDialog.setVisible(true);
+
+            }
+
+        });
+
+        bAthlete.addActionListener(new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                athleteDialog.setVisible(true);
 
             }
 
