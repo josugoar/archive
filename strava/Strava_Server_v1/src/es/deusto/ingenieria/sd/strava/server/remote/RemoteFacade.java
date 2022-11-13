@@ -12,6 +12,8 @@ import java.util.Map;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityAssembler;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityDTO;
+import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteAssembler;
+import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeAssembler;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 import es.deusto.ingenieria.sd.strava.server.services.ActivityAppService;
@@ -133,12 +135,37 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 	}
 
 	@Override
-	public synchronized float getChallengeState(int challengeId) throws RemoteException {
-		try
-		{
-			return challengeService.getChallengeState(challengeId);
-		} catch (Exception e) {
-			throw new RemoteException("Challenge does not exist");
+	public synchronized float getChallengeState(long token, int challengeId) throws RemoteException {
+		if (this.serverState.containsKey(token)) {
+			Athlete athlete = serverState.get(token);
+			try
+			{
+				return challengeService.getChallengeState(athlete, challengeId);
+			} catch (Exception e) {
+				throw new RemoteException("Challenge does not exist");
+			}
+		} else {
+			throw new RemoteException("Athlete is not logged in!");
+		}
+	}
+
+	@Override
+	public AthleteDTO getAthlete(long token) throws RemoteException {
+		if (this.serverState.containsKey(token)) {
+			Athlete athlete = serverState.get(token);
+			return AthleteAssembler.getInstance().athleteToDTO(athlete);
+		} else {
+			throw new RemoteException("Athlete is not logged in!");
+		}
+	}
+
+	@Override
+	public List<ActivityDTO> getActivities(long token) throws RemoteException {
+		if (this.serverState.containsKey(token)) {
+			Athlete athlete = serverState.get(token);
+			return ActivityAssembler.getInstance().activityToDTO(activityService.getActivities(athlete));
+		} else {
+			throw new RemoteException("Athlete is not logged in!");
 		}
 	}
 }
