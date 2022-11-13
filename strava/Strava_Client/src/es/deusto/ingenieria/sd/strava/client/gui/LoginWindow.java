@@ -91,7 +91,11 @@ public class LoginWindow extends JFrame {
         // TODO
         if (athleteController.login(email, password))
         {
+            mainWindow.setVisible(true);
+            this.setVisible(false);
         } else {
+            System.out.println("Failed Login");
+            // TODO Failed Login prompt
         }
     }
 
