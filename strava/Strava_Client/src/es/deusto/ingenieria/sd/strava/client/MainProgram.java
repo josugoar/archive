@@ -23,7 +23,7 @@ public class MainProgram {
 		if (args.length >= 3) {
 			serviceLocator.setService(args[0], args[1], args[2]);
 		} else {
-			System.out.println("Enter arguments to locate remote facade");
+			System.err.println("Enter arguments to locate remote facade");
 		}
 
 		ActivityController activityController = new ActivityController(serviceLocator);
