@@ -29,7 +29,7 @@ public interface IRemoteFacade extends Remote {
 
 	public ChallengeDTO createChallenge(long token, String name, Date startDate,
 			Date endDate,
-			float distance,
+			Float distance,
 			Duration time,
 			boolean isCycling,
 			boolean isRunning) throws RemoteException;

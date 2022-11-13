@@ -106,7 +106,7 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 	}
 
 	@Override
-	public synchronized ChallengeDTO createChallenge(long token, String name, Date startDate, Date endDate, float distance, Duration time,
+	public synchronized ChallengeDTO createChallenge(long token, String name, Date startDate, Date endDate, Float distance, Duration time,
 			boolean isCycling, boolean isRunning) throws RemoteException {
 		if (this.serverState.containsKey(token)) {
 			try {
