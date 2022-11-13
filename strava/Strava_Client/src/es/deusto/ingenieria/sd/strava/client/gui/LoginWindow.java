@@ -34,7 +34,6 @@ public class LoginWindow extends JFrame {
     }
 
     public void initPane() {
-
         mainPane = new JPanel();
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
         JPanel emailLine = new JPanel();
@@ -55,12 +54,14 @@ public class LoginWindow extends JFrame {
         JPanel buttonLine = new JPanel();
         loginButton = new JButton("Login");
         registerButton = new JButton("Register");
+
         loginButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 login();
             }
         });
+
         registerButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -75,7 +76,6 @@ public class LoginWindow extends JFrame {
 
 
         this.add(mainPane);
-
     }
 
     public void setRegisterWindow(RegisterWindow r) {
@@ -85,7 +85,11 @@ public class LoginWindow extends JFrame {
     public void login() {
         String email = emailField.getText();
         String password = String.valueOf(passField.getPassword());
-        athleteController.login(email, password);
+        // TODO
+        if (athleteController.login(email, password))
+        {
+        } else {
+        }
     }
 
 }
