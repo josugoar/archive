@@ -176,6 +176,10 @@ public class MainWindow extends JFrame {
         // TODO
     }
 
+    public void getChallengeState() {
+        // TODO
+    }
+
     public void logout() {
         athleteController.logout();
         setVisible(false);
