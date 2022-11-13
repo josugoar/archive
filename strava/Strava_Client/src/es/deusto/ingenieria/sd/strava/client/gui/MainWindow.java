@@ -162,11 +162,11 @@ public class MainWindow extends JFrame {
     }
 
     public void getActivities() {
-        activityController.getActivities(this.athleteController.getToken());
+        activities = activityController.getActivities(this.athleteController.getToken());
     }
 
     public void getActiveChallenges() {
-        challengeController.getActiveChallenges(this.athleteController.getToken());
+        challenges = challengeController.getActiveChallenges(this.athleteController.getToken());
     }
 
     public void acceptChallenge() {
