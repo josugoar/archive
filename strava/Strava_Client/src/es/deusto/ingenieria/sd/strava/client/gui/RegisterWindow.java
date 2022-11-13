@@ -34,7 +34,6 @@ public class RegisterWindow extends JFrame {
         setContentPane(mainPane);
         setSize(400,400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(false);
     }
 
     public void initPane() {

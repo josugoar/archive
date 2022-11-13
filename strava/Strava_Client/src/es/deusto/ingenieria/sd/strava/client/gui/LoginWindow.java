@@ -30,8 +30,6 @@ public class LoginWindow extends JFrame {
         setContentPane(mainPane);
         setSize(400,200);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(true);
-
     }
 
     public void initPane() {

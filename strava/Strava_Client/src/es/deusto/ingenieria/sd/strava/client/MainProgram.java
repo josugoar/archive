@@ -42,5 +42,7 @@ public class MainProgram {
 
 		loginWindow.setRegisterWindow(registerWindow);
 		loginWindow.setMainWindow(mainWindow);
+
+		registerWindow.setVisible(true);
 	}
 }
