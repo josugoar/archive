@@ -140,7 +140,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                logout();;
+                logout();
 
             }
 
