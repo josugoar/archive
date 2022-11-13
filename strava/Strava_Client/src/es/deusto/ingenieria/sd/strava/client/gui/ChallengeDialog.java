@@ -92,8 +92,6 @@ public class ChallengeDialog extends JDialog {
 
 
          this.add(mainPane);
-
-
     }
 
     public void createChallenge() {

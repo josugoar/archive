@@ -58,8 +58,6 @@ public class MainWindow extends JFrame {
 
     }
 
-
-
     public void initPane() {
 
         mainPane = new JPanel();
@@ -99,7 +97,7 @@ public class MainWindow extends JFrame {
             }
             contentPane.add(pane);
         }
-        
+
         bCreateActivity = new JButton("New Activity");
         bCreateChallenge = new JButton("New Challenfge");
         bViewProfile = new JButton("Profile");
@@ -116,9 +114,9 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 activityDialog.setVisible(true);
-                
+
             }
-            
+
         });
 
         bCreateChallenge.addActionListener(new AbstractAction() {
@@ -127,9 +125,9 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 challengeDialog.setVisible(true);
-                
+
             }
-            
+
         });
 
 
