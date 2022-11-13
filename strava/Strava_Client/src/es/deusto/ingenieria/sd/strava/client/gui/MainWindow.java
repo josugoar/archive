@@ -94,6 +94,7 @@ public class MainWindow extends JFrame {
             pane.add(new JLabel("Start Date: " + challengeDTO.getStartDate().toString()));
             pane.add(new JLabel("End Date: " + challengeDTO.getEndDate().toString()));
             pane.add(new JLabel("Time: " + challengeDTO.getTime().toString()));
+            pane.add(new JLabel("Completion :" + getChallengeState(athleteController.getToken(), challengeDTO.getId())));
             if (challengeDTO.isCycling()) {
                 pane.add(new JLabel("Cycling"));
             } else if (challengeDTO.isRunning()) {
@@ -174,9 +175,11 @@ public class MainWindow extends JFrame {
         // TODO
     }
 
-    public void getChallengeState() {
+    public float getChallengeState(Long token, Integer id) {
         // TODO
+        return challengeController.getChallengeState(token, id);
     }
+
 
     public void logout() {
         athleteController.logout();
