@@ -6,8 +6,6 @@ import java.awt.event.ComponentEvent;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentListener;
-import java.time.Duration;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -59,6 +57,22 @@ public class MainWindow extends JFrame {
             }
         });
 
+        challengeDialog.getContentPane().addComponentListener(new ComponentAdapter() {
+            public void componentHidden(ComponentEvent e) {
+                getActiveChallenges();
+                getActivities();
+                initPane();
+            }
+        });
+
+        activityDialog.getContentPane().addComponentListener(new ComponentAdapter() {
+            public void componentHidden(ComponentEvent e) {
+                getActiveChallenges();
+                getActivities();
+                initPane();
+            }
+        });
+
         setTitle("STRAVA");
         setSize(400, 900);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -96,6 +110,7 @@ public class MainWindow extends JFrame {
             pane.add(new JLabel("Start Date: " + challengeDTO.getStartDate().toString()));
             pane.add(new JLabel("End Date: " + challengeDTO.getEndDate().toString()));
             pane.add(new JLabel("Time: " + challengeDTO.getTime().toString()));
+            pane.add(new JLabel("Completion :" + getChallengeState(challengeDTO.getId())));
             if (challengeDTO.isCycling()) {
                 pane.add(new JLabel("Cycling"));
             } else if (challengeDTO.isRunning()) {
@@ -176,8 +191,8 @@ public class MainWindow extends JFrame {
         // TODO
     }
 
-    public void getChallengeState() {
-        // TODO
+    public float getChallengeState(Integer id) {
+        return challengeController.getChallengeState(athleteController.getToken(), id);
     }
 
     public void logout() {
