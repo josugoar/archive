@@ -110,7 +110,7 @@ public class MainWindow extends JFrame {
         }
 
         bCreateActivity = new JButton("New Activity");
-        bCreateChallenge = new JButton("New Challenfge");
+        bCreateChallenge = new JButton("New Challenge");
         bViewProfile = new JButton("Profile");
         bLogout = new JButton("Log Out");
 
