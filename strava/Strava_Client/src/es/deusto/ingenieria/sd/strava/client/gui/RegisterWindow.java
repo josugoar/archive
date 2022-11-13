@@ -155,14 +155,12 @@ public class RegisterWindow extends JFrame {
         Integer maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
         Integer restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
 
-        // TODO
         if (athleteController.register(email, password, name, dateOfBirth, weight, height, restingHeartRate, maxHeartRate))
         {
-            mainWindow.setVisible(true);
             this.setVisible(false);
+            mainWindow.setVisible(true);
         } else {
-            System.out.println("Failed register");
-            // TODO Failed register prompt
+            JOptionPane.showMessageDialog(rootPane, "Error in registration");
         }
     }
 
