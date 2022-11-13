@@ -3,7 +3,6 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.registry.Registry;
 
 import javax.swing.*;
 
