@@ -61,6 +61,7 @@ public class MainWindow extends JFrame {
 
         setTitle("STRAVA");
         setSize(400, 900);
+        setContentPane(mainPane);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
