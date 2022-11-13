@@ -20,20 +20,20 @@ public class AthleteDialog extends JDialog {
     public AthleteDialog(AthleteController athleteController) {
         this.athleteController = athleteController;
 
-        initDialog();
         setContentPane(mainPane);
         setSize(400,400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         getContentPane().addComponentListener(new ComponentAdapter() {
             public void componentShown(ComponentEvent e) {
-                getAthlete();
+                initDialog();
             }
         });
 
     }
 
     public void initDialog(){
+        getAthlete();
         mainPane = new JPanel();
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
 
