@@ -13,8 +13,8 @@ public class AthleteDialog extends JDialog {
     private JLabel emailLabel, passwordLabel, weightLabel, heightLabel, restingHeartrateLabel, maxHeartrateLabel, dateofBirthLabel;
     private JTextField emailField, passwordField, weightField, heightField, restingHeartrateField, maxHeartrateField, dateofBirthField;
     private JButton acceptButton, cancelButton;
- 
 
+    // TODO
     public AthleteDialog(AthleteController athleteController) {
         this.athleteController = athleteController;
 
@@ -85,7 +85,7 @@ public class AthleteDialog extends JDialog {
          mainPane.add(restingHeartrateLine);
          mainPane.add(maxHeartrateLine);
          mainPane.add(dateofBirthLine);
-         
+
 
          JPanel buttonLine = new JPanel();
          acceptButton = new JButton("Accept");
