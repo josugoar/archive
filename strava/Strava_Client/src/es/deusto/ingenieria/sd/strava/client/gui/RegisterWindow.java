@@ -24,7 +24,7 @@ public class RegisterWindow extends JFrame {
     private JPasswordField passField;
     private JLabel warning;
 
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy", Locale.ENGLISH);
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
     public RegisterWindow(AthleteController athleteController) {
         this.athleteController = athleteController;
@@ -74,7 +74,7 @@ public class RegisterWindow extends JFrame {
 
 
         JPanel dateOfBirthLine = new JPanel();
-        dateOfBirthLabel = new JLabel("Date of Birth* (dd-M-yyyy)");
+        dateOfBirthLabel = new JLabel("Date of Birth* (dd-MM-yyyy)");
         dateOfBirthField = new JTextField(20);
         dateOfBirthLine.add(dateOfBirthLabel, BorderLayout.WEST);
         dateOfBirthLine.add(dateOfBirthField, BorderLayout.CENTER);
@@ -147,7 +147,7 @@ public class RegisterWindow extends JFrame {
             dateOfBirth = formatter.parse(dateOfBirthField.getText());
         } catch (ParseException e1) {
             dateOfBirth = null;
-            warning.setText("Wrong date format, use dd-M-yyyy");
+            warning.setText("Wrong date format, use dd-MM-yyyy");
 
         }
         Float weight = Float.parseFloat(weightField.getText());

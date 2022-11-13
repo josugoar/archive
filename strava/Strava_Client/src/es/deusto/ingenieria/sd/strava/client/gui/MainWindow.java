@@ -29,8 +29,6 @@ public class MainWindow extends JFrame {
 
     private ChallengeDialog challengeDialog;
     private ActivityDialog activityDialog;
-    private LoginWindow loginWindow;
-    private Long token;
     private ActivityController activityController;
     private AthleteController athleteController;
     private ChallengeController challengeController;
@@ -59,12 +57,9 @@ public class MainWindow extends JFrame {
             }
         });
 
-        
-
         setTitle("STRAVA");
         setSize(400, 900);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
     }
 
     public void initPane() {
@@ -139,7 +134,6 @@ public class MainWindow extends JFrame {
 
         });
 
-
     }
 
     public void getActivities() {
@@ -148,10 +142,6 @@ public class MainWindow extends JFrame {
 
     public void getActiveChallenges() {
         challenges = challengeController.getActiveChallenges(this.athleteController.getToken());
-    }
-
-    public void setLoginWindow(LoginWindow loginWindow) {
-        this.loginWindow = loginWindow;
     }
 
     public void acceptChallenge() {
