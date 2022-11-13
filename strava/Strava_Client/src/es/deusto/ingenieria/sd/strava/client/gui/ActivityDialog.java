@@ -98,25 +98,7 @@ public class ActivityDialog extends JDialog {
         });
 
         acceptButton.addActionListener(e -> {
-            String name = nameField.getText();
-            Duration elapsedTime = Duration.parse(elapsedTimeField.getText());
-            Float distance = Float.parseFloat(distanceField.getText());
-            Date startDate = null;
-            try {
-                startDate = formatter.parse(startDateField.getText());
-            } catch (ParseException e1) {
-                startDate = null;
-                showMessageDialog(null, "Wrong date format, use dd-mm-yyyy");
-            }
-            String type = typeCombo.getSelectedItem().toString();
-
-            
-            Long token = athleteController.getToken();
-            
-            ActivityDTO activity = activityController.createActivity(token, name, distance, elapsedTime, type, startDate);
-            if(activity == null){
-                showMessageDialog(null, "Error creating activity");
-            }
+            this.createActivity();
         });
  
          this.add(mainPane);
@@ -125,6 +107,25 @@ public class ActivityDialog extends JDialog {
     }
 
     public void createActivity() {
+        String name = nameField.getText();
+        Duration elapsedTime = Duration.parse(elapsedTimeField.getText());
+        Float distance = Float.parseFloat(distanceField.getText());
+        Date startDate = null;
+        try {
+            startDate = formatter.parse(startDateField.getText());
+        } catch (ParseException e1) {
+            startDate = null;
+            showMessageDialog(null, "Wrong date format, use dd-mm-yyyy");
+        }
+        String type = typeCombo.getSelectedItem().toString();
+
+        
+        Long token = athleteController.getToken();
+        
+        ActivityDTO activity = activityController.createActivity(token, name, distance, elapsedTime, type, startDate);
+        if(activity == null){
+            showMessageDialog(null, "Error creating activity");
+        }
     }
 
 }
