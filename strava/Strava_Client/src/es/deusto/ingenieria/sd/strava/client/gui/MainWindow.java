@@ -77,7 +77,7 @@ public class MainWindow extends JFrame {
         });
 
         setTitle("STRAVA");
-        setSize(400, 900);
+        setSize(900, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
@@ -109,7 +109,7 @@ public class MainWindow extends JFrame {
         for (ChallengeDTO challengeDTO : challenges) {
             JPanel pane = new JPanel();
             pane.add(new JLabel("Name: " + challengeDTO.getName()));
-            if (challengeDTO.getDistance() != null) {              
+            if (challengeDTO.getDistance() != null) {
                 pane.add(new JLabel("Distance: " + challengeDTO.getDistance()));
             }
             pane.add(new JLabel("Start Date: " + challengeDTO.getStartDate().toString()));
@@ -131,6 +131,7 @@ public class MainWindow extends JFrame {
         bViewProfile = new JButton("Profile");
         bLogout = new JButton("Log Out");
         bAccept = new JButton("Accept Challenge");
+        challengeIDField = new JTextField(20);
 
         mainPane.add(challengeIDField, BorderLayout.SOUTH);
 
@@ -145,9 +146,9 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 acceptChallenge();
-                
+
             }
-            
+
         });
 
         bCreateActivity.addActionListener(new AbstractAction() {
@@ -245,7 +246,7 @@ public class MainWindow extends JFrame {
     }
 
     public void acceptChallenge() {
-        try {         
+        try {
             if (!(challengeController.acceptChallenge(athleteController.getToken(), Integer.parseInt(challengeIDField.getText())))) {
                 JOptionPane.showMessageDialog(rootPane, "Error accepting challenge");
 
@@ -261,7 +262,7 @@ public class MainWindow extends JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Challenge ID not an Integer");
         }
-        
+
     }
 
     public float getChallengeState(Integer id) {
