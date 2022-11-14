@@ -59,6 +59,8 @@ public class MainWindow extends JFrame {
                 initPane();
                 getContentPane().removeAll();
                 getContentPane().add(mainPane);
+                revalidate();
+                repaint();
             }
         });
 
@@ -78,16 +80,16 @@ public class MainWindow extends JFrame {
 
         mainPane = new JPanel();
 
-        scrollPane = new JScrollPane();
-        mainPane.add(scrollPane, BorderLayout.CENTER);
+        //scrollPane = new JScrollPane();
+        //mainPane.add(scrollPane, BorderLayout.CENTER);
 
         contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
 
-        scrollPane.add(contentPane);
+        mainPane.add(contentPane, BorderLayout.CENTER);
 
         buttonPane = new JPanel();
-        mainPane.add(buttonPane, BorderLayout.SOUTH);
+        mainPane.add(buttonPane, BorderLayout.NORTH);
 
         for (ActivityDTO activityDTO : activities) {
             JPanel pane = new JPanel();
@@ -102,10 +104,14 @@ public class MainWindow extends JFrame {
         for (ChallengeDTO challengeDTO : challenges) {
             JPanel pane = new JPanel();
             pane.add(new JLabel("Name: " + challengeDTO.getName()));
-            pane.add(new JLabel("Distance: " + challengeDTO.getDistance()));
+            if (challengeDTO.getDistance() != null) {              
+                pane.add(new JLabel("Distance: " + challengeDTO.getDistance()));
+            }
             pane.add(new JLabel("Start Date: " + challengeDTO.getStartDate().toString()));
             pane.add(new JLabel("End Date: " + challengeDTO.getEndDate().toString()));
-            pane.add(new JLabel("Time: " + challengeDTO.getTime().toString()));
+            if (challengeDTO.getTime() != null) {
+                pane.add(new JLabel("Time: " + challengeDTO.getTime().toString()));
+            }
             pane.add(new JLabel("Completion :" + getChallengeState(challengeDTO.getId())));
             if (challengeDTO.isCycling()) {
                 pane.add(new JLabel("Cycling"));
@@ -184,6 +190,8 @@ public class MainWindow extends JFrame {
                 initPane();
                 getContentPane().removeAll();
                 getContentPane().add(mainPane);
+                revalidate();
+                repaint();
             }
         });
     }
@@ -197,6 +205,9 @@ public class MainWindow extends JFrame {
                 initPane();
                 getContentPane().removeAll();
                 getContentPane().add(mainPane);
+                revalidate();
+                repaint();
+                System.out.println("Exited challenge dialog");
             }
         });
     }
@@ -211,6 +222,7 @@ public class MainWindow extends JFrame {
 
     public void getActiveChallenges() {
         challenges = challengeController.getActiveChallenges(this.athleteController.getToken());
+        System.out.println("Challenges: " + challenges);
     }
 
     public void acceptChallenge() {

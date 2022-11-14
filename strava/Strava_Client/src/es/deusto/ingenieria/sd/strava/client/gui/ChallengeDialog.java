@@ -150,6 +150,7 @@ public class ChallengeDialog extends JDialog {
         Long token = athleteController.getToken();
 
         ChallengeDTO challenge = challengeController.createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
+        System.out.println(challenge);
         if(challenge == null){
             showMessageDialog(null, "Error creating challenge");
         }
