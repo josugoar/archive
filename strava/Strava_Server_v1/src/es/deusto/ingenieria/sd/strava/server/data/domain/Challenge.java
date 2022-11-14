@@ -58,7 +58,7 @@ public class Challenge {
             return false;
         }
 
-        return startDate.compareTo(endDate) <= 0;
+        return startDate.before(endDate);
     }
 
     public Date getStartDate() {
@@ -114,7 +114,7 @@ public class Challenge {
     }
 
     public boolean checkType() {
-        return isCycling && !isRunning || !isCycling && isRunning;
+        return (isCycling && !isRunning) || (!isCycling && isRunning);
     }
 
     public boolean isCycling() {
