@@ -19,14 +19,14 @@ public class ChallengeController {
 
     public ChallengeDTO createChallenge(long token, String name, Date startDate,
             Date endDate,
-            float distance,
+            Float distance,
             Duration time,
             boolean isCycling,
             boolean isRunning) {
         try {
             return this.serviceLocator.getService().createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
         } catch (RemoteException e) {
-            System.out.println("# Error creating an activity: " + e);
+            System.out.println("# Error creating an challenge: " + e);
             return null;
         }
     }

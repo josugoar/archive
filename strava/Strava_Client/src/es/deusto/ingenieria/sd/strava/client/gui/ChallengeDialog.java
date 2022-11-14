@@ -123,8 +123,10 @@ public class ChallengeDialog extends JDialog {
 
         Float distance = null;
         try {
-            distance = Float.parseFloat(distanceField.getText());
-        } catch (Exception e) {
+            if (distanceField.getText() != null) {
+                distance = Float.parseFloat(distanceField.getText());
+            }
+        } catch (NumberFormatException e) {
         }
 
         Date startDate = null;
@@ -132,14 +134,14 @@ public class ChallengeDialog extends JDialog {
         try {
             startDate = formatter.parse(startDateField.getText());
             endDate = formatter.parse(endDateField.getText());
-        } catch (ParseException e1) {
+        } catch (RuntimeException | ParseException e1) {
             showMessageDialog(null, "Wrong date, use dd-mm-yyyy");
         }
 
         String sport = sportCombo.getSelectedItem().toString();
-        boolean isCycling;
-        boolean isRunning;
-        if(sport == "Cycling"){
+        boolean isCycling = false;
+        boolean isRunning = false;
+        if(sport.equals("Cycling")){
             isCycling = true;
             isRunning = false;
         }else{
@@ -150,7 +152,6 @@ public class ChallengeDialog extends JDialog {
         Long token = athleteController.getToken();
 
         ChallengeDTO challenge = challengeController.createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
-        System.out.println(challenge);
         if(challenge == null){
             showMessageDialog(null, "Error creating challenge");
         }
