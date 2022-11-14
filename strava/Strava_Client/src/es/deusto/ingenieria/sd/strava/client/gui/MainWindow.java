@@ -13,8 +13,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 
@@ -45,6 +48,8 @@ public class MainWindow extends JFrame {
     private JButton bCreateChallenge;
     private JButton bViewProfile;
     private JButton bLogout;
+    private JTextField challengeIDField;
+    private JButton bAccept;
 
 
     public MainWindow(ActivityController activityController, AthleteController athleteController, ChallengeController challengeController) {
@@ -125,11 +130,25 @@ public class MainWindow extends JFrame {
         bCreateChallenge = new JButton("New Challenge");
         bViewProfile = new JButton("Profile");
         bLogout = new JButton("Log Out");
+        bAccept = new JButton("Accept Challenge");
+
+        mainPane.add(challengeIDField, BorderLayout.SOUTH);
 
         buttonPane.add(bCreateActivity);
         buttonPane.add(bCreateChallenge);
         buttonPane.add(bViewProfile);
         buttonPane.add(bLogout);
+        buttonPane.add(bAccept);
+
+        bAccept.addActionListener(new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                acceptChallenge();
+                
+            }
+            
+        });
 
         bCreateActivity.addActionListener(new AbstractAction() {
 
@@ -226,7 +245,23 @@ public class MainWindow extends JFrame {
     }
 
     public void acceptChallenge() {
-        // TODO
+        try {         
+            if (!(challengeController.acceptChallenge(athleteController.getToken(), Integer.parseInt(challengeIDField.getText())))) {
+                JOptionPane.showMessageDialog(rootPane, "Error accepting challenge");
+
+            } else {
+                getActiveChallenges();
+                getActivities();
+                initPane();
+                getContentPane().removeAll();
+                getContentPane().add(mainPane);
+                revalidate();
+                repaint();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Challenge ID not an Integer");
+        }
+        
     }
 
     public float getChallengeState(Integer id) {
