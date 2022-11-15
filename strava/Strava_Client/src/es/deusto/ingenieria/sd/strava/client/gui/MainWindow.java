@@ -36,7 +36,7 @@ public class MainWindow extends JFrame {
     private AthleteController athleteController;
     private ChallengeController challengeController;
 
-    private RegisterWindow registerWindow;
+    private LoginWindow loginWindow;
 
     private JPanel mainPane;
     private JPanel contentPane;
@@ -197,8 +197,8 @@ public class MainWindow extends JFrame {
 
     }
 
-    public void setRegisterWindow(RegisterWindow registerWindow) {
-        this.registerWindow = registerWindow;
+    public void setLoginWindow(LoginWindow loginWindow) {
+        this.loginWindow = loginWindow;
     }
 
     public void setActivityDialog(ActivityDialog activityDialog) {
@@ -272,7 +272,7 @@ public class MainWindow extends JFrame {
     public void logout() {
         athleteController.logout();
         setVisible(false);
-        registerWindow.setVisible(true);
+        loginWindow.setVisible(true);
     }
 
 }
