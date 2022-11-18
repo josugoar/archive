@@ -107,10 +107,10 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 
 	@Override
 	public synchronized ChallengeDTO createChallenge(long token, String name, Date startDate, Date endDate, Float distance, Duration time,
-			boolean isCycling, boolean isRunning) throws RemoteException {
+			String type) throws RemoteException {
 		if (this.serverState.containsKey(token)) {
 			try {
-				return ChallengeAssembler.getInstance().challengeToDTO(challengeService.createChallenge(serverState.get(token), name, startDate, endDate, distance, time, isRunning, isCycling));
+				return ChallengeAssembler.getInstance().challengeToDTO(challengeService.createChallenge(serverState.get(token), name, startDate, endDate, distance, time, type));
 			} catch (Exception e) {
 				throw new RemoteException("Bad arguments in call");
 			}

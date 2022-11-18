@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import java.awt.event.WindowEvent;
@@ -40,7 +39,6 @@ public class MainWindow extends JFrame {
 
     private JPanel mainPane;
     private JPanel contentPane;
-    private JScrollPane scrollPane;
     private JPanel buttonPane;
     private List<ActivityDTO> activities;
     private List<ChallengeDTO> challenges;
@@ -118,11 +116,7 @@ public class MainWindow extends JFrame {
                 pane.add(new JLabel("Time: " + challengeDTO.getTime().toString()));
             }
             pane.add(new JLabel("Completion :" + getChallengeState(challengeDTO.getId())));
-            if (challengeDTO.isCycling()) {
-                pane.add(new JLabel("Cycling"));
-            } else if (challengeDTO.isRunning()) {
-                pane.add(new JLabel("Running"));
-            }
+            pane.add(new JLabel(challengeDTO.getType()));
             contentPane.add(pane);
         }
 

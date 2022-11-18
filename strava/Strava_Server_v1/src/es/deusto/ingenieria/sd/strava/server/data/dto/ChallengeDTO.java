@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.util.Date;
 
+
 //This class implements DTO pattern
 public class ChallengeDTO implements Serializable {
 	//This attribute is needed to implement the "Serializable" interface.
@@ -15,8 +16,7 @@ public class ChallengeDTO implements Serializable {
     private Date endDate;
     private Float distance;
     private Duration time;
-    private boolean isCycling;
-    private boolean isRunning;
+    private String type;
 
     public Integer getId() {
         return id;
@@ -66,25 +66,17 @@ public class ChallengeDTO implements Serializable {
         this.time = time;
     }
 
-    public boolean isCycling() {
-        return isCycling;
+    public String getType(){
+        return type;
     }
 
-    public void setCycling(boolean isCycling) {
-        this.isCycling = isCycling;
-    }
-
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    public void setRunning(boolean isRunning) {
-        this.isRunning = isRunning;
+    public void setType(String type){
+        this.type = type;
     }
 
     @Override
     public String toString() {
         return "Challenge [name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", distance="
-                + distance + ", time=" + time + ", isCycling=" + isCycling + ", isRunning=" + isRunning + "]";
+                + distance + ", time=" + time + ", type=" + type + "]";
     }
 }

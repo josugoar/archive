@@ -6,6 +6,7 @@ import java.util.List;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Activity;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
+import es.deusto.ingenieria.sd.strava.server.data.domain.SportType;
 
 public class ActivityAppService {
 
@@ -21,7 +22,7 @@ public class ActivityAppService {
         activity.setElapsedTime(elapsedTime);
         activity.setName(name);
         activity.setStartDate(startDate);
-        activity.setType(type);
+        activity.setType(SportType.fromString(type));
 
         if (!activity.checkActivity()) {
             throw new IllegalArgumentException("Bad arguments!");

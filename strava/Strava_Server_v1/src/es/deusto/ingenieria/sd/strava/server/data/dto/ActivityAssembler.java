@@ -25,7 +25,7 @@ public class ActivityAssembler {
 		dto.setElapsedTime(activity.getElapsedTime());
 		dto.setName(activity.getName());
 		dto.setStartDate(activity.getStartDate());
-		dto.setType(activity.getType());
+		dto.setType(activity.getType().toString());
 
 		return dto;
 	}

@@ -21,11 +21,10 @@ public class ChallengeAssembler {
 
     public ChallengeDTO challengeToDTO(Challenge challenge) {
         ChallengeDTO dto = new ChallengeDTO();
-        dto.setCycling(challenge.isCycling());
+        dto.setType(challenge.getType().toString());
         dto.setDistance(challenge.getDistance());
         dto.setEndDate(challenge.getEndDate());
         dto.setName(challenge.getName());
-        dto.setRunning(challenge.isRunning());
         dto.setStartDate(challenge.getStartDate());
         dto.setTime(challenge.getTime());
         dto.setId(challenge.getId());

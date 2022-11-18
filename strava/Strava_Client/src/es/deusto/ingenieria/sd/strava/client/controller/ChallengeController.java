@@ -21,10 +21,9 @@ public class ChallengeController {
             Date endDate,
             Float distance,
             Duration time,
-            boolean isCycling,
-            boolean isRunning) {
+            String type) {
         try {
-            return this.serviceLocator.getService().createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
+            return this.serviceLocator.getService().createChallenge(token, name, startDate, endDate, distance, time, type);
         } catch (RemoteException e) {
             System.out.println("# Error creating an challenge: " + e);
             return null;

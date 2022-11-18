@@ -139,19 +139,10 @@ public class ChallengeDialog extends JDialog {
         }
 
         String sport = sportCombo.getSelectedItem().toString();
-        boolean isCycling = false;
-        boolean isRunning = false;
-        if(sport.equals("Cycling")){
-            isCycling = true;
-            isRunning = false;
-        }else{
-            isCycling = false;
-            isRunning = true;
-        }
 
         Long token = athleteController.getToken();
 
-        ChallengeDTO challenge = challengeController.createChallenge(token, name, startDate, endDate, distance, time, isCycling, isRunning);
+        ChallengeDTO challenge = challengeController.createChallenge(token, name, startDate, endDate, distance, time, sport);
         if(challenge == null){
             showMessageDialog(null, "Error creating challenge");
         }

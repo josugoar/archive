@@ -29,7 +29,7 @@ public class LocalTest {
 		try {
 			token = facade.register("peter.oben@gmail.com", "Peter Oben", pasword, new Date(), null, null, null, null);
 			ChallengeDTO newChallenge = facade.createChallenge(token, "hike", formatter.parse("22-01-2022"), formatter.parse("23-12-2022"), 10f,
-					null, true, false);
+					null, "CYCLING");
 			List<ChallengeDTO> challenges = facade.getActiveChallenges(token);
 			for (ChallengeDTO challenge : challenges) {
 				System.out.println(challenge);

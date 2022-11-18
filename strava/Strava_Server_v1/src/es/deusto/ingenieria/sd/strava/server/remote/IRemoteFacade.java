@@ -37,8 +37,7 @@ public interface IRemoteFacade extends Remote {
 			Date endDate,
 			Float distance,
 			Duration time,
-			boolean isCycling,
-			boolean isRunning) throws RemoteException;
+			String type) throws RemoteException;
 
 	public List<ChallengeDTO> getActiveChallenges(long token) throws RemoteException;
 

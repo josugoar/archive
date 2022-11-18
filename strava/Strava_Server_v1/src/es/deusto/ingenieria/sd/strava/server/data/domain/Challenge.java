@@ -11,8 +11,7 @@ public class Challenge {
     private Date endDate;
     private Float distance;
     private Duration time;
-    private boolean isCycling;
-    private boolean isRunning;
+    private SportType type;
 
     public boolean checkChallenge() {
         return checkId() && checkName() && checkDate() && checkDistance() && checkTime() && checkType();
@@ -114,29 +113,22 @@ public class Challenge {
     }
 
     public boolean checkType() {
-        return (isCycling && !isRunning) || (!isCycling && isRunning);
+        return type != null;
     }
 
-    public boolean isCycling() {
-        return isCycling;
+    public SportType getType() {
+        return type;
     }
 
-    public void setCycling(boolean isCycling) {
-        this.isCycling = isCycling;
+    public void setType(SportType type){
+        this.type = type;
     }
 
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    public void setRunning(boolean isRunning) {
-        this.isRunning = isRunning;
-    }
 
     @Override
     public String toString() {
         return "Challenge [name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", distance="
-                + distance + ", time=" + time + ", isCycling=" + isCycling + ", isRunning=" + isRunning + "]";
+                + distance + ", time=" + time + ", type=" + type + "]";
     }
 
     @Override

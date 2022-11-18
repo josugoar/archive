@@ -8,7 +8,7 @@ public class Activity {
     private String name;
     private Float distance;
     private Duration elapsedTime;
-    private String type;
+    private SportType type;
     private Date startDate;
 
     public boolean checkActivity() {
@@ -61,14 +61,14 @@ public class Activity {
         if (type == null) {
             return false;
         }
-        return type.equals("Running") || type.equals("Cycling");
+        return true;
     }
 
-    public String getType() {
+    public SportType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(SportType type) {
         this.type = type;
     }
 
