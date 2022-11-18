@@ -14,11 +14,12 @@ public class Athlete {
     private Integer restingHeartrate;
     private Integer maxHeartrate;
     private Date dateofbirth;
+    private LoginType loginType;
     private List<Activity> activities = new ArrayList<>();
     private List<Challenge> challenges = new ArrayList<>();
 
     public boolean checkAthlete() {
-        return checkName() && checkDateofbirth() && checkEmail() && checkPassword() && checkWeight() && checkHeight() && checkRestingHeartrate() && checkMaxHeartrate();
+        return checkLoginType() && checkName() && checkDateofbirth() && checkEmail() && checkPassword() && checkWeight() && checkHeight() && checkRestingHeartrate() && checkMaxHeartrate();
     }
 
     public boolean checkName() {
@@ -50,6 +51,11 @@ public class Athlete {
     }
 
     public boolean checkPassword() {
+        if (loginType == LoginType.LOCAL) {
+            if (password == null) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -168,6 +174,18 @@ public class Athlete {
 
     public void addChallenge(Challenge challenge) {
         this.challenges.add(challenge);
+    }
+
+    public boolean checkLoginType() {
+        return loginType != null;
+    }
+
+    public LoginType getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(LoginType loginType) {
+        this.loginType = loginType;
     }
 
     @Override
