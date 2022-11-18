@@ -168,4 +168,16 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 			throw new RemoteException("Athlete is not logged in!");
 		}
 	}
+
+	@Override
+	public long registerGoogle(String email, String password, String name, Date birthDate, Float weight, Integer height,
+			Integer restingHeartrate, Integer maxHeartrate) throws RemoteException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public long registerFacebook(String email, String password, String name, Date birthDate, Float weight,
+			Integer height, Integer restingHeartrate, Integer maxHeartrate) throws RemoteException {
+		throw new UnsupportedOperationException();
+	}
 }
