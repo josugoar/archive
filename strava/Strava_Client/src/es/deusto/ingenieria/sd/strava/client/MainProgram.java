@@ -44,11 +44,11 @@ public class MainProgram {
 		loginWindow.setRegisterWindow(registerWindow);
 		loginWindow.setMainWindow(mainWindow);
 
-		mainWindow.setRegisterWindow(registerWindow);
+		mainWindow.setLoginWindow(loginWindow);
 		mainWindow.setActivityDialog(activityDialog);
 		mainWindow.setChallengeDialog(challengeDialog);
 		mainWindow.setAthleteDialog(athleteDialog);
 
-		registerWindow.setVisible(true);
+		loginWindow.setVisible(true);
 	}
 }
