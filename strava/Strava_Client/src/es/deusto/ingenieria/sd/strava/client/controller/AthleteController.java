@@ -29,7 +29,7 @@ public class AthleteController {
     public boolean registerGoogle(String email, String password, String name, Date birthDate, Float weight, Integer height,
             Integer restingHeartrate, Integer maxHeartrate) {
         try {
-            this.token = this.serviceLocator.getService().register(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
+            this.token = this.serviceLocator.getService().registerGoogle(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
             return true;
         } catch (RemoteException e) {
             System.out.println("# Error during register: " + e);
@@ -40,7 +40,7 @@ public class AthleteController {
     public boolean registerFacebook(String email, String password, String name, Date birthDate, Float weight, Integer height,
             Integer restingHeartrate, Integer maxHeartrate) {
         try {
-            this.token = this.serviceLocator.getService().register(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
+            this.token = this.serviceLocator.getService().registerFacebook(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
             return true;
         } catch (RemoteException e) {
             System.out.println("# Error during register: " + e);
