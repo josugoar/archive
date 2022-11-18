@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
+import es.deusto.ingenieria.sd.strava.server.data.domain.LoginType;
 
 public class AthleteAppService {
 
@@ -22,6 +23,7 @@ public class AthleteAppService {
         athlete.setPassword(password);
         athlete.setRestingHeartrate(restingHeartrate);
         athlete.setWeight(weight);
+        athlete.setLoginType(LoginType.LOCAL);
 
         if (!athlete.checkAthlete()) {
             return null;

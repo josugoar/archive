@@ -18,7 +18,7 @@ public class RegisterWindow extends JFrame {
     private MainWindow mainWindow;
 
     private JPanel mainPane;
-    private JButton loginButton, registerButton;
+    private JButton loginButton, registerButton, googleRegisterButton, facebookRegisterButton;
     private JTextField emailField, nameField, heightField, weightField, dateOfBirthField, maxHeartRateField,
             restingHeartRateField;
     private JLabel emailLabel, passLabel, nameLabel, heightLabel, weightLabel, dateOfBirthLabel, maxHeartRateLabel,
@@ -34,7 +34,7 @@ public class RegisterWindow extends JFrame {
         initPane();
         setTitle("Create a new Account");
         setContentPane(mainPane);
-        setSize(600, 400);
+        setSize(600, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
@@ -106,6 +106,8 @@ public class RegisterWindow extends JFrame {
         JPanel buttonLine = new JPanel();
         loginButton = new JButton("Back to Login");
         registerButton = new JButton("Create a new Account");
+        googleRegisterButton = new JButton("Register with Google Account");
+        facebookRegisterButton = new JButton("Register with Facebook Account");
         loginButton.addActionListener(new AbstractAction() {
 
             @Override
@@ -123,8 +125,29 @@ public class RegisterWindow extends JFrame {
             }
 
         });
+
+        googleRegisterButton.addActionListener(new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                registerGoogle();
+            }
+
+        });
+
+        facebookRegisterButton.addActionListener(new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                registerFacebook();
+            }
+
+        });
+
         buttonLine.add(loginButton);
         buttonLine.add(registerButton);
+        buttonLine.add(googleRegisterButton);
+        buttonLine.add(facebookRegisterButton);
         mainPane.add(buttonLine);
 
         this.add(mainPane);
@@ -174,6 +197,95 @@ public class RegisterWindow extends JFrame {
         }
 
         if (athleteController.register(email, password, name, dateOfBirth, weight, height, restingHeartRate,
+                maxHeartRate)) {
+            this.setVisible(false);
+            mainWindow.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Error in registration");
+        }
+    }
+
+
+    public void registerGoogle() {
+        String email = emailField.getText();
+        String password = String.valueOf(passField.getPassword());
+        String name = nameField.getText();
+
+        Date dateOfBirth = null;
+        try {
+            dateOfBirth = formatter.parse(dateOfBirthField.getText());
+        } catch (ParseException e1) {
+        }
+
+        Float weight = null;
+        try {
+            weight = Float.parseFloat(weightField.getText());
+        } catch (Exception e) {
+        }
+
+        Integer height = null;
+        try {
+            height = Integer.parseInt(heightField.getText());
+        } catch (Exception e) {
+        }
+
+        Integer maxHeartRate = null;
+        try {
+            maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
+        } catch (Exception e) {
+        }
+
+        Integer restingHeartRate = null;
+        try {
+            restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
+        } catch (Exception e) {
+        }
+
+        if (athleteController.registerGoogle(email, password, name, dateOfBirth, weight, height, restingHeartRate,
+                maxHeartRate)) {
+            this.setVisible(false);
+            mainWindow.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Error in registration");
+        }
+    }
+
+    public void registerFacebook() {
+        String email = emailField.getText();
+        String password = String.valueOf(passField.getPassword());
+        String name = nameField.getText();
+
+        Date dateOfBirth = null;
+        try {
+            dateOfBirth = formatter.parse(dateOfBirthField.getText());
+        } catch (ParseException e1) {
+        }
+
+        Float weight = null;
+        try {
+            weight = Float.parseFloat(weightField.getText());
+        } catch (Exception e) {
+        }
+
+        Integer height = null;
+        try {
+            height = Integer.parseInt(heightField.getText());
+        } catch (Exception e) {
+        }
+
+        Integer maxHeartRate = null;
+        try {
+            maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
+        } catch (Exception e) {
+        }
+
+        Integer restingHeartRate = null;
+        try {
+            restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
+        } catch (Exception e) {
+        }
+
+        if (athleteController.registerFacebook(email, password, name, dateOfBirth, weight, height, restingHeartRate,
                 maxHeartRate)) {
             this.setVisible(false);
             mainWindow.setVisible(true);
