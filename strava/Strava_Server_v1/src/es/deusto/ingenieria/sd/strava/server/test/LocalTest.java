@@ -3,8 +3,10 @@ package es.deusto.ingenieria.sd.strava.server.test;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 import es.deusto.ingenieria.sd.strava.server.remote.IRemoteFacade;
@@ -27,9 +29,11 @@ public class LocalTest {
 		}
 
 		try {
+			Set<String> type = new HashSet<>();
+			type.add("CYCLING");
 			token = facade.register("peter.oben@gmail.com", "Peter Oben", pasword, new Date(), null, null, null, null);
 			ChallengeDTO newChallenge = facade.createChallenge(token, "hike", formatter.parse("22-01-2022"), formatter.parse("23-12-2022"), 10f,
-					null, "CYCLING");
+					null, type);
 			List<ChallengeDTO> challenges = facade.getActiveChallenges(token);
 			for (ChallengeDTO challenge : challenges) {
 				System.out.println(challenge);

@@ -2,6 +2,8 @@ package es.deusto.ingenieria.sd.strava.server.data.domain;
 
 import java.time.Duration;
 import java.util.Date;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Challenge {
 
@@ -11,7 +13,7 @@ public class Challenge {
     private Date endDate;
     private Float distance;
     private Duration time;
-    private SportType type;
+    private Set<SportType> type = new HashSet<>();
 
     public boolean checkChallenge() {
         return checkId() && checkName() && checkDate() && checkDistance() && checkTime() && checkType();
@@ -116,12 +118,16 @@ public class Challenge {
         return type != null;
     }
 
-    public SportType getType() {
+    public Set<SportType> getType() {
         return type;
     }
 
-    public void setType(SportType type){
+    public void setType(Set<SportType> type){
         this.type = type;
+    }
+
+    public void addType(SportType type){
+        this.type.add(type);
     }
 
 

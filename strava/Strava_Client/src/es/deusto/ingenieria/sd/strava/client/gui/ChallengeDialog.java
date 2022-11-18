@@ -6,7 +6,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -24,7 +26,7 @@ public class ChallengeDialog extends JDialog {
     private JTextField nameField, startDateField, endDateField, distanceField, timeField;
     private JComboBox<String> sportCombo;
     private JButton acceptButton, cancelButton;
-    private String sport[]={"Running","Cycling"};
+    private String sport[]={"Running","Cycling","Both"};
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
 
@@ -139,10 +141,17 @@ public class ChallengeDialog extends JDialog {
         }
 
         String sport = sportCombo.getSelectedItem().toString();
+        Set<String> type = new HashSet<>();
+        if (sport.equals("Both")) {
+            type.add("Cycling");
+            type.add("Running");
+        } else {
+            type.add(sport);
+        }
 
         Long token = athleteController.getToken();
 
-        ChallengeDTO challenge = challengeController.createChallenge(token, name, startDate, endDate, distance, time, sport);
+        ChallengeDTO challenge = challengeController.createChallenge(token, name, startDate, endDate, distance, time, type);
         if(challenge == null){
             showMessageDialog(null, "Error creating challenge");
         }

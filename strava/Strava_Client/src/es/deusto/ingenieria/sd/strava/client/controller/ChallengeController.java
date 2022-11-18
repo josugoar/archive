@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
@@ -21,7 +22,7 @@ public class ChallengeController {
             Date endDate,
             Float distance,
             Duration time,
-            String type) {
+            Set<String> type) {
         try {
             return this.serviceLocator.getService().createChallenge(token, name, startDate, endDate, distance, time, type);
         } catch (RemoteException e) {

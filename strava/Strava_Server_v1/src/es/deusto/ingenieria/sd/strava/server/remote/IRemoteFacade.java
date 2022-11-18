@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityDTO;
 import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
@@ -37,7 +38,7 @@ public interface IRemoteFacade extends Remote {
 			Date endDate,
 			Float distance,
 			Duration time,
-			String type) throws RemoteException;
+			Set<String> type) throws RemoteException;
 
 	public List<ChallengeDTO> getActiveChallenges(long token) throws RemoteException;
 

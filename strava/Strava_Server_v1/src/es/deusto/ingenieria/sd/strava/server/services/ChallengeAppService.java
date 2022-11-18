@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Activity;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
@@ -28,10 +29,12 @@ public class ChallengeAppService {
     }
 
     public Challenge createChallenge(Athlete athlete, String name, Date startDate, Date endDate, Float distance, Duration time,
-            String type) throws IllegalArgumentException {
+            Set<String> type) throws IllegalArgumentException {
         System.out.println("Creating challenge in ChallengeAppService");
         Challenge challenge = new Challenge();
-        challenge.setType(SportType.fromString(type));
+        for (String sportType : type) {
+            challenge.addType(SportType.fromString(sportType));
+        }
         challenge.setDistance(distance);
         challenge.setEndDate(endDate);
         challenge.setName(name);
@@ -71,7 +74,7 @@ public class ChallengeAppService {
         float distance = 0;
         Duration duration = Duration.ZERO;
         for (Activity activity : athlete.getActivities()) {
-            if (activity.getType()== SportType.RUNNING && challenge.getType()== SportType.RUNNING || activity.getType()== SportType.CYCLING && challenge.getType()==SportType.CYCLING) {
+            if (activity.getType()== SportType.RUNNING && challenge.getType().contains(SportType.RUNNING) || activity.getType()== SportType.CYCLING && challenge.getType().contains(SportType.CYCLING)) {
                 if (activity.getStartDate().after(challenge.getStartDate()) && activity.getStartDate().before(challenge.getEndDate())) {
                     if (challenge.getDistance() != null) {
                         distance += activity.getDistance();

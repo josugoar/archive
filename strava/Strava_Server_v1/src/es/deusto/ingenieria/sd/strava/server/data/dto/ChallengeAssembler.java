@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
+import es.deusto.ingenieria.sd.strava.server.data.domain.SportType;
 
 //This class is part of the DTO pattern. It also implements Singleton Pattern.
 public class ChallengeAssembler {
@@ -21,7 +22,9 @@ public class ChallengeAssembler {
 
     public ChallengeDTO challengeToDTO(Challenge challenge) {
         ChallengeDTO dto = new ChallengeDTO();
-        dto.setType(challenge.getType().toString());
+        for (SportType sportType : challenge.getType()) {
+            dto.addType(sportType.toString());
+        }
         dto.setDistance(challenge.getDistance());
         dto.setEndDate(challenge.getEndDate());
         dto.setName(challenge.getName());

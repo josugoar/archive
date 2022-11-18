@@ -116,7 +116,9 @@ public class MainWindow extends JFrame {
                 pane.add(new JLabel("Time: " + challengeDTO.getTime().toString()));
             }
             pane.add(new JLabel("Completion :" + getChallengeState(challengeDTO.getId())));
-            pane.add(new JLabel(challengeDTO.getType()));
+            for (String sportType : challengeDTO.getType()) {
+                pane.add(new JLabel(sportType));
+            }
             contentPane.add(pane);
         }
 

@@ -3,6 +3,8 @@ package es.deusto.ingenieria.sd.strava.server.data.dto;
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 //This class implements DTO pattern
@@ -16,7 +18,7 @@ public class ChallengeDTO implements Serializable {
     private Date endDate;
     private Float distance;
     private Duration time;
-    private String type;
+    private Set<String> type = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -66,12 +68,16 @@ public class ChallengeDTO implements Serializable {
         this.time = time;
     }
 
-    public String getType(){
+    public Set<String> getType(){
         return type;
     }
 
-    public void setType(String type){
+    public void setType(Set<String> type){
         this.type = type;
+    }
+
+    public void addType(String type){
+        this.type.add(type);
     }
 
     @Override

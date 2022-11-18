@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityAssembler;
@@ -107,7 +108,7 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 
 	@Override
 	public synchronized ChallengeDTO createChallenge(long token, String name, Date startDate, Date endDate, Float distance, Duration time,
-			String type) throws RemoteException {
+			Set<String> type) throws RemoteException {
 		if (this.serverState.containsKey(token)) {
 			try {
 				return ChallengeAssembler.getInstance().challengeToDTO(challengeService.createChallenge(serverState.get(token), name, startDate, endDate, distance, time, type));
