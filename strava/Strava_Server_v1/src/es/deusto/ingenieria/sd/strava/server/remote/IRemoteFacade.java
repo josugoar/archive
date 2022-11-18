@@ -16,6 +16,12 @@ public interface IRemoteFacade extends Remote {
 	public long register(String email, String password, String name, Date birthDate, Float weight, Integer height,
 			Integer restingHeartrate, Integer maxHeartrate) throws RemoteException;
 
+	public long registerGoogle(String email, String password, String name, Date birthDate, Float weight, Integer height,
+			Integer restingHeartrate, Integer maxHeartrate) throws RemoteException;
+
+	public long registerFacebook(String email, String password, String name, Date birthDate, Float weight, Integer height,
+			Integer restingHeartrate, Integer maxHeartrate) throws RemoteException;
+
 	public long login(String email, String password) throws RemoteException;
 
 	public void logout(long token) throws RemoteException;
