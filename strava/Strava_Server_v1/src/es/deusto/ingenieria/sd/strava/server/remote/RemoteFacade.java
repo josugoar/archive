@@ -72,7 +72,7 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 	@Override
 	public synchronized List<ChallengeDTO> getActiveChallenges(long token) throws RemoteException {
 		if (this.serverState.containsKey(token)) {
-			return ChallengeAssembler.getInstance().challengeToDTO(challengeService.getActiveChallenges(serverState.get(token)));
+			return ChallengeAssembler.getInstance().challengeToDTO(challengeService.getActiveChallenges());
 		} else {
 			throw new RemoteException("Athlete is not logged in!");
 		}

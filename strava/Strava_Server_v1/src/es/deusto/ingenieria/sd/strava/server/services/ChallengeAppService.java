@@ -17,9 +17,9 @@ public class ChallengeAppService {
 
     private Map<Integer, Challenge> state = new HashMap<>();
 
-    public List<Challenge> getActiveChallenges(Athlete athlete) {
+    public List<Challenge> getActiveChallenges() {
         List<Challenge> challenges = new ArrayList<>();
-        for (Challenge challenge : athlete.getChallenges()) {
+        for (Challenge challenge : state.values()) {
             if (challenge.isActive()) {
                 challenges.add(challenge);
             }

@@ -107,6 +107,7 @@ public class MainWindow extends JFrame {
         for (ChallengeDTO challengeDTO : challenges) {
             JPanel pane = new JPanel();
             pane.add(new JLabel("Name: " + challengeDTO.getName()));
+            pane.add(new JLabel("Id: " + challengeDTO.getId()));
             if (challengeDTO.getDistance() != null) {
                 pane.add(new JLabel("Distance: " + challengeDTO.getDistance()));
             }
