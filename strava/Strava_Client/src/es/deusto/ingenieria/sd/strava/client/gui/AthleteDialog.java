@@ -27,6 +27,8 @@ public class AthleteDialog extends JDialog {
             public void componentShown(ComponentEvent e) {
                 initDialog();
                 setContentPane(mainPane);
+                revalidate();
+                repaint();
             }
         });
 
