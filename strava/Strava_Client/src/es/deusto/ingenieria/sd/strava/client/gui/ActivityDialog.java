@@ -33,6 +33,7 @@ public class ActivityDialog extends JDialog {
         this.activityController = activityController;
         this.athleteController = athleteController;
 
+        setTitle("Create new Activity");
         initDialog();
         setContentPane(mainPane);
         setSize(400,400);

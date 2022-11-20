@@ -34,6 +34,7 @@ public class ChallengeDialog extends JDialog {
         this.challengeController = challengeController;
         this.athleteController = athleteController;
 
+        setTitle("Create new Challenge");
         initDialog();
         setContentPane(mainPane);
         setSize(400,400);

@@ -19,6 +19,7 @@ public class AthleteDialog extends JDialog {
     public AthleteDialog(AthleteController athleteController) {
         this.athleteController = athleteController;
 
+        setTitle("Athlete Profile");
         setSize(400,400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setModal(true);
