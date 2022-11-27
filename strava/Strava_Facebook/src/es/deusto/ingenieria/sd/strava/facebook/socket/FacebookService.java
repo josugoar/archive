@@ -4,13 +4,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FacebookService extends Thread implements IFacebook {
+public class FacebookService extends Thread {
 
-    private static FacebookService instance;
+    private static final String DELIMETER = "#";
 
     private DataInputStream in;
     private DataOutputStream out;
@@ -26,7 +25,7 @@ public class FacebookService extends Thread implements IFacebook {
         }
     };
 
-    private FacebookService(final Socket socket) {
+    public FacebookService(final Socket socket) {
         try {
             tcpSocket = socket;
             in = new DataInputStream(socket.getInputStream());
@@ -37,45 +36,41 @@ public class FacebookService extends Thread implements IFacebook {
         }
     }
 
-    public static FacebookService getInstance() {
-        if (instance == null) {
-            try {
-                instance = new FacebookService();
-            } catch (final RemoteException e) {
-                System.err.println("  # Error initializing service(): " + e.getMessage());
-            }
-        }
-
-        return instance;
-    }
-
     public void run() {
         try {
-            String data = in.readUTF();
-            System.out.println("   - FacebookService - Received data from '"
-                    + tcpSocket.getInetAddress().getHostAddress() + ":" + tcpSocket.getPort() + "' -> '" + data + "'");
-            data = translate(data);
-            out.writeBoolean(isAlive());
-            System.out.println("   - FacebookService - Sent data to '" + tcpSocket.getInetAddress().getHostAddress()
-                    + ":" + tcpSocket.getPort() + "' -> '" + data.toUpperCase() + "'");
+            final String input = in.readUTF();
+            System.err.println("   - FacebookService - Received data from '"
+                    + tcpSocket.getInetAddress().getHostAddress() + ":" + tcpSocket.getPort() + "' -> '" + input + "'");
+
+            final String[] strings = input.split(DELIMETER, 2);
+
+            final boolean output;
+            if (strings.length == 1) {
+                output = checkEmail(strings[0]);
+            } else {
+                output = checkEmailAndPassword(strings[0], strings[1]);
+            }
+
+            out.writeBoolean(output);
+
+            System.err.println("   - FacebookService - Sent data to '" + tcpSocket.getInetAddress().getHostAddress()
+                    + ":" + tcpSocket.getPort() + "' -> '" + output + "'");
         } catch (final IOException e) {
-            System.out.println("   # FacebookService - TCPConnection error" + e.getMessage());
+            System.err.println("   # FacebookService - TCPConnection error" + e.getMessage());
         } finally {
             try {
                 tcpSocket.close();
             } catch (final IOException e) {
-                System.out.println("   # FacebookService - TCPConnection IO error:" + e.getMessage());
+                System.err.println("   # FacebookService - TCPConnection IO error:" + e.getMessage());
             }
         }
     }
 
-    @Override
-    public boolean checkEmail(final String email) throws RemoteException {
+    public boolean checkEmail(final String email) {
         return serverState.containsKey(email);
     }
 
-    @Override
-    public boolean checkEmailAndPassword(final String email, final String password) throws RemoteException {
+    public boolean checkEmailAndPassword(final String email, final String password) {
         return serverState.containsKey(email) && serverState.get(email).equals(password);
     }
 

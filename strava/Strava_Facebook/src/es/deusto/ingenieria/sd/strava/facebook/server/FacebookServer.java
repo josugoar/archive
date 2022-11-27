@@ -1,26 +1,34 @@
 package es.deusto.ingenieria.sd.strava.facebook.server;
 
-import java.rmi.Naming;
+import java.io.IOException;
+import java.net.ServerSocket;
 
-import es.deusto.ingenieria.sd.strava.facebook.remote.FacebookService;
-import es.deusto.ingenieria.sd.strava.facebook.remote.IFacebook;
+import es.deusto.ingenieria.sd.strava.facebook.socket.FacebookService;
 
 public class FacebookServer {
 
+    private static int numClients = 0;
+
     public static void main(final String[] args) {
-        if (System.getSecurityManager() == null) {
-            System.setSecurityManager(new SecurityManager());
+        if (args.length < 1) {
+            System.err.println(" # Usage: FacebookServer [PORT]");
+            System.exit(1);
         }
 
-        final String name = "//" + args[0] + ":" + args[1] + "/" + args[2];
+        // args[1] = Server socket port
+        final int serverPort = Integer.parseInt(args[0]);
 
-        try {
-            final IFacebook remoteObject = FacebookService.getInstance();
-            Naming.rebind(name, remoteObject);
-            System.out.println(" * Facebook Server '" + name + "' started!!");
-        } catch (final Exception e) {
-            System.out.println(" # Facebook Server: " + e.getMessage());
-            e.printStackTrace();
+        try (ServerSocket tcpEchoServerSocket = new ServerSocket(serverPort);) {
+            System.out.println(
+                    " - FacebookServer: Waiting for connections '" + tcpEchoServerSocket.getInetAddress().getHostAddress()
+                            + ":" + tcpEchoServerSocket.getLocalPort() + "' ...");
+
+            while (true) {
+                new FacebookService(tcpEchoServerSocket.accept());
+                System.out.println(" - FacebookServer: New client connection accepted. Client Number: " + numClients++);
+            }
+        } catch (final IOException e) {
+            System.out.println("# FacebookServer: IO error:" + e.getMessage());
         }
     }
 
