@@ -5,6 +5,12 @@
         },
         {
             "path": "Strava_Server_v1"
+        },
+        {
+            "path": "Facebook_Server"
+        },
+        {
+            "path": "Google_Server"
         }
     ]
 }
