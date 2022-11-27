@@ -118,9 +118,9 @@ public class ActivityDialog extends JDialog {
             showMessageDialog(null, "Wrong elapsed time");
         }
 
-        Float distance = null;
+        Double distance = null;
         try {
-            distance = Float.parseFloat(distanceField.getText());
+            distance = Double.parseDouble(distanceField.getText());
         } catch (Exception e) {
             showMessageDialog(null, "Wrong distance");
         }

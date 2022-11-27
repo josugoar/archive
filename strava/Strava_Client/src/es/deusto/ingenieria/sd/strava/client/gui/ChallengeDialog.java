@@ -124,10 +124,10 @@ public class ChallengeDialog extends JDialog {
         } catch (Exception e) {
         }
 
-        Float distance = null;
+        Double distance = null;
         try {
             if (distanceField.getText() != null) {
-                distance = Float.parseFloat(distanceField.getText());
+                distance = Double.parseDouble(distanceField.getText());
             }
         } catch (NumberFormatException e) {
         }

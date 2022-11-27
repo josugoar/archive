@@ -17,7 +17,7 @@ public class ActivityController {
         this.serviceLocator = serviceLocator;
     }
 
-    public ActivityDTO createActivity(long token, String name, float distance, Duration elapsedTime, String type,
+    public ActivityDTO createActivity(long token, String name, double distance, Duration elapsedTime, String type,
             Date startDate) {
         try {
             return this.serviceLocator.getService().createActivity(token, name, distance, elapsedTime, type, startDate);

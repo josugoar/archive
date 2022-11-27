@@ -20,7 +20,7 @@ public class ChallengeController {
 
     public ChallengeDTO createChallenge(long token, String name, Date startDate,
             Date endDate,
-            Float distance,
+            Double distance,
             Duration time,
             Set<String> type) {
         try {
@@ -50,7 +50,7 @@ public class ChallengeController {
         }
     }
 
-    public float getChallengeState(long token, int challengeId) {
+    public double getChallengeState(long token, int challengeId) {
         try {
             return this.serviceLocator.getService().getChallengeState(token, challengeId);
         } catch (RemoteException e) {

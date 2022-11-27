@@ -172,9 +172,9 @@ public class RegisterWindow extends JFrame {
         } catch (ParseException e1) {
         }
 
-        Float weight = null;
+        Double weight = null;
         try {
-            weight = Float.parseFloat(weightField.getText());
+            weight = Double.parseDouble(weightField.getText());
         } catch (Exception e) {
         }
 
@@ -217,9 +217,9 @@ public class RegisterWindow extends JFrame {
         } catch (ParseException e1) {
         }
 
-        Float weight = null;
+        Double weight = null;
         try {
-            weight = Float.parseFloat(weightField.getText());
+            weight = Double.parseDouble(weightField.getText());
         } catch (Exception e) {
         }
 
@@ -261,9 +261,9 @@ public class RegisterWindow extends JFrame {
         } catch (ParseException e1) {
         }
 
-        Float weight = null;
+        Double weight = null;
         try {
-            weight = Float.parseFloat(weightField.getText());
+            weight = Double.parseDouble(weightField.getText());
         } catch (Exception e) {
         }
 

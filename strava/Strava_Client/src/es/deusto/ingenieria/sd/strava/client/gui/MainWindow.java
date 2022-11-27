@@ -262,7 +262,7 @@ public class MainWindow extends JFrame {
 
     }
 
-    public float getChallengeState(Integer id) {
+    public double getChallengeState(Integer id) {
         return challengeController.getChallengeState(athleteController.getToken(), id);
     }
 
