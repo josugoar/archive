@@ -4,28 +4,24 @@ import java.rmi.Naming;
 
 import es.deusto.ingenieria.sd.strava.server.remote.IRemoteFacade;
 
-//This class implements Service Locator pattern
 public class ServiceLocator {
 
-	//Remote Facade reference
-	private IRemoteFacade service;
+    private IRemoteFacade service;
 
-	public void setService(String ip, String port, String serviceName) {
-		//Activate Security Manager. It is needed for RMI.
-		if (System.getSecurityManager() == null) {
-			System.setSecurityManager(new SecurityManager());
-		}
+    public void setService(final String ip, final String port, final String serviceName) {
+        if (System.getSecurityManager() == null) {
+            System.setSecurityManager(new SecurityManager());
+        }
 
-		//Get Remote Facade reference using RMIRegistry (IP + Port) and the service name.
-		try {
-			String URL = "//" + ip + ":" + port + "/" + serviceName;
-			this.service = (IRemoteFacade) Naming.lookup(URL);
-		} catch (Exception ex) {
-			System.err.println("# Error locating remote facade: " + ex);
-		}
-	}
+        try {
+            service = (IRemoteFacade) Naming.lookup("//" + ip + ":" + port + "/" + serviceName);
+        } catch (final Exception e) {
+            System.err.println("# Error locating remote facade: " + e);
+        }
+    }
 
-	public IRemoteFacade getService() {
-		return this.service;
-	}
+    public IRemoteFacade getService() {
+        return service;
+    }
+
 }
