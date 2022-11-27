@@ -26,7 +26,7 @@ public class ChallengeController {
         try {
             return this.serviceLocator.getService().createChallenge(token, name, startDate, endDate, distance, time, type);
         } catch (RemoteException e) {
-            System.out.println("# Error creating an challenge: " + e);
+            System.err.println("# Error creating an challenge: " + e);
             return null;
         }
     }
@@ -35,7 +35,7 @@ public class ChallengeController {
         try {
             return this.serviceLocator.getService().getActiveChallenges(token);
         } catch (RemoteException e) {
-            System.out.println("# Error creating an activity: " + e);
+            System.err.println("# Error creating an activity: " + e);
             return new ArrayList<>();
         }
     }
@@ -45,7 +45,7 @@ public class ChallengeController {
             this.serviceLocator.getService().acceptChallenge(token, challengeId);;
             return true;
         } catch (RemoteException e) {
-            System.out.println("# Error creating an activity: " + e);
+            System.err.println("# Error creating an activity: " + e);
             return false;
         }
     }
@@ -54,7 +54,7 @@ public class ChallengeController {
         try {
             return this.serviceLocator.getService().getChallengeState(token, challengeId);
         } catch (RemoteException e) {
-            System.out.println("# Error creating an activity: " + e);
+            System.err.println("# Error creating an activity: " + e);
             return -1;
         }
     }

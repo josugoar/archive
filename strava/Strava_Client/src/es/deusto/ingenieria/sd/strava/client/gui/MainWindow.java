@@ -224,7 +224,7 @@ public class MainWindow extends JFrame {
                 getContentPane().add(mainPane);
                 revalidate();
                 repaint();
-                System.out.println("Exited challenge dialog");
+                System.err.println("Exited challenge dialog");
             }
         });
     }
@@ -239,7 +239,7 @@ public class MainWindow extends JFrame {
 
     public void getActiveChallenges() {
         challenges = challengeController.getActiveChallenges(this.athleteController.getToken());
-        System.out.println("Challenges: " + challenges);
+        System.err.println("Challenges: " + challenges);
     }
 
     public void acceptChallenge() {

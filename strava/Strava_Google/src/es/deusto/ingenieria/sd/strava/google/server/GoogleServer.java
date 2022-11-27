@@ -17,9 +17,9 @@ public class GoogleServer {
         try {
             final IGoogle remoteObject = GoogleService.getInstance();
             Naming.rebind(name, remoteObject);
-            System.out.println(" * Google Exchange Server '" + name + "' started!!");
+            System.err.println(" * Google Exchange Server '" + name + "' started!!");
         } catch (final Exception ex) {
-            System.out.println(" # Google Exchange Server: " + ex.getMessage());
+            System.err.println(" # Google Exchange Server: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

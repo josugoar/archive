@@ -25,7 +25,7 @@ public class LocalTest {
         try {
             remoteFacade.login("john.doe@gmail.com", pasword);
         } catch (final RemoteException e) {
-            System.out.println("\t# Error: " + e.getMessage());
+            System.err.println("\t# Error: " + e.getMessage());
         }
 
         try {
@@ -52,15 +52,15 @@ public class LocalTest {
 
             final List<ChallengeDTO> challenges = remoteFacade.getChallenges(token);
             for (final ChallengeDTO challenge : challenges) {
-                System.out.println(challenge);
+                System.err.println(challenge);
             }
 
             final double challengeState = remoteFacade.getChallengeProgress(token, challengeDTO);
-            System.out.println(challengeState);
+            System.err.println(challengeState);
 
             remoteFacade.logout(token);
         } catch (final Exception e) {
-            System.out.println("\t# Error: " + e.getMessage());
+            System.err.println("\t# Error: " + e.getMessage());
         }
 
         System.exit(0);

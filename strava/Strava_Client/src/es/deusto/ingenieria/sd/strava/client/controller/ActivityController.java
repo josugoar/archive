@@ -22,7 +22,7 @@ public class ActivityController {
         try {
             return this.serviceLocator.getService().createActivity(token, name, distance, elapsedTime, type, startDate);
         } catch (RemoteException e) {
-            System.out.println("# Error creating an activity: " + e);
+            System.err.println("# Error creating an activity: " + e);
             return null;
         }
     }
@@ -31,7 +31,7 @@ public class ActivityController {
         try {
             return this.serviceLocator.getService().getActivities(token);
         } catch (RemoteException e) {
-            System.out.println("# Error getting activities: " + e);
+            System.err.println("# Error getting activities: " + e);
             return new ArrayList<>();
         }
     }

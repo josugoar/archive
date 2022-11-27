@@ -21,7 +21,7 @@ public class AthleteController {
             this.token = this.serviceLocator.getService().register(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
             return true;
         } catch (RemoteException e) {
-            System.out.println("# Error during register: " + e);
+            System.err.println("# Error during register: " + e);
             return false;
         }
     }
@@ -32,7 +32,7 @@ public class AthleteController {
             this.token = this.serviceLocator.getService().registerGoogle(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
             return true;
         } catch (RemoteException e) {
-            System.out.println("# Error during register: " + e);
+            System.err.println("# Error during register: " + e);
             return false;
         }
     }
@@ -43,7 +43,7 @@ public class AthleteController {
             this.token = this.serviceLocator.getService().registerFacebook(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
             return true;
         } catch (RemoteException e) {
-            System.out.println("# Error during register: " + e);
+            System.err.println("# Error during register: " + e);
             return false;
         }
     }
@@ -53,7 +53,7 @@ public class AthleteController {
             this.token = this.serviceLocator.getService().login(email, password);
             return true;
         } catch (RemoteException e) {
-            System.out.println("# Error during login: " + e);
+            System.err.println("# Error during login: " + e);
             return false;
         }
     }
@@ -63,7 +63,7 @@ public class AthleteController {
             this.serviceLocator.getService().logout(this.token);
             this.token = null;
         } catch (RemoteException e) {
-            System.out.println("# Error during logout: " + e);
+            System.err.println("# Error during logout: " + e);
         }
     }
 
@@ -71,7 +71,7 @@ public class AthleteController {
         try {
             return this.serviceLocator.getService().getAthlete(this.token);
         } catch (RemoteException e) {
-            System.out.println("# Error getting athlete: " + e);
+            System.err.println("# Error getting athlete: " + e);
             return null;
         }
     }

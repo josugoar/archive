@@ -9,11 +9,15 @@ public class GoogleServiceGateway {
 
     private static GoogleServiceGateway instance;
 
+    private static final String SERVER_IP = "127.0.0.1";
+    private static final String SERVER_PORT = "8001";
+    private static final String SERVER_NAME = "8001";
+
     private IGoogle googleService;
 
     private GoogleServiceGateway() {
         try {
-            googleService = (IGoogle) Naming.lookup("//127.0.0.1:1099/Google");
+            googleService = (IGoogle) Naming.lookup("//" + SERVER_IP + ":" + SERVER_PORT + "/" + SERVER_NAME);
         } catch (final Exception e) {
             System.err.println("# Error locating remote service: " + e);
         }
@@ -28,23 +32,23 @@ public class GoogleServiceGateway {
     }
 
     public boolean checkEmail(final String email) {
-        System.out.println("   - Check email from Google Service Gateway");
+        System.err.println("   - Check email from Google Service Gateway");
 
         try {
             return googleService.checkEmail(email);
         } catch (final RemoteException e) {
-            System.out.println("   $ Error checking email: " + e.getMessage());
+            System.err.println("   $ Error checking email: " + e.getMessage());
             return false;
         }
     }
 
     public boolean checkEmailAndPassword(final String email, final String password) {
-        System.out.println("   - Check email and password from Google Service Gateway");
+        System.err.println("   - Check email and password from Google Service Gateway");
 
         try {
             return googleService.checkEmailAndPassword(email, password);
         } catch (final RemoteException e) {
-            System.out.println("   $ Error checking email and password: " + e.getMessage());
+            System.err.println("   $ Error checking email and password: " + e.getMessage());
             return false;
         }
     }
