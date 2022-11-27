@@ -8,13 +8,11 @@ public class Athlete {
 
     private String name;
     private String email;
-    private String password;
     private Double weight;
     private Integer height;
     private Integer restingHeartRate;
     private Integer maxHeartRate;
     private Date dateOfBirth;
-    private LoginType loginType;
     private Set<Activity> activities = new HashSet<>();
     private Set<Challenge> challenges = new HashSet<>();
 
@@ -44,15 +42,6 @@ public class Athlete {
         }
 
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    // TODO
-    public void setPassword(final String password) throws IllegalArgumentException {
-        this.password = password;
     }
 
     public Double getWeight() {
@@ -179,25 +168,11 @@ public class Athlete {
         this.challenges.add(challenge);
     }
 
-    public LoginType getLoginType() {
-        return loginType;
-    }
-
-    // TODO
-    public void setLoginType(final LoginType loginType) throws IllegalArgumentException {
-        if (loginType == null) {
-            throw new IllegalArgumentException("loginType == null");
-        }
-
-        this.loginType = loginType;
-    }
-
     @Override
     public String toString() {
-        return "Athlete [name=" + name + ", email=" + email + ", password=" + password + ", weight=" + weight
-                + ", height=" + height + ", restingHeartRate=" + restingHeartRate + ", maxHeartRate=" + maxHeartRate
-                + ", dateOfBirth=" + dateOfBirth + ", loginType=" + loginType + ", activities=" + activities
-                + ", challenges=" + challenges + "]";
+        return "Athlete [name=" + name + ", email=" + email + ", weight=" + weight + ", height=" + height
+                + ", restingHeartRate=" + restingHeartRate + ", maxHeartRate=" + maxHeartRate + ", dateOfBirth="
+                + dateOfBirth + ", activities=" + activities + ", challenges=" + challenges + "]";
     }
 
     @Override
@@ -209,57 +184,10 @@ public class Athlete {
         if (getClass() != obj.getClass())
             return false;
         final Athlete other = (Athlete) obj;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
         if (email == null) {
             if (other.email != null)
                 return false;
         } else if (!email.equals(other.email))
-            return false;
-        if (password == null) {
-            if (other.password != null)
-                return false;
-        } else if (!password.equals(other.password))
-            return false;
-        if (weight == null) {
-            if (other.weight != null)
-                return false;
-        } else if (!weight.equals(other.weight))
-            return false;
-        if (height == null) {
-            if (other.height != null)
-                return false;
-        } else if (!height.equals(other.height))
-            return false;
-        if (restingHeartRate == null) {
-            if (other.restingHeartRate != null)
-                return false;
-        } else if (!restingHeartRate.equals(other.restingHeartRate))
-            return false;
-        if (maxHeartRate == null) {
-            if (other.maxHeartRate != null)
-                return false;
-        } else if (!maxHeartRate.equals(other.maxHeartRate))
-            return false;
-        if (dateOfBirth == null) {
-            if (other.dateOfBirth != null)
-                return false;
-        } else if (!dateOfBirth.equals(other.dateOfBirth))
-            return false;
-        if (loginType != other.loginType)
-            return false;
-        if (activities == null) {
-            if (other.activities != null)
-                return false;
-        } else if (!activities.equals(other.activities))
-            return false;
-        if (challenges == null) {
-            if (other.challenges != null)
-                return false;
-        } else if (!challenges.equals(other.challenges))
             return false;
         return true;
     }
