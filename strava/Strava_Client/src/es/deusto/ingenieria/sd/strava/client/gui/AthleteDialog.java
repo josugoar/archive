@@ -62,17 +62,17 @@ public class AthleteDialog extends JDialog {
 
          // Resting Heartrate
          JPanel restingHeartrateLine = new JPanel();
-         restingHeartrateLabel = new JLabel("Resting Heartrate: " + athlete.getRestingHeartrate());
+         restingHeartrateLabel = new JLabel("Resting Heartrate: " + athlete.getRestingHeartRate());
          restingHeartrateLine.add(restingHeartrateLabel, BorderLayout.CENTER);
 
          // Max Heartrate
          JPanel maxHeartrateLine = new JPanel();
-         maxHeartrateLabel = new JLabel("Max Heartrate: " + athlete.getMaxHeartrate());
+         maxHeartrateLabel = new JLabel("Max Heartrate: " + athlete.getMaxHeartRate());
          maxHeartrateLine.add(maxHeartrateLabel, BorderLayout.CENTER);
 
          // Date of Birth
          JPanel dateofBirthLine = new JPanel();
-         dateofBirthLabel = new JLabel("Date of Birth (DD/MM/YYYY): " + athlete.getDateofbirth());
+         dateofBirthLabel = new JLabel("Date of Birth (DD/MM/YYYY): " + athlete.getDateOfBirth());
          dateofBirthLine.add(dateofBirthLabel, BorderLayout.CENTER);
 
          // Add to the main panel

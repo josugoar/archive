@@ -15,11 +15,15 @@ public class ChallengeController {
         this.serviceLocator = serviceLocator;
     }
 
-    public void createChallenge(final long token, final ChallengeDTO challengeDTO) {
+    public boolean createChallenge(final long token, final ChallengeDTO challengeDTO) {
         try {
             serviceLocator.getService().createChallenge(token, challengeDTO);
+
+            return true;
         } catch (final RemoteException e) {
             System.err.println("# Error creating an challenge: " + e);
+
+            return false;
         }
     }
 

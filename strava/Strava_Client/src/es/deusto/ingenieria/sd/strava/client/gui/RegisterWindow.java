@@ -10,10 +10,11 @@ import java.util.Locale;
 import javax.swing.*;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
+import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
 
 public class RegisterWindow extends JFrame {
 
-    private AthleteController athleteController;
+    private final AthleteController athleteController;
     private LoginWindow loginWindow;
     private MainWindow mainWindow;
 
@@ -26,9 +27,9 @@ public class RegisterWindow extends JFrame {
     private JPasswordField passField;
     private JLabel warning;
 
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
+    SimpleDateFormat formatter = new SimpleDateFormat("DD-mm-yyyy", Locale.ENGLISH);
 
-    public RegisterWindow(AthleteController athleteController) {
+    public RegisterWindow(final AthleteController athleteController) {
         this.athleteController = athleteController;
 
         initPane();
@@ -43,50 +44,50 @@ public class RegisterWindow extends JFrame {
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
 
         // Email prompt
-        JPanel emailLine = new JPanel();
+        final JPanel emailLine = new JPanel();
         emailLabel = new JLabel("Email*");
         emailField = new JTextField(20);
         emailLine.add(emailLabel, BorderLayout.WEST);
         emailLine.add(emailField, BorderLayout.CENTER);
 
         // password prompt
-        JPanel passLine = new JPanel();
+        final JPanel passLine = new JPanel();
         passLabel = new JLabel("Password*");
         passField = new JPasswordField(20);
         passLine.add(passLabel, BorderLayout.WEST);
         passLine.add(passField, BorderLayout.CENTER);
 
-        JPanel nameLine = new JPanel();
+        final JPanel nameLine = new JPanel();
         nameLabel = new JLabel("Name*");
         nameField = new JTextField(20);
         nameLine.add(nameLabel, BorderLayout.WEST);
         nameLine.add(nameField, BorderLayout.CENTER);
 
-        JPanel heightLine = new JPanel();
+        final JPanel heightLine = new JPanel();
         heightLabel = new JLabel("Height (cm)");
         heightField = new JTextField(20);
         heightLine.add(heightLabel, BorderLayout.WEST);
         heightLine.add(heightField, BorderLayout.CENTER);
 
-        JPanel weightLine = new JPanel();
+        final JPanel weightLine = new JPanel();
         weightLabel = new JLabel("Weight in kg");
         weightField = new JTextField(20);
         weightLine.add(weightLabel, BorderLayout.WEST);
         weightLine.add(weightField, BorderLayout.CENTER);
 
-        JPanel dateOfBirthLine = new JPanel();
+        final JPanel dateOfBirthLine = new JPanel();
         dateOfBirthLabel = new JLabel("Date of Birth* (dd-MM-yyyy)");
         dateOfBirthField = new JTextField(20);
         dateOfBirthLine.add(dateOfBirthLabel, BorderLayout.WEST);
         dateOfBirthLine.add(dateOfBirthField, BorderLayout.CENTER);
 
-        JPanel maxHeartRateLine = new JPanel();
+        final JPanel maxHeartRateLine = new JPanel();
         maxHeartRateLabel = new JLabel("Max Heart Rate in bpm");
         maxHeartRateField = new JTextField(20);
         maxHeartRateLine.add(maxHeartRateLabel, BorderLayout.WEST);
         maxHeartRateLine.add(maxHeartRateField, BorderLayout.CENTER);
 
-        JPanel restingHeartRateLine = new JPanel();
+        final JPanel restingHeartRateLine = new JPanel();
         restingHeartRateLabel = new JLabel("Resting Heart Rate in bpm");
         restingHeartRateField = new JTextField(20);
         restingHeartRateLine.add(restingHeartRateLabel, BorderLayout.WEST);
@@ -103,7 +104,7 @@ public class RegisterWindow extends JFrame {
         warning = new JLabel("All fields with * are NOT optional");
         mainPane.add(warning);
 
-        JPanel buttonLine = new JPanel();
+        final JPanel buttonLine = new JPanel();
         loginButton = new JButton("Back to Login");
         registerButton = new JButton("Create a new Account");
         googleRegisterButton = new JButton("Register with Google Account");
@@ -111,7 +112,7 @@ public class RegisterWindow extends JFrame {
         loginButton.addActionListener(new AbstractAction() {
 
             @Override
-            public void actionPerformed(ActionEvent arg0) {
+            public void actionPerformed(final ActionEvent arg0) {
                 loginWindow.setVisible(true);
                 setVisible(false);
             }
@@ -120,7 +121,7 @@ public class RegisterWindow extends JFrame {
         registerButton.addActionListener(new AbstractAction() {
 
             @Override
-            public void actionPerformed(ActionEvent arg0) {
+            public void actionPerformed(final ActionEvent arg0) {
                 register();
             }
 
@@ -129,7 +130,7 @@ public class RegisterWindow extends JFrame {
         googleRegisterButton.addActionListener(new AbstractAction() {
 
             @Override
-            public void actionPerformed(ActionEvent arg0) {
+            public void actionPerformed(final ActionEvent arg0) {
                 registerGoogle();
             }
 
@@ -138,7 +139,7 @@ public class RegisterWindow extends JFrame {
         facebookRegisterButton.addActionListener(new AbstractAction() {
 
             @Override
-            public void actionPerformed(ActionEvent arg0) {
+            public void actionPerformed(final ActionEvent arg0) {
                 registerFacebook();
             }
 
@@ -153,51 +154,58 @@ public class RegisterWindow extends JFrame {
         this.add(mainPane);
     }
 
-    public void setLoginWindow(LoginWindow l) {
+    public void setLoginWindow(final LoginWindow l) {
         this.loginWindow = l;
     }
 
-    public void setMainWindow(MainWindow mainWindow) {
+    public void setMainWindow(final MainWindow mainWindow) {
         this.mainWindow = mainWindow;
     }
 
     public void register() {
-        String email = emailField.getText();
-        String password = String.valueOf(passField.getPassword());
-        String name = nameField.getText();
+        final String email = emailField.getText();
+        final String password = String.valueOf(passField.getPassword());
+        final String name = nameField.getText();
 
         Date dateOfBirth = null;
         try {
             dateOfBirth = formatter.parse(dateOfBirthField.getText());
-        } catch (ParseException e1) {
+        } catch (final ParseException e1) {
         }
 
         Double weight = null;
         try {
             weight = Double.parseDouble(weightField.getText());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
 
         Integer height = null;
         try {
             height = Integer.parseInt(heightField.getText());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
 
         Integer maxHeartRate = null;
         try {
             maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
 
         Integer restingHeartRate = null;
         try {
             restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
 
-        if (athleteController.register(email, password, name, dateOfBirth, weight, height, restingHeartRate,
-                maxHeartRate)) {
+        final AthleteDTO athleteDTO = new AthleteDTO();
+        athleteDTO.setName(name);
+        athleteDTO.setEmail(name);
+        athleteDTO.setDateOfBirth(dateOfBirth);
+        athleteDTO.setWeight(weight);
+        athleteDTO.setHeight(height);
+        athleteDTO.setRestingHeartRate(restingHeartRate);
+        athleteDTO.setMaxHeartRate(maxHeartRate);
+        if (athleteController.register(password, athleteDTO) && athleteController.login(email, password)) {
             this.setVisible(false);
             mainWindow.setVisible(true);
         } else {
@@ -207,42 +215,49 @@ public class RegisterWindow extends JFrame {
 
 
     public void registerGoogle() {
-        String email = emailField.getText();
-        String password = String.valueOf(passField.getPassword());
-        String name = nameField.getText();
+        final String email = emailField.getText();
+        final String password = String.valueOf(passField.getPassword());
+        final String name = nameField.getText();
 
         Date dateOfBirth = null;
         try {
             dateOfBirth = formatter.parse(dateOfBirthField.getText());
-        } catch (ParseException e1) {
+        } catch (final ParseException e1) {
         }
 
         Double weight = null;
         try {
             weight = Double.parseDouble(weightField.getText());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
 
         Integer height = null;
         try {
             height = Integer.parseInt(heightField.getText());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
 
         Integer maxHeartRate = null;
         try {
             maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
 
         Integer restingHeartRate = null;
         try {
             restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
 
-        if (athleteController.registerGoogle(email, password, name, dateOfBirth, weight, height, restingHeartRate,
-                maxHeartRate)) {
+        final AthleteDTO athleteDTO = new AthleteDTO();
+        athleteDTO.setName(name);
+        athleteDTO.setEmail(name);
+        athleteDTO.setDateOfBirth(dateOfBirth);
+        athleteDTO.setWeight(weight);
+        athleteDTO.setHeight(height);
+        athleteDTO.setRestingHeartRate(restingHeartRate);
+        athleteDTO.setMaxHeartRate(maxHeartRate);
+        if (athleteController.registerGoogle(athleteDTO) && athleteController.login(email, password)) {
             this.setVisible(false);
             mainWindow.setVisible(true);
         } else {
@@ -251,42 +266,49 @@ public class RegisterWindow extends JFrame {
     }
 
     public void registerFacebook() {
-        String email = emailField.getText();
-        String password = String.valueOf(passField.getPassword());
-        String name = nameField.getText();
+        final String email = emailField.getText();
+        final String password = String.valueOf(passField.getPassword());
+        final String name = nameField.getText();
 
         Date dateOfBirth = null;
         try {
             dateOfBirth = formatter.parse(dateOfBirthField.getText());
-        } catch (ParseException e1) {
+        } catch (final ParseException e1) {
         }
 
         Double weight = null;
         try {
             weight = Double.parseDouble(weightField.getText());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
 
         Integer height = null;
         try {
             height = Integer.parseInt(heightField.getText());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
 
         Integer maxHeartRate = null;
         try {
             maxHeartRate = Integer.parseInt(maxHeartRateField.getText());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
 
         Integer restingHeartRate = null;
         try {
             restingHeartRate = Integer.parseInt(restingHeartRateField.getText());
-        } catch (Exception e) {
+        } catch (final Exception e) {
         }
 
-        if (athleteController.registerFacebook(email, password, name, dateOfBirth, weight, height, restingHeartRate,
-                maxHeartRate)) {
+        final AthleteDTO athleteDTO = new AthleteDTO();
+        athleteDTO.setName(name);
+        athleteDTO.setEmail(name);
+        athleteDTO.setDateOfBirth(dateOfBirth);
+        athleteDTO.setWeight(weight);
+        athleteDTO.setHeight(height);
+        athleteDTO.setRestingHeartRate(restingHeartRate);
+        athleteDTO.setMaxHeartRate(maxHeartRate);
+        if (athleteController.registerFacebook(athleteDTO) && athleteController.login(email, password)) {
             this.setVisible(false);
             mainWindow.setVisible(true);
         } else {

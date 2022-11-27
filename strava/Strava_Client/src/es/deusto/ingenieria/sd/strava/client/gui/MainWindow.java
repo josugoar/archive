@@ -31,9 +31,9 @@ public class MainWindow extends JFrame {
     private ChallengeDialog challengeDialog;
     private ActivityDialog activityDialog;
     private AthleteDialog athleteDialog;
-    private ActivityController activityController;
-    private AthleteController athleteController;
-    private ChallengeController challengeController;
+    private final ActivityController activityController;
+    private final AthleteController athleteController;
+    private final ChallengeController challengeController;
 
     private LoginWindow loginWindow;
 
@@ -50,13 +50,13 @@ public class MainWindow extends JFrame {
     private JButton bAccept;
 
 
-    public MainWindow(ActivityController activityController, AthleteController athleteController, ChallengeController challengeController) {
+    public MainWindow(final ActivityController activityController, final AthleteController athleteController, final ChallengeController challengeController) {
         this.activityController = activityController;
         this.athleteController = athleteController;
         this.challengeController = challengeController;
 
         addComponentListener(new ComponentAdapter() {
-            public void componentShown(ComponentEvent e) {
+            public void componentShown(final ComponentEvent e) {
                 getActiveChallenges();
                 getActivities();
                 initPane();
@@ -69,7 +69,7 @@ public class MainWindow extends JFrame {
 
         addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(final WindowEvent e) {
                 logout();
             }
         });
@@ -94,20 +94,19 @@ public class MainWindow extends JFrame {
         buttonPane = new JPanel();
         mainPane.add(buttonPane, BorderLayout.NORTH);
 
-        for (ActivityDTO activityDTO : activities) {
-            JPanel pane = new JPanel();
+        for (final ActivityDTO activityDTO : activities) {
+            final JPanel pane = new JPanel();
             pane.add(new JLabel("Name: " + activityDTO.getName()));
             pane.add(new JLabel("Type :" + activityDTO.getType()));
             pane.add(new JLabel("Distance: " + activityDTO.getDistance()));
             pane.add(new JLabel("Start Date :" + activityDTO.getStartDate().toString()));
-            pane.add(new JLabel("Elapsed Time: " + activityDTO.getElapsedTime().toString()));
+            pane.add(new JLabel("Elapsed Time: " + activityDTO.getElapsedTime()));
             contentPane.add(pane);
         }
 
-        for (ChallengeDTO challengeDTO : challenges) {
-            JPanel pane = new JPanel();
+        for (final ChallengeDTO challengeDTO : challenges) {
+            final JPanel pane = new JPanel();
             pane.add(new JLabel("Name: " + challengeDTO.getName()));
-            pane.add(new JLabel("Id: " + challengeDTO.getId()));
             if (challengeDTO.getDistance() != null) {
                 pane.add(new JLabel("Distance: " + challengeDTO.getDistance()));
             }
@@ -116,8 +115,8 @@ public class MainWindow extends JFrame {
             if (challengeDTO.getTime() != null) {
                 pane.add(new JLabel("Time: " + challengeDTO.getTime().toString()));
             }
-            pane.add(new JLabel("Completion :" + getChallengeState(challengeDTO.getId())));
-            for (String sportType : challengeDTO.getType()) {
+            pane.add(new JLabel("Completion :" + getChallengeProgress(challengeDTO)));
+            for (final String sportType : challengeDTO.getType()) {
                 pane.add(new JLabel(sportType));
             }
             contentPane.add(pane);
@@ -141,7 +140,7 @@ public class MainWindow extends JFrame {
         bAccept.addActionListener(new AbstractAction() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 acceptChallenge();
 
             }
@@ -151,7 +150,7 @@ public class MainWindow extends JFrame {
         bCreateActivity.addActionListener(new AbstractAction() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
 
                 activityDialog.setVisible(true);
 
@@ -162,7 +161,7 @@ public class MainWindow extends JFrame {
         bCreateChallenge.addActionListener(new AbstractAction() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
 
                 challengeDialog.setVisible(true);
 
@@ -173,7 +172,7 @@ public class MainWindow extends JFrame {
         bViewProfile.addActionListener(new AbstractAction() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
 
                 athleteDialog.setVisible(true);
 
@@ -184,7 +183,7 @@ public class MainWindow extends JFrame {
         bLogout.addActionListener(new AbstractAction() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
 
                 logout();
 
@@ -194,14 +193,14 @@ public class MainWindow extends JFrame {
 
     }
 
-    public void setLoginWindow(LoginWindow loginWindow) {
+    public void setLoginWindow(final LoginWindow loginWindow) {
         this.loginWindow = loginWindow;
     }
 
-    public void setActivityDialog(ActivityDialog activityDialog) {
+    public void setActivityDialog(final ActivityDialog activityDialog) {
         this.activityDialog = activityDialog;
         activityDialog.addComponentListener(new ComponentAdapter() {
-            public void componentHidden(ComponentEvent e) {
+            public void componentHidden(final ComponentEvent e) {
                 getActiveChallenges();
                 getActivities();
                 initPane();
@@ -213,10 +212,10 @@ public class MainWindow extends JFrame {
         });
     }
 
-    public void setChallengeDialog( ChallengeDialog challengeDialog) {
+    public void setChallengeDialog( final ChallengeDialog challengeDialog) {
         this.challengeDialog = challengeDialog;
         challengeDialog.addComponentListener(new ComponentAdapter() {
-            public void componentHidden(ComponentEvent e) {
+            public void componentHidden(final ComponentEvent e) {
                 getActiveChallenges();
                 getActivities();
                 initPane();
@@ -229,7 +228,7 @@ public class MainWindow extends JFrame {
         });
     }
 
-    public void setAthleteDialog(AthleteDialog athleteDialog) {
+    public void setAthleteDialog(final AthleteDialog athleteDialog) {
         this.athleteDialog = athleteDialog;
     }
 
@@ -244,7 +243,7 @@ public class MainWindow extends JFrame {
 
     public void acceptChallenge() {
         try {
-            if (!(challengeController.acceptChallenge(athleteController.getToken(), Integer.parseInt(challengeIDField.getText())))) {
+            if (true) {
                 JOptionPane.showMessageDialog(rootPane, "Error accepting challenge");
 
             } else {
@@ -256,14 +255,14 @@ public class MainWindow extends JFrame {
                 revalidate();
                 repaint();
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Challenge ID not an Integer");
         }
 
     }
 
-    public double getChallengeState(Integer id) {
-        return challengeController.getChallengeProgress(athleteController.getToken(), id);
+    public double getChallengeProgress(final ChallengeDTO challengeDTO) {
+        return challengeController.getChallengeProgress(athleteController.getToken(), challengeDTO);
     }
 
     public void logout() {

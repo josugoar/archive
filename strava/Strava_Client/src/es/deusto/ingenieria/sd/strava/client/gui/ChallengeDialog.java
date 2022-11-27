@@ -26,9 +26,9 @@ public class ChallengeDialog extends JDialog {
     private JTextField nameField, startDateField, endDateField, distanceField, timeField;
     private JComboBox<String> sportCombo;
     private JButton acceptButton, cancelButton;
-    private String sport[]={"Running","Cycling","Both"};
+    private String sport[] = { "RUNNING", "CYCLING", "BOTH" };
 
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
+    SimpleDateFormat formatter = new SimpleDateFormat("DD-mm-yyyy", Locale.ENGLISH);
 
     public ChallengeDialog(ChallengeController challengeController, AthleteController athleteController) {
         this.challengeController = challengeController;
@@ -37,7 +37,7 @@ public class ChallengeDialog extends JDialog {
         setTitle("Create new Challenge");
         initDialog();
         setContentPane(mainPane);
-        setSize(400,400);
+        setSize(400, 400);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setModal(true);
     }
@@ -89,7 +89,6 @@ public class ChallengeDialog extends JDialog {
         sportLine.add(sportLabel, BorderLayout.WEST);
         sportLine.add(sportCombo, BorderLayout.CENTER);
 
-
         mainPane.add(nameLine);
         mainPane.add(startDateLine);
         mainPane.add(endDateLine);
@@ -112,7 +111,7 @@ public class ChallengeDialog extends JDialog {
             this.createChallenge();
         });
 
-         this.add(mainPane);
+        this.add(mainPane);
     }
 
     public void createChallenge() {
@@ -138,27 +137,32 @@ public class ChallengeDialog extends JDialog {
             startDate = formatter.parse(startDateField.getText());
             endDate = formatter.parse(endDateField.getText());
         } catch (RuntimeException | ParseException e1) {
-            showMessageDialog(null, "Wrong date, use dd-mm-yyyy");
+            showMessageDialog(null, "Wrong date, use DD-mm-yyyy");
         }
 
         String sport = sportCombo.getSelectedItem().toString();
         Set<String> type = new HashSet<>();
         if (sport.equals("Both")) {
-            type.add("Cycling");
-            type.add("Running");
+            type.add("CYCLING");
+            type.add("RUNNING");
         } else {
             type.add(sport);
         }
 
         Long token = athleteController.getToken();
 
-        ChallengeDTO challenge = challengeController.createChallenge(token, name, startDate, endDate, distance, time, type);
-        if(challenge == null){
+        ChallengeDTO challenge = new ChallengeDTO();
+        challenge.setName(name);
+        challenge.setStartDate(startDate);
+        challenge.setEndDate(endDate);
+        challenge.setDistance(distance);
+        challenge.setTime(time.getNano());
+        challenge.setType(type);
+        if (!challengeController.createChallenge(token, challenge)) {
             showMessageDialog(null, "Error creating challenge");
         }
 
         setVisible(false);
     }
-
 
 }

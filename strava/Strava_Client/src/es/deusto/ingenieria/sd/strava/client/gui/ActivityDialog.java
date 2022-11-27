@@ -7,7 +7,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
-import java.util.Locale;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -25,9 +24,9 @@ public class ActivityDialog extends JDialog {
     private JTextField nameField, distanceField, elapsedTimeField, startDateField;
     private JComboBox<String> typeCombo;
     private JButton acceptButton, cancelButton;
-    private String type[]={"Running","Cycling"};
+    private String type[] = { "RUNNING", "CYCLING" };
 
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
+    SimpleDateFormat formatter = new SimpleDateFormat("DD-mm-yyyy");
 
     public ActivityDialog(ActivityController activityController, AthleteController athleteController) {
         this.activityController = activityController;
@@ -36,7 +35,7 @@ public class ActivityDialog extends JDialog {
         setTitle("Create new Activity");
         initDialog();
         setContentPane(mainPane);
-        setSize(400,400);
+        setSize(400, 400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setModal(true);
     }
@@ -53,49 +52,48 @@ public class ActivityDialog extends JDialog {
         nameLine.add(nameLabel, BorderLayout.WEST);
         nameLine.add(nameField, BorderLayout.CENTER);
 
-         // Start date
-         JPanel startDateLine = new JPanel();
-         startDateLabel = new JLabel("Start date (DD/MM/YYYY)");
-         startDateField = new JTextField(20);
-         startDateLine.add(startDateLabel, BorderLayout.WEST);
-         startDateLine.add(startDateField, BorderLayout.CENTER);
+        // Start date
+        JPanel startDateLine = new JPanel();
+        startDateLabel = new JLabel("Start date (DD/MM/YYYY)");
+        startDateField = new JTextField(20);
+        startDateLine.add(startDateLabel, BorderLayout.WEST);
+        startDateLine.add(startDateField, BorderLayout.CENTER);
 
-         // Distance
-         JPanel distanceLine = new JPanel();
-         distanceLabel = new JLabel("Distance");
-         distanceField = new JTextField(20);
-         distanceLine.add(distanceLabel, BorderLayout.WEST);
-         distanceLine.add(distanceField, BorderLayout.CENTER);
+        // Distance
+        JPanel distanceLine = new JPanel();
+        distanceLabel = new JLabel("Distance");
+        distanceField = new JTextField(20);
+        distanceLine.add(distanceLabel, BorderLayout.WEST);
+        distanceLine.add(distanceField, BorderLayout.CENTER);
 
-         // Elapsed time
-         JPanel elapsedTimeLine = new JPanel();
-         elapsedTimeLabel = new JLabel("Elapsed time (days)");
-         elapsedTimeField = new JTextField(20);
-         elapsedTimeLine.add(elapsedTimeLabel, BorderLayout.WEST);
-         elapsedTimeLine.add(elapsedTimeField, BorderLayout.CENTER);
+        // Elapsed time
+        JPanel elapsedTimeLine = new JPanel();
+        elapsedTimeLabel = new JLabel("Elapsed time (days)");
+        elapsedTimeField = new JTextField(20);
+        elapsedTimeLine.add(elapsedTimeLabel, BorderLayout.WEST);
+        elapsedTimeLine.add(elapsedTimeField, BorderLayout.CENTER);
 
-         // Type
-         JPanel typeLine = new JPanel();
-         typeLabel = new JLabel("Sport");
-         typeCombo = new JComboBox<String>(type);
-         typeLine.add(typeLabel, BorderLayout.WEST);
-         typeLine.add(typeCombo, BorderLayout.CENTER);
+        // Type
+        JPanel typeLine = new JPanel();
+        typeLabel = new JLabel("Sport");
+        typeCombo = new JComboBox<String>(type);
+        typeLine.add(typeLabel, BorderLayout.WEST);
+        typeLine.add(typeCombo, BorderLayout.CENTER);
 
+        mainPane.add(nameLine);
+        mainPane.add(distanceLine);
+        mainPane.add(elapsedTimeLine);
+        mainPane.add(typeLine);
+        mainPane.add(startDateLine);
 
-         mainPane.add(nameLine);
-         mainPane.add(distanceLine);
-         mainPane.add(elapsedTimeLine);
-         mainPane.add(typeLine);
-         mainPane.add(startDateLine);
+        JPanel buttonLine = new JPanel();
+        acceptButton = new JButton("Accept");
+        cancelButton = new JButton("Cancel");
+        buttonLine.add(acceptButton);
+        buttonLine.add(cancelButton);
+        mainPane.add(buttonLine);
 
-         JPanel buttonLine = new JPanel();
-         acceptButton = new JButton("Accept");
-         cancelButton = new JButton("Cancel");
-         buttonLine.add(acceptButton);
-         buttonLine.add(cancelButton);
-         mainPane.add(buttonLine);
-
-         cancelButton.addActionListener(e -> {
+        cancelButton.addActionListener(e -> {
             this.setVisible(false);
         });
 
@@ -103,8 +101,7 @@ public class ActivityDialog extends JDialog {
             this.createActivity();
         });
 
-         this.add(mainPane);
-
+        this.add(mainPane);
 
     }
 
@@ -133,11 +130,15 @@ public class ActivityDialog extends JDialog {
         }
         String type = typeCombo.getSelectedItem().toString();
 
-
         Long token = athleteController.getToken();
 
-        ActivityDTO activity = activityController.createActivity(token, name, distance, elapsedTime, type, startDate);
-        if(activity == null){
+        final ActivityDTO activity = new ActivityDTO();
+        activity.setName(name);
+        activity.setDistance(distance);
+        activity.setElapsedTime(elapsedTime.getNano());
+        activity.setType(type);
+        activity.setStartDate(startDate);
+        if (!activityController.createActivity(token, activity)) {
             showMessageDialog(null, "Error creating activity");
         }
         setVisible(false);
