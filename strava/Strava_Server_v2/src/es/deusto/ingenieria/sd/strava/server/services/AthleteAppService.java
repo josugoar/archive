@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
-import es.deusto.ingenieria.sd.strava.server.gateway.FacebookServiceGateway;
-import es.deusto.ingenieria.sd.strava.server.gateway.GoogleServiceGateway;
+import es.deusto.ingenieria.sd.strava.server.factory.GatewayFactory;
 
 public class AthleteAppService {
 
@@ -40,7 +39,7 @@ public class AthleteAppService {
             throw new IllegalArgumentException("Athlete is already registered!");
         }
 
-        if (!GoogleServiceGateway.getInstance().checkEmail(athlete.getEmail())) {
+        if (!GatewayFactory.createGateway("Google").checkEmail(athlete.getEmail())) {
             throw new IllegalArgumentException("Invalid email!");
         }
 
@@ -52,7 +51,7 @@ public class AthleteAppService {
             throw new IllegalArgumentException("Athlete is already registered!");
         }
 
-        if (!FacebookServiceGateway.getInstance().checkEmail(athlete.getEmail())) {
+        if (!GatewayFactory.createGateway("Facebook").checkEmail(athlete.getEmail())) {
             throw new IllegalArgumentException("Invalid email!");
         }
 
@@ -65,8 +64,8 @@ public class AthleteAppService {
         }
 
         if (passwords.get(email).equals(password)
-                || GoogleServiceGateway.getInstance().checkEmailAndPassword(email, password)
-                || FacebookServiceGateway.getInstance().checkEmailAndPassword(email, password)) {
+                || GatewayFactory.createGateway("Google").checkEmailAndPassword(email, password)
+                || GatewayFactory.createGateway("Facebook").checkEmailAndPassword(email, password)) {
             return athletes.get(email);
         }
 
