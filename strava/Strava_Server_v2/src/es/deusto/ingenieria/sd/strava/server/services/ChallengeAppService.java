@@ -69,7 +69,7 @@ public class ChallengeAppService {
             return progress / challenge.getTime();
         }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Invalid challenge!");
     }
 
 }

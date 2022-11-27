@@ -20,7 +20,8 @@ public class MainProgram {
         try {
             final IRemoteFacade remoteFacade = new RemoteFacade();
             Naming.rebind(name, remoteFacade);
-            System.err.println(" * Strava Server v1 '" + name + "' started!!");
+
+            System.err.println(" * Strava Server '" + name + "' started!!");
         } catch (final Exception e) {
             System.err.println(" # Strava Server Exception: " + e.getMessage());
             e.printStackTrace();

@@ -35,7 +35,6 @@ public class AthleteAssembler {
         return athletes.stream().map(this::athleteToDTO).toList();
     }
 
-    // TODO: setPassword()
     public Athlete DTOToAthlete(final AthleteDTO athleteDTO) throws IllegalArgumentException {
         final Athlete athlete = new Athlete();
         athlete.setName(athleteDTO.getName());

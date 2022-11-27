@@ -9,11 +9,11 @@ public class GoogleServiceGateway {
 
     private static GoogleServiceGateway instance;
 
+    private IGoogle googleService;
+
     private static final String SERVER_IP = "127.0.0.1";
     private static final String SERVER_PORT = "8001";
-    private static final String SERVER_NAME = "8001";
-
-    private IGoogle googleService;
+    private static final String SERVER_NAME = "Google";
 
     private GoogleServiceGateway() {
         try {
@@ -38,6 +38,7 @@ public class GoogleServiceGateway {
             return googleService.checkEmail(email);
         } catch (final RemoteException e) {
             System.err.println("   $ Error checking email: " + e.getMessage());
+
             return false;
         }
     }
@@ -49,6 +50,7 @@ public class GoogleServiceGateway {
             return googleService.checkEmailAndPassword(email, password);
         } catch (final RemoteException e) {
             System.err.println("   $ Error checking email and password: " + e.getMessage());
+
             return false;
         }
     }
