@@ -1,9 +1,9 @@
-package es.deusto.ingenieria.sd.auctions.facebook.server;
+package es.deusto.ingenieria.sd.strava.facebook.server;
 
 import java.rmi.Naming;
 
-import es.deusto.ingenieria.sd.auctions.facebook.remote.FacebookService;
-import es.deusto.ingenieria.sd.auctions.facebook.remote.IFacebook;
+import es.deusto.ingenieria.sd.strava.facebook.remote.FacebookService;
+import es.deusto.ingenieria.sd.strava.facebook.remote.IFacebook;
 
 public class FacebookServer {
 

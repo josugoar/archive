@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.sd.auctions.facebook.remote;
+package es.deusto.ingenieria.sd.strava.facebook.remote;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

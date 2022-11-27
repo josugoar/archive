@@ -26,7 +26,7 @@
     </target>
 
     <target name="3.server" description="Runs the Server">
-        <java classname="es.deusto.ingenieria.sd.auctions.facebook.server.FacebookServer" classpathref="classpath" fork="true">
+        <java classname="es.deusto.ingenieria.sd.strava.facebook.server.FacebookServer" classpathref="classpath" fork="true">
             <jvmarg value="-Djava.rmi.server.codebase=file:${bin.dir}/" />
             <jvmarg value="-Djava.security.policy=${policy.file}" />
             <arg value="${rmiregistry.IP}" />
