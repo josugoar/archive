@@ -21,7 +21,7 @@ public class Conection {
             cs = new Socket(); 
 
         } else {
-            cs = new Socket(HOST, PORT):
+            cs = new Socket(HOST, PORT);
         }
     }
      
