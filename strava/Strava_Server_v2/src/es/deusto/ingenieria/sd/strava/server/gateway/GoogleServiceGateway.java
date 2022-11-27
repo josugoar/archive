@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 
 import es.deusto.ingenieria.sd.strava.google.remote.IGoogle;
 
-public class GoogleServiceGateway {
+public class GoogleServiceGateway implements IGateway {
 
     private static GoogleServiceGateway instance;
 
@@ -31,6 +31,7 @@ public class GoogleServiceGateway {
         return instance;
     }
 
+    @Override
     public boolean checkEmail(final String email) {
         System.err.println("   - Check email from Google Service Gateway");
 
@@ -43,6 +44,7 @@ public class GoogleServiceGateway {
         }
     }
 
+    @Override
     public boolean checkEmailAndPassword(final String email, final String password) {
         System.err.println("   - Check email and password from Google Service Gateway");
 

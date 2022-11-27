@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class FacebookServiceGateway {
+public class FacebookServiceGateway implements IGateway {
 
     private static FacebookServiceGateway instance;
 
@@ -25,6 +25,7 @@ public class FacebookServiceGateway {
         return instance;
     }
 
+    @Override
     public boolean checkEmail(final String email) {
         System.err.println("   - Check email from Facebook Service Gateway");
 
@@ -48,6 +49,7 @@ public class FacebookServiceGateway {
         }
     }
 
+    @Override
     public boolean checkEmailAndPassword(final String email, final String password) {
         System.err.println("   - Check email and password from Facebook Service Gateway");
 
