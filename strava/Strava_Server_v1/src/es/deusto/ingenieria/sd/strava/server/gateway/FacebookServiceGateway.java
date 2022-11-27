@@ -32,18 +32,18 @@ public class FacebookServiceGateway implements IExternalLogin{
 
 
         try (Socket s = new Socket(ip, port)){
-            
+
             DataInputStream inStream = new DataInputStream(s.getInputStream());
             DataOutputStream outputStream = new DataOutputStream(s.getOutputStream());
 
             outputStream.writeUTF(message);
-            System.out.println("Facebook Service Gateway: Sending to " + s.getInetAddress().getHostAddress() + ":" + s.getPort() + " the following data: " + "\"" + message + "\"");
+            System.err.println("Facebook Service Gateway: Sending to " + s.getInetAddress().getHostAddress() + ":" + s.getPort() + " the following data: " + "\"" + message + "\"");
 
             exists = inStream.readBoolean();
-            System.out.println("Facebook Service Gateway: Receiving from " + s.getInetAddress().getHostAddress() + ":" + s.getPort() + " if the user exists: " + "\"" + exists + "\"");
+            System.err.println("Facebook Service Gateway: Receiving from " + s.getInetAddress().getHostAddress() + ":" + s.getPort() + " if the user exists: " + "\"" + exists + "\"");
 
         } catch (UnknownHostException e) {
-			System.err.println("Facebook Service Gateway: Socket error: " + e.getMessage());	
+			System.err.println("Facebook Service Gateway: Socket error: " + e.getMessage());
 		} catch (EOFException e) {
 			System.err.println("Facebook Service Gateway: EOF error: " + e.getMessage());
 		} catch (IOException e) {
@@ -54,6 +54,6 @@ public class FacebookServiceGateway implements IExternalLogin{
 
     }
 
-    
-    
+
+
 }

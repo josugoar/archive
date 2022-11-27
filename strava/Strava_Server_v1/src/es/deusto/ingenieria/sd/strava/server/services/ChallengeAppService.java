@@ -30,7 +30,7 @@ public class ChallengeAppService {
 
     public Challenge createChallenge(Athlete athlete, String name, Date startDate, Date endDate, Float distance, Duration time,
             Set<String> type) throws IllegalArgumentException {
-        System.out.println("Creating challenge in ChallengeAppService");
+        System.err.println("Creating challenge in ChallengeAppService");
         Challenge challenge = new Challenge();
         for (String sportType : type) {
             challenge.addType(SportType.fromString(sportType));

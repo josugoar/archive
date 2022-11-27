@@ -16,7 +16,7 @@ public class ActivityAppService {
 
     public Activity createActivity(Athlete athlete, String name, float distance, Duration elapsedTime, String type,
             Date startDate) throws IllegalArgumentException {
-        System.out.println("Creating activity in ActivityAppService");
+        System.err.println("Creating activity in ActivityAppService");
         Activity activity = new Activity();
         activity.setDistance(distance);
         activity.setElapsedTime(elapsedTime);

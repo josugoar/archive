@@ -25,7 +25,7 @@ public class LocalTest {
 			// Login (fails no registered athlete)
 			facade.login("Peter Oben", pasword);
 		} catch (Exception e) {
-			System.out.println("\t# Error: " + e.getMessage());
+			System.err.println("\t# Error: " + e.getMessage());
 		}
 
 		try {
@@ -36,13 +36,13 @@ public class LocalTest {
 					null, type);
 			List<ChallengeDTO> challenges = facade.getActiveChallenges(token);
 			for (ChallengeDTO challenge : challenges) {
-				System.out.println(challenge);
+				System.err.println(challenge);
 			}
 			float challengeState = facade.getChallengeState(token, newChallenge.getId());
-			System.out.println(challengeState);
+			System.err.println(challengeState);
 			facade.logout(token);
 		} catch (Exception e) {
-			System.out.println("\t# Error: " + e.getMessage());
+			System.err.println("\t# Error: " + e.getMessage());
 		}
 
 		// Force exit to stop RMI Server
