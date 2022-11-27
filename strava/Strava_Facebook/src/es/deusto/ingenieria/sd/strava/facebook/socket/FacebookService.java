@@ -13,7 +13,7 @@ public class FacebookService extends Thread {
     private DataOutputStream out;
     private Socket tcpSocket;
 
-    private static final String DELIMETER = "#";
+    private static final String DELIMITER = "\0";
 
     // TODO
     private final Map<String, String> serverState = new HashMap<>() {
@@ -43,7 +43,7 @@ public class FacebookService extends Thread {
             System.err.println("   - FacebookService - Received data from '" + tcpSocket.getInetAddress().getHostAddress() + ":" + tcpSocket.getPort() + "' -> '" + inData + "'");
 
             // TODO
-            final String[] strings = inData.split(DELIMETER, 2);
+            final String[] strings = inData.split(DELIMITER, 2);
             final boolean outData;
             if (strings.length == 1) {
                 outData = checkEmail(strings[0]);

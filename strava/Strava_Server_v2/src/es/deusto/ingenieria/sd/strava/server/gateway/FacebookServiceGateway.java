@@ -12,7 +12,7 @@ public class FacebookServiceGateway {
     private static final String SERVER_IP = "127.0.0.1";
     private static final int SERVER_PORT = 8001;
 
-    private static final String DELIMITER = "#";
+    private static final String DELIMITER = "\0";
 
     private FacebookServiceGateway() {
     }
