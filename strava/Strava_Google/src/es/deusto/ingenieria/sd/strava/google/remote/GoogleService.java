@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.sd.auctions.google.remote;
+package es.deusto.ingenieria.sd.strava.google.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

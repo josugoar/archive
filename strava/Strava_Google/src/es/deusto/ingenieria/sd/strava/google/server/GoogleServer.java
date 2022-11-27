@@ -1,9 +1,9 @@
-package es.deusto.ingenieria.sd.auctions.google.server;
+package es.deusto.ingenieria.sd.strava.google.server;
 
 import java.rmi.Naming;
 
-import es.deusto.ingenieria.sd.auctions.google.remote.GoogleService;
-import es.deusto.ingenieria.sd.auctions.google.remote.IGoogle;
+import es.deusto.ingenieria.sd.strava.google.remote.GoogleService;
+import es.deusto.ingenieria.sd.strava.google.remote.IGoogle;
 
 public class GoogleServer {
 
