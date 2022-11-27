@@ -1,11 +1,10 @@
 package es.deusto.ingenieria.sd.strava.server.test;
 
 import java.rmi.RemoteException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
@@ -16,7 +15,7 @@ import es.deusto.ingenieria.sd.strava.server.remote.RemoteFacade;
 public class LocalTest {
 
     public static void main(final String[] args) throws RemoteException {
-        final SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
+        final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         final IRemoteFacade remoteFacade = new RemoteFacade();
 
@@ -29,23 +28,23 @@ public class LocalTest {
         }
 
         try {
-            final Set<String> type = new HashSet<>();
-            type.add("CYCLING");
-
             final AthleteDTO athleteDTO = new AthleteDTO();
-            athleteDTO.setName("Peter Oben");
+            athleteDTO.setName("John Doe");
             athleteDTO.setEmail("john.doe@gmail.com");
-            athleteDTO.setDateOfBirth(new Date());
+            athleteDTO.setDateOfBirth(formatter.parse("25-02-1953"));
 
             remoteFacade.register(pasword, athleteDTO);
 
             final long token = remoteFacade.login(athleteDTO.getEmail(), pasword);
 
+            final Set<String> type = new HashSet<>();
+            type.add("RUNNING");
+
             final ChallengeDTO challengeDTO = new ChallengeDTO();
-            challengeDTO.setName(pasword);
-            challengeDTO.setStartDate(formatter.parse("22-01-2022"));
-            challengeDTO.setEndDate(formatter.parse("22-01-2023"));
-            challengeDTO.setDistance(10d);
+            challengeDTO.setName("BREAKFASTER by New Balance");
+            challengeDTO.setStartDate(formatter.parse("24-10-2022"));
+            challengeDTO.setEndDate(formatter.parse("04-12-2022"));
+            challengeDTO.setDistance(252.);
             challengeDTO.setType(type);
 
             remoteFacade.createChallenge(token, challengeDTO);
@@ -59,7 +58,7 @@ public class LocalTest {
             System.err.println(challengeState);
 
             remoteFacade.logout(token);
-        } catch (final Exception e) {
+        } catch (final RemoteException | ParseException e) {
             System.err.println("\t# Error: " + e.getMessage());
         }
 
