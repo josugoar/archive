@@ -1,7 +1,6 @@
 package es.deusto.ingenieria.sd.strava.client.controller;
 
 import java.rmi.RemoteException;
-import java.util.Date;
 
 import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
 import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
@@ -9,75 +8,82 @@ import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
 public class AthleteController {
 
     ServiceLocator serviceLocator;
+
     private Long token;
 
-    public AthleteController(ServiceLocator serviceLocator) {
+    public AthleteController(final ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 
-    public boolean register(String email, String password, String name, Date birthDate, Double weight, Integer height,
-            Integer restingHeartrate, Integer maxHeartrate) {
+    public boolean register(final String password, final AthleteDTO athleteDTO) {
         try {
-            this.token = this.serviceLocator.getService().register(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
+            serviceLocator.getService().register(password, athleteDTO);
+
             return true;
-        } catch (RemoteException e) {
+        } catch (final RemoteException e) {
             System.err.println("# Error during register: " + e);
+
             return false;
         }
     }
 
-    public boolean registerGoogle(String email, String password, String name, Date birthDate, Double weight, Integer height,
-            Integer restingHeartrate, Integer maxHeartrate) {
+    public boolean registerGoogle(final AthleteDTO athleteDTO) {
         try {
-            this.token = this.serviceLocator.getService().registerGoogle(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
+            serviceLocator.getService().registerGoogle(athleteDTO);
+
             return true;
-        } catch (RemoteException e) {
+        } catch (final RemoteException e) {
             System.err.println("# Error during register: " + e);
+
             return false;
         }
     }
 
-    public boolean registerFacebook(String email, String password, String name, Date birthDate, Double weight, Integer height,
-            Integer restingHeartrate, Integer maxHeartrate) {
+    public boolean registerFacebook(final AthleteDTO athleteDTO) {
         try {
-            this.token = this.serviceLocator.getService().registerFacebook(email, password, name, birthDate, weight, height, restingHeartrate, maxHeartrate);
+            serviceLocator.getService().registerFacebook(athleteDTO);
+
             return true;
-        } catch (RemoteException e) {
+        } catch (final RemoteException e) {
             System.err.println("# Error during register: " + e);
+
             return false;
         }
     }
 
-    public boolean login(String email, String password) {
+    public boolean login(final String email, final String password) {
         try {
-            this.token = this.serviceLocator.getService().login(email, password);
+            token = serviceLocator.getService().login(email, password);
+
             return true;
-        } catch (RemoteException e) {
+        } catch (final RemoteException e) {
             System.err.println("# Error during login: " + e);
+
             return false;
         }
     }
 
     public void logout() {
         try {
-            this.serviceLocator.getService().logout(this.token);
-            this.token = null;
-        } catch (RemoteException e) {
+            serviceLocator.getService().logout(token);
+
+            token = null;
+        } catch (final RemoteException e) {
             System.err.println("# Error during logout: " + e);
         }
     }
 
     public AthleteDTO getAthlete() {
         try {
-            return this.serviceLocator.getService().getAthlete(this.token);
-        } catch (RemoteException e) {
+            return serviceLocator.getService().getAthlete(token);
+        } catch (final RemoteException e) {
             System.err.println("# Error getting athlete: " + e);
             return null;
         }
     }
 
     public long getToken() {
-		return token;
-	}
+        return token;
+    }
 
 }

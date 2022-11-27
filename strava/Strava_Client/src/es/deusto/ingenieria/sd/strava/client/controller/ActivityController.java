@@ -1,9 +1,7 @@
 package es.deusto.ingenieria.sd.strava.client.controller;
 
 import java.rmi.RemoteException;
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
@@ -13,25 +11,24 @@ public class ActivityController {
 
     ServiceLocator serviceLocator;
 
-    public ActivityController(ServiceLocator serviceLocator) {
+    public ActivityController(final ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 
-    public ActivityDTO createActivity(long token, String name, double distance, Duration elapsedTime, String type,
-            Date startDate) {
+    public void createActivity(final long token, final ActivityDTO activityDTO) {
         try {
-            return this.serviceLocator.getService().createActivity(token, name, distance, elapsedTime, type, startDate);
-        } catch (RemoteException e) {
+            serviceLocator.getService().createActivity(token, activityDTO);
+        } catch (final RemoteException e) {
             System.err.println("# Error creating an activity: " + e);
-            return null;
         }
     }
 
-    public List<ActivityDTO> getActivities(long token) {
+    public List<ActivityDTO> getActivities(final long token) {
         try {
-            return this.serviceLocator.getService().getActivities(token);
-        } catch (RemoteException e) {
+            return serviceLocator.getService().getActivities(token);
+        } catch (final RemoteException e) {
             System.err.println("# Error getting activities: " + e);
+
             return new ArrayList<>();
         }
     }

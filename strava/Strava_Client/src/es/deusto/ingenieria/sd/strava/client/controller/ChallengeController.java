@@ -1,11 +1,8 @@
 package es.deusto.ingenieria.sd.strava.client.controller;
 
 import java.rmi.RemoteException;
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
@@ -14,47 +11,46 @@ public class ChallengeController {
 
     ServiceLocator serviceLocator;
 
-    public ChallengeController(ServiceLocator serviceLocator) {
+    public ChallengeController(final ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 
-    public ChallengeDTO createChallenge(long token, String name, Date startDate,
-            Date endDate,
-            Double distance,
-            Duration time,
-            Set<String> type) {
+    public void createChallenge(final long token, final ChallengeDTO challengeDTO) {
         try {
-            return this.serviceLocator.getService().createChallenge(token, name, startDate, endDate, distance, time, type);
-        } catch (RemoteException e) {
+            serviceLocator.getService().createChallenge(token, challengeDTO);
+        } catch (final RemoteException e) {
             System.err.println("# Error creating an challenge: " + e);
-            return null;
         }
     }
 
-    public List<ChallengeDTO> getActiveChallenges(long token) {
+    public List<ChallengeDTO> getChallenges(final long token) {
         try {
-            return this.serviceLocator.getService().getActiveChallenges(token);
-        } catch (RemoteException e) {
-            System.err.println("# Error creating an activity: " + e);
+            return serviceLocator.getService().getChallenges(token);
+        } catch (final RemoteException e) {
+            System.err.println("# Error getting challenges: " + e);
+
             return new ArrayList<>();
         }
     }
 
-    public boolean acceptChallenge(long token, int challengeId) {
+    public boolean acceptChallenge(final long token, final ChallengeDTO challengeDTO) {
         try {
-            this.serviceLocator.getService().acceptChallenge(token, challengeId);;
+            serviceLocator.getService().acceptChallenge(token, challengeDTO);;
+
             return true;
-        } catch (RemoteException e) {
-            System.err.println("# Error creating an activity: " + e);
+        } catch (final RemoteException e) {
+            System.err.println("# Error accepting challenge: " + e);
+
             return false;
         }
     }
 
-    public double getChallengeState(long token, int challengeId) {
+    public double getChallengeProgress(final long token, final ChallengeDTO challengeDTO) {
         try {
-            return this.serviceLocator.getService().getChallengeState(token, challengeId);
-        } catch (RemoteException e) {
-            System.err.println("# Error creating an activity: " + e);
+            return this.serviceLocator.getService().getChallengeProgress(token, challengeDTO);
+        } catch (final RemoteException e) {
+            System.err.println("# Error getting challenge progress: " + e);
+
             return -1;
         }
     }

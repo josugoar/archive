@@ -238,7 +238,7 @@ public class MainWindow extends JFrame {
     }
 
     public void getActiveChallenges() {
-        challenges = challengeController.getActiveChallenges(this.athleteController.getToken());
+        challenges = challengeController.getChallenges(this.athleteController.getToken());
         System.err.println("Challenges: " + challenges);
     }
 
@@ -263,7 +263,7 @@ public class MainWindow extends JFrame {
     }
 
     public double getChallengeState(Integer id) {
-        return challengeController.getChallengeState(athleteController.getToken(), id);
+        return challengeController.getChallengeProgress(athleteController.getToken(), id);
     }
 
     public void logout() {
