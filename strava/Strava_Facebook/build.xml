@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="3.server" name="Strava_Facebook">
+<project basedir="." default="2.server" name="Strava_Facebook">
     <property name="src.dir" location="src" />
     <property name="bin.dir" location="bin" />
-    <property name="dist.dir" location="dist" />
-    <property name="export.file" value="Facebook.jar" />
-    <property name="policy.file" location="security/java.policy" />
     <property name="server.port" value="8001" />
 
     <path id="classpath">
@@ -17,13 +14,7 @@
         <javac srcdir="${src.dir}" destdir="${bin.dir}" classpathref="classpath" deprecation="true" fork="true" includeantruntime="no" />
     </target>
 
-    <target name="2.export" depends="1.build" description="Export classes into a .jar file">
-        <delete dir="${dist.dir}" />
-        <mkdir dir="${dist.dir}" />
-        <jar destfile="${dist.dir}/${export.file}" basedir="${bin.dir}" includes="**/socket/I**.class" />
-    </target>
-
-    <target name="3.server" description="Runs the Server">
+    <target name="2.server" description="Runs the Server">
         <java classname="es.deusto.ingenieria.sd.strava.facebook.server.FacebookServer" classpathref="classpath" fork="true">
             <arg value="${server.port}" />
         </java>
