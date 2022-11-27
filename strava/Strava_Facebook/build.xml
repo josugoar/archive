@@ -5,9 +5,7 @@
     <property name="dist.dir" location="dist" />
     <property name="export.file" value="Facebook.jar" />
     <property name="policy.file" location="security/java.policy" />
-    <property name="rmiregistry.IP" value="127.0.0.1" />
-    <property name="rmiregistry.port" value="1099" />
-    <property name="server.name" value="Facebook" />
+    <property name="server.port" value="8001" />
 
     <path id="classpath">
         <pathelement location="${bin.dir}" />
@@ -22,16 +20,12 @@
     <target name="2.export" depends="1.build" description="Export classes into a .jar file">
         <delete dir="${dist.dir}" />
         <mkdir dir="${dist.dir}" />
-        <jar destfile="${dist.dir}/${export.file}" basedir="${bin.dir}" includes="**/remote/I**.class" />
+        <jar destfile="${dist.dir}/${export.file}" basedir="${bin.dir}" includes="**/socket/I**.class" />
     </target>
 
     <target name="3.server" description="Runs the Server">
         <java classname="es.deusto.ingenieria.sd.strava.facebook.server.FacebookServer" classpathref="classpath" fork="true">
-            <jvmarg value="-Djava.rmi.server.codebase=file:${bin.dir}/" />
-            <jvmarg value="-Djava.security.policy=${policy.file}" />
-            <arg value="${rmiregistry.IP}" />
-            <arg value="${rmiregistry.port}" />
-            <arg value="${server.name}" />
+            <arg value="${server.port}" />
         </java>
     </target>
 </project>
