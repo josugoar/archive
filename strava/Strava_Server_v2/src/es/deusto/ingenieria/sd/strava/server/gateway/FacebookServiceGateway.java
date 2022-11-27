@@ -1,22 +1,20 @@
 package es.deusto.ingenieria.sd.strava.server.gateway;
 
-import java.rmi.Naming;
-import java.rmi.RemoteException;
-
-import es.deusto.ingenieria.sd.strava.facebook.remote.IFacebook;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 
 public class FacebookServiceGateway {
 
     private static FacebookServiceGateway instance;
 
-    private IFacebook facebookService;
+    private static final String SERVER_IP = "127.0.0.1";
+    private static final int SERVER_PORT = 8001;
+
+    private static final String DELIMITER = "#";
 
     private FacebookServiceGateway() {
-        try {
-            facebookService = (IFacebook) Naming.lookup("//127.0.0.1:1099/Facebook");
-        } catch (final Exception e) {
-            System.err.println("# Error locating remote service: " + e);
-        }
     }
 
     public static FacebookServiceGateway getInstance() {
@@ -28,23 +26,47 @@ public class FacebookServiceGateway {
     }
 
     public boolean checkEmail(final String email) {
-        System.out.println("   - Check email from Facebook Service Gateway");
+        System.err.println("   - Check email from Facebook Service Gateway");
 
-        try {
-            return facebookService.checkEmail(email);
-        } catch (final RemoteException e) {
-            System.out.println("   $ Error checking email: " + e.getMessage());
+        try (Socket socket = new Socket(SERVER_IP, SERVER_PORT);
+                DataInputStream in = new DataInputStream(socket.getInputStream());
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
+
+            out.writeUTF(email);
+            System.err.println(" - Sending data to '" + socket.getInetAddress().getHostAddress() + ":"
+                    + socket.getPort() + "' -> '" + email + "'");
+
+            final boolean data = in.readBoolean();
+            System.err.println(" - Getting translation from '" + socket.getInetAddress().getHostAddress() + ":"
+                    + socket.getPort() + "' -> '" + data + "'");
+
+            return data;
+        } catch (IOException e) {
+            System.err.println("# FacebookServiceGateway error: " + e.getMessage());
+
             return false;
         }
     }
 
     public boolean checkEmailAndPassword(final String email, final String password) {
-        System.out.println("   - Check email and password from Facebook Service Gateway");
+        System.err.println("   - Check email and password from Facebook Service Gateway");
 
-        try {
-            return facebookService.checkEmailAndPassword(email, password);
-        } catch (final RemoteException e) {
-            System.out.println("   $ Error checking email and password: " + e.getMessage());
+        try (Socket socket = new Socket(SERVER_IP, SERVER_PORT);
+                DataInputStream in = new DataInputStream(socket.getInputStream());
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
+
+            out.writeUTF(email + DELIMITER + password);
+            System.err.println(" - Sending data to '" + socket.getInetAddress().getHostAddress() + ":"
+                    + socket.getPort() + "' -> '" + email + "'");
+
+            final boolean data = in.readBoolean();
+            System.err.println(" - Getting translation from '" + socket.getInetAddress().getHostAddress() + ":"
+                    + socket.getPort() + "' -> '" + data + "'");
+
+            return data;
+        } catch (IOException e) {
+            System.err.println("# FacebookServiceGateway error: " + e.getMessage());
+
             return false;
         }
     }
