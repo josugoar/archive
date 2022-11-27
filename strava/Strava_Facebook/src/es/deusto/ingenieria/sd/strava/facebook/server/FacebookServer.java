@@ -12,23 +12,25 @@ public class FacebookServer {
     public static void main(final String[] args) {
         if (args.length < 1) {
             System.err.println(" # Usage: FacebookServer [PORT]");
+
             System.exit(1);
         }
 
         // args[1] = Server socket port
         final int serverPort = Integer.parseInt(args[0]);
 
-        try (ServerSocket tcpEchoServerSocket = new ServerSocket(serverPort);) {
-            System.out.println(
-                    " - FacebookServer: Waiting for connections '" + tcpEchoServerSocket.getInetAddress().getHostAddress()
-                            + ":" + tcpEchoServerSocket.getLocalPort() + "' ...");
+        try (final ServerSocket tcpEchoServerSocket = new ServerSocket(serverPort)) {
+            System.err.println(" - FacebookServer: Waiting for connections '"
+                    + tcpEchoServerSocket.getInetAddress().getHostAddress() + ":" + tcpEchoServerSocket.getLocalPort()
+                    + "' ...");
 
             while (true) {
                 new FacebookService(tcpEchoServerSocket.accept());
-                System.out.println(" - FacebookServer: New client connection accepted. Client Number: " + numClients++);
+
+                System.err.println(" - FacebookServer: New client connection accepted. Client Number: " + numClients++);
             }
         } catch (final IOException e) {
-            System.out.println("# FacebookServer: IO error:" + e.getMessage());
+            System.err.println("# FacebookServer: IO error:" + e.getMessage());
         }
     }
 
