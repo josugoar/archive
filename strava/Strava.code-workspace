@@ -4,7 +4,16 @@
             "path": "Strava_Client"
         },
         {
+            "path": "Strava_Facebook"
+        },
+        {
+            "path": "Strava_Google"
+        },
+        {
             "path": "Strava_Server_v1"
+        },
+        {
+            "path": "Strava_Server_v2"
         }
     ]
 }
