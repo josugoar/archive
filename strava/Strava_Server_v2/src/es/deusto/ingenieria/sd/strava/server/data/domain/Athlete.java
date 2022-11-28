@@ -13,6 +13,7 @@ public class Athlete {
     private Integer restingHeartRate;
     private Integer maxHeartRate;
     private Date dateOfBirth;
+    private LoginType loginType;
     private Set<Activity> activities = new HashSet<>();
     private Set<Challenge> challenges = new HashSet<>();
 
@@ -168,11 +169,24 @@ public class Athlete {
         this.challenges.add(challenge);
     }
 
+    public LoginType getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(final LoginType loginType) throws IllegalArgumentException {
+        if (loginType == null) {
+            throw new IllegalArgumentException("loginType == null");
+        }
+
+        this.loginType = loginType;
+    }
+
     @Override
     public String toString() {
         return "Athlete [name=" + name + ", email=" + email + ", weight=" + weight + ", height=" + height
                 + ", restingHeartRate=" + restingHeartRate + ", maxHeartRate=" + maxHeartRate + ", dateOfBirth="
-                + dateOfBirth + ", activities=" + activities + ", challenges=" + challenges + "]";
+                + dateOfBirth + ", activities=" + activities + ", challenges=" + challenges + ", loginType=" + loginType
+                + "]";
     }
 
     @Override
