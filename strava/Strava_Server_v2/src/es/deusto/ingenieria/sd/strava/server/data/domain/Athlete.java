@@ -74,8 +74,8 @@ public class Athlete {
     }
 
     public void setRestingHeartRate(final Integer restingHeartRate) throws IllegalArgumentException {
-        if (restingHeartRate < 0) {
-            throw new IllegalArgumentException("restingHeartRate < 0");
+        if (restingHeartRate != null && restingHeartRate < 0) {
+            throw new IllegalArgumentException("restingHeartRate != null && restingHeartRate < 0");
         }
 
         if (maxHeartRate != null && restingHeartRate > maxHeartRate) {
@@ -90,8 +90,8 @@ public class Athlete {
     }
 
     public void setMaxHeartRate(final Integer maxHeartRate) throws IllegalArgumentException {
-        if (maxHeartRate < 0) {
-            throw new IllegalArgumentException("maxHeartRate < 0");
+        if (maxHeartRate != null && maxHeartRate < 0) {
+            throw new IllegalArgumentException("maxHeartRate != null && maxHeartRate < 0");
         }
 
         if (restingHeartRate != null && maxHeartRate < restingHeartRate) {
