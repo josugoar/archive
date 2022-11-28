@@ -74,12 +74,12 @@ public class Challenge {
     }
 
     public void setDistance(final Double distance) throws IllegalArgumentException {
-        if (time != null) {
-            throw new IllegalArgumentException("time != null");
+        if (distance == null && time == null) {
+            throw new IllegalArgumentException("distance == null && time == null");
         }
 
-        if (distance == null) {
-            throw new IllegalArgumentException("distance == null");
+        if (distance != null && time != null) {
+            throw new IllegalArgumentException("distance != null && time != null");
         }
 
         if (distance <= 0) {
@@ -94,12 +94,12 @@ public class Challenge {
     }
 
     public void setTime(final Integer time) throws IllegalArgumentException {
-        if (distance != null) {
-            throw new IllegalArgumentException("distance != null");
+        if (time == null && distance == null) {
+            throw new IllegalArgumentException("time == null && distance == null");
         }
 
-        if (time == null) {
-            throw new IllegalArgumentException("time == null");
+        if (time != null && distance != null) {
+            throw new IllegalArgumentException("time != null && distance != null");
         }
 
         if (time <= 0) {
