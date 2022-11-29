@@ -64,7 +64,7 @@ public class Activity {
 
     public void setStartDate(final Date startDate) throws IllegalArgumentException {
         if (startDate == null) {
-            throw new IllegalArgumentException(" == null");
+            throw new IllegalArgumentException("startDate == null");
         }
 
         this.startDate = startDate;

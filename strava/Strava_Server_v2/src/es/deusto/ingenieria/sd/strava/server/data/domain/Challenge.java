@@ -73,39 +73,28 @@ public class Challenge {
         return distance;
     }
 
-    public void setDistance(final Double distance) throws IllegalArgumentException {
-        if (time != null) {
-            throw new IllegalArgumentException("time != null");
-        }
-
-        if (distance == null) {
-            throw new IllegalArgumentException("distance == null");
-        }
-
-        if (distance <= 0) {
-            throw new IllegalArgumentException("distance <= 0");
-        }
-
-        this.distance = distance;
-    }
-
     public Integer getTime() {
         return time;
     }
 
-    public void setTime(final Integer time) throws IllegalArgumentException {
-        if (distance != null) {
-            throw new IllegalArgumentException("distance != null");
+    public void setDistanceOrTime(final Double distance, final Integer time) throws IllegalArgumentException {
+        if (distance == null && time == null) {
+            throw new IllegalArgumentException("distance == null && time == null");
         }
 
-        if (time == null) {
-            throw new IllegalArgumentException("time == null");
+        if (distance != null && time != null) {
+            throw new IllegalArgumentException("distance != null && time != null");
         }
 
-        if (time <= 0) {
-            throw new IllegalArgumentException("time <= 0");
+        if (distance != null && distance <= 0) {
+            throw new IllegalArgumentException("distance != null && distance <= 0");
         }
 
+        if (time != null && time <= 0) {
+            throw new IllegalArgumentException("time != null && time <= 0");
+        }
+
+        this.distance = distance;
         this.time = time;
     }
 

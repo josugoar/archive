@@ -42,8 +42,7 @@ public class ChallengeAssembler {
         challenge.setName(challengeDTO.getName());
         challenge.setStartDate(challengeDTO.getStartDate());
         challenge.setEndDate(challengeDTO.getEndDate());
-        challenge.setDistance(challengeDTO.getDistance());
-        challenge.setTime(challengeDTO.getTime());
+        challenge.setDistanceOrTime(challengeDTO.getDistance(), challengeDTO.getTime());
         for (final String sportType : challengeDTO.getType()) {
             challenge.addType(SportType.valueOf(sportType));
         }
