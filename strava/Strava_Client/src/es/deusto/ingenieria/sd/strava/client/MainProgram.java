@@ -14,6 +14,7 @@ import es.deusto.ingenieria.sd.strava.client.gui.MainWindowChallenges;
 import es.deusto.ingenieria.sd.strava.client.gui.RegisterWindow;
 
 
+
 public class MainProgram {
 
 	public static void main(String[] args) {

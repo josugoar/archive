@@ -10,6 +10,9 @@ import javax.swing.BoxLayout;
 import javax.swing.FocusManager;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
+import es.deusto.ingenieria.sd.strava.client.gui.LoginWindow;
+
 import java.awt.Component;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
@@ -21,7 +24,7 @@ import java.awt.Color;
 public class RegisterWindow {
 
 	private JFrame frmStravaLogin;
-	
+
 	private CompleteRegisterWindow completeRegisterWindow;
 	private LoginWindow loginWindow;
 

@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.sd.strava.client.gui;
+package es.deusto.ingenieria.sd.strava.client.legacy;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,6 +10,8 @@ import java.util.Locale;
 import javax.swing.*;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
+import es.deusto.ingenieria.sd.strava.client.gui.LoginWindow;
+import es.deusto.ingenieria.sd.strava.client.gui.MainWindowActivities;
 import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
 
 public class RegisterWindow extends JFrame {

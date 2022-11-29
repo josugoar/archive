@@ -24,6 +24,9 @@ import javax.swing.table.DefaultTableModel;
 import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
+import es.deusto.ingenieria.sd.strava.client.gui.ActivityDialog;
+import es.deusto.ingenieria.sd.strava.client.gui.AthleteDialog;
+import es.deusto.ingenieria.sd.strava.client.gui.LoginWindow;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityDTO;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 
@@ -159,6 +162,13 @@ public class MainWindowActivities extends JFrame {
 		JButton btnUser = new JButton("Profile");
 		btnUser.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel.add(btnUser);
+		btnUser.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				athleteDialog.setVisible(true);
+				
+			}});
 		
 		JButton btnNewButton = new JButton("+");
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 20));

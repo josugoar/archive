@@ -28,6 +28,7 @@ public class ChallengeDialog extends JDialog {
 
 	private ChallengeController challengeController;
 	private AthleteController athleteController;
+	private String sport[] = { "RUNNING", "CYCLING", "BOTH" };
 
 
 

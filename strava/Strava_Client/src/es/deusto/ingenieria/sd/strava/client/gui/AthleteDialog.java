@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.crypto.Mac;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -51,26 +52,35 @@ public class AthleteDialog extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2);
+
+		String name = athlete.getName();
+		String email = athlete.getEmail();
+		Integer height = athlete.getHeight();
+		Double weight = athlete.getWeight();
+		Integer resting = athlete.getRestingHeartRate();
+		Integer max = athlete.getMaxHeartRate();
+		String date = athlete.getDateOfBirth().toString();
+
 		
 		atributeTable = new JTable();
 		atributeTable.setFillsViewportHeight(true);
 		atributeTable.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		atributeTable.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Name: \n", null},
-				{"Email: \n", null},
-				{"Height: \n", null},
-				{"Weight: \n", null},
-				{"Resting Heartrate: \n", null},
-				{"Maximum Heartrate: \n", null},
-				{"Date of Birth: \n", null},
+				{"Name: \n", name},
+				{"Email: \n", email},
+				{"Height: \n", height},
+				{"Weight: \n", weight},
+				{"Resting Heartrate: \n", resting},
+				{"Maximum Heartrate: \n", max},
+				{"Date of Birth: \n", date},
 			},
 			new String[] {
 				"Atribute", "Value"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, true
+				false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];

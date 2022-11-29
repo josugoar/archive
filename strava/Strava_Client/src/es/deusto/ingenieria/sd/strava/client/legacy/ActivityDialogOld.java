@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.sd.strava.client.gui;
+package es.deusto.ingenieria.sd.strava.client.legacy;
 
 import javax.swing.JDialog;
 import javax.swing.*;

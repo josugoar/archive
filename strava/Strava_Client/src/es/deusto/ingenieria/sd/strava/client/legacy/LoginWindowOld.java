@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.sd.strava.client.gui;
+package es.deusto.ingenieria.sd.strava.client.legacy;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
+import es.deusto.ingenieria.sd.strava.client.gui.RegisterWindow;
 
 public class LoginWindow extends JFrame {
 

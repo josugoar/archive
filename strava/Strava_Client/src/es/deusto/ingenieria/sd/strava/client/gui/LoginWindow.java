@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
+import es.deusto.ingenieria.sd.strava.client.gui.RegisterWindow;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
