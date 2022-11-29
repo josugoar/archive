@@ -25,6 +25,9 @@ import javax.swing.table.DefaultTableModel;
 import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
+import es.deusto.ingenieria.sd.strava.client.gui.ActivityDialog;
+import es.deusto.ingenieria.sd.strava.client.gui.AthleteDialog;
+import es.deusto.ingenieria.sd.strava.client.gui.LoginWindow;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityDTO;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 

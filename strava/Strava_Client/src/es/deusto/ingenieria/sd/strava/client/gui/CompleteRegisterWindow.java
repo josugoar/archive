@@ -8,6 +8,7 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
+import es.deusto.ingenieria.sd.strava.client.gui.RegisterWindow;
 import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
 
 import javax.swing.AbstractAction;
