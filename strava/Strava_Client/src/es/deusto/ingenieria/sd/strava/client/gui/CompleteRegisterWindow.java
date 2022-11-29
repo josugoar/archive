@@ -40,7 +40,7 @@ public class CompleteRegisterWindow extends JFrame {
 
 	private AthleteController athleteController;
 	private RegisterWindow registerWindow;
-	private MainWindow mainWindow;
+	private MainWindowActivities mainWindow;
 
 	SimpleDateFormat formatter = new SimpleDateFormat("DD-mm-yyyy", Locale.ENGLISH);
 
@@ -206,7 +206,7 @@ public class CompleteRegisterWindow extends JFrame {
 	}
 
 
-	public void setMainWindow(final MainWindow mainWindow) {
+	public void setMainWindow(final MainWindowActivities mainWindow) {
         this.mainWindow = mainWindow;
     }
 

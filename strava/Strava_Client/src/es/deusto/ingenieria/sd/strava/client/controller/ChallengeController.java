@@ -39,7 +39,7 @@ public class ChallengeController {
 
     public boolean acceptChallenge(final long token, final ChallengeDTO challengeDTO) {
         try {
-            serviceLocator.getService().acceptChallenge(token, challengeDTO);;
+            serviceLocator.getService().acceptChallenge(token, challengeDTO);
 
             return true;
         } catch (final RemoteException e) {
