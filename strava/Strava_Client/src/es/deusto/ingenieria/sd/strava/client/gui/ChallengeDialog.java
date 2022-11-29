@@ -1,168 +1,134 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
 
-import javax.swing.*;
-import java.awt.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
-import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
-import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 public class ChallengeDialog extends JDialog {
 
-    private ChallengeController challengeController;
-    private AthleteController athleteController;
+	private final JPanel contentPanel = new JPanel();
+	private JTextField nameField;
+	private JTextField startField;
+	private JTextField endField;
+	private JTextField distanceField;
+	private JTextField timeField;
 
-    private JPanel mainPane;
-    private JLabel nameLabel, startDateLabel, endDateLabel, distanceLabel, timeLabel, sportLabel;
-    private JTextField nameField, startDateField, endDateField, distanceField, timeField;
-    private JComboBox<String> sportCombo;
-    private JButton acceptButton, cancelButton;
-    private String sport[] = { "RUNNING", "CYCLING", "BOTH" };
+	private ChallengeController challengeController;
+	private AthleteController athleteController;
 
-    SimpleDateFormat formatter = new SimpleDateFormat("DD-mm-yyyy", Locale.ENGLISH);
 
-    public ChallengeDialog(ChallengeController challengeController, AthleteController athleteController) {
-        this.challengeController = challengeController;
-        this.athleteController = athleteController;
 
-        setTitle("Create new Challenge");
-        initDialog();
-        setContentPane(mainPane);
-        setSize(400, 400);
-        setDefaultCloseOperation(HIDE_ON_CLOSE);
+
+	/**
+	 * Create the dialog.
+	 */
+	public ChallengeDialog(ChallengeController challengeController, AthleteController athleteController) {
+		this.challengeController = challengeController;
+		this.athleteController = athleteController;
+		
+		setTitle("Create Challenge");
+		setBounds(100, 100, 563, 576);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
         setModal(true);
-    }
-
-    public void initDialog() {
-
-        mainPane = new JPanel();
-        mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
-
-        // Name
-        JPanel nameLine = new JPanel();
-        nameLabel = new JLabel("Name");
-        nameField = new JTextField(20);
-        nameLine.add(nameLabel, BorderLayout.WEST);
-        nameLine.add(nameField, BorderLayout.CENTER);
-
-        // Start date
-        JPanel startDateLine = new JPanel();
-        startDateLabel = new JLabel("Start date (DD/MM/YYYY)");
-        startDateField = new JTextField(20);
-        startDateLine.add(startDateLabel, BorderLayout.WEST);
-        startDateLine.add(startDateField, BorderLayout.CENTER);
-
-        // End date
-        JPanel endDateLine = new JPanel();
-        endDateLabel = new JLabel("End date (DD/MM/YYYY)");
-        endDateField = new JTextField(20);
-        endDateLine.add(endDateLabel, BorderLayout.WEST);
-        endDateLine.add(endDateField, BorderLayout.CENTER);
-
-        // Distance
-        JPanel distanceLine = new JPanel();
-        distanceLabel = new JLabel("Distance");
-        distanceField = new JTextField(20);
-        distanceLine.add(distanceLabel, BorderLayout.WEST);
-        distanceLine.add(distanceField, BorderLayout.CENTER);
-
-        // Time
-        JPanel timeLine = new JPanel();
-        timeLabel = new JLabel("Time");
-        timeField = new JTextField(20);
-        timeLine.add(timeLabel, BorderLayout.WEST);
-        timeLine.add(timeField, BorderLayout.CENTER);
-
-        // Sport
-        JPanel sportLine = new JPanel();
-        sportLabel = new JLabel("Sport");
-        sportCombo = new JComboBox<String>(sport);
-        sportLine.add(sportLabel, BorderLayout.WEST);
-        sportLine.add(sportCombo, BorderLayout.CENTER);
-
-        mainPane.add(nameLine);
-        mainPane.add(startDateLine);
-        mainPane.add(endDateLine);
-        mainPane.add(distanceLine);
-        mainPane.add(timeLine);
-        mainPane.add(sportLine);
-
-        JPanel buttonLine = new JPanel();
-        acceptButton = new JButton("Accept");
-        cancelButton = new JButton("Cancel");
-        buttonLine.add(acceptButton);
-        buttonLine.add(cancelButton);
-        mainPane.add(buttonLine);
-
-        cancelButton.addActionListener(e -> {
-            this.setVisible(false);
-        });
-
-        acceptButton.addActionListener(e -> {
-            this.createChallenge();
-        });
-
-        this.add(mainPane);
-    }
-
-    public void createChallenge() {
-        String name = nameField.getText();
-
-        Duration time = null;
-        try {
-            time = Duration.parse("P" + timeField.getText() + "D");
-        } catch (Exception e) {
-        }
-
-        Double distance = null;
-        try {
-            if (distanceField.getText() != null) {
-                distance = Double.parseDouble(distanceField.getText());
-            }
-        } catch (NumberFormatException e) {
-        }
-
-        Date startDate = null;
-        Date endDate = null;
-        try {
-            startDate = formatter.parse(startDateField.getText());
-            endDate = formatter.parse(endDateField.getText());
-        } catch (RuntimeException | ParseException e1) {
-            showMessageDialog(null, "Wrong date, use DD-mm-yyyy");
-        }
-
-        String sport = sportCombo.getSelectedItem().toString();
-        Set<String> type = new HashSet<>();
-        if (sport.equals("Both")) {
-            type.add("CYCLING");
-            type.add("RUNNING");
-        } else {
-            type.add(sport);
-        }
-
-        Long token = athleteController.getToken();
-
-        ChallengeDTO challenge = new ChallengeDTO();
-        challenge.setName(name);
-        challenge.setStartDate(startDate);
-        challenge.setEndDate(endDate);
-        challenge.setDistance(distance);
-        challenge.setTime(time.getNano());
-        challenge.setType(type);
-        if (!challengeController.createChallenge(token, challenge)) {
-            showMessageDialog(null, "Error creating challenge");
-        }
-
-        setVisible(false);
-    }
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+		
+		JPanel panel_7 = new JPanel();
+		contentPanel.add(panel_7);
+		
+		JPanel panel = new JPanel();
+		contentPanel.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("                            Name    ");
+		lblNewLabel.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		panel.add(lblNewLabel);
+		
+		nameField = new JTextField();
+		nameField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel.add(nameField);
+		nameField.setColumns(20);
+		
+		JPanel panel_1 = new JPanel();
+		contentPanel.add(panel_1);
+		
+		JLabel lblNewLabel_1 = new JLabel("Start Date ( DD/MM/YYYY )");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		panel_1.add(lblNewLabel_1);
+		
+		startField = new JTextField();
+		startField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_1.add(startField);
+		startField.setColumns(20);
+		
+		JPanel panel_2 = new JPanel();
+		contentPanel.add(panel_2);
+		
+		JLabel lblNewLabel_2 = new JLabel(" End Date ( DD/MM/YYYY )");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		panel_2.add(lblNewLabel_2);
+		
+		endField = new JTextField();
+		endField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_2.add(endField);
+		endField.setColumns(20);
+		
+		JPanel panel_3 = new JPanel();
+		contentPanel.add(panel_3);
+		
+		JLabel lblNewLabel_3 = new JLabel("                         Distance  ");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		panel_3.add(lblNewLabel_3);
+		
+		distanceField = new JTextField();
+		distanceField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_3.add(distanceField);
+		distanceField.setColumns(20);
+		
+		JPanel panel_4 = new JPanel();
+		contentPanel.add(panel_4);
+		
+		JLabel lblNewLabel_4 = new JLabel("                            Time    ");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		panel_4.add(lblNewLabel_4);
+		
+		timeField = new JTextField();
+		timeField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_4.add(timeField);
+		timeField.setColumns(20);
+		
+		JPanel panel_5 = new JPanel();
+		contentPanel.add(panel_5);
+		
+		JComboBox sportBox = new JComboBox();
+		sportBox.setToolTipText("");
+		sportBox.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		panel_5.add(sportBox);
+		
+		JPanel panel_6 = new JPanel();
+		contentPanel.add(panel_6);
+		
+		JButton btnCreate = new JButton("Create Challenge");
+		btnCreate.setFont(new Font("Tahoma", Font.BOLD, 20));
+		panel_6.add(btnCreate);
+		
+		JButton btnBack = new JButton("           Back            ");
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 20));
+		panel_6.add(btnBack);
+	}
 
 }

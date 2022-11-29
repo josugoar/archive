@@ -4,20 +4,33 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
+
+import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
+import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
+
+import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.net.PasswordAuthentication;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
 
-public class CompleteRegister extends JFrame {
+public class CompleteRegisterWindow extends JFrame {
 
+	private String loginType;
 	private JPanel contentPane;
 	private JTextField emailField;
-	private JTextField passField;
+	private JPasswordField passField;
 	private JTextField nameField;
 	private JTextField heightField;
 	private JTextField weightField;
@@ -25,10 +38,20 @@ public class CompleteRegister extends JFrame {
 	private JTextField maxField;
 	private JTextField restField;
 
+	private AthleteController athleteController;
+	private RegisterWindow registerWindow;
+	private MainWindow mainWindow;
+
+	SimpleDateFormat formatter = new SimpleDateFormat("DD-mm-yyyy", Locale.ENGLISH);
+
+	
+
 	/**
 	 * Create the frame.
 	 */
-	public CompleteRegister() {
+	public CompleteRegisterWindow(AthleteController athleteController) {
+		this.athleteController = athleteController;
+
 		setTitle("Complete Registration");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 638, 662);
@@ -60,7 +83,7 @@ public class CompleteRegister extends JFrame {
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.ITALIC, 16));
 		panel_1.add(lblNewLabel_1);
 		
-		passField = new JTextField();
+		passField = new JPasswordField();
 		passField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_1.add(passField);
 		passField.setColumns(30);
@@ -140,29 +163,129 @@ public class CompleteRegister extends JFrame {
 		JPanel panel_8 = new JPanel();
 		contentPane.add(panel_8);
 		
-		JButton btnFacebook = new JButton("Register with Facebook");
-		btnFacebook.setFont(new Font("Tahoma", Font.BOLD, 20));
-		panel_8.add(btnFacebook);
-		
-		JButton btnGoogle = new JButton("  Register with Google  ");
-		btnGoogle.setFont(new Font("Tahoma", Font.BOLD, 20));
-		panel_8.add(btnGoogle);
-		
-		JPanel panel_9 = new JPanel();
-		contentPane.add(panel_9);
-		
 		JButton btnBack = new JButton("      Back      ");
+		panel_8.add(btnBack);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		panel_9.add(btnBack);
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
 		JButton btnCreate = new JButton("Create Account");
-		btnCreate.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		panel_9.add(btnCreate);
+		panel_8.add(btnCreate);
+		btnCreate.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JPanel panel_9 = new JPanel();
+		contentPane.add(panel_9);
+
+		//Button Actions
+
+		btnBack.addActionListener(new AbstractAction() {
+
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                setVisible(false);
+				registerWindow.setVisible(true);
+            }
+        });
+
+		btnCreate.addActionListener(new AbstractAction() {
+
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                register();
+            }
+
+        });
+
+
 	}
 
+	public void setLoginType(String type) {
+		loginType = type;
+	}
+
+
+	public void setMainWindow(final MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
+    }
+
+	public void setRegisterWindow(final RegisterWindow registerWindow) {
+        this.registerWindow = registerWindow;
+    }
+
+	public void register() {
+        final String email = emailField.getText();
+        final String password = String.valueOf(passField.getPassword());
+        final String name = nameField.getText();
+
+        java.util.Date dateOfBirth = null;
+        try {
+            dateOfBirth = formatter.parse(birthField.getText());
+        } catch (final ParseException e1) {
+        }
+
+        Double weight = null;
+        try {
+            weight = Double.parseDouble(weightField.getText());
+        } catch (final Exception e) {
+        }
+
+        Integer height = null;
+        try {
+            height = Integer.parseInt(heightField.getText());
+        } catch (final Exception e) {
+        }
+
+        Integer maxHeartRate = null;
+        try {
+            maxHeartRate = Integer.parseInt(maxField.getText());
+        } catch (final Exception e) {
+        }
+
+        Integer restingHeartRate = null;
+        try {
+            restingHeartRate = Integer.parseInt(restField.getText());
+        } catch (final Exception e) {
+        }
+
+        final AthleteDTO athleteDTO = new AthleteDTO();
+        athleteDTO.setName(name);
+        athleteDTO.setEmail(name);
+        athleteDTO.setDateOfBirth(dateOfBirth);
+        athleteDTO.setWeight(weight);
+        athleteDTO.setHeight(height);
+        athleteDTO.setRestingHeartRate(restingHeartRate);
+        athleteDTO.setMaxHeartRate(maxHeartRate);
+
+		if (loginType.equals("google")) {
+			if (athleteController.registerGoogle(athleteDTO) && athleteController.login(email, password)) {
+				this.setVisible(false);
+				mainWindow.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(rootPane, "Error in registration");
+			}
+		} else if (loginType.equals("facebook")) {
+			if (athleteController.register(password, athleteDTO) && athleteController.login(email, password)) {
+				this.setVisible(false);
+				mainWindow.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(rootPane, "Error in registration");
+			}
+		} else if (loginType.equals("local")) {
+			if (athleteController.register(password, athleteDTO) && athleteController.login(email, password)) {
+				this.setVisible(false);
+				mainWindow.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(rootPane, "Error in registration");
+			}
+		} else {
+			System.err.println("Wrong login Type value");
+		}
+        
+    }
+
+
 }
+
 

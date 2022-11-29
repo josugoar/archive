@@ -1,147 +1,117 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
 
-import javax.swing.JDialog;
-import javax.swing.*;
-import java.awt.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.util.Date;
 
-import static javax.swing.JOptionPane.showMessageDialog;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
-import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityDTO;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 public class ActivityDialog extends JDialog {
 
-    private ActivityController activityController;
-    private AthleteController athleteController;
+	private final JPanel contentPanel = new JPanel();
+	private JTextField nameField;
+	private JTextField distanceField;
+	private JTextField timeField;
+	private JTextField startField;
 
-    private JPanel mainPane;
-    private JLabel nameLabel, distanceLabel, elapsedTimeLabel, typeLabel, startDateLabel;
-    private JTextField nameField, distanceField, elapsedTimeField, startDateField;
-    private JComboBox<String> typeCombo;
-    private JButton acceptButton, cancelButton;
-    private String type[] = { "RUNNING", "CYCLING" };
+	private AthleteController athleteController;
+	private ActivityController activityController;
 
-    SimpleDateFormat formatter = new SimpleDateFormat("DD-mm-yyyy");
+	/**
+	 * Create the dialog.
+	 */
+	public ActivityDialog(ActivityController activityController, AthleteController athleteController) {
 
-    public ActivityDialog(ActivityController activityController, AthleteController athleteController) {
-        this.activityController = activityController;
-        this.athleteController = athleteController;
-
-        setTitle("Create new Activity");
-        initDialog();
-        setContentPane(mainPane);
-        setSize(400, 400);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setTitle("Create Activity");
+		setBounds(100, 100, 578, 615);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
         setModal(true);
-    }
-
-    public void initDialog() {
-
-        mainPane = new JPanel();
-        mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
-
-        // Name
-        JPanel nameLine = new JPanel();
-        nameLabel = new JLabel("Name");
-        nameField = new JTextField(20);
-        nameLine.add(nameLabel, BorderLayout.WEST);
-        nameLine.add(nameField, BorderLayout.CENTER);
-
-        // Start date
-        JPanel startDateLine = new JPanel();
-        startDateLabel = new JLabel("Start date (DD/MM/YYYY)");
-        startDateField = new JTextField(20);
-        startDateLine.add(startDateLabel, BorderLayout.WEST);
-        startDateLine.add(startDateField, BorderLayout.CENTER);
-
-        // Distance
-        JPanel distanceLine = new JPanel();
-        distanceLabel = new JLabel("Distance");
-        distanceField = new JTextField(20);
-        distanceLine.add(distanceLabel, BorderLayout.WEST);
-        distanceLine.add(distanceField, BorderLayout.CENTER);
-
-        // Elapsed time
-        JPanel elapsedTimeLine = new JPanel();
-        elapsedTimeLabel = new JLabel("Elapsed time (days)");
-        elapsedTimeField = new JTextField(20);
-        elapsedTimeLine.add(elapsedTimeLabel, BorderLayout.WEST);
-        elapsedTimeLine.add(elapsedTimeField, BorderLayout.CENTER);
-
-        // Type
-        JPanel typeLine = new JPanel();
-        typeLabel = new JLabel("Sport");
-        typeCombo = new JComboBox<String>(type);
-        typeLine.add(typeLabel, BorderLayout.WEST);
-        typeLine.add(typeCombo, BorderLayout.CENTER);
-
-        mainPane.add(nameLine);
-        mainPane.add(distanceLine);
-        mainPane.add(elapsedTimeLine);
-        mainPane.add(typeLine);
-        mainPane.add(startDateLine);
-
-        JPanel buttonLine = new JPanel();
-        acceptButton = new JButton("Accept");
-        cancelButton = new JButton("Cancel");
-        buttonLine.add(acceptButton);
-        buttonLine.add(cancelButton);
-        mainPane.add(buttonLine);
-
-        cancelButton.addActionListener(e -> {
-            this.setVisible(false);
-        });
-
-        acceptButton.addActionListener(e -> {
-            this.createActivity();
-        });
-
-        this.add(mainPane);
-
-    }
-
-    public void createActivity() {
-        String name = nameField.getText();
-
-        Duration elapsedTime = null;
-        try {
-            elapsedTime = Duration.parse("P" + elapsedTimeField.getText() + "D");
-        } catch (Exception e) {
-            showMessageDialog(null, "Wrong elapsed time");
-        }
-
-        Double distance = null;
-        try {
-            distance = Double.parseDouble(distanceField.getText());
-        } catch (Exception e) {
-            showMessageDialog(null, "Wrong distance");
-        }
-
-        Date startDate = null;
-        try {
-            startDate = formatter.parse(startDateField.getText());
-        } catch (ParseException e1) {
-            showMessageDialog(null, "Wrong date, use dd-mm-yyyy");
-        }
-        String type = typeCombo.getSelectedItem().toString();
-
-        Long token = athleteController.getToken();
-
-        final ActivityDTO activity = new ActivityDTO();
-        activity.setName(name);
-        activity.setDistance(distance);
-        activity.setElapsedTime(elapsedTime.getNano());
-        activity.setType(type);
-        activity.setStartDate(startDate);
-        if (!activityController.createActivity(token, activity)) {
-            showMessageDialog(null, "Error creating activity");
-        }
-        setVisible(false);
-    }
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+		
+		JPanel panel_6 = new JPanel();
+		contentPanel.add(panel_6);
+		
+		JPanel panel = new JPanel();
+		contentPanel.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("                            Name    ");
+		lblNewLabel.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		panel.add(lblNewLabel);
+		
+		nameField = new JTextField();
+		nameField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		nameField.setColumns(20);
+		panel.add(nameField);
+		
+		JPanel panel_1 = new JPanel();
+		contentPanel.add(panel_1);
+		
+		JLabel lblDistance = new JLabel("                        Distance    ");
+		lblDistance.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		panel_1.add(lblDistance);
+		
+		distanceField = new JTextField();
+		distanceField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		distanceField.setColumns(20);
+		panel_1.add(distanceField);
+		
+		JPanel panel_2 = new JPanel();
+		contentPanel.add(panel_2);
+		
+		JLabel lblElapsedTime = new JLabel("       Elapsed Time ( days )  ");
+		lblElapsedTime.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		panel_2.add(lblElapsedTime);
+		
+		timeField = new JTextField();
+		timeField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		timeField.setColumns(20);
+		panel_2.add(timeField);
+		
+		JPanel panel_3 = new JPanel();
+		contentPanel.add(panel_3);
+		
+		JLabel lblStartDate = new JLabel("Start Date ( DD/MM/YYYY )");
+		panel_3.add(lblStartDate);
+		lblStartDate.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		
+		startField = new JTextField();
+		startField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		startField.setColumns(20);
+		panel_3.add(startField);
+		
+		JPanel panel_4 = new JPanel();
+		contentPanel.add(panel_4);
+		
+		JComboBox sportBox = new JComboBox();
+		panel_4.add(sportBox);
+		sportBox.setToolTipText("");
+		sportBox.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		
+		JPanel panel_5 = new JPanel();
+		contentPanel.add(panel_5);
+		
+		JButton btnCreate = new JButton("  Create Activity  ");
+		btnCreate.setFont(new Font("Tahoma", Font.BOLD, 20));
+		panel_5.add(btnCreate);
+		
+		JButton btnBack = new JButton("          Back          ");
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 20));
+		panel_5.add(btnBack);
+	}
 
 }
