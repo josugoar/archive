@@ -14,6 +14,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JSeparator;
@@ -41,7 +42,7 @@ public class MainWindowActivities extends JFrame {
 	private LoginWindow loginWindow;
 	private MainWindowChallenges mainWindowChallenges;
 
-	private List<ActivityDTO> activities;
+	private List<ActivityDTO> activities = new ArrayList<>();
 
 
 
@@ -62,19 +63,19 @@ public class MainWindowActivities extends JFrame {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void componentMoved(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void componentHidden(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
         });
@@ -89,43 +90,43 @@ public class MainWindowActivities extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowClosed(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowIconified(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowActivated(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowDeactivated(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
         });
 
 
 
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 971, 573);
 		contentPane = new JPanel();
@@ -133,14 +134,14 @@ public class MainWindowActivities extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
-		
+
 		JButton btnActivities = new JButton("Activities");
 		btnActivities.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel.add(btnActivities);
-		
+
 		JButton btnChallenges = new JButton("Challenges");
 		btnChallenges.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel.add(btnChallenges);
@@ -150,16 +151,16 @@ public class MainWindowActivities extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				mainWindowChallenges.setVisible(true);
-				
+
 			}});
-		
+
 		JLabel lblNewLabel = new JLabel("                                                                                                                                                           ");
 		panel.add(lblNewLabel);
-		
+
 		JButton btnUser = new JButton("Profile");
 		btnUser.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel.add(btnUser);
-		
+
 		JButton btnNewButton = new JButton("+");
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 		contentPane.add(btnNewButton, BorderLayout.SOUTH);
@@ -169,10 +170,10 @@ public class MainWindowActivities extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				activityDialog.setVisible(true);
 			}});
-		
+
 		JScrollPane scrollActivities = new JScrollPane();
 		contentPane.add(scrollActivities, BorderLayout.CENTER);
-		
+
 		tableActivities = new JTable();
 		tableActivities.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -234,19 +235,19 @@ public class MainWindowActivities extends JFrame {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void componentMoved(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void componentShown(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
         });
     }
@@ -257,7 +258,13 @@ public class MainWindowActivities extends JFrame {
     }
 
 	public void getActivities() {
-        activities = activityController.getActivities(this.athleteController.getToken());
+		final Long token = athleteController.getToken();
+
+		if (token == null) {
+			return;
+		}
+
+        activities = activityController.getActivities(token);
     }
 
 

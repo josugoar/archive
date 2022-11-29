@@ -82,7 +82,7 @@ public class AthleteController {
         }
     }
 
-    public long getToken() {
+    public Long getToken() {
         return token;
     }
 
