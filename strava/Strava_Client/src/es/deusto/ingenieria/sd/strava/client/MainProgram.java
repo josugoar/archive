@@ -10,6 +10,7 @@ import es.deusto.ingenieria.sd.strava.client.gui.ChallengeDialog;
 import es.deusto.ingenieria.sd.strava.client.gui.CompleteRegisterWindow;
 import es.deusto.ingenieria.sd.strava.client.gui.LoginWindow;
 import es.deusto.ingenieria.sd.strava.client.gui.MainWindowActivities;
+import es.deusto.ingenieria.sd.strava.client.gui.MainWindowChallenges;
 import es.deusto.ingenieria.sd.strava.client.gui.RegisterWindow;
 
 
@@ -34,7 +35,8 @@ public class MainProgram {
         RegisterWindow registerWindow = new RegisterWindow();
 		CompleteRegisterWindow completeRegisterWindow = new CompleteRegisterWindow(athleteController);
         LoginWindow loginWindow = new LoginWindow(athleteController);
-        MainWindowActivities mainWindow = new MainWindowActivities(activityController, athleteController, challengeController);
+        MainWindowActivities mActivities = new MainWindowActivities(activityController, athleteController);
+		MainWindowChallenges mChallenges = new MainWindowChallenges(athleteController, challengeController);
         AthleteDialog athleteDialog = new AthleteDialog(athleteController);
         ActivityDialog activityDialog = new ActivityDialog(activityController, athleteController);
         ChallengeDialog challengeDialog = new ChallengeDialog(challengeController, athleteController);
@@ -43,16 +45,21 @@ public class MainProgram {
 		registerWindow.setLoginWindow(loginWindow);
 		registerWindow.setCompleteRegisterWindow(completeRegisterWindow);
 
-		completeRegisterWindow.setMainWindow(mainWindow);
+		completeRegisterWindow.setMainWindow(mActivities);
 		completeRegisterWindow.setRegisterWindow(registerWindow);
 
 		loginWindow.setRegisterWindow(registerWindow);
-		loginWindow.setMainWindow(mainWindow);
+		loginWindow.setMainWindow(mActivities);
 
-		mainWindow.setLoginWindow(loginWindow);
-		mainWindow.setActivityDialog(activityDialog);
-		mainWindow.setChallengeDialog(challengeDialog);
-		mainWindow.setAthleteDialog(athleteDialog);
+		mActivities.setLoginWindow(loginWindow);
+		mActivities.setActivityDialog(activityDialog);
+		mActivities.setAthleteDialog(athleteDialog);
+		mActivities.setMainWindowChallenges(mChallenges);
+
+		mChallenges.setLoginWindow(loginWindow);
+		mChallenges.setChallengeDialog(challengeDialog);
+		mChallenges.setAthleteDialog(athleteDialog);
+		mChallenges.setMainWindowActivities(mActivities);
 
 		loginWindow.setVisible(true);
 	}

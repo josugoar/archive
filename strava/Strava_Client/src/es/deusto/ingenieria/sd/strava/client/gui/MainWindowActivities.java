@@ -39,6 +39,7 @@ public class MainWindowActivities extends JFrame {
     private ActivityController activityController;
     private AthleteController athleteController;
 	private LoginWindow loginWindow;
+	private MainWindowChallenges mainWindowChallenges;
 
 	private List<ActivityDTO> activities;
 
@@ -143,6 +144,14 @@ public class MainWindowActivities extends JFrame {
 		JButton btnChallenges = new JButton("Challenges");
 		btnChallenges.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel.add(btnChallenges);
+		btnChallenges.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				mainWindowChallenges.setVisible(true);
+				
+			}});
 		
 		JLabel lblNewLabel = new JLabel("                                                                                                                                                           ");
 		panel.add(lblNewLabel);
@@ -209,6 +218,10 @@ public class MainWindowActivities extends JFrame {
 
 	public void setLoginWindow(LoginWindow l) {
 		this.loginWindow = l;
+	}
+
+	public void setMainWindowChallenges(MainWindowChallenges m) {
+		this.mainWindowChallenges = m;
 	}
 
 	public void setActivityDialog(final ActivityDialog activityDialog) {

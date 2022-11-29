@@ -32,6 +32,7 @@ public class MainWindowChallenges extends JFrame {
 	private JTable tableMyChallenges;
 	private JTable tableAvailableChallenges;
 
+	private AthleteDialog athleteDialog;
 	private ChallengeDialog challengeDialog;
 	private MainWindowActivities mainWindowActivities;
 	private LoginWindow loginWindow;
@@ -40,6 +41,7 @@ public class MainWindowChallenges extends JFrame {
 	private ChallengeController challengeController;
 
 	private List<ChallengeDTO> challenges;
+	
 
 	/**
 	 * Create the frame.
@@ -118,6 +120,7 @@ public class MainWindowChallenges extends JFrame {
 			}
         });
 
+		setVisible(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 971, 573);
 		contentPane = new JPanel();
@@ -314,6 +317,10 @@ public class MainWindowChallenges extends JFrame {
 
 	public void setLoginWindow(LoginWindow l) {
 		this.loginWindow = l;
+	}
+
+	public void setMainWindowActivities(MainWindowActivities m) {
+		this.mainWindowActivities = m;
 	}
 
 	public void logout() {
