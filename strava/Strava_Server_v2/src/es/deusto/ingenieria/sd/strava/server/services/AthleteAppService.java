@@ -6,6 +6,7 @@ import java.util.Map;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
 import es.deusto.ingenieria.sd.strava.server.data.domain.LoginType;
 import es.deusto.ingenieria.sd.strava.server.factory.GatewayFactory;
+import es.deusto.ingenieria.sd.strava.server.gateway.IGateway;
 
 public class AthleteAppService {
 
@@ -41,7 +42,7 @@ public class AthleteAppService {
             throw new IllegalArgumentException("Athlete is already registered!");
         }
 
-        if (!GatewayFactory.createGateway("Google").checkEmail(athlete.getEmail())) {
+        if (!GatewayFactory.createGateway(LoginType.GOOGLE).checkEmail(athlete.getEmail())) {
             throw new IllegalArgumentException("Invalid email!");
         }
 
@@ -54,7 +55,7 @@ public class AthleteAppService {
             throw new IllegalArgumentException("Athlete is already registered!");
         }
 
-        if (!GatewayFactory.createGateway("Facebook").checkEmail(athlete.getEmail())) {
+        if (!GatewayFactory.createGateway(LoginType.FACEBOOK).checkEmail(athlete.getEmail())) {
             throw new IllegalArgumentException("Invalid email!");
         }
 
@@ -69,30 +70,16 @@ public class AthleteAppService {
 
         final Athlete athlete = athletes.get(email);
 
-        switch (athlete.getLoginType()) {
-            case LOCAL:
-                if (!passwords.get(email).equals(password)) {
-                    throw new IllegalArgumentException("Invalid password!");
-                }
+        final IGateway gateway = GatewayFactory.createGateway(athlete.getLoginType());
 
-                break;
-
-            case GOOGLE:
-                if (!GatewayFactory.createGateway("Google").checkEmailAndPassword(email, password)) {
-                    throw new IllegalArgumentException("Invalid password!");
-                }
-
-                break;
-
-            case FACEBOOK:
-                if (!GatewayFactory.createGateway("Facebook").checkEmailAndPassword(email, password)) {
-                    throw new IllegalArgumentException("Invalid password!");
-                }
-
-                break;
-
-            default:
+        if (gateway == null) {
+            if (!passwords.get(email).equals(password)) {
                 throw new IllegalArgumentException("Invalid password!");
+            }
+        } else {
+            if (!gateway.checkEmailAndPassword(email, password)) {
+                throw new IllegalArgumentException("Invalid password!");
+            }
         }
 
         return athlete;
