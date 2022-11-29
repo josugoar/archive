@@ -16,7 +16,7 @@ public class RegisterWindow extends JFrame {
 
     private final AthleteController athleteController;
     private LoginWindow loginWindow;
-    private MainWindow mainWindow;
+    private MainWindowActivities mainWindow;
 
     private JPanel mainPane;
     private JButton loginButton, registerButton, googleRegisterButton, facebookRegisterButton;
@@ -158,7 +158,7 @@ public class RegisterWindow extends JFrame {
         this.loginWindow = l;
     }
 
-    public void setMainWindow(final MainWindow mainWindow) {
+    public void setMainWindow(final MainWindowActivities mainWindow) {
         this.mainWindow = mainWindow;
     }
 

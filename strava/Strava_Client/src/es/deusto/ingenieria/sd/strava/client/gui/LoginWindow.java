@@ -28,7 +28,7 @@ public class LoginWindow extends JFrame {
 
 	private AthleteController athleteController;
     private RegisterWindow registerWindow;
-    private MainWindow mainWindow;
+    private MainWindowActivities mainWindow;
 
 	/**
 	 * Create the frame.
@@ -111,7 +111,7 @@ public class LoginWindow extends JFrame {
         this.registerWindow = r;
     }
 
-    public void setMainWindow(MainWindow mainWindow) {
+    public void setMainWindow(MainWindowActivities mainWindow) {
         this.mainWindow = mainWindow;
     }
 

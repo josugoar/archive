@@ -9,7 +9,7 @@ import es.deusto.ingenieria.sd.strava.client.gui.AthleteDialog;
 import es.deusto.ingenieria.sd.strava.client.gui.ChallengeDialog;
 import es.deusto.ingenieria.sd.strava.client.gui.CompleteRegisterWindow;
 import es.deusto.ingenieria.sd.strava.client.gui.LoginWindow;
-import es.deusto.ingenieria.sd.strava.client.gui.MainWindow;
+import es.deusto.ingenieria.sd.strava.client.gui.MainWindowActivities;
 import es.deusto.ingenieria.sd.strava.client.gui.RegisterWindow;
 
 
@@ -34,7 +34,7 @@ public class MainProgram {
         RegisterWindow registerWindow = new RegisterWindow();
 		CompleteRegisterWindow completeRegisterWindow = new CompleteRegisterWindow(athleteController);
         LoginWindow loginWindow = new LoginWindow(athleteController);
-        MainWindow mainWindow = new MainWindow(activityController, athleteController, challengeController);
+        MainWindowActivities mainWindow = new MainWindowActivities(activityController, athleteController, challengeController);
         AthleteDialog athleteDialog = new AthleteDialog(athleteController);
         ActivityDialog activityDialog = new ActivityDialog(activityController, athleteController);
         ChallengeDialog challengeDialog = new ChallengeDialog(challengeController, athleteController);
