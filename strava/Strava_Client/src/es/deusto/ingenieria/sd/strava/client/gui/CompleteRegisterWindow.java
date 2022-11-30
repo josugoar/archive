@@ -1,30 +1,25 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.border.EmptyBorder;
-
-import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
-import es.deusto.ingenieria.sd.strava.client.gui.RegisterWindow;
-import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
-
-import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.PasswordAuthentication;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
+import es.deusto.ingenieria.sd.strava.server.data.dto.AthleteDTO;
 
 public class CompleteRegisterWindow extends JFrame {
 

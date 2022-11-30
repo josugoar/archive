@@ -1,6 +1,6 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
 
-import java.awt.EventQueue;
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,13 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
-import es.deusto.ingenieria.sd.strava.client.gui.AthleteDialog;
-import es.deusto.ingenieria.sd.strava.client.gui.ChallengeDialog;
-import es.deusto.ingenieria.sd.strava.client.gui.LoginWindow;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
-
-import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
 
 public class MainWindowChallenges extends JFrame {
 
@@ -44,7 +39,7 @@ public class MainWindowChallenges extends JFrame {
 	private ChallengeController challengeController;
 
 	private List<ChallengeDTO> challenges;
-	
+
 
 	/**
 	 * Create the frame.
@@ -62,19 +57,19 @@ public class MainWindowChallenges extends JFrame {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void componentMoved(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void componentHidden(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
         });
@@ -89,37 +84,37 @@ public class MainWindowChallenges extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowClosed(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowIconified(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowActivated(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowDeactivated(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
         });
 
@@ -131,10 +126,10 @@ public class MainWindowChallenges extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
-		
+
 		JButton btnActivities = new JButton("Activities");
 		btnActivities.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel.add(btnActivities);
@@ -144,18 +139,18 @@ public class MainWindowChallenges extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				mainWindowActivities.setVisible(true);
-				
+
 			}
 
 		});
-		
+
 		JButton btnChallenges = new JButton("Challenges");
 		btnChallenges.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel.add(btnChallenges);
-		
+
 		JLabel lblNewLabel = new JLabel("                                                                                                                                                           ");
 		panel.add(lblNewLabel);
-		
+
 		JButton btnUser = new JButton("Profile");
 		btnUser.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel.add(btnUser);
@@ -166,7 +161,7 @@ public class MainWindowChallenges extends JFrame {
 				athleteDialog.setVisible(true);
 				
 			}});
-		
+
 		JButton btnNewButton = new JButton("+");
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 		contentPane.add(btnNewButton, BorderLayout.SOUTH);
@@ -178,14 +173,14 @@ public class MainWindowChallenges extends JFrame {
 			}
 		});
 
-		
+
 		JPanel panelCenter = new JPanel();
 		contentPane.add(panelCenter, BorderLayout.CENTER);
 		panelCenter.setLayout(new BoxLayout(panelCenter, BoxLayout.X_AXIS));
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		panelCenter.add(scrollPane);
-		
+
 		tableMyChallenges = new JTable();
 		tableMyChallenges.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -197,11 +192,11 @@ public class MainWindowChallenges extends JFrame {
 		tableMyChallenges.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tableMyChallenges.setRowHeight(50);
 		scrollPane.setViewportView(tableMyChallenges);
-		
+
 		JPanel panel_2 = new JPanel();
 		panelCenter.add(panel_2);
 		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
-		
+
 		JButton btnAdd = new JButton("<");
 		btnAdd.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_2.add(btnAdd);
@@ -219,17 +214,17 @@ public class MainWindowChallenges extends JFrame {
 				update();
 			}
 		});
-		
+
 		JLabel lblNewLabel_1 = new JLabel(" ");
 		panel_2.add(lblNewLabel_1);
-		
+
 		JButton btnRemove = new JButton(">");
 		btnRemove.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_2.add(btnRemove);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		panelCenter.add(scrollPane_1);
-		
+
 		tableAvailableChallenges = new JTable();
 		tableAvailableChallenges.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -257,19 +252,19 @@ public class MainWindowChallenges extends JFrame {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void componentMoved(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void componentShown(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
@@ -277,7 +272,7 @@ public class MainWindowChallenges extends JFrame {
 				// TODO Auto-generated method stub
 				update();
                 System.err.println("Exited challenge dialog");
-				
+
 			}
         });
     }
@@ -296,7 +291,7 @@ public class MainWindowChallenges extends JFrame {
 		DefaultTableModel activeModel = (DefaultTableModel) tableAvailableChallenges.getModel();
 		DefaultTableModel myModel = (DefaultTableModel) tableMyChallenges.getModel();
 		for (ChallengeDTO challengeDTO : challenges) {
-			
+
 			String time = "";
 			Double distance = 0.0;
 			if (challengeDTO.getTime() != null) {
@@ -322,7 +317,7 @@ public class MainWindowChallenges extends JFrame {
         }
 		revalidate();
 		repaint();
-		
+
 	}
 
 	public void setLoginWindow(LoginWindow l) {

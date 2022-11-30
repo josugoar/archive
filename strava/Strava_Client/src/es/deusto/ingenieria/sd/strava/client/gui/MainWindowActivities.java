@@ -1,12 +1,6 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
-import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,21 +11,18 @@ import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JSeparator;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
-import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
-import es.deusto.ingenieria.sd.strava.client.gui.ActivityDialog;
-import es.deusto.ingenieria.sd.strava.client.gui.AthleteDialog;
-import es.deusto.ingenieria.sd.strava.client.gui.LoginWindow;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityDTO;
-import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
-
-import javax.swing.JScrollPane;
 
 public class MainWindowActivities extends JFrame {
 

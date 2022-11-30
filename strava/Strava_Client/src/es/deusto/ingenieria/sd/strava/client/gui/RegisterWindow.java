@@ -1,25 +1,15 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
-import javax.swing.FocusManager;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
-
-import es.deusto.ingenieria.sd.strava.client.gui.LoginWindow;
-
-import java.awt.Component;
-import javax.swing.JTextField;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
 
 public class RegisterWindow {
 
@@ -44,13 +34,13 @@ public class RegisterWindow {
 		frmStravaLogin.setBounds(100, 100, 492, 474);
 		frmStravaLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmStravaLogin.getContentPane().setLayout(new BoxLayout(frmStravaLogin.getContentPane(), BoxLayout.Y_AXIS));
-		
+
 		JPanel panel_1 = new JPanel();
 		frmStravaLogin.getContentPane().add(panel_1);
-		
+
 		JPanel panel = new JPanel();
 		frmStravaLogin.getContentPane().add(panel);
-		
+
 		JButton btnNewButton = new JButton("        Login with Google        ");
 		panel.add(btnNewButton);
 		btnNewButton.setBackground(new Color(128, 0, 0));
@@ -59,18 +49,18 @@ public class RegisterWindow {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		
+
 		JPanel panel_2 = new JPanel();
 		frmStravaLogin.getContentPane().add(panel_2);
-		
+
 		JButton btnNewButton_1 = new JButton("      Login with Facebook      ");
 		panel_2.add(btnNewButton_1);
 		btnNewButton_1.setBackground(new Color(0, 128, 255));
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		
+
 		JPanel panel_3 = new JPanel();
 		frmStravaLogin.getContentPane().add(panel_3);
-		
+
 		JButton btnRegister = new JButton("              Subscribe              ");
 		panel_3.add(btnRegister);
 		btnRegister.setFont(new Font("Tahoma", Font.PLAIN, 30));
@@ -78,14 +68,14 @@ public class RegisterWindow {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		
+
 		JPanel panel_4 = new JPanel();
 		frmStravaLogin.getContentPane().add(panel_4);
-		
+
 		JButton btnLogin = new JButton("                 Login                 ");
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panel_4.add(btnLogin);
-		
+
 		JPanel panel_5 = new JPanel();
 		frmStravaLogin.getContentPane().add(panel_5);
 
