@@ -33,6 +33,7 @@ public class AthleteDialog extends JFrame {
 	public AthleteDialog(AthleteController athleteController) {
 		this.athleteController = athleteController;
 
+		// TODO
 		if (athlete == null) {
 			return;
 		}
