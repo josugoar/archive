@@ -163,6 +163,13 @@ public class MainWindowActivities extends JFrame {
 		JButton btnUser = new JButton("Profile");
 		btnUser.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel.add(btnUser);
+		btnUser.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				athleteDialog.setVisible(true);
+
+			}});
 
 		JButton btnNewButton = new JButton("+");
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 20));
