@@ -12,7 +12,7 @@ public class GoogleServiceGateway implements IGateway {
     private IGoogle googleService;
 
     private static final String SERVER_IP = "127.0.0.1";
-    private static final String SERVER_PORT = "8001";
+    private static final String SERVER_PORT = "1099";
     private static final String SERVER_NAME = "Google";
 
     private GoogleServiceGateway() {
