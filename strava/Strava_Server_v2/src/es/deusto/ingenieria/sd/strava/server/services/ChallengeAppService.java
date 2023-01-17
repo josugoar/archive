@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import es.deusto.ingenieria.sd.strava.server.dao.DAO;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Activity;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
@@ -11,8 +12,6 @@ import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 public class ChallengeAppService {
 
     private static ChallengeAppService instance;
-
-    private final Set<Challenge> challenges = new HashSet<>();
 
     private ChallengeAppService() {
     }
@@ -26,23 +25,24 @@ public class ChallengeAppService {
     }
 
     public void createChallenge(final Athlete athlete, final Challenge challenge) throws IllegalArgumentException {
-        if (challenges.contains(challenge)) {
+        if (DAO.getInstance().containsChallenge(challenge.getName())) {
             throw new IllegalArgumentException("Challenge is already created!");
         }
 
-        challenges.add(challenge);
+        DAO.getInstance().storeChallenge(challenge);
     }
 
     public List<Challenge> getChallenges() {
-        return challenges.stream().filter(Challenge::isActive).toList();
+        return DAO.getInstance().getActiveChallenges();
     }
 
     public void acceptChallenge(final Athlete athlete, final Challenge challenge) throws IllegalArgumentException {
-        if (!challenges.contains(challenge)) {
+        if (!DAO.getInstance().containsChallenge(challenge.getName())) {
             throw new IllegalArgumentException("Challenge is not created!");
         }
 
         athlete.addChallenge(challenge);
+        DAO.getInstance().updateAthlete(athlete);
     }
 
     public double getChallengeProgress(final Athlete athlete, final Challenge challenge) {

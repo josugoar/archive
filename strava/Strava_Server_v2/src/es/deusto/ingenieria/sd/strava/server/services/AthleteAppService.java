@@ -3,6 +3,7 @@ package es.deusto.ingenieria.sd.strava.server.services;
 import java.util.HashMap;
 import java.util.Map;
 
+import es.deusto.ingenieria.sd.strava.server.dao.DAO;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
 import es.deusto.ingenieria.sd.strava.server.data.domain.LoginType;
 import es.deusto.ingenieria.sd.strava.server.factory.GatewayFactory;
@@ -11,9 +12,6 @@ import es.deusto.ingenieria.sd.strava.server.gateway.IGateway;
 public class AthleteAppService {
 
     private static AthleteAppService instance;
-
-    private final Map<String, Athlete> athletes = new HashMap<>();
-    private final Map<String, String> passwords = new HashMap<>();
 
     private AthleteAppService() {
     }
@@ -27,18 +25,16 @@ public class AthleteAppService {
     }
 
     public void register(final String password, final Athlete athlete) throws IllegalArgumentException {
-        if (athletes.containsKey(athlete.getEmail())) {
+        if (DAO.getInstance().containsAthlete(athlete.getEmail())) {
             throw new IllegalArgumentException("Athlete is already registered!");
         }
 
         athlete.setLoginType(LoginType.LOCAL);
-        athletes.put(athlete.getEmail(), athlete);
-
-        passwords.put(athlete.getEmail(), password);
+        DAO.getInstance().storeAthlete(athlete);
     }
 
     public void registerGoogle(final Athlete athlete) throws IllegalArgumentException {
-        if (athletes.containsKey(athlete.getEmail())) {
+        if (DAO.getInstance().containsAthlete(athlete.getEmail())) {
             throw new IllegalArgumentException("Athlete is already registered!");
         }
 
@@ -47,11 +43,11 @@ public class AthleteAppService {
         }
 
         athlete.setLoginType(LoginType.GOOGLE);
-        athletes.put(athlete.getEmail(), athlete);
+        DAO.getInstance().storeAthlete(athlete);
     }
 
     public void registerFacebook(final Athlete athlete) throws IllegalArgumentException {
-        if (athletes.containsKey(athlete.getEmail())) {
+        if (DAO.getInstance().containsAthlete(athlete.getEmail())) {
             throw new IllegalArgumentException("Athlete is already registered!");
         }
 
@@ -60,20 +56,20 @@ public class AthleteAppService {
         }
 
         athlete.setLoginType(LoginType.FACEBOOK);
-        athletes.put(athlete.getEmail(), athlete);
+        DAO.getInstance().storeAthlete(athlete);
     }
 
     public Athlete login(final String email, final String password) throws IllegalArgumentException {
-        if (!athletes.containsKey(email)) {
+        if (!DAO.getInstance().containsAthlete(email)) {
             throw new IllegalArgumentException("Athlete is not registered!");
         }
 
-        final Athlete athlete = athletes.get(email);
+        final Athlete athlete = DAO.getInstance().getAthlete(email);
 
         final IGateway gateway = GatewayFactory.createGateway(athlete.getLoginType());
 
         if (gateway == null) {
-            if (!passwords.get(email).equals(password)) {
+            if (!DAO.getInstance().getAthetePassword(email).equals(password)) {
                 throw new IllegalArgumentException("Invalid password!");
             }
         } else {

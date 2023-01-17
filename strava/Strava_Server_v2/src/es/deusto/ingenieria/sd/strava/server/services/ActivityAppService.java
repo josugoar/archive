@@ -2,6 +2,7 @@ package es.deusto.ingenieria.sd.strava.server.services;
 
 import java.util.List;
 
+import es.deusto.ingenieria.sd.strava.server.dao.DAO;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Activity;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
 
@@ -22,6 +23,7 @@ public class ActivityAppService {
 
     public void createActivity(final Athlete athlete, final Activity activity) throws IllegalArgumentException {
         athlete.addActivity(activity);
+        DAO.getInstance().updateAthlete(athlete);
     }
 
     public List<Activity> getActivities(final Athlete athlete) {
