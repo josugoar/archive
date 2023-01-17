@@ -1,0 +1,16 @@
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/data/dto/ActivityDTO.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/MainProgram.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/data/domain/Activity.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/data/domain/Athlete.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/data/domain/Challenge.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/data/dto/ActivityAssembler.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/data/dto/AthleteAssembler.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/data/dto/AthleteDTO.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/data/dto/ChallengeAssembler.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/data/dto/ChallengeDTO.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/remote/IRemoteFacade.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/remote/RemoteFacade.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/services/ActivityAppService.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/services/AthleteAppService.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/services/ChallengeAppService.class
+Strava_Server_v1/bin/es/deusto/ingenieria/sd/strava/server/test/LocalTest.class
