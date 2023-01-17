@@ -1,21 +1,32 @@
 package es.deusto.ingenieria.sd.strava.server.data.domain;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
+import javax.jdo.annotations.Join;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.PrimaryKey;
+
+@PersistenceCapable(detachable = "true")
 public class Athlete {
 
-    private String name;
+    @PrimaryKey
     private String email;
+
+    private String name;
     private Double weight;
     private Integer height;
     private Integer restingHeartRate;
     private Integer maxHeartRate;
     private Date dateOfBirth;
     private LoginType loginType;
-    private Set<Activity> activities = new HashSet<>();
-    private Set<Challenge> challenges = new HashSet<>();
+    private String password;
+
+    @Join
+    private Set<Activity> activities;
+
+    @Join
+    private Set<Challenge> challenges;
 
     public boolean hasChallenge(final Challenge challenge) {
         return challenges.contains(challenge);
@@ -186,7 +197,7 @@ public class Athlete {
         return "Athlete [name=" + name + ", email=" + email + ", weight=" + weight + ", height=" + height
                 + ", restingHeartRate=" + restingHeartRate + ", maxHeartRate=" + maxHeartRate + ", dateOfBirth="
                 + dateOfBirth + ", activities=" + activities + ", challenges=" + challenges + ", loginType=" + loginType
-                + "]";
+                + ", password=" + password + "]";
     }
 
     @Override

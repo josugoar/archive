@@ -2,9 +2,15 @@ package es.deusto.ingenieria.sd.strava.server.data.domain;
 
 import java.util.Date;
 
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.PrimaryKey;
+
+@PersistenceCapable(detachable = "true")
 public class Activity {
 
+    @PrimaryKey
     private String name;
+
     private double distance;
     private int elapsedTime;
     private SportType type;
@@ -89,17 +95,6 @@ public class Activity {
             if (other.name != null)
                 return false;
         } else if (!name.equals(other.name))
-            return false;
-        if (Double.doubleToLongBits(distance) != Double.doubleToLongBits(other.distance))
-            return false;
-        if (elapsedTime != other.elapsedTime)
-            return false;
-        if (type != other.type)
-            return false;
-        if (startDate == null) {
-            if (other.startDate != null)
-                return false;
-        } else if (!startDate.equals(other.startDate))
             return false;
         return true;
     }

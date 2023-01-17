@@ -1,17 +1,25 @@
 package es.deusto.ingenieria.sd.strava.server.data.domain;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
+import javax.jdo.annotations.Join;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.PrimaryKey;
+
+@PersistenceCapable(detachable = "true")
 public class Challenge {
 
+    @PrimaryKey
     private String name;
+
     private Date startDate;
     private Date endDate;
     private Double distance;
     private Integer time;
-    private Set<SportType> type = new HashSet<>();
+
+    @Join
+    private Set<SportType> type;
 
     public boolean isActive() {
         if (endDate == null) {
@@ -145,31 +153,6 @@ public class Challenge {
             if (other.name != null)
                 return false;
         } else if (!name.equals(other.name))
-            return false;
-        if (startDate == null) {
-            if (other.startDate != null)
-                return false;
-        } else if (!startDate.equals(other.startDate))
-            return false;
-        if (endDate == null) {
-            if (other.endDate != null)
-                return false;
-        } else if (!endDate.equals(other.endDate))
-            return false;
-        if (distance == null) {
-            if (other.distance != null)
-                return false;
-        } else if (!distance.equals(other.distance))
-            return false;
-        if (time == null) {
-            if (other.time != null)
-                return false;
-        } else if (!time.equals(other.time))
-            return false;
-        if (type == null) {
-            if (other.type != null)
-                return false;
-        } else if (!type.equals(other.type))
             return false;
         return true;
     }
