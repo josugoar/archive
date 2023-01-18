@@ -1,8 +1,6 @@
 package es.deusto.ingenieria.sd.strava.server.services;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import es.deusto.ingenieria.sd.strava.server.dao.DAO;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Activity;
@@ -33,7 +31,7 @@ public class ChallengeAppService {
     }
 
     public List<Challenge> getChallenges() {
-        return DAO.getInstance().getActiveChallenges();
+        return DAO.getInstance().getChallenges("GETDATE() BETWEEN startDate AND endDate");
     }
 
     public void acceptChallenge(final Athlete athlete, final Challenge challenge) throws IllegalArgumentException {
@@ -42,7 +40,7 @@ public class ChallengeAppService {
         }
 
         athlete.addChallenge(challenge);
-        DAO.getInstance().updateAthlete(athlete);
+        DAO.getInstance().storeAthlete(athlete);
     }
 
     public double getChallengeProgress(final Athlete athlete, final Challenge challenge) {

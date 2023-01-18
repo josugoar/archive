@@ -1,8 +1,5 @@
 package es.deusto.ingenieria.sd.strava.server.services;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import es.deusto.ingenieria.sd.strava.server.dao.DAO;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
 import es.deusto.ingenieria.sd.strava.server.data.domain.LoginType;
@@ -30,6 +27,7 @@ public class AthleteAppService {
         }
 
         athlete.setLoginType(LoginType.LOCAL);
+        athlete.setPassword(password);
         DAO.getInstance().storeAthlete(athlete);
     }
 
@@ -69,7 +67,7 @@ public class AthleteAppService {
         final IGateway gateway = GatewayFactory.createGateway(athlete.getLoginType());
 
         if (gateway == null) {
-            if (!DAO.getInstance().getAthetePassword(email).equals(password)) {
+            if (!athlete.getPassword().equals(password)) {
                 throw new IllegalArgumentException("Invalid password!");
             }
         } else {
