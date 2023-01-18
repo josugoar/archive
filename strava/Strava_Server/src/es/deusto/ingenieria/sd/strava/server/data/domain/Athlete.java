@@ -124,6 +124,30 @@ public class Athlete {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public LoginType getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(final LoginType loginType) throws IllegalArgumentException {
+        if (loginType == null) {
+            throw new IllegalArgumentException("loginType == null");
+        }
+
+        this.loginType = loginType;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(final String password) throws IllegalArgumentException {
+        if (loginType == LoginType.LOCAL && password == null) {
+            throw new IllegalArgumentException("loginType == LoginType.LOCAL && password == null");
+        }
+
+        this.password = password;
+    }
+
     public Set<Activity> getActivities() {
         return activities;
     }
@@ -178,18 +202,6 @@ public class Athlete {
         }
 
         this.challenges.add(challenge);
-    }
-
-    public LoginType getLoginType() {
-        return loginType;
-    }
-
-    public void setLoginType(final LoginType loginType) throws IllegalArgumentException {
-        if (loginType == null) {
-            throw new IllegalArgumentException("loginType == null");
-        }
-
-        this.loginType = loginType;
     }
 
     @Override

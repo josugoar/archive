@@ -22,11 +22,13 @@ public class Challenge {
     private Set<SportType> type;
 
     public boolean isActive() {
-        if (endDate == null) {
+        if (startDate == null || endDate == null) {
             return false;
         }
 
-        return new Date().before(endDate);
+        Date date = new Date();
+
+        return date.before(endDate) && date.after(startDate);
     }
 
     public boolean hasType(final SportType type) {
