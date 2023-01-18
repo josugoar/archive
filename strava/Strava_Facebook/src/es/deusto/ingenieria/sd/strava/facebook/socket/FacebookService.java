@@ -15,7 +15,6 @@ public class FacebookService extends Thread {
 
     private static final String DELIMITER = "\0";
 
-    // TODO
     private final Map<String, String> serverState = new HashMap<>() {
         {
             put("a@gmail.com", "12345");
@@ -42,7 +41,7 @@ public class FacebookService extends Thread {
 
             System.err.println("   - FacebookService - Received data from '" + tcpSocket.getInetAddress().getHostAddress() + ":" + tcpSocket.getPort() + "' -> '" + inData + "'");
 
-            // TODO
+            // TODO: refactor if needed
             final String[] strings = inData.split(DELIMITER, 2);
             final boolean outData;
             if (strings.length == 1) {

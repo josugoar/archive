@@ -9,7 +9,6 @@ public class GoogleService extends UnicastRemoteObject implements IGoogle {
 
     private static GoogleService instance;
 
-    // TODO
     private final Map<String, String> serverState = new HashMap<>() {
         {
             put("a@gmail.com", "12345");
