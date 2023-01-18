@@ -2,6 +2,8 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -123,10 +125,22 @@ public class ChallengeDialog extends JDialog {
 
 		JButton btnCreate = new JButton("Create Challenge");
 		btnCreate.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnCreate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
 		panel_6.add(btnCreate);
 
 		JButton btnBack = new JButton("           Back            ");
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
 		panel_6.add(btnBack);
 	}
 

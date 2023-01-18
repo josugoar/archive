@@ -3,7 +3,6 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
@@ -44,10 +43,6 @@ public class RegisterWindow {
 		JButton btnNewButton = new JButton("        Login with Google        ");
 		panel.add(btnNewButton);
 		btnNewButton.setBackground(new Color(128, 0, 0));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
 
 		JPanel panel_2 = new JPanel();
@@ -64,10 +59,6 @@ public class RegisterWindow {
 		JButton btnRegister = new JButton("              Subscribe              ");
 		panel_3.add(btnRegister);
 		btnRegister.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnRegister.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 
 		JPanel panel_4 = new JPanel();
 		frmStravaLogin.getContentPane().add(panel_4);

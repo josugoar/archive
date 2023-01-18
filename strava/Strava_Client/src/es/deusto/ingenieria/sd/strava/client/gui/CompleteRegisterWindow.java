@@ -2,7 +2,6 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -161,10 +160,6 @@ public class CompleteRegisterWindow extends JFrame {
 
 		JButton btnBack = new JButton("      Back      ");
 		panel_8.add(btnBack);
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 18));
 
 		JButton btnCreate = new JButton("Create Account");
@@ -262,7 +257,7 @@ public class CompleteRegisterWindow extends JFrame {
 				JOptionPane.showMessageDialog(rootPane, "Error in registration");
 			}
 		} else if (loginType.equals("facebook")) {
-			if (athleteController.register(password, athleteDTO) && athleteController.login(email, password)) {
+			if (athleteController.registerFacebook(athleteDTO) && athleteController.login(email, password)) {
 				this.setVisible(false);
 				mainWindow.setVisible(true);
 			} else {

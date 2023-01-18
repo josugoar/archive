@@ -56,20 +56,14 @@ public class MainWindowActivities extends JFrame {
 
 			@Override
 			public void componentResized(ComponentEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void componentHidden(ComponentEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
         });
@@ -83,38 +77,26 @@ public class MainWindowActivities extends JFrame {
 
 			@Override
 			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-
 			}
         });
 
@@ -192,7 +174,7 @@ public class MainWindowActivities extends JFrame {
 	private void update() {
 
 		getActivities();
-		// TODO Refresh avtivity table
+		// TODO Refresh activity table
 		DefaultTableModel model = (DefaultTableModel) tableActivities.getModel();
 		for (ActivityDTO activityDTO : activities) {
 			Object[] row = {
@@ -235,19 +217,16 @@ public class MainWindowActivities extends JFrame {
 
 			@Override
 			public void componentResized(ComponentEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub
 
 			}
         });

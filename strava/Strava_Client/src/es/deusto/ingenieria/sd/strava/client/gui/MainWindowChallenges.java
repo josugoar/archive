@@ -56,19 +56,16 @@ public class MainWindowChallenges extends JFrame {
 
 			@Override
 			public void componentResized(ComponentEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void componentHidden(ComponentEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -83,37 +80,31 @@ public class MainWindowChallenges extends JFrame {
 
 			@Override
 			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
 
 			}
         });
@@ -159,7 +150,7 @@ public class MainWindowChallenges extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				athleteDialog.setVisible(true);
-				
+
 			}});
 
 		JButton btnNewButton = new JButton("+");
@@ -204,7 +195,6 @@ public class MainWindowChallenges extends JFrame {
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				try {
 					int index = tableAvailableChallenges.getSelectedRow();
 					challengeController.acceptChallenge(index, challenges.get(index));
@@ -221,6 +211,18 @@ public class MainWindowChallenges extends JFrame {
 		JButton btnRemove = new JButton(">");
 		btnRemove.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_2.add(btnRemove);
+		btnRemove.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int index = tableAvailableChallenges.getSelectedRow();
+					// TODO
+				} catch (Exception ece) {
+					System.err.println("Select row in table");
+				}
+				update();
+			}
+		});
 
 		JScrollPane scrollPane_1 = new JScrollPane();
 		panelCenter.add(scrollPane_1);
@@ -251,25 +253,21 @@ public class MainWindowChallenges extends JFrame {
 
 			@Override
 			public void componentResized(ComponentEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void componentHidden(ComponentEvent e) {
-				// TODO Auto-generated method stub
 				update();
                 System.err.println("Exited challenge dialog");
 
@@ -287,7 +285,7 @@ public class MainWindowChallenges extends JFrame {
 
 		getActiveChallenges();
 
-		//TODO
+		// TODO
 		DefaultTableModel activeModel = (DefaultTableModel) tableAvailableChallenges.getModel();
 		DefaultTableModel myModel = (DefaultTableModel) tableMyChallenges.getModel();
 		for (ChallengeDTO challengeDTO : challenges) {

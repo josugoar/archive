@@ -2,6 +2,8 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -29,7 +31,7 @@ public class AthleteDialog extends JFrame {
 	public AthleteDialog(AthleteController athleteController) {
 		this.athleteController = athleteController;
 
-		// TODO
+		// TODO: IMPORTANT
 		if (athlete == null) {
 			return;
 		}
@@ -98,10 +100,22 @@ public class AthleteDialog extends JFrame {
 
 		JButton btnBack = new JButton("Back");
 		panel_8.add(btnBack);
+		btnBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 20));
 
 		JButton btnLogout = new JButton("Log Out");
 		btnLogout.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnLogout.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
 		panel_8.add(btnLogout);
 	}
 
