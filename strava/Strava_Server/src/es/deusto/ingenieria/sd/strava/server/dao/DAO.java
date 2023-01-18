@@ -3,7 +3,6 @@ package es.deusto.ingenieria.sd.strava.server.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.plugins.tiff.TIFFTagSet;
 import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
@@ -53,29 +52,25 @@ public class DAO implements IDAO {
         }
     }
 
-    private <T> T getObject() {
-    }
-
-    private <T> List<T> getObjects(Class<T> cls) {
+    @SuppressWarnings("unchecked")
+    private <T> T getObject(Class<T> cls, String condition) {
         PersistenceManager pm = pmf.getPersistenceManager();
         pm.getFetchPlan().setMaxFetchDepth(3);
 
         Transaction tx = pm.currentTransaction();
-        List<T> objects = new ArrayList<>();
+        T product = null;
 
         try {
-            System.out.println("   * Retrieving an Extent for Objects.");
+            System.out.println("   * Querying a Product: " + condition);
 
             tx.begin();
-            Extent<T> extent = pm.getExtent(cls, true);
-
-            for (T object : extent) {
-                objects.add(object);
-            }
-
+            Query<?> query = pm.newQuery("SELECT FROM " + cls.getName() + " WHERE " + condition);
+            query.setUnique(true);
+            product = (T) query.execute();
             tx.commit();
+
         } catch (Exception ex) {
-            System.out.println("   $ Error retrieving an extent: " + ex.getMessage());
+            System.out.println("   $ Error retreiving an extent: " + ex.getMessage());
         } finally {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
@@ -84,7 +79,7 @@ public class DAO implements IDAO {
             pm.close();
         }
 
-        return objects;
+        return product;
     }
 
     @SuppressWarnings("unchecked")
@@ -120,25 +115,6 @@ public class DAO implements IDAO {
         return objects;
     }
 
-    private <T> void updateObject(T object) {
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-
-        try {
-            tx.begin();
-            pm.makePersistent(object);
-            tx.commit();
-        } catch (Exception ex) {
-            System.out.println("   $ Error updating an Object: " + ex.getMessage());
-        } finally {
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
-            }
-
-            pm.close();
-        }
-    }
-
     private <T> void deleteObject(T object) {
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
@@ -158,44 +134,18 @@ public class DAO implements IDAO {
         }
     }
 
-    public <T> void deleteAllObjects(Class<T> cls) {
-        System.out.println("- Cleaning the DB...");
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        try {
-            tx.begin();
-
-            Query<T> query = pm.newQuery(cls);
-            System.out.println(" * '" + query.deletePersistentAll() + "' objects deleted from the DB.");
-
-            tx.commit();
-        } catch (Exception ex) {
-            System.err.println(" $ Error cleaning the DB: " + ex.getMessage());
-            ex.printStackTrace();
-        } finally {
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
-            }
-
-            if (pm != null && !pm.isClosed()) {
-                pm.close();
-            }
-        }
-    }
-
     @Override
     public void storeActivity(Activity activity) {
         storeObject(activity);
     }
 
     @Override
-    public Activity getActivity() {
-        return getObject();
+    public Activity getActivity(String name, String email) {
+        return getObject(Activity.class, "name == " + name + " AND email == " + email);
     }
 
-    @Override
-    public List<Activity> getActivities() {
-        return getObjects(Activity.class);
+    public boolean containsActivity(String name, String email) {
+        return getActivity(name, email) != null;
     }
 
     @Override
@@ -204,18 +154,8 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public void updateActivity(Activity activity) {
-        updateObject(activity);
-    }
-
-    @Override
     public void deleteActivity(Activity activity) {
         deleteObject(activity);
-    }
-
-    @Override
-    public void deleteActivities() {
-        deleteAllObjects(Activity.class);
     }
 
     @Override
@@ -224,13 +164,12 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public Athlete getAthlete() {
-        return getObject();
+    public Athlete getAthlete(String email) {
+        return getObject(Athlete.class, "email == " + email);
     }
 
-    @Override
-    public List<Athlete> getAthletes() {
-        return getObjects(Athlete.class);
+    public boolean containsAthlete(String email) {
+        return getAthlete(email) != null;
     }
 
     @Override
@@ -239,18 +178,8 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public void updateAthlete(Athlete athlete) {
-        updateObject(athlete);
-    }
-
-    @Override
     public void deleteAthlete(Athlete athlete) {
         deleteObject(athlete);
-    }
-
-    @Override
-    public void deleteAthletes() {
-        deleteAllObjects(Athlete.class);
     }
 
     @Override
@@ -259,13 +188,12 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public Challenge getChallenge() {
-        return getObject();
+    public Challenge getChallenge(String name) {
+        return getObject(Challenge.class, "name == " + name);
     }
 
-    @Override
-    public List<Challenge> getChallenges() {
-        return getObjects(Challenge.class);
+    public boolean containsChallenge(String name) {
+        return getChallenge(name) != null;
     }
 
     @Override
@@ -274,18 +202,8 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public void updateChallenge(Challenge challenge) {
-        updateObject(challenge);
-    }
-
-    @Override
     public void deleteChallenge(Challenge challenge) {
         deleteObject(challenge);
-    }
-
-    @Override
-    public void deleteChallenges() {
-        deleteAllObjects(Challenge.class);
     }
 
 }

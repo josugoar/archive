@@ -10,44 +10,32 @@ public interface IDAO {
 
     public void storeActivity(Activity activity);
 
-    public Activity getActivity();
+    public Activity getActivity(String name, String email);
 
-    public List<Activity> getActivity(String condition);
+    public boolean containsActivity(String name, String email);
 
-    public List<Activity> getActivities();
-
-    public void updateActivity(Activity activity);
+    public List<Activity> getActivities(String condition);
 
     public void deleteActivity(Activity activity);
 
-    public void deleteActivities();
-
     public void storeAthlete(Athlete athlete);
 
-    public Athlete getAthlete();
+    public Athlete getAthlete(String email);
 
-    public List<Athlete> getAthletes();
+    public boolean containsAthlete(String email);
 
     public List<Athlete> getAthletes(String condition);
 
-    public void updateAthlete(Athlete athlete);
-
     public void deleteAthlete(Athlete athlete);
-
-    public void deleteAthletes();
 
     public void storeChallenge(Challenge challenge);
 
-    public Challenge getChallenge();
+    public Challenge getChallenge(String name);
 
-    public List<Challenge> getChallenges();
+    public boolean containsChallenge(String name);
 
     public List<Challenge> getChallenges(String condition);
 
-    public void updateChallenge(Challenge challenge);
-
     public void deleteChallenge(Challenge challenge);
-
-    public void deleteChallenges();
 
 }
