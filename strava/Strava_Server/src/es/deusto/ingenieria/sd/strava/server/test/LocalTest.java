@@ -1,7 +1,6 @@
 package es.deusto.ingenieria.sd.strava.server.test;
 
 import java.rmi.RemoteException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +22,7 @@ public class LocalTest {
 
         try {
             remoteFacade.login("john.doe@gmail.com", pasword);
-        } catch (final RemoteException e) {
+        } catch (final Exception e) {
             System.err.println("\t# Error: " + e.getMessage());
         }
 
@@ -58,7 +57,8 @@ public class LocalTest {
             System.err.println(challengeState);
 
             remoteFacade.logout(token);
-        } catch (final RemoteException | ParseException e) {
+        } catch (final Exception e) {
+            e.printStackTrace();
             System.err.println("\t# Error: " + e.getMessage());
         }
 
