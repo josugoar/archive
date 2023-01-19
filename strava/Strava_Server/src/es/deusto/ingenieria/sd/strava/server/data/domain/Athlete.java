@@ -1,11 +1,16 @@
 package es.deusto.ingenieria.sd.strava.server.data.domain;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+
+import org.datanucleus.api.jdo.annotations.CreateTimestamp;
 
 @PersistenceCapable(detachable = "true")
 public class Athlete {
@@ -18,15 +23,19 @@ public class Athlete {
     private Integer height;
     private Integer restingHeartRate;
     private Integer maxHeartRate;
+
+    @CreateTimestamp
     private Date dateOfBirth;
+
     private LoginType loginType;
     private String password;
 
-    @Join
-    private Set<Activity> activities;
+    @Element(column="email")
+    private Set<Activity> activities = new HashSet<>();
 
     @Join
-    private Set<Challenge> challenges;
+    @Persistent(defaultFetchGroup = "true")
+    private Set<Challenge> challenges = new HashSet<>();
 
     public boolean hasChallenge(final Challenge challenge) {
         return challenges.contains(challenge);

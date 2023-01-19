@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 
+import org.datanucleus.api.jdo.annotations.CreateTimestamp;
+
 @PersistenceCapable(detachable = "true")
 public class Activity {
 
@@ -17,6 +19,8 @@ public class Activity {
     private double distance;
     private int elapsedTime;
     private SportType type;
+
+    @CreateTimestamp
     private Date startDate;
 
     public String getName() {

@@ -1,11 +1,15 @@
 package es.deusto.ingenieria.sd.strava.server.data.domain;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+
+import org.datanucleus.api.jdo.annotations.CreateTimestamp;
 
 @PersistenceCapable(detachable = "true")
 public class Challenge {
@@ -13,13 +17,17 @@ public class Challenge {
     @PrimaryKey
     private String name;
 
+    @CreateTimestamp
     private Date startDate;
+
+    @CreateTimestamp
     private Date endDate;
     private Double distance;
     private Integer time;
 
     @Join
-    private Set<SportType> type;
+    @Persistent(defaultFetchGroup = "true")
+    private Set<SportType> type = new HashSet<>();
 
     public boolean isActive() {
         if (startDate == null || endDate == null) {
