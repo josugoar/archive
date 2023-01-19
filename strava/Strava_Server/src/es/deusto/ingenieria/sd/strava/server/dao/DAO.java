@@ -16,7 +16,7 @@ import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 
 public class DAO implements IDAO {
 
-    private PersistenceManagerFactory pmf;
+    private final PersistenceManagerFactory pmf;
 
     private static IDAO instance;
 
@@ -32,16 +32,16 @@ public class DAO implements IDAO {
         return instance;
     }
 
-    private <T> void storeObject(T object) {
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
+    private <T> void storeObject(final T object) {
+        final PersistenceManager pm = pmf.getPersistenceManager();
+        final Transaction tx = pm.currentTransaction();
 
         try {
             tx.begin();
             System.err.println("   * Storing an object: " + object);
             pm.makePersistent(object);
             tx.commit();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.err.println("   $ Error storing an object: " + ex.getMessage());
         } finally {
             if (tx != null && tx.isActive()) {
@@ -53,24 +53,24 @@ public class DAO implements IDAO {
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T getObject(Class<T> cls, String condition) {
-        PersistenceManager pm = pmf.getPersistenceManager();
+    private <T> T getObject(final Class<T> cls, final String condition) {
+        final PersistenceManager pm = pmf.getPersistenceManager();
         pm.getFetchPlan().setMaxFetchDepth(3);
 
-        Transaction tx = pm.currentTransaction();
-        T product = null;
+        final Transaction tx = pm.currentTransaction();
+        T object = null;
 
         try {
-            System.out.println("   * Querying a Product: " + condition);
+            System.out.println("   * Querying a Object: " + condition);
 
             tx.begin();
-            Query<?> query = pm.newQuery("SELECT FROM " + cls.getName() + " WHERE " + condition);
+            final Query<?> query = pm.newQuery("SELECT FROM " + cls.getName() + " WHERE " + condition);
             query.setUnique(true);
-            product = (T) query.execute();
+            object = (T) query.execute();
             tx.commit();
 
-        } catch (Exception ex) {
-            System.out.println("   $ Error retreiving an extent: " + ex.getMessage());
+        } catch (final Exception ex) {
+            System.out.println("   $ Error retreiving Object: " + ex.getMessage());
         } finally {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
@@ -79,30 +79,30 @@ public class DAO implements IDAO {
             pm.close();
         }
 
-        return product;
+        return object;
     }
 
     @SuppressWarnings("unchecked")
-    private <T> List<T> getObjects(Class<T> cls, String condition) {
-        PersistenceManager pm = pmf.getPersistenceManager();
+    private <T> List<T> getObjects(final Class<T> cls, final String condition) {
+        final PersistenceManager pm = pmf.getPersistenceManager();
         pm.getFetchPlan().setMaxFetchDepth(3);
 
-        Transaction tx = pm.currentTransaction();
-        List<T> objects = new ArrayList<>();
+        final Transaction tx = pm.currentTransaction();
+        final List<T> objects = new ArrayList<>();
 
         try {
             System.out.println("   * Retrieving an Extent for Objects.");
 
             tx.begin();
-            Extent<T> extent = pm.getExtent(cls, true);
-            Query<T> query = pm.newQuery(extent, condition);
+            final Extent<T> extent = pm.getExtent(cls, true);
+            final Query<T> query = pm.newQuery(extent, condition);
 
-            for (T object : (List<T>) query.execute()) {
+            for (final T object : (List<T>) query.execute()) {
                 objects.add(object);
             }
 
             tx.commit();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println("   $ Error retrieving an extent: " + ex.getMessage());
         } finally {
             if (tx != null && tx.isActive()) {
@@ -115,15 +115,15 @@ public class DAO implements IDAO {
         return objects;
     }
 
-    private <T> void deleteObject(T object) {
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
+    private <T> void deleteObject(final T object) {
+        final PersistenceManager pm = pmf.getPersistenceManager();
+        final Transaction tx = pm.currentTransaction();
 
         try {
             tx.begin();
             pm.deletePersistent(object);
             tx.commit();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             System.out.println("   $ Error deleting an Object: " + ex.getMessage());
         } finally {
             if (tx != null && tx.isActive()) {
@@ -135,74 +135,74 @@ public class DAO implements IDAO {
     }
 
     @Override
-    public void storeActivity(Activity activity) {
+    public void storeActivity(final Activity activity) {
         storeObject(activity);
     }
 
     @Override
-    public Activity getActivity(String name, String email) {
-        return getObject(Activity.class, "name == " + name + " AND email == " + email);
+    public Activity getActivity(final String name, final String email) {
+        return getObject(Activity.class, "name == '" + name + "'' AND email == '" + email + "'");
     }
 
-    public boolean containsActivity(String name, String email) {
+    public boolean containsActivity(final String name, final String email) {
         return getActivity(name, email) != null;
     }
 
     @Override
-    public List<Activity> getActivities(String condition) {
+    public List<Activity> getActivities(final String condition) {
         return getObjects(Activity.class, condition);
     }
 
     @Override
-    public void deleteActivity(Activity activity) {
+    public void deleteActivity(final Activity activity) {
         deleteObject(activity);
     }
 
     @Override
-    public void storeAthlete(Athlete athlete) {
+    public void storeAthlete(final Athlete athlete) {
         storeObject(athlete);
     }
 
     @Override
-    public Athlete getAthlete(String email) {
-        return getObject(Athlete.class, "email == " + email);
+    public Athlete getAthlete(final String email) {
+        return getObject(Athlete.class, "email == '" + email + "'");
     }
 
-    public boolean containsAthlete(String email) {
+    public boolean containsAthlete(final String email) {
         return getAthlete(email) != null;
     }
 
     @Override
-    public List<Athlete> getAthletes(String condition) {
+    public List<Athlete> getAthletes(final String condition) {
         return getObjects(Athlete.class, condition);
     }
 
     @Override
-    public void deleteAthlete(Athlete athlete) {
+    public void deleteAthlete(final Athlete athlete) {
         deleteObject(athlete);
     }
 
     @Override
-    public void storeChallenge(Challenge challenge) {
+    public void storeChallenge(final Challenge challenge) {
         storeObject(challenge);
     }
 
     @Override
-    public Challenge getChallenge(String name) {
-        return getObject(Challenge.class, "name == " + name);
+    public Challenge getChallenge(final String name) {
+        return getObject(Challenge.class, "name == '" + name + "'");
     }
 
-    public boolean containsChallenge(String name) {
+    public boolean containsChallenge(final String name) {
         return getChallenge(name) != null;
     }
 
     @Override
-    public List<Challenge> getChallenges(String condition) {
+    public List<Challenge> getChallenges(final String condition) {
         return getObjects(Challenge.class, condition);
     }
 
     @Override
-    public void deleteChallenge(Challenge challenge) {
+    public void deleteChallenge(final Challenge challenge) {
         deleteObject(challenge);
     }
 
