@@ -1,5 +1,6 @@
 package es.deusto.ingenieria.sd.strava.server.services;
 
+import java.util.Date;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.strava.server.dao.DAO;
@@ -31,7 +32,8 @@ public class ChallengeAppService {
     }
 
     public List<Challenge> getChallenges() {
-        return DAO.getInstance().getChallenges("GETDATE() BETWEEN startDate AND endDate");
+        final java.sql.Date date = new java.sql.Date(new Date().getTime());
+        return DAO.getInstance().getChallenges("'" + date + "' BETWEEN startDate AND endDate");
     }
 
     public void acceptChallenge(final Athlete athlete, final Challenge challenge) throws IllegalArgumentException {
