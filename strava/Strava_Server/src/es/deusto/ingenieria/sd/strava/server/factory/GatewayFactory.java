@@ -16,7 +16,7 @@ public class GatewayFactory {
                 return GoogleServiceGateway.getInstance();
 
             default:
-                throw null;
+                return null;
         }
     }
 
