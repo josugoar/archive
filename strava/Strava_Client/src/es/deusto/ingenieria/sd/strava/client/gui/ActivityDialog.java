@@ -4,6 +4,9 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BoxLayout;
@@ -17,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import es.deusto.ingenieria.sd.strava.client.controller.ActivityController;
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
+import es.deusto.ingenieria.sd.strava.server.data.dto.ActivityDTO;
 
 public class ActivityDialog extends JDialog {
 
@@ -25,9 +29,13 @@ public class ActivityDialog extends JDialog {
 	private JTextField distanceField;
 	private JTextField timeField;
 	private JTextField startField;
+	private JComboBox<String> sportBox;
+	private String type[] = { "RUNNING", "CYCLING" };
 
-	// private AthleteController athleteController;
-	// private ActivityController activityController;
+    SimpleDateFormat formatter = new SimpleDateFormat("DD-mm-yyyy");
+
+	private AthleteController athleteController;
+	private ActivityController activityController;
 
 	/**
 	 * Create the dialog.
@@ -97,7 +105,7 @@ public class ActivityDialog extends JDialog {
 		JPanel panel_4 = new JPanel();
 		contentPanel.add(panel_4);
 
-		JComboBox<String> sportBox = new JComboBox<>();
+		sportBox = new JComboBox<>(type);
 		panel_4.add(sportBox);
 		sportBox.setToolTipText("");
 		sportBox.setFont(new Font("Tahoma", Font.ITALIC, 18));
@@ -110,7 +118,7 @@ public class ActivityDialog extends JDialog {
 		btnCreate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				createActivity();;
 			}
 		});
 		panel_5.add(btnCreate);
@@ -120,10 +128,49 @@ public class ActivityDialog extends JDialog {
 		btnBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				setVisible(false);
 			}
 		});
 		panel_5.add(btnBack);
 	}
+
+	public void createActivity() {
+        String name = nameField.getText();
+
+        int elapsedTime = 0;
+        try {
+            elapsedTime = Integer.parseInt(timeField.getText());
+        } catch (Exception e) {
+            System.err.println("Wrong elapsed time");
+        }
+
+        Double distance = null;
+        try {
+            distance = Double.parseDouble(distanceField.getText());
+        } catch (Exception e) {
+            System.err.println("Wrong distance");
+        }
+
+        Date startDate = null;
+        try {
+            startDate = formatter.parse(startField.getText());
+        } catch (ParseException e1) {
+            System.err.println("Wrong date, use dd-mm-yyyy");
+        }
+        String type = sportBox.getSelectedItem().toString();
+
+        Long token = athleteController.getToken();
+
+        final ActivityDTO activity = new ActivityDTO();
+        activity.setName(name);
+        activity.setDistance(distance);
+        activity.setElapsedTime(elapsedTime);
+        activity.setType(type);
+        activity.setStartDate(startDate);
+        if (!activityController.createActivity(token, activity)) {
+			System.err.println("Error creating activity");
+        }
+        setVisible(false);
+    }
 
 }

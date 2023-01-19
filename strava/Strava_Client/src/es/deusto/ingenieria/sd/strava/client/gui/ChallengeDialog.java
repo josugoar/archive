@@ -3,6 +3,12 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BoxLayout;
@@ -16,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import es.deusto.ingenieria.sd.strava.client.controller.AthleteController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
+import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 
 public class ChallengeDialog extends JDialog {
 
@@ -25,10 +32,13 @@ public class ChallengeDialog extends JDialog {
 	private JTextField endField;
 	private JTextField distanceField;
 	private JTextField timeField;
+	private JComboBox<String> sportCombo;
 
-	// private ChallengeController challengeController;
-	// private AthleteController athleteController;
-	// private String sport[] = { "RUNNING", "CYCLING", "BOTH" };
+	SimpleDateFormat formatter = new SimpleDateFormat("DD-mm-yyyy", Locale.ENGLISH);
+
+	private ChallengeController challengeController;
+	private AthleteController athleteController;
+	private String sport[] = { "RUNNING", "CYCLING", "BOTH" };
 
 
 
@@ -115,10 +125,10 @@ public class ChallengeDialog extends JDialog {
 		JPanel panel_5 = new JPanel();
 		contentPanel.add(panel_5);
 
-		JComboBox<String> sportBox = new JComboBox<>();
-		sportBox.setToolTipText("");
-		sportBox.setFont(new Font("Tahoma", Font.ITALIC, 18));
-		panel_5.add(sportBox);
+		sportCombo = new JComboBox<String>(sport);
+		sportCombo.setToolTipText("");
+		sportCombo.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		panel_5.add(sportCombo);
 
 		JPanel panel_6 = new JPanel();
 		contentPanel.add(panel_6);
@@ -128,7 +138,7 @@ public class ChallengeDialog extends JDialog {
 		btnCreate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				createChallenge();
 			}
 		});
 		panel_6.add(btnCreate);
@@ -138,10 +148,62 @@ public class ChallengeDialog extends JDialog {
 		btnBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				setVisible(false);
 			}
 		});
 		panel_6.add(btnBack);
+
 	}
+
+	public void createChallenge() {
+        String name = nameField.getText();
+
+        Integer time = null;
+        try {
+            time = Integer.valueOf(timeField.getText());
+        } catch (Exception e) {
+        }
+
+        Double distance = null;
+        try {
+            if (distanceField.getText() != null) {
+                distance = Double.parseDouble(distanceField.getText());
+            }
+        } catch (NumberFormatException e) {
+        }
+
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = formatter.parse(startField.getText());
+            endDate = formatter.parse(endField.getText());
+        } catch (RuntimeException | ParseException e1) {
+			System.err.println("Wrong date, use DD-mm-yyyy");
+        }
+
+        String sport = sportCombo.getSelectedItem().toString();
+        Set<String> type = new HashSet<>();
+        if (sport.equals("Both")) {
+            type.add("CYCLING");
+            type.add("RUNNING");
+        } else {
+            type.add(sport);
+        }
+
+        Long token = athleteController.getToken();
+
+        ChallengeDTO challenge = new ChallengeDTO();
+        challenge.setName(name);
+        challenge.setStartDate(startDate);
+        challenge.setEndDate(endDate);
+        challenge.setDistance(distance);
+        challenge.setTime(time);
+        challenge.setType(type);
+        if (!challengeController.createChallenge(token, challenge)) {
+            System.err.println("Error creating challenge");
+        }
+
+        setVisible(false);
+    }
 
 }
