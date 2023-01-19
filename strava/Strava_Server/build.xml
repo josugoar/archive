@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="4.server" name="Strava_Server_v2">
+<project basedir="." default="4.server" name="Strava_Server">
     <property name="src.dir" location="src" />
     <property name="bin.dir" location="bin" />
     <property name="dist.dir" location="dist" />
@@ -16,6 +16,7 @@
             <include name="**/*.jar" />
         </fileset>
         <pathelement location="${bin.dir}" />
+        <pathelement location="${resources.dir}" />
     </path>
 
     <target name="1.build" description="Builds the project">
@@ -42,7 +43,7 @@
 
     <target name="3.create-db-schema" depends="2.enhance-classes" description="Creates DB Schema on the DB Server">
         <taskdef name="schematool" classpathref="classpath" classname="org.datanucleus.store.schema.SchemaToolTask" />
-        <schematool mode="create" classpathref="classpath" props="datanucleus.properties" failonerror="true">
+        <schematool mode="create" classpathref="classpath" props="${resources.dir}/datanucleus.properties" failonerror="true">
             <sysproperty key="log4j.configuration" value="file:${resources.dir}/log4j.properties" />
             <fileset dir="${bin.dir}">
                 <include name="**/*.class" />
@@ -51,14 +52,14 @@
     </target>
 
     <target name="3.server-local" description="Runs a local test of the Server" depends="2.enhance-classes">
-        <java classname="es.deusto.ingenieria.sd.datanucleus.jdo.LocalTest_Copies" classpathref="classpath" fork="true">
-            <jvmarg value="-Dlog4j.configuration=log4j.properties" />
+        <java classname="es.deusto.ingenieria.sd.strava.server.test.LocalTest" classpathref="classpath" fork="true">
+            <jvmarg value="-Dlog4j.configuration=file:${resources.dir}/log4j.properties" />
         </java>
     </target>
 
     <target name="3.server" depends="2.enhance-classes" description="Runs the Server">
         <java classname="es.deusto.ingenieria.sd.strava.server.MainProgram" classpathref="classpath" fork="true">
-            <jvmarg value="-Djava.rmi.server.codebase=file:${bin.dir}/" />
+            <jvmarg value="-Djava.rmi.server.codebase=${bin.dir}/" />
             <jvmarg value="-Djava.security.policy=${policy.file}" />
             <arg value="${rmiregistry.IP}" />
             <arg value="${rmiregistry.port}" />
@@ -68,10 +69,10 @@
 
     <target name="3.delete-db-schema" depends="2.enhance-classes" description="Drops DB sechema from the DB Server">
         <taskdef name="schematool" classpathref="classpath" classname="org.datanucleus.store.schema.SchemaToolTask" />
-        <schematool mode="delete" classpathref="classpath" props="datanucleus.properties" failonerror="true">
-               <sysproperty key="log4j.configuration" value="file:${resources.dir}/log4j.properties" />
-             <fileset dir="${bin.dir}">
-                   <include name="**/*.class" />
+        <schematool mode="delete" classpathref="classpath" props="${resources.dir}/datanucleus.properties" failonerror="true">
+            <sysproperty key="log4j.configuration" value="${resources.dir}/log4j.properties" />
+            <fileset dir="${bin.dir}">
+                <include name="**/*.class" />
             </fileset>
         </schematool>
     </target>
