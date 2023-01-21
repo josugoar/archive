@@ -41,7 +41,6 @@ public class FacebookService extends Thread {
 
             System.err.println("   - FacebookService - Received data from '" + tcpSocket.getInetAddress().getHostAddress() + ":" + tcpSocket.getPort() + "' -> '" + inData + "'");
 
-            // TODO: refactor if needed
             final String[] strings = inData.split(DELIMITER, 2);
             final boolean outData;
             if (strings.length == 1) {
