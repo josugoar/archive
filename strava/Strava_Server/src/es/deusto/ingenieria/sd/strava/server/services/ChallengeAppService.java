@@ -33,7 +33,7 @@ public class ChallengeAppService {
 
     public List<Challenge> getChallenges() {
         final java.sql.Date date = new java.sql.Date(new Date().getTime());
-        return DAO.getInstance().getChallenges("'" + date + "' BETWEEN startDate AND endDate");
+        return DAO.getInstance().getChallenges("'" + date + "' > startDate AND '" + date + "' < endDate");
     }
 
     public void acceptChallenge(final Athlete athlete, final Challenge challenge) throws IllegalArgumentException {
