@@ -3,7 +3,6 @@ package es.deusto.ingenieria.sd.strava.server.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
@@ -64,12 +63,14 @@ public class DAO implements IDAO {
             System.out.println("   * Querying a Object: " + condition);
 
             tx.begin();
-            final Query<?> query = pm.newQuery("SELECT FROM " + cls.getName() + " WHERE " + condition);
+            final Query<T> query = pm.newQuery("javax.jdo.query.SQL", "SELECT * FROM stravaDB." + cls.getSimpleName().toUpperCase() + " WHERE " + condition);
+            query.setClass(cls);
             query.setUnique(true);
             object = (T) query.execute();
             tx.commit();
 
         } catch (final Exception ex) {
+            ex.printStackTrace();
             System.out.println("   $ Error retreiving Object: " + ex.getMessage());
         } finally {
             if (tx != null && tx.isActive()) {
@@ -88,22 +89,21 @@ public class DAO implements IDAO {
         pm.getFetchPlan().setMaxFetchDepth(3);
 
         final Transaction tx = pm.currentTransaction();
-        final List<T> objects = new ArrayList<>();
+        List<T> objects = new ArrayList<>();
 
         try {
-            System.out.println("   * Retrieving an Extent for Objects.");
+            System.out.println("   * Querying a Object: " + condition);
 
             tx.begin();
-            final Extent<T> extent = pm.getExtent(cls, true);
-            final Query<T> query = pm.newQuery(extent, condition);
-
+            final Query<T> query = pm.newQuery("javax.jdo.query.SQL", "SELECT * FROM stravaDB." + cls.getSimpleName().toUpperCase() + " WHERE " + condition);
+            query.setClass(cls);
             for (final T object : (List<T>) query.execute()) {
                 objects.add(object);
             }
-
             tx.commit();
+
         } catch (final Exception ex) {
-            System.out.println("   $ Error retrieving an extent: " + ex.getMessage());
+            System.out.println("   $ Error retreiving Objects: " + ex.getMessage());
         } finally {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
@@ -141,7 +141,7 @@ public class DAO implements IDAO {
 
     @Override
     public Activity getActivity(final String name, final String email) {
-        return getObject(Activity.class, "name == '" + name + "'' AND email == '" + email + "'");
+        return getObject(Activity.class, "name = '" + name + "'' AND email = '" + email + "'");
     }
 
     public boolean containsActivity(final String name, final String email) {
@@ -165,7 +165,7 @@ public class DAO implements IDAO {
 
     @Override
     public Athlete getAthlete(final String email) {
-        return getObject(Athlete.class, "email == '" + email + "'");
+        return getObject(Athlete.class, "email = '" + email + "'");
     }
 
     public boolean containsAthlete(final String email) {
@@ -189,7 +189,7 @@ public class DAO implements IDAO {
 
     @Override
     public Challenge getChallenge(final String name) {
-        return getObject(Challenge.class, "name == '" + name + "'");
+        return getObject(Challenge.class, "name = '" + name + "'");
     }
 
     public boolean containsChallenge(final String name) {
