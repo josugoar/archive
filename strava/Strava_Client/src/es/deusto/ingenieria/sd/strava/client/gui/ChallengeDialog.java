@@ -47,8 +47,8 @@ public class ChallengeDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public ChallengeDialog(ChallengeController challengeController, AthleteController athleteController) {
-		// this.challengeController = challengeController;
-		// this.athleteController = athleteController;
+		this.challengeController = challengeController;
+		this.athleteController = athleteController;
 
 		setTitle("Create Challenge");
 		setBounds(100, 100, 563, 576);
