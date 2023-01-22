@@ -2,6 +2,7 @@ package es.deusto.ingenieria.sd.strava.server.data.domain;
 
 import java.util.Date;
 
+import javax.jdo.annotations.ForeignKey;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 
@@ -12,10 +13,10 @@ public class Activity {
 
     @PrimaryKey
     private String name;
-/* 
+
     @PrimaryKey
-    private String athleteEmail;
-*/
+    private String email;
+
     private double distance;
     private int elapsedTime;
     private SportType type;
@@ -34,9 +35,9 @@ public class Activity {
 
         this.name = name;
     }
-/*
+
     public String getEmail() {
-        return athleteEmail;
+        return email;
     }
 
     public void setEmail(final String email) throws IllegalArgumentException {
@@ -44,9 +45,9 @@ public class Activity {
             throw new IllegalArgumentException("email == null");
         }
 
-        this.athleteEmail = email;
+        this.email = email;
     }
-*/
+
     public double getDistance() {
         return distance;
     }

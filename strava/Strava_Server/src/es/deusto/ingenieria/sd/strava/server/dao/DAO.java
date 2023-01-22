@@ -39,6 +39,7 @@ public class DAO implements IDAO {
             tx.begin();
             System.err.println("   * Storing an object: " + object);
             pm.makePersistent(object);
+            System.out.println("Saexo peristente miarma!!!!");
             tx.commit();
         } catch (final Exception ex) {
             System.err.println("   $ Error storing an object: " + ex.getMessage());
@@ -141,7 +142,7 @@ public class DAO implements IDAO {
 
     @Override
     public Activity getActivity(final String name, final String email) {
-        return getObject(Activity.class, "name = '" + name + "'' AND email = '" + email + "'");
+        return getObject(Activity.class, "name = '" + name + "' AND email = '" + email + "'");
     }
 
     public boolean containsActivity(final String name, final String email) {

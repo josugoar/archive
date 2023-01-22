@@ -27,7 +27,7 @@ public class ChallengeAppService {
         if (DAO.getInstance().containsChallenge(challenge.getName())) {
             throw new IllegalArgumentException("Challenge is already created!");
         }
-
+        //
         DAO.getInstance().storeChallenge(challenge);
     }
 

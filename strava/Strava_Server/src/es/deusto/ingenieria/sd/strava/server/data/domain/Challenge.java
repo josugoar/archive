@@ -34,7 +34,8 @@ public class Challenge {
             return false;
         }
 
-        Date date = new Date();
+       Date date = new Date();
+        
 
         return date.before(endDate) && date.after(startDate);
     }

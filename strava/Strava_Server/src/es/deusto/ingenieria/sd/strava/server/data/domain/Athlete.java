@@ -30,7 +30,7 @@ public class Athlete {
     private LoginType loginType;
     private String password;
 
-    @Element(column="email")
+    //@Element(column="email")
     //Pruebitas
     @Persistent(defaultFetchGroup = "true")
     private Set<Activity> activities = new HashSet<>();
