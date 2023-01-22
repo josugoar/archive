@@ -12,10 +12,10 @@ public class Activity {
 
     @PrimaryKey
     private String name;
-
+/* 
     @PrimaryKey
-    private String email;
-
+    private String athleteEmail;
+*/
     private double distance;
     private int elapsedTime;
     private SportType type;
@@ -34,9 +34,9 @@ public class Activity {
 
         this.name = name;
     }
-
+/*
     public String getEmail() {
-        return email;
+        return athleteEmail;
     }
 
     public void setEmail(final String email) throws IllegalArgumentException {
@@ -44,9 +44,9 @@ public class Activity {
             throw new IllegalArgumentException("email == null");
         }
 
-        this.email = email;
+        this.athleteEmail = email;
     }
-
+*/
     public double getDistance() {
         return distance;
     }
