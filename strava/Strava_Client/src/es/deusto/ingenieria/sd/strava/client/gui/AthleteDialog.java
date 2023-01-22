@@ -31,11 +31,6 @@ public class AthleteDialog extends JFrame {
 	public AthleteDialog(AthleteController athleteController) {
 		this.athleteController = athleteController;
 
-		// TODO: IMPORTANT
-		if (athlete == null) {
-			return;
-		}
-
 		setTitle("Athlete Profile");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 537, 582);
