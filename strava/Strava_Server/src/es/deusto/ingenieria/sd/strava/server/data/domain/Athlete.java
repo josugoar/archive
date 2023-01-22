@@ -31,6 +31,8 @@ public class Athlete {
     private String password;
 
     @Element(column="email")
+    //Pruebitas
+    @Persistent(defaultFetchGroup = "true")
     private Set<Activity> activities = new HashSet<>();
 
     @Join
