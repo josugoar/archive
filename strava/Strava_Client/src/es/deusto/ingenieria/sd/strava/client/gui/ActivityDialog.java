@@ -42,6 +42,9 @@ public class ActivityDialog extends JDialog {
 	 */
 	public ActivityDialog(ActivityController activityController, AthleteController athleteController) {
 
+		this.activityController = activityController;
+		this.athleteController = athleteController;
+
 		setTitle("Create Activity");
 		setBounds(100, 100, 578, 615);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -167,6 +170,7 @@ public class ActivityDialog extends JDialog {
         activity.setElapsedTime(elapsedTime);
         activity.setType(type);
         activity.setStartDate(startDate);
+
         if (!activityController.createActivity(token, activity)) {
 			System.err.println("Error creating activity");
         }

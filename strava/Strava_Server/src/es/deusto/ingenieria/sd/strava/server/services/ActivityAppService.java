@@ -25,6 +25,7 @@ public class ActivityAppService {
         activity.setEmail(athlete.getEmail());
         athlete.addActivity(activity);
         DAO.getInstance().storeAthlete(athlete);
+        
     }
 
     public List<Activity> getActivities(final Athlete athlete) {

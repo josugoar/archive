@@ -18,7 +18,7 @@ public class ActivityController {
     public boolean createActivity(final long token, final ActivityDTO activityDTO) {
         try {
             serviceLocator.getService().createActivity(token, activityDTO);
-
+            
             return true;
         } catch (final RemoteException e) {
             System.err.println("# Error creating an activity: " + e);
