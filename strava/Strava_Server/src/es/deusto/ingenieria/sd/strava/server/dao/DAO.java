@@ -160,7 +160,13 @@ public class DAO implements IDAO {
 
     @Override
     public void storeAthlete(final Athlete athlete) {
+        //pruebita
+        for (Activity activity : athlete.getActivities()) {
+            storeActivity(activity);
+        }
+
         storeObject(athlete);
+
     }
 
     @Override
