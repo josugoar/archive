@@ -176,6 +176,7 @@ public class MainWindowActivities extends JFrame {
 		getActivities();
 		// TODO Refresh activity table
 		DefaultTableModel model = (DefaultTableModel) tableActivities.getModel();
+		model.setRowCount(0); // Clear table
 		for (ActivityDTO activityDTO : activities) {
 			Object[] row = {
 				activityDTO.getName(),
