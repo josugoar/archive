@@ -163,8 +163,6 @@ public class ChallengeDialog extends JDialog {
         try {
             time = Integer.valueOf(timeField.getText());
         } catch (Exception e) {
-			JOptionPane.showMessageDialog(rootPane, "Wrong time");
-			return;
         }
 
         Double distance = null;
@@ -173,8 +171,6 @@ public class ChallengeDialog extends JDialog {
                 distance = Double.parseDouble(distanceField.getText());
             }
         } catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(rootPane, "Wrong distance");
-			return;
         }
 
         Date startDate = null;
