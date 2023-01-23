@@ -161,7 +161,6 @@ public class DAO implements IDAO {
     @Override
     public void storeAthlete(final Athlete athlete) {
         storeObject(athlete);
-
     }
 
     @Override
