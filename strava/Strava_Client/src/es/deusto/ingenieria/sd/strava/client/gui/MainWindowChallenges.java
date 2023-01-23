@@ -197,7 +197,7 @@ public class MainWindowChallenges extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int index = tableAvailableChallenges.getSelectedRow();
-					challengeController.acceptChallenge(index, challenges.get(index));
+					challengeController.acceptChallenge(athleteController.getToken(), challenges.get(index));
 				} catch (Exception ece) {
 					System.err.println("Select row in table");
 				}
@@ -285,7 +285,6 @@ public class MainWindowChallenges extends JFrame {
 
 		getActiveChallenges();
 
-		// TODO
 		DefaultTableModel activeModel = (DefaultTableModel) tableAvailableChallenges.getModel();
 		DefaultTableModel myModel = (DefaultTableModel) tableMyChallenges.getModel();
 		myModel.setRowCount(0);
