@@ -29,7 +29,6 @@ public class Athlete {
     private LoginType loginType;
     private String password;
 
-    @Join
     @Persistent(defaultFetchGroup = "true")
     private Set<Activity> activities = new HashSet<>();
 
