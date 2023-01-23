@@ -23,8 +23,10 @@ public class ActivityAppService {
 
     public void createActivity(final Athlete athlete, final Activity activity) throws IllegalArgumentException {
         activity.setEmail(athlete.getEmail());
-        athlete.addActivity(activity);
-        DAO.getInstance().storeAthlete(athlete);
+        if (!DAO.getInstance().containsActivity(activity.getName(), activity.getEmail())) {
+            athlete.addActivity(activity);
+            DAO.getInstance().storeAthlete(athlete);
+        }
     }
 
     public List<Activity> getActivities(final Athlete athlete) {
