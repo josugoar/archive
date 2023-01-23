@@ -288,6 +288,8 @@ public class MainWindowChallenges extends JFrame {
 		// TODO
 		DefaultTableModel activeModel = (DefaultTableModel) tableAvailableChallenges.getModel();
 		DefaultTableModel myModel = (DefaultTableModel) tableMyChallenges.getModel();
+		myModel.setRowCount(0);
+		activeModel.setRowCount(0);
 		for (ChallengeDTO challengeDTO : challenges) {
 
 			String time = "";
