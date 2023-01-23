@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -140,25 +141,28 @@ public class ActivityDialog extends JDialog {
 	public void createActivity() {
         String name = nameField.getText();
 
+		Double distance = null;
+		try {
+			distance = Double.parseDouble(distanceField.getText());
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(rootPane, "Wrong distance");
+			return;
+		}
+
         int elapsedTime = 0;
         try {
             elapsedTime = Integer.parseInt(timeField.getText());
         } catch (Exception e) {
-            System.err.println("Wrong elapsed time");
-        }
-
-        Double distance = null;
-        try {
-            distance = Double.parseDouble(distanceField.getText());
-        } catch (Exception e) {
-            System.err.println("Wrong distance");
+			JOptionPane.showMessageDialog(rootPane, "Wrong elapsed time");
+			return;
         }
 
         Date startDate = null;
         try {
             startDate = formatter.parse(startField.getText());
         } catch (ParseException e1) {
-            System.err.println("Wrong date, use dd-mm-yyyy");
+			JOptionPane.showMessageDialog(rootPane, "Wrong date, use dd-mm-yyyy");
+			return;
         }
         String type = sportBox.getSelectedItem().toString();
 
@@ -172,7 +176,8 @@ public class ActivityDialog extends JDialog {
         activity.setStartDate(startDate);
 
         if (!activityController.createActivity(token, activity)) {
-			System.err.println("Error creating activity");
+			JOptionPane.showMessageDialog(rootPane, "Error creating activity");
+			return;
         }
         setVisible(false);
     }
