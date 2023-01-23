@@ -183,7 +183,7 @@ public class ChallengeDialog extends JDialog {
 
         String sport = sportCombo.getSelectedItem().toString();
         Set<String> type = new HashSet<>();
-        if (sport.equals("Both")) {
+        if (sport.equals("BOTH")) {
             type.add("CYCLING");
             type.add("RUNNING");
         } else {
