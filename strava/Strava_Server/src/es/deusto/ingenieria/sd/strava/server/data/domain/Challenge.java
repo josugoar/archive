@@ -9,18 +9,13 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import org.datanucleus.api.jdo.annotations.CreateTimestamp;
-
 @PersistenceCapable(detachable = "true")
 public class Challenge {
 
     @PrimaryKey
     private String name;
 
-    @CreateTimestamp
     private Date startDate;
-
-    @CreateTimestamp
     private Date endDate;
     private Double distance;
     private Integer time;

@@ -9,8 +9,6 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import org.datanucleus.api.jdo.annotations.CreateTimestamp;
-
 @PersistenceCapable(detachable = "true")
 public class Athlete {
 
@@ -23,7 +21,6 @@ public class Athlete {
     private Integer restingHeartRate;
     private Integer maxHeartRate;
 
-    @CreateTimestamp
     private Date dateOfBirth;
 
     private LoginType loginType;
