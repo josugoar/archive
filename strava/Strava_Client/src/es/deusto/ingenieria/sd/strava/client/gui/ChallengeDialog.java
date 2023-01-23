@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -162,6 +163,8 @@ public class ChallengeDialog extends JDialog {
         try {
             time = Integer.valueOf(timeField.getText());
         } catch (Exception e) {
+			JOptionPane.showMessageDialog(rootPane, "Wrong time");
+			return;
         }
 
         Double distance = null;
@@ -170,6 +173,8 @@ public class ChallengeDialog extends JDialog {
                 distance = Double.parseDouble(distanceField.getText());
             }
         } catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(rootPane, "Wrong distance");
+			return;
         }
 
         Date startDate = null;
@@ -178,7 +183,8 @@ public class ChallengeDialog extends JDialog {
             startDate = formatter.parse(startField.getText());
             endDate = formatter.parse(endField.getText());
         } catch (RuntimeException | ParseException e1) {
-			System.err.println("Wrong date, use DD-mm-yyyy");
+			JOptionPane.showMessageDialog(rootPane, "Wrong date, use DD-mm-yyyy");
+			return;
         }
 
         String sport = sportCombo.getSelectedItem().toString();
@@ -200,7 +206,8 @@ public class ChallengeDialog extends JDialog {
         challenge.setTime(time);
         challenge.setType(type);
         if (!challengeController.createChallenge(token, challenge)) {
-            System.err.println("Error creating challenge");
+			JOptionPane.showMessageDialog(rootPane, "Error creating challenge");
+			return;
         }
 
         setVisible(false);
