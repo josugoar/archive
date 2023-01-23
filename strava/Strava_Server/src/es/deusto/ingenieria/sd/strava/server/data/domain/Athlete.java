@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -30,8 +29,7 @@ public class Athlete {
     private LoginType loginType;
     private String password;
 
-    //@Element(column="email")
-    //Pruebitas
+    @Join
     @Persistent(defaultFetchGroup = "true")
     private Set<Activity> activities = new HashSet<>();
 

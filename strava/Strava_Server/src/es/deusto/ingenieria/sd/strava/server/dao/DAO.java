@@ -39,7 +39,6 @@ public class DAO implements IDAO {
             tx.begin();
             System.err.println("   * Storing an object: " + object);
             pm.makePersistent(object);
-            System.out.println("Saexo peristente miarma!!!!");
             tx.commit();
         } catch (final Exception ex) {
             System.err.println("   $ Error storing an object: " + ex.getMessage());
@@ -161,11 +160,6 @@ public class DAO implements IDAO {
 
     @Override
     public void storeAthlete(final Athlete athlete) {
-        //pruebita
-        for (Activity activity : athlete.getActivities()) {
-            storeActivity(activity);
-        }
-
         storeObject(athlete);
 
     }
