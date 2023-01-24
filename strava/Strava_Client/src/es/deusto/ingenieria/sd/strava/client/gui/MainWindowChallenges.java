@@ -8,6 +8,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -215,7 +216,6 @@ public class MainWindowChallenges extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int index = tableAvailableChallenges.getSelectedRow();
 					// TODO
 				} catch (Exception ece) {
 					System.err.println("Select row in table");
@@ -242,9 +242,8 @@ public class MainWindowChallenges extends JFrame {
 
 
 
-	public void getActiveChallenges() {
-        challenges = challengeController.getChallenges(this.athleteController.getToken());
-        System.err.println("Challenges: " + challenges);
+	public List<ChallengeDTO>  getActiveChallenges() {
+        return challengeController.getChallenges(this.athleteController.getToken());
     }
 
 	public void setChallengeDialog( final ChallengeDialog challengeDialog) {
@@ -283,13 +282,12 @@ public class MainWindowChallenges extends JFrame {
 
 	private void update() {
 
-		getActiveChallenges();
-
 		DefaultTableModel activeModel = (DefaultTableModel) tableAvailableChallenges.getModel();
 		DefaultTableModel myModel = (DefaultTableModel) tableMyChallenges.getModel();
 		myModel.setRowCount(0);
 		activeModel.setRowCount(0);
-		for (ChallengeDTO challengeDTO : challenges) {
+		challenges = new ArrayList<>();
+		for (ChallengeDTO challengeDTO : getActiveChallenges()) {
 
 			String time = "";
 			Double distance = 0.0;
@@ -321,6 +319,7 @@ public class MainWindowChallenges extends JFrame {
 					challengeDTO.getStartDate().toString(),
 					challengeDTO.getEndDate().toString()
 				};
+				challenges.add(challengeDTO);
 				activeModel.addRow(data);
 			}
 
