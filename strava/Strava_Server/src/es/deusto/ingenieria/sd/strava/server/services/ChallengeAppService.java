@@ -61,13 +61,14 @@ public class ChallengeAppService {
         pm.close();
     }
 
-    public double getChallengeProgress(final Athlete athlete, final Challenge challenge) {
+    public double getChallengeProgress(Athlete athlete, final Challenge challenge) {
+        athlete = DAO.getInstance().getAthlete(athlete.getEmail());
         if (!athlete.hasChallenge(challenge)) {
             return -1;
         }
 
         double progress = 0;
-        for (final Activity activity : athlete.getActivities()) {
+        for (final Activity activity : DAO.getInstance().getActivities("email = '" + athlete.getEmail() + "'")) {
             if (challenge.hasType(activity.getType())
                     && activity.getStartDate().after(challenge.getStartDate())
                     && activity.getStartDate().before(challenge.getEndDate())) {

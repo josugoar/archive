@@ -21,7 +21,8 @@ public class ActivityAppService {
         return instance;
     }
 
-    public void createActivity(final Athlete athlete, final Activity activity) throws IllegalArgumentException {
+    public void createActivity(Athlete athlete, final Activity activity) throws IllegalArgumentException {
+        athlete = DAO.getInstance().getAthlete(athlete.getEmail());
         activity.setEmail(athlete.getEmail());
         if (!DAO.getInstance().containsActivity(activity.getName(), activity.getEmail())) {
             athlete.addActivity(activity);
@@ -30,7 +31,8 @@ public class ActivityAppService {
         }
     }
 
-    public List<Activity> getActivities(final Athlete athlete) {
+    public List<Activity> getActivities(Athlete athlete) {
+        athlete = DAO.getInstance().getAthlete(athlete.getEmail());
         return List.copyOf(athlete.getActivities());
     }
 
