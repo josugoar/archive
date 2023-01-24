@@ -2,7 +2,10 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentListener;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BoxLayout;
@@ -23,18 +26,38 @@ public class AthleteDialog extends JFrame {
 	private JTable atributeTable;
 
 	private AthleteController athleteController;
+	private LoginWindow loginWindow;
 	private AthleteDTO athlete;
 
 	/**
 	 * Create the frame.
 	 */
-	public AthleteDialog(AthleteController athleteController) {
+	public AthleteDialog(AthleteController athleteController, LoginWindow loginWindow) {
 		this.athleteController = athleteController;
+		this.loginWindow = loginWindow;
 
-		// TODO: IMPORTANT
-		if (athlete == null) {
-			return;
-		}
+		addComponentListener(new ComponentListener() {
+            public void componentShown(ComponentEvent e) {
+				getAthlete();
+            }
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+			}
+
+        });
+	}
+
+	public void getAthlete() {
+        athlete = athleteController.getAthlete();
 
 		setTitle("Athlete Profile");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,7 +126,7 @@ public class AthleteDialog extends JFrame {
 		btnBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				setVisible(false);
 			}
 		});
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -113,14 +136,14 @@ public class AthleteDialog extends JFrame {
 		btnLogout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				for (Window window : getWindows()) {
+					window.setVisible(false);
+				}
+				loginWindow.setVisible(true);
+				athleteController.logout();
 			}
 		});
 		panel_8.add(btnLogout);
-	}
-
-	public void getAthlete() {
-        athlete = athleteController.getAthlete();
     }
 
 }

@@ -38,7 +38,7 @@ public class MainProgram {
         LoginWindow loginWindow = new LoginWindow(athleteController);
         MainWindowActivities mActivities = new MainWindowActivities(activityController, athleteController);
 		MainWindowChallenges mChallenges = new MainWindowChallenges(athleteController, challengeController);
-        AthleteDialog athleteDialog = new AthleteDialog(athleteController);
+        AthleteDialog athleteDialog = new AthleteDialog(athleteController, loginWindow);
         ActivityDialog activityDialog = new ActivityDialog(activityController, athleteController);
         ChallengeDialog challengeDialog = new ChallengeDialog(challengeController, athleteController);
 
