@@ -24,6 +24,9 @@ public class Challenge {
     @Persistent(defaultFetchGroup = "true")
     private Set<SportType> type = new HashSet<>();
 
+    @Persistent(mappedBy = "challenges")
+    private Set<Athlete> athletes = new HashSet<>();
+
     public boolean isActive() {
         if (startDate == null || endDate == null) {
             return false;
@@ -159,6 +162,34 @@ public class Challenge {
         } else if (!name.equals(other.name))
             return false;
         return true;
+    }
+
+    public Set<Athlete> getAthletes() {
+        return athletes;
+    }
+
+    public void setAthletes(final Set<Athlete> athletes) throws IllegalArgumentException {
+        if (athletes == null) {
+            throw new IllegalArgumentException("challenges == null");
+        }
+
+        if (athletes.contains(null)) {
+            throw new IllegalArgumentException("challenges.contains(null)");
+        }
+
+        this.athletes = athletes;
+    }
+
+    public void addAthlete(final Athlete athlete) throws IllegalArgumentException {
+        if (athlete == null) {
+            throw new IllegalArgumentException("challenges == null");
+        }
+
+        if (athletes.contains(athlete)) {
+            throw new IllegalArgumentException("challenges.contains(challenge)");
+        }
+
+        this.athletes.add(athlete);
     }
 
 }

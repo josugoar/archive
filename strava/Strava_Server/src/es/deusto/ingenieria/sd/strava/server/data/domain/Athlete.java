@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -29,8 +30,9 @@ public class Athlete {
     @Persistent(defaultFetchGroup = "true")
     private Set<Activity> activities = new HashSet<>();
 
-    @Join
-    @Persistent(defaultFetchGroup = "true")
+    @Persistent(defaultFetchGroup = "true", table="ATHLETE_CHALLENGE")
+    @Join(column = "email")
+    @Element(column = "name")
     private Set<Challenge> challenges = new HashSet<>();
 
     public boolean hasChallenge(final Challenge challenge) {
