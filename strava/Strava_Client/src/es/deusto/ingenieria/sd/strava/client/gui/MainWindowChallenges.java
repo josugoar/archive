@@ -300,17 +300,28 @@ public class MainWindowChallenges extends JFrame {
 			if (challengeDTO.getDistance() != null) {
 				distance = challengeDTO.getDistance();
 			}
-			Object[] data = {
-				challengeDTO.getName(),
-				distance,
-				time,
-				challengeDTO.getType(),
-				challengeDTO.getStartDate().toString(),
-				challengeDTO.getEndDate().toString()
-			};
-			activeModel.addRow(data);
-			if (getChallengeProgress(challengeDTO) != -1) {
+			double progress = getChallengeProgress(challengeDTO);
+			if (progress != -1) {
+				Object[] data = {
+					challengeDTO.getName(),
+					distance,
+					time,
+					challengeDTO.getType(),
+					challengeDTO.getStartDate().toString(),
+					challengeDTO.getEndDate().toString(),
+					progress
+				};
 				myModel.addRow(data);
+			} else {
+				Object[] data = {
+					challengeDTO.getName(),
+					distance,
+					time,
+					challengeDTO.getType(),
+					challengeDTO.getStartDate().toString(),
+					challengeDTO.getEndDate().toString()
+				};
+				activeModel.addRow(data);
 			}
 
         }
