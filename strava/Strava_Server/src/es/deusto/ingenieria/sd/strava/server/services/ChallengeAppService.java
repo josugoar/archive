@@ -3,6 +3,9 @@ package es.deusto.ingenieria.sd.strava.server.services;
 import java.util.Date;
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Transaction;
+
 import es.deusto.ingenieria.sd.strava.server.dao.DAO;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Activity;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
@@ -36,13 +39,26 @@ public class ChallengeAppService {
         return DAO.getInstance().getChallenges("'" + date + "' > startDate AND '" + date + "' < endDate");
     }
 
-    public void acceptChallenge(final Athlete athlete, final Challenge challenge) throws IllegalArgumentException {
+    public void acceptChallenge(Athlete athlete, Challenge challenge) throws IllegalArgumentException {
         if (!DAO.getInstance().containsChallenge(challenge.getName())) {
             throw new IllegalArgumentException("Challenge is not created!");
         }
 
+        final PersistenceManager pm = DAO.getInstance().getManager();
+        final Transaction tx = pm.currentTransaction();
+
+        tx.begin();
+
+        athlete = DAO.getInstance().getAthlete(athlete.getEmail());
+        challenge = DAO.getInstance().getChallenge(challenge.getName());
+
         athlete.addChallenge(challenge);
-        DAO.getInstance().storeAthlete(athlete);
+        challenge.addAthlete(athlete);
+
+        pm.makePersistentAll(athlete, challenge);
+
+        tx.commit();
+        pm.close();
     }
 
     public double getChallengeProgress(final Athlete athlete, final Challenge challenge) {

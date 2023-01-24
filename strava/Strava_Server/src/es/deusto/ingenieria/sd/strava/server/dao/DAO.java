@@ -15,15 +15,15 @@ import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 
 public class DAO implements IDAO {
 
-    private final PersistenceManagerFactory pmf;
+    public final PersistenceManagerFactory pmf;
 
-    private static IDAO instance;
+    private static DAO instance;
 
     private DAO() {
         pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
     }
 
-    public static IDAO getInstance() {
+    public static DAO getInstance() {
         if (instance == null) {
             instance = new DAO();
         }
@@ -31,7 +31,12 @@ public class DAO implements IDAO {
         return instance;
     }
 
-    private <T> void storeObject(final T object) {
+    public PersistenceManager getManager() {
+        final PersistenceManager pm = pmf.getPersistenceManager();
+        return pm;
+    }
+
+    public <T> void storeObject(final T object) {
         final PersistenceManager pm = pmf.getPersistenceManager();
         final Transaction tx = pm.currentTransaction();
 

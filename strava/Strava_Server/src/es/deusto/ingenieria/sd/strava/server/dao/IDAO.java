@@ -2,11 +2,15 @@ package es.deusto.ingenieria.sd.strava.server.dao;
 
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
+
 import es.deusto.ingenieria.sd.strava.server.data.domain.Activity;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Athlete;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 
 public interface IDAO {
+
+    public PersistenceManager getManager();
 
     public void storeActivity(Activity activity);
 
