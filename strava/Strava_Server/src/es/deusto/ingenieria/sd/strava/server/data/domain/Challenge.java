@@ -168,10 +168,6 @@ public class Challenge {
             throw new IllegalArgumentException("athletes == null");
         }
 
-        if (athletes.contains(athlete)) {
-            throw new IllegalArgumentException("athletes.contains(challenge)");
-        }
-
         this.athletes.add(athlete);
     }
 

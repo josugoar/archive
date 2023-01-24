@@ -204,10 +204,6 @@ public class Athlete {
             throw new IllegalArgumentException("challenges == null");
         }
 
-        if (challenges.contains(challenge)) {
-            throw new IllegalArgumentException("challenges.contains(challenge)");
-        }
-
         this.challenges.add(challenge);
     }
 
