@@ -177,6 +177,7 @@ public class CompleteRegisterWindow extends JFrame {
             public void actionPerformed(final ActionEvent arg0) {
                 setVisible(false);
 				registerWindow.setVisible(true);
+				clear();
             }
         });
 
@@ -253,6 +254,7 @@ public class CompleteRegisterWindow extends JFrame {
 			if (athleteController.registerGoogle(athleteDTO) && athleteController.login(email, password)) {
 				this.setVisible(false);
 				mainWindow.setVisible(true);
+				clear();
 			} else {
 				JOptionPane.showMessageDialog(rootPane, "Error in registration");
 			}
@@ -260,6 +262,7 @@ public class CompleteRegisterWindow extends JFrame {
 			if (athleteController.registerFacebook(athleteDTO) && athleteController.login(email, password)) {
 				this.setVisible(false);
 				mainWindow.setVisible(true);
+				clear();
 			} else {
 				JOptionPane.showMessageDialog(rootPane, "Error in registration");
 			}
@@ -267,6 +270,7 @@ public class CompleteRegisterWindow extends JFrame {
 			if (athleteController.register(password, athleteDTO) && athleteController.login(email, password)) {
 				this.setVisible(false);
 				mainWindow.setVisible(true);
+				clear();
 			} else {
 				JOptionPane.showMessageDialog(rootPane, "Error in registration");
 			}
@@ -275,6 +279,18 @@ public class CompleteRegisterWindow extends JFrame {
 		}
 
     }
+
+	
+	private void clear() {
+	emailField.setText("");
+	passField.setText("");
+	nameField.setText("");
+	heightField.setText("");
+	weightField.setText("");
+	birthField.setText("");
+	maxField.setText("");
+	restField.setText("");
+	}
 
 
 }

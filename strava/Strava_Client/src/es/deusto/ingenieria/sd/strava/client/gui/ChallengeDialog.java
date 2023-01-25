@@ -207,6 +207,15 @@ public class ChallengeDialog extends JDialog {
         }
 
         setVisible(false);
+		clear();
     }
+
+	private void clear() {
+		nameField.setText("");
+		startField.setText("");
+		endField.setText("");
+		distanceField.setText("");
+		timeField.setText("");
+	}
 
 }

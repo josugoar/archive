@@ -91,6 +91,7 @@ public class LoginWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 login();
+				clear();
             }
         });
 
@@ -99,6 +100,7 @@ public class LoginWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 registerWindow.setVisible(true);
                 setVisible(false);
+				clear();
             }
         });
 
@@ -123,5 +125,10 @@ public class LoginWindow extends JFrame {
             JOptionPane.showMessageDialog(rootPane, "Error in login");
         }
     }
+
+	private void clear(){
+		emailField.setText("");
+		passwordField.setText("");
+	}
 
 }

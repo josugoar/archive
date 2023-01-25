@@ -180,6 +180,16 @@ public class ActivityDialog extends JDialog {
 			return;
         }
         setVisible(false);
+		clear();
     }
+
+	private void clear() {
+
+		nameField.setText("");
+		distanceField.setText("");
+		timeField.setText("");
+		startField.setText("");
+
+	}
 
 }
