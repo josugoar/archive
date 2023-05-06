@@ -23,10 +23,13 @@ class MCTS:
         child = self._expand(leaf)
         reward = self._simulate(child.state)
         self._backpropagate(child, reward)
+    
+    def best_child(self, node):
+        return max(node.children, key=self.tree_policy)
 
     def _select(self, node):
         while node.fully_expanded and not node.state.terminal:
-            node = max(node.children, key=self.tree_policy)
+            node = self.best_child(node)
         return node
 
     def _expand(self, node):
@@ -45,6 +48,7 @@ class MCTS:
         while node is not None:
             node.update(reward)
             node = node.parent
+            reward *= -1
 
 
 class Node:
@@ -53,7 +57,8 @@ class Node:
         self.state = state
         self.parent = parent
         self.children = set()
-        self.visits = self.total_reward = 0
+        self.visits = 0
+        self.total_reward = 0
 
     @property
     def fully_expanded(self):
@@ -75,10 +80,6 @@ class Node:
 
 
 class State(abc.ABC):
-
-    @property
-    @abc.abstractmethod
-    def action(self): ...
 
     @property
     @abc.abstractmethod

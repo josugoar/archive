@@ -3,7 +3,7 @@ __credits__ = "https://gist.github.com/qpwo/c538c6f73727e254fdc7fab81024f6e1"
 import threading
 import time
 
-from mcts import MCTS, MCTSNode, MCTSState
+from mcts import MCTS, Node, State
 
 SYMBOLS = {True: "X", False: "O", None: "-"}
 
@@ -12,42 +12,34 @@ WINNING_COMBOS = ((0, 1, 2), (3, 4, 5), (6, 7, 8),
                   (0, 4, 8), (2, 4, 6))
 
 
-class TicTacToeState(MCTSState):
+class TicTacToeState(State):
 
-    def __init__(self, board, turn, winner, action):
+    def __init__(self, board, turn, winner):
         self.board = board
         self.turn = turn
         self.winner = winner
-        self._action = action
-
-    @property
-    def agent(self):
-        return int(self.turn)
 
     @property
     def reward(self):
         if self.winner is None:
-            return [0.5] * 2
-        reward = [1] * 2
-        reward[self.winner] = 0
-        return reward
+            reward = [0.5] * 2
+        else:
+            reward = [1] * 2
+            reward[self.winner] = 0
+        return reward[0]
 
     @property
     def terminal(self):
         return self.winner is not None or not self.actions
 
     @property
-    def action(self):
-        return self._action
-
-    @property
     def actions(self):
         return [idx for idx, value in enumerate(self.board) if value is None]
 
-    def take_action(self, action):
+    def step(self, action):
         board = list(self.board)
         board[action] = self.turn
-        return TicTacToeState(board, not self.turn, _winner(board), action)
+        return TicTacToeState(board, not self.turn, _winner(board),)
 
     def _string(self, value):
         if value is True:
@@ -79,8 +71,10 @@ def main(rounds):
         idx = 3 * row + col - 4
         if root.state.board[idx] is not None:
             raise ValueError("Invalid move")
-        root = root.take_action(idx)
+        root = root.add_child(idx)
         if root.state.terminal:
+            print("You win")
+            print(root.state)
             break
         start = time.time()
         for _ in range(rounds):
@@ -88,12 +82,14 @@ def main(rounds):
         print(f"Elapsed time: {time.time() - start} seconds")
         root = tree.best_child(root)
         if root.state.terminal:
+            print("You lose")
+            print(root.state)
             break
 
 
 def _root():
-    state = TicTacToeState([None] * 9, True, None, None)
-    return MCTSNode(state)
+    state = TicTacToeState([None] * 9, True, None)
+    return Node(state)
 
 
 def _winner(board):
@@ -107,4 +103,4 @@ def _winner(board):
 
 
 if __name__ == "__main__":
-    main(1000)
+    main(10000)
