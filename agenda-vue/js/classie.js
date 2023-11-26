@@ -12,7 +12,6 @@
 /*global define: false */
 
 ( function( window ) {
-
 'use strict';
 
 // class helper functions from bonzo https://github.com/ded/bonzo
