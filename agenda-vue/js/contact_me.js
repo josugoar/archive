@@ -1,3 +1,5 @@
+import { addContact } from '@/firebase';
+
 $(function() {
 
     $("input,textarea").jqBootstrapValidation({
@@ -9,7 +11,7 @@ $(function() {
             // Prevent spam click and default submit behaviour
             $("#btnSubmit").attr("disabled", true);
             event.preventDefault();
-            
+
             // get values from FORM
             var name = $("input#name").val();
             var email = $("input#email").val();
@@ -20,17 +22,8 @@ $(function() {
             if (firstName.indexOf(' ') >= 0) {
                 firstName = name.split(' ').slice(0, -1).join(' ');
             }
-            $.ajax({
-                url: "././mail/contact_me.php",
-                type: "POST",
-                data: {
-                    name: name,
-                    phone: phone,
-                    email: email,
-                    message: message
-                },
-                cache: false,
-                success: function() {
+            addContact(name, phone, email)
+                .then(() => {
                     // Enable button & show success message
                     $("#btnSubmit").attr("disabled", false);
                     $('#success').html("<div class='alert alert-success'>");
@@ -43,17 +36,16 @@ $(function() {
 
                     //clear all fields
                     $('#contactForm').trigger("reset");
-                },
-                error: function() {
-                    // Fail message
-                    $('#success').html("<div class='alert alert-danger'>");
-                    $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-                        .append("</button>");
-                    $('#success > .alert-danger').append("<strong>Sorry " + firstName + ", it seems that my mail server is not responding. Please try again later!");
-                    $('#success > .alert-danger').append('</div>');
-                    //clear all fields
-                    $('#contactForm').trigger("reset");
-                },
+                })
+            .catch(() => {
+                // Fail message
+                $('#success').html("<div class='alert alert-danger'>");
+                $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+                    .append("</button>");
+                $('#success > .alert-danger').append("<strong>Sorry " + firstName + ", it seems that my mail server is not responding. Please try again later!");
+                $('#success > .alert-danger').append('</div>');
+                //clear all fields
+                $('#contactForm').trigger("reset");
             })
         },
         filter: function() {
