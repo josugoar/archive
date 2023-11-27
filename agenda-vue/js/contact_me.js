@@ -22,7 +22,7 @@ $(function() {
             if (firstName.indexOf(' ') >= 0) {
                 firstName = name.split(' ').slice(0, -1).join(' ');
             }
-            addContact(name, phone, email)
+            addContact(name, email, phone)
                 .then(() => {
                     // Enable button & show success message
                     $("#btnSubmit").attr("disabled", false);
