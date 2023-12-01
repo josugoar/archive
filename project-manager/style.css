@@ -1,0 +1,149 @@
+:root {
+  --nav-font-weight: normal;
+  --nav-stroke-width: 1px;
+}
+
+* {
+  font-family: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  background-color: #18181b;
+  border: none;
+  border-radius: 7.5px;
+  color: #fafafa;
+  cursor: pointer;
+  font-size: medium;
+  padding: 10px;
+  transition: 0.5s;
+}
+
+button:hover {
+  background-color: #424249;
+  color: #fafafa;
+}
+
+img {
+  border-radius: 7.5px;
+  max-width: 100%;
+}
+
+ol {
+  list-style-position: inside;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  font-family: Inter;
+}
+
+aside {
+  background-color: #fbfbfb;
+  border-right: 1px solid #eaecef;
+  position: sticky;
+  top: 0;
+  min-width: 250px;
+}
+
+aside header a {
+  align-items: center;
+  display: flex;
+}
+
+aside header a svg {
+  stroke-width: 2px;
+}
+
+aside header a span {
+  font-size: larger;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+nav {
+  padding: 20px;
+}
+
+nav li {
+  border-radius: 7.5px;
+  color: #71717a;
+  transition: 0.5s;
+}
+
+nav li:hover {
+  color: black;
+  --nav-font-weight: bold;
+  --nav-stroke-width: 2px;
+}
+
+nav li.active {
+  background-color: #f4f4f5;
+  color: black;
+  --nav-font-weight: bold;
+  --nav-stroke-width: 2px;
+}
+
+nav a {
+  align-items: center;
+  display: flex;
+  padding: 10px;
+}
+
+nav a svg {
+  stroke-width: var(--nav-stroke-width);
+}
+
+nav a span {
+  font-size: medium;
+  font-weight: var(--nav-font-weight);
+  margin-left: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+header {
+  align-items: center;
+  background-color: #fbfbfb;
+  border-bottom: 1px solid #eaecef;
+  display: flex;
+  height: 30px;
+  min-height: 30px;
+  padding: 20px;
+  justify-content: space-between;
+}
+
+h1 {
+  font-size: x-large;
+}
+
+main {
+  height: 100%;
+  padding: 20px;
+}
+
+footer {
+  align-items: center;
+  background-color: #fbfbfb;
+  border-top: 1px solid #eaecef;
+  color: #71717a;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  padding: 20px;
+}

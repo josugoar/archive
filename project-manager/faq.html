@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Manager</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Inter"
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/faq.css" />
+  </head>
+  <body>
+    <aside>
+      <header>
+        <a href="/projects.html">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"></path>
+            <path
+              d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"
+            ></path>
+            <path d="M12 3v6"></path>
+          </svg>
+          <span>Project Manager</span>
+        </a>
+      </header>
+      <nav>
+        <ul>
+          <li>
+            <a href="/projects.html">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span>Projects</span>
+            </a>
+          </li>
+          <li>
+            <a href="/new_project.html">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              <span>New Project</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="/faq.html">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="12" y1="20" x2="12" y2="10"></line>
+                <line x1="18" y1="20" x2="18" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="16"></line>
+              </svg>
+              <span>FAQ</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="container">
+      <header>
+        <h1>FAQ</h1>
+      </header>
+      <main>
+        <details>
+          <summary><strong>What is Project Manager?</strong></summary>
+          <p>
+            Project Manager is a web-based application that helps you manage
+            your projects and tasks. You can create, edit, and delete projects,
+            assign resources, track progress, and communicate with your team and
+            clients.
+          </p>
+        </details>
+        <details>
+          <summary><strong>How do I create a new project?</strong></summary>
+          <p>
+            To create a new project, you need to go to the New Project page and
+            fill out the project registration form. You need to provide the
+            project title, start and end dates, person responsible, description,
+            client information, and project type. Once you submit the form, your
+            project will be created and added to the list of projects.
+          </p>
+        </details>
+        <details>
+          <summary>
+            <strong>How do I view the details of a project?</strong>
+          </summary>
+          <p>
+            To view the details of a project, you need to go to the Projects
+            page and click on the View Details link of the project you want to
+            see. You will be taken to the Project Details page, where you can
+            see all the information about the project, such as start and end
+            dates, client data, description, resources involved, planned tasks,
+            comments, etc.
+          </p>
+        </details>
+        <details>
+          <summary>
+            <strong>How do I edit or delete a project?</strong>
+          </summary>
+          <p>
+            To edit or delete a project, you need to go to the Project Details
+            page and click on the Edit or Delete button at the top right corner
+            of the page. You will be able to modify or remove the project
+            information as you wish. Please note that deleting a project is
+            irreversible and will erase all the data associated with it.
+          </p>
+        </details>
+        <details>
+          <summary>
+            <strong>How do I add or remove resources from a project?</strong>
+          </summary>
+          <p>
+            To add or remove resources from a project, you need to go to the
+            Project Details page and click on the Resources tab. You will see a
+            list of resources involved in the project, as well as a dropdown
+            menu to select new resources. You can add or remove resources by
+            checking or unchecking the boxes next to their names. You can also
+            assign different roles and responsibilities to each resource by
+            clicking on the Edit button next to their name.
+          </p>
+        </details>
+        <details>
+          <summary>
+            <strong>How do I create or update tasks for a project?</strong>
+          </summary>
+          <p>
+            To create or update tasks for a project, you need to go to the
+            Project Details page and click on the Tasks tab. You will see a list
+            of planned tasks for the project, as well as a button to add new
+            tasks. You can create or update tasks by filling out the task form,
+            which includes the task title, description, deadline, status, and
+            assigned resource. You can also delete tasks by clicking on the
+            Delete button next to each task.
+          </p>
+        </details>
+        <details>
+          <summary>
+            <strong>How do I add or view comments for a project?</strong>
+          </summary>
+          <p>
+            To add or view comments for a project, you need to go to the Project
+            Details page and click on the Comments tab. You will see a list of
+            comments for the project, as well as a textbox to write new
+            comments. You can add or view comments by typing in the textbox and
+            clicking on the Submit button. You can also reply to or delete
+            comments by clicking on the Reply or Delete button next to each
+            comment.
+          </p>
+        </details>
+      </main>
+      <footer><p>© 2023 Project Manager. All rights reserved.</p></footer>
+    </div>
+  </body>
+</html>
