@@ -8,8 +8,6 @@ export default {
   methods: { deleteContact },
   async mounted() {
     // @ts-ignore
-    await import('/js/jquery.js')
-    // @ts-ignore
     await import('/js/bootstrap.min.js')
     // @ts-ignore
     await import('https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js')
