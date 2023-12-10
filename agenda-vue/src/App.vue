@@ -8,8 +8,6 @@ export default {
   methods: { deleteContact },
   async mounted() {
     // @ts-ignore
-    await import('/js/jquery.js')
-    // @ts-ignore
     await import('/js/bootstrap.min.js')
     // @ts-ignore
     await import('https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js')
@@ -174,7 +172,9 @@ export default {
             <div id="success"></div>
             <div class="row">
               <div class="form-group col-xs-12">
-                <button type="submit" class="btn btn-success btn-lg" id="btnSubmit">Añadir</button>
+                <button type="submit" class="btn btn-success btn-lg" id="btnSubmit">
+                  Añadir
+                </button>
               </div>
             </div>
           </form>
