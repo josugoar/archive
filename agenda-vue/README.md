@@ -1,6 +1,6 @@
 # agenda-vue
 
-* [GitHub Pages](josugoar.github.io/agenda-vue/)
+* [GitHub Pages](https://josugoar.github.io/agenda-vue/)
 
 ## Recommended IDE Setup
 
