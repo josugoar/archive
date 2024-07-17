@@ -1,6 +1,6 @@
 # CChess
 
-***CChess* lets users play chess locally. That's it.**
+> *CChess* lets users play chess locally. That's it.
 
 *CChess* is built upon the foundations of the gnome-chess chess library with an integrated SQLite DB and an advanced Swing & AWT user interface.
 
