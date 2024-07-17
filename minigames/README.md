@@ -1,0 +1,3 @@
+# minigames
+
+> Command line minigames
