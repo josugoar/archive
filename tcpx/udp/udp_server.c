@@ -1,0 +1,237 @@
+#include <assert.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <netdb.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/select.h>
+#include <sys/socket.h>
+#include <unistd.h>
+
+#define NAME "localhost"
+#define SERVICE "1025"
+#define N 1200
+
+void app_main(void)
+{
+    int errnum = 0;
+
+    struct addrinfo req = {
+        .ai_flags = AI_PASSIVE,
+        .ai_family = AF_UNSPEC,
+        .ai_socktype = SOCK_DGRAM,
+    };
+
+    struct addrinfo *ais = NULL;
+
+    errnum = getaddrinfo(NAME, SERVICE, &req, &ais);
+    if (errnum != 0)
+    {
+        fprintf(stderr, "getaddrinfo: %d\n", errnum);
+
+        goto addrinfo_cleanup;
+    }
+
+    int fd = -1;
+
+    for (struct addrinfo *ai = ais; ai; ai = ai->ai_next)
+    {
+        errno = 0;
+        fd = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
+        errnum = errno;
+        if (errnum != 0)
+        {
+            if (!ai->ai_next)
+            {
+                fprintf(stderr, "socket: %s\n", strerror(errnum));
+
+                goto fd_cleanup;
+            }
+
+            continue;
+        }
+
+        errno = 0;
+        bind(fd, ai->ai_addr, ai->ai_addrlen);
+        errnum = errno;
+        if (errnum != 0)
+        {
+            if (!ai->ai_next)
+            {
+                fprintf(stderr, "bind: %s\n", strerror(errnum));
+
+                goto fd_cleanup;
+            }
+
+            close(fd);
+
+            continue;
+        }
+
+        char host[NI_MAXHOST] = "";
+        char serv[NI_MAXSERV] = "";
+
+        errno = 0;
+        getnameinfo(ai->ai_addr, ai->ai_addrlen, host, sizeof(host), serv, sizeof(serv), NI_NUMERICHOST | NI_NUMERICSERV);
+        errnum = errno;
+        if (errnum != 0)
+        {
+            fprintf(stderr, "getnameinfo: %s\n", strerror(errnum));
+        }
+        else
+        {
+            fprintf(stderr, "getnameinfo: host=%s, serv=%s\n", host, serv);
+        }
+
+        break;
+    }
+
+    int readfd = fd;
+
+    errno = 0;
+    fcntl(readfd, F_SETFL, fcntl(readfd, F_GETFL) | O_NONBLOCK);
+    errnum = errno;
+    if (errnum != 0)
+    {
+        fprintf(stderr, "fcntl: %s\n", strerror(errnum));
+
+        goto fd_cleanup;
+    }
+
+    int writefd = STDOUT_FILENO;
+
+    errno = 0;
+    fcntl(writefd, F_SETFL, fcntl(writefd, F_GETFL) | O_NONBLOCK);
+    errnum = errno;
+    if (errnum != 0)
+    {
+        fprintf(stderr, "fcntl: %s\n", strerror(errnum));
+
+        goto fd_cleanup;
+    }
+
+    int nfds = readfd > writefd ? readfd + 1 : writefd + 1;
+    errnum = nfds > FD_SETSIZE ? EINVAL : 0;
+    if (errnum != 0)
+    {
+        fprintf(stderr, "select: %s\n", strerror(errnum));
+
+        goto fd_cleanup;
+    }
+
+    fd_set next_readfds = {0};
+    FD_ZERO(&next_readfds);
+    FD_SET(readfd, &next_readfds);
+
+    fd_set next_writefds = {0};
+    FD_ZERO(&next_writefds);
+
+    unsigned char buf[N] = {0};
+
+    size_t nread = 0;
+    size_t nwrite = 0;
+
+    while (true)
+    {
+        fd_set curr_readfds = next_readfds;
+        fd_set curr_writefds = next_writefds;
+
+        errno = 0;
+        select(nfds, &curr_readfds, &curr_writefds, NULL, NULL);
+        errnum = errno;
+        if (errnum != 0)
+        {
+            fprintf(stderr, "select: %s\n", strerror(errnum));
+
+            goto fd_cleanup;
+        }
+
+        if (FD_ISSET(readfd, &curr_readfds) != 0)
+        {
+            while (true)
+            {
+                assert(sizeof(buf) - nread > 0);
+
+                errno = 0;
+                ssize_t n = read(readfd, buf + nread, sizeof(buf) - nread);
+                errnum = errno;
+                if (errnum != 0)
+                {
+                    if (errnum == EAGAIN || errnum == EWOULDBLOCK)
+                    {
+                        break;
+                    }
+
+                    fprintf(stderr, "read: %s\n", strerror(errnum));
+
+                    goto fd_cleanup;
+                }
+
+                if (n == 0)
+                {
+                    break;
+                }
+
+                nread += n;
+
+                FD_SET(writefd, &next_writefds);
+
+                if (nread >= sizeof(buf))
+                {
+                    FD_CLR(readfd, &next_readfds);
+
+                    break;
+                }
+            }
+        }
+
+        if (FD_ISSET(writefd, &curr_writefds) != 0)
+        {
+            while (true)
+            {
+                assert(nread - nwrite > 0);
+
+                errno = 0;
+                ssize_t n = write(writefd, buf + nwrite, nread - nwrite);
+                errnum = errno;
+                if (errnum != 0)
+                {
+                    if (errnum == EAGAIN || errnum == EWOULDBLOCK)
+                    {
+                        break;
+                    }
+
+                    fprintf(stderr, "write: %s\n", strerror(errnum));
+
+                    goto fd_cleanup;
+                }
+
+                nwrite += n;
+
+                if (nwrite >= nread)
+                {
+                    nread = 0;
+                    nwrite = 0;
+
+                    FD_SET(readfd, &next_readfds);
+
+                    FD_CLR(writefd, &next_writefds);
+
+                    break;
+                }
+            }
+        }
+    }
+
+fd_cleanup:
+    close(fd);
+
+addrinfo_cleanup:
+    freeaddrinfo(ais);
+}
+
+int main(void)
+{
+    app_main();
+}
