@@ -8,6 +8,13 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#ifdef ESP_PLATFORM
+#include <esp_event.h>
+#include <esp_netif.h>
+#include <nvs_flash.h>
+#include <protocol_examples_common.h>
+#endif
+
 #define NAME "localhost"
 #define SERVICE "1025"
 #define NBUF 1200
@@ -19,6 +26,14 @@ int main(void)
 #endif
 {
     int errnum = 0;
+
+#ifdef ESP_PLATFORM
+    ESP_ERROR_CHECK(nvs_flash_init());
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+
+    ESP_ERROR_CHECK(example_connect());
+#endif
 
     struct addrinfo req = {
         .ai_flags = 0,
