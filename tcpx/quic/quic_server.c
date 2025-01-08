@@ -30,6 +30,8 @@
 
 void wolfSSL_log_printf(int log_level, const char *log_message)
 {
+    (void)log_level;
+
     fprintf(stderr, "V wolfSSL: %s\n", log_message);
 }
 

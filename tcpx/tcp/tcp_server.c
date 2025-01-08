@@ -31,7 +31,6 @@ int main(void)
     ESP_ERROR_CHECK(nvs_flash_init());
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
-
     ESP_ERROR_CHECK(example_connect());
 #endif
 
@@ -124,12 +123,12 @@ int main(void)
 
     if (getnameinfo((struct sockaddr *)&local_addr, local_addr_len, local_host, sizeof(local_host), local_serv, sizeof(local_serv), NI_NUMERICHOST | NI_NUMERICSERV) != 0)
     {
-        fprintf(stderr, "W tcp_client: getnameinfo local_addr: %s\n", strerror(errno));
+        fprintf(stderr, "W tcp_server: getnameinfo local_addr: %s\n", strerror(errno));
     }
 
     if (*local_host != '\0' && *local_serv != '\0')
     {
-        fprintf(stderr, "I tcp_client: local_host=%s local_serv=%s\n", local_host, local_serv);
+        fprintf(stderr, "I tcp_server: local_host=%s local_serv=%s\n", local_host, local_serv);
     }
 
     int acceptfd = local_fd;
@@ -158,7 +157,7 @@ int main(void)
         nfds = nfds > fd ? nfds : fd + 1;
         if (nfds > FD_SETSIZE)
         {
-            fprintf(stderr, "E tcp_server: nfds=%d > FD_SETSIZE=%d: %s\n", nfds, FD_SETSIZE);
+            fprintf(stderr, "E tcp_server: nfds=%d > FD_SETSIZE=%d\n", nfds, FD_SETSIZE);
 
             goto fd_cleanup;
         }
@@ -212,10 +211,7 @@ int main(void)
                     break;
                 }
 
-                struct sockaddr_storage addr = {0};
-                socklen_t addr_len = sizeof(addr);
-
-                int remote_fd = accept(acceptfd, (struct addrinfo *)&addr, &addr_len);
+                int remote_fd = accept(acceptfd, (struct sockaddr *)&remote_addr, &remote_addr_len);
                 if (remote_fd == -1)
                 {
                     if (errno == EAGAIN || errno == EWOULDBLOCK)
@@ -233,7 +229,7 @@ int main(void)
                 char remote_host[NI_MAXHOST] = "";
                 char remote_serv[NI_MAXSERV] = "";
 
-                if (getnameinfo((struct sockaddr *)&addr, addr_len, remote_host, sizeof(remote_host), remote_serv, sizeof(remote_serv), NI_NUMERICHOST | NI_NUMERICSERV) != 0)
+                if (getnameinfo((struct sockaddr *)&remote_addr, remote_addr_len, remote_host, sizeof(remote_host), remote_serv, sizeof(remote_serv), NI_NUMERICHOST | NI_NUMERICSERV) != 0)
                 {
                     fprintf(stderr, "W tcp_server: getnameinfo: %s\n", strerror(errno));
                 }
@@ -243,22 +239,22 @@ int main(void)
                     fprintf(stderr, "I tcp_server: remote_host=%s remote_serv=%s\n", remote_host, remote_serv);
                 }
 
-                if (fcntl(remote_fd, F_SETFL, fcntl(remote_fd, F_GETFL) | O_NONBLOCK) != 0)
+                int readfd = remote_fd;
+
+                if (fcntl(readfd, F_SETFL, fcntl(readfd, F_GETFL) | O_NONBLOCK) != 0)
                 {
-                    fprintf(stderr, "E tcp_server: fcntl fd=%d: %s\n", remote_fd, strerror(errno));
+                    fprintf(stderr, "E tcp_server: fcntl fd=%d: %s\n", readfd, strerror(errno));
 
                     goto fd_cleanup;
                 }
 
-                nfds = nfds > remote_fd ? nfds : remote_fd + 1;
+                nfds = nfds > readfd ? nfds : readfd + 1;
                 if (nfds > FD_SETSIZE)
                 {
-                    fprintf(stderr, "E tcp_server: nfds=%d > FD_SETSIZE=%d: %s\n", nfds, FD_SETSIZE);
+                    fprintf(stderr, "E tcp_server: nfds=%d > FD_SETSIZE=%d\n", nfds, FD_SETSIZE);
 
                     goto fd_cleanup;
                 }
-
-                int readfd = remote_fd;
 
                 readfds[i] = readfd;
 
