@@ -13,17 +13,14 @@
 
 void *mq_server(void *arg)
 {
-    size_t i = (size_t)arg;
+    const char *name = (const char *)arg;
 
     pthread_t thread = pthread_self();
 
-    fprintf(stderr, "I mq_server=%d thread=%lu\n", i, thread);
-
-    mqd_t mqdes = mq_open(MQ_NAME, O_WRONLY);
+    mqd_t mqdes = mq_open(name, O_WRONLY);
     if (mqdes == -1)
     {
         fprintf(stderr, "E mq_server thread=%lu: mq_open: %s\n", thread, strerror(errno));
-
         goto mqdes_cleanup;
     }
 
@@ -35,7 +32,6 @@ void *mq_server(void *arg)
         if (msg_len == -1)
         {
             fprintf(stderr, "E mq_server thread=%lu: read: %s\n", thread, strerror(errno));
-
             goto mqdes_cleanup;
         }
 
@@ -48,7 +44,6 @@ void *mq_server(void *arg)
                 if (mq_send(mqdes, "", 0, 0) == -1)
                 {
                     fprintf(stderr, "E mq_server thread=%lu: mq_send: %s\n", thread, strerror(errno));
-
                     goto mqdes_cleanup;
                 }
             }
@@ -59,7 +54,6 @@ void *mq_server(void *arg)
         if (mq_send(mqdes, msg, msg_len, 0) == -1)
         {
             fprintf(stderr, "E mq_server thread=%lu: mq_send: %s\n", thread, strerror(errno));
-
             goto mqdes_cleanup;
         }
     }
@@ -78,17 +72,14 @@ mqdes_cleanup:
 
 void *mq_client(void *arg)
 {
-    size_t i = (size_t)arg;
+    const char *name = (const char *)arg;
 
     pthread_t thread = pthread_self();
 
-    fprintf(stderr, "I mq_client=%d thread=%lu\n", (int)i, thread);
-
-    mqd_t mqdes = mq_open(MQ_NAME, O_RDONLY);
+    mqd_t mqdes = mq_open(name, O_RDONLY);
     if (mqdes == -1)
     {
         fprintf(stderr, "E mq_client thread=%lu: mq_open: %s\n", thread, strerror(errno));
-
         goto mqdes_cleanup;
     }
 
@@ -100,7 +91,6 @@ void *mq_client(void *arg)
         if (msg_len == -1)
         {
             fprintf(stderr, "E mq_client thread=%lu: mq_receive: %s\n", thread, strerror(errno));
-
             goto mqdes_cleanup;
         }
 
@@ -116,7 +106,6 @@ void *mq_client(void *arg)
         if (printf("I mq_client thread=%lu: %.*s", thread, (int)msg_len, msg) < 0)
         {
             fprintf(stderr, "E mq_client thread=%lu: printf: %s\n", thread, strerror(errno));
-
             goto mqdes_cleanup;
         }
     }
@@ -144,35 +133,35 @@ int main(void)
     if (mqdes == -1)
     {
         fprintf(stderr, "E mq: mq_open: %s\n", strerror(errno));
-
         goto mqdes_cleanup;
     }
 
     pthread_t mq_server_thread = 0;
 
-    if (pthread_create(&mq_server_thread, NULL, mq_server, (void *)0) != 0)
+    if (pthread_create(&mq_server_thread, NULL, mq_server, (void *)MQ_NAME) != 0)
     {
         fprintf(stderr, "E mq: pthread_create: mq_server %s\n", strerror(errno));
-
         goto mqdes_cleanup;
     }
+
+    fprintf(stderr, "I mq_server thread=%lu\n", mq_server_thread);
 
     pthread_t mq_client_threads[MQ_CLIENT_THREADS_LEN] = {0};
 
     for (size_t i = 0; i < MQ_CLIENT_THREADS_LEN; ++i)
     {
-        if (pthread_create(&mq_client_threads[i], NULL, mq_client, (void *)i) != 0)
+        if (pthread_create(&mq_client_threads[i], NULL, mq_client, (void *)MQ_NAME) != 0)
         {
             fprintf(stderr, "E mq: pthread_create: mq_client=%d %s\n", (int)i, strerror(errno));
-
             goto mqdes_cleanup;
         }
+
+        fprintf(stderr, "I mq_client=%d thread=%lu\n", (int)i, mq_client_threads[i]);
     }
 
     if (pthread_join(mq_server_thread, NULL) != 0)
     {
         fprintf(stderr, "E mq: pthread_join thread=%lu: %s\n", mq_server_thread, strerror(errno));
-
         goto mqdes_cleanup;
     }
 
@@ -181,7 +170,6 @@ int main(void)
         if (pthread_join(mq_client_threads[i], NULL) != 0)
         {
             fprintf(stderr, "E mq: pthread_join thread=%lu: %s\n", mq_client_threads[i], strerror(errno));
-
             goto mqdes_cleanup;
         }
     }
@@ -194,7 +182,7 @@ mqdes_cleanup:
             fprintf(stderr, "W mq: mq_close mqdes=%d: %s\n", mqdes, strerror(errno));
         }
 
-        if (mq_unlink("/mq") == -1)
+        if (mq_unlink(MQ_NAME) == -1)
         {
             fprintf(stderr, "W mq: mq_unlink mqdes=%d: %s\n", mqdes, strerror(errno));
         }
