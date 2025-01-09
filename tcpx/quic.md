@@ -29,14 +29,10 @@
 
 * when sending packets call **ngtcp2_conn_writev_stream** or **ngtcp2_conn_writev_datagram** and AFTER call ONLY FOR STREAMS **ngtcp2_conn_update_pkt_tx_time**
 
-* DATAGRAMS CAN BE SENT RIGHT AFTER INSTANTIATING CONNECTION
+# MULTIPROCESSING
 
-## MULTITHREADING
+GLOBAL SHARED READ AND WRITE CIRC BUFFERS
+1 MQ PER THREAD AND 1 MQ FOR MAIN THREAD
+    SEND POINTER TO GLOBAL VALUE AND NUMBER OF BYTES READ
 
-> Dispatch from event loop to workers inside recv callback
-
-* 1 event loop thread
-
-* n worker threads (read mq and write mq)
-    * [mq](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/system/pthread.html#message-queues)
-    * [pthread](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/system/pthread.html#thread-apis)
+hash map [fd] -> (queue)
