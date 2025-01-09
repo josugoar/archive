@@ -8,44 +8,50 @@
 #include <ngtcp2/ngtcp2_crypto.h>
 #include <ngtcp2/ngtcp2.h>
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
+#include <time.h>
 #include <unistd.h>
 #include <wolfssl/certs_test.h>
 #include <wolfssl/ssl.h>
 
+#undef DEBUG_WOLFSSL
 #define DEBUG_NGTCP2
-#define NDEBUG_WOLFSSL
 #define SERVER_CERT server_cert_der_1024
-#define SIZEOF_SERVER_CERT sizeof_server_cert_der_1024
 #define SERVER_KEY server_key_der_1024
-#define SIZEOF_SERVER_KEY sizeof_server_key_der_1024
 #define NAME "localhost"
 #define SERVICE "1025"
 #define PROTOCOL_NAME_LIST "quic"
-#define PROTOCOL_NAME_LIST_SZ (sizeof(PROTOCOL_NAME_LIST) - 1)
 
-void wolfSSL_log_printf(int log_level, const char *log_message)
+static const char *TAG = "quic_server";
+
+#ifdef DEBUG_WOLFSSL
+void wolfSSL_log(int log_level, const char *log_message)
 {
     (void)log_level;
 
-    fprintf(stderr, "V wolfSSL: %s\n", log_message);
+    fprintf(stderr, "V %s: %s\n", TAG, "wolfSSL", log_message);
 }
+#endif
 
-void ngtcp2_log_printf(void *user_data, const char *format, ...)
+#ifdef DEBUG_NGTCP2
+void ngtcp2_log(void *user_data, const char *format, ...)
 {
+    (void)user_data;
+
     va_list arg;
     va_start(arg, format);
 
-    fprintf(stderr, "V ngtcp2: ");
+    fprintf(stderr, "V %s: ", "ngtcp2");
     vfprintf(stderr, format, arg);
     fprintf(stderr, "\n");
 
     va_end(arg);
 }
+#endif
 
 ngtcp2_tstamp timestamp(void)
 {
@@ -53,7 +59,7 @@ ngtcp2_tstamp timestamp(void)
 
     if (clock_gettime(CLOCK_MONOTONIC, &tp) != 0)
     {
-        fprintf(stderr, "W quic: clock_gettime: %s\n", strerror(errno));
+        fprintf(stderr, "W %s: clock_gettime: %s\n", TAG, strerror(errno));
 
         return UINT64_MAX;
     }
@@ -66,67 +72,72 @@ ngtcp2_conn *get_conn(ngtcp2_crypto_conn_ref *conn_ref)
     return (ngtcp2_conn *)conn_ref->user_data;
 }
 
+#ifdef ESP_PLATFORM
 void app_main(void)
+#else
+int main(void)
+#endif
 {
     int errnum = 0;
 
-#if defined(DEBUG_WOLFSSL) && !defined(NDEBUG_WOLFSSL)
+    WOLFSSL_CTX *ctx = NULL;
+    int fd = -1;
+    WOLFSSL *ssl = NULL;
+    ngtcp2_conn *conn = NULL;
+
+#ifdef DEBUG_WOLFSSL
     errnum = wolfSSL_Debugging_ON();
     if (errnum != 0)
     {
-        fprintf(stderr, "V quic: wolfSSL_Debugging_ON: %s\n", wolfSSL_ERR_reason_error_string(errnum));
+        fprintf(stderr, "V %s: wolfSSL_Debugging_ON: %s\n", TAG, TAG, wolfSSL_ERR_reason_error_string(errnum));
     }
 
-    errnum = wolfSSL_SetLoggingCb(wolfSSL_log_printf);
+    errnum = wolfSSL_SetLoggingCb(wolfSSL_log);
     if (errnum != 0)
     {
-        fprintf(stderr, "V quic: wolfSSL_SetLoggingCb: %s\n", wolfSSL_ERR_reason_error_string(errnum));
+        fprintf(stderr, "V %s: wolfSSL_SetLoggingCb: %s\n", TAG, TAG, wolfSSL_ERR_reason_error_string(errnum));
     }
 #endif
 
-    WOLFSSL_CTX *ctx = wolfSSL_CTX_new(wolfTLSv1_3_server_method());
+    ctx = wolfSSL_CTX_new(wolfTLSv1_3_server_method());
     if (!ctx)
     {
-        fprintf(stderr, "E quic: wolfSSL_CTX_new");
-
-        goto WOLFSSL_CTX_cleanup;
+        fprintf(stderr, "E %s: wolfSSL_CTX_new", TAG);
+        goto cleanup;
     }
 
-    errnum = wolfSSL_CTX_use_certificate_chain_buffer_format(ctx, SERVER_CERT, SIZEOF_SERVER_CERT, WOLFSSL_FILETYPE_ASN1);
+    errnum = wolfSSL_CTX_use_certificate_chain_buffer_format(ctx, SERVER_CERT, sizeof(SERVER_CERT), WOLFSSL_FILETYPE_ASN1);
     if (errnum != WOLFSSL_SUCCESS)
     {
-        fprintf(stderr, "E quic: wolfSSL_CTX_use_certificate_chain_buffer_format: %s\n", wolfSSL_ERR_reason_error_string(errnum));
-
-        goto WOLFSSL_CTX_cleanup;
+        fprintf(stderr, "E %s: wolfSSL_CTX_use_certificate_chain_buffer_format: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        goto cleanup;
     }
 
-    errnum = wolfSSL_CTX_use_PrivateKey_buffer(ctx, SERVER_KEY, SIZEOF_SERVER_KEY, WOLFSSL_FILETYPE_ASN1);
+    errnum = wolfSSL_CTX_use_PrivateKey_buffer(ctx, SERVER_KEY, sizeof(SERVER_KEY), WOLFSSL_FILETYPE_ASN1);
     if (errnum != WOLFSSL_SUCCESS)
     {
-        fprintf(stderr, "E quic: wolfSSL_CTX_use_PrivateKey_buffer: %s\n", wolfSSL_ERR_reason_error_string(errnum));
-
-        goto WOLFSSL_CTX_cleanup;
+        fprintf(stderr, "E %s: wolfSSL_CTX_use_PrivateKey_buffer: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        goto cleanup;
     }
 
     errnum = wolfSSL_CTX_check_private_key(ctx);
     if (errnum != WOLFSSL_SUCCESS)
     {
-        fprintf(stderr, "E quic: wolfSSL_CTX_check_private_key: %s\n", wolfSSL_ERR_reason_error_string(errnum));
-
-        goto WOLFSSL_CTX_cleanup;
+        fprintf(stderr, "E %s: wolfSSL_CTX_check_private_key: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        goto cleanup;
     }
 
     if (ngtcp2_crypto_wolfssl_configure_server_context(ctx) != 0)
     {
-        fprintf(stderr, "E quic: ngtcp2_crypto_wolfssl_configure_server_context\n");
-
-        goto WOLFSSL_CTX_cleanup;
+        fprintf(stderr, "E %s: ngtcp2_crypto_wolfssl_configure_server_context\n");
+        goto cleanup;
     }
 
     struct addrinfo req = {
         .ai_flags = AI_PASSIVE,
         .ai_family = AF_UNSPEC,
         .ai_socktype = SOCK_DGRAM,
+        .ai_protocol = 0,
     };
 
     struct addrinfo *ais = NULL;
@@ -134,12 +145,9 @@ void app_main(void)
     errnum = getaddrinfo(NAME, SERVICE, &req, &ais);
     if (errnum != 0)
     {
-        fprintf(stderr, "E quic: getaddrinfo: %d\n", errnum);
-
-        goto addrinfo_cleanup;
+        fprintf(stderr, "E %s: getaddrinfo: %d\n", errnum);
+        goto cleanup;
     }
-
-    int fd = -1;
 
     struct sockaddr_storage local_addr = {0};
     socklen_t local_addr_len = sizeof(local_addr);
@@ -154,10 +162,11 @@ void app_main(void)
         {
             if (!ai->ai_next)
             {
-                fprintf(stderr, "E quic: socket: %s\n", strerror(errno));
-
-                goto fd_cleanup;
+                fprintf(stderr, "E %s: socket: %s\n", TAG, strerror(errno));
+                goto cleanup;
             }
+
+            fprintf(stderr, "W %s: socket: %s\n", TAG, strerror(errno));
 
             continue;
         }
@@ -166,12 +175,16 @@ void app_main(void)
         {
             if (!ai->ai_next)
             {
-                fprintf(stderr, "E quic: bind: %s\n", strerror(errno));
-
-                goto fd_cleanup;
+                fprintf(stderr, "E %s: bind: %s\n", TAG, strerror(errno));
+                goto cleanup;
             }
 
-            close(fd);
+            fprintf(stderr, "W %s: bind: %s\n", TAG, strerror(errno));
+
+            if (close(fd) != 0)
+            {
+                fprintf(stderr, "W %s: close: %s\n", TAG, strerror(errno));
+            }
 
             continue;
         }
@@ -183,7 +196,6 @@ void app_main(void)
     }
 
     int readfd = fd;
-
     int writefd = STDOUT_FILENO;
 
     unsigned char readbuf[NGTCP2_DEFAULT_MAX_RECV_UDP_PAYLOAD_SIZE] = {0};
@@ -195,16 +207,14 @@ void app_main(void)
     nread = recvfrom(readfd, readbuf, sizeof(readbuf), 0, (struct sockaddr *)&remote_addr, &remote_addr_len);
     if (nread == -1)
     {
-        fprintf(stderr, "E quic: recvfrom: %s\n", strerror(errno));
-
-        goto fd_cleanup;
+        fprintf(stderr, "E %s: recvfrom: %s\n", TAG, strerror(errno));
+        goto cleanup;
     }
 
     if (connect(fd, (struct sockaddr *)&remote_addr, remote_addr_len) != 0)
     {
-        fprintf(stderr, "E quic: connect: %s\n", strerror(errno));
-
-        goto fd_cleanup;
+        fprintf(stderr, "E %s: connect: %s\n", TAG, strerror(errno));
+        goto cleanup;
     }
 
     ngtcp2_version_cid vc = {0};
@@ -212,9 +222,8 @@ void app_main(void)
     errnum = ngtcp2_pkt_decode_version_cid(&vc, readbuf, nread, NGTCP2_MAX_CIDLEN);
     if (errnum != 0)
     {
-        fprintf(stderr, "E quic: ngtcp2_pkt_decode_version_cid: %s\n", ngtcp2_strerror(errnum));
-
-        goto fd_cleanup;
+        fprintf(stderr, "E %s: ngtcp2_pkt_decode_version_cid: %s\n", TAG, ngtcp2_strerror(errnum));
+        goto cleanup;
     }
 
     ngtcp2_pkt_hd hd = {0};
@@ -222,28 +231,23 @@ void app_main(void)
     errnum = ngtcp2_accept(&hd, readbuf, nread);
     if (errnum != 0)
     {
-        fprintf(stderr, "E quic: ngtcp2_accept: %s\n", ngtcp2_strerror(errnum));
-
-        goto fd_cleanup;
+        fprintf(stderr, "E %s: ngtcp2_accept: %s\n", TAG, ngtcp2_strerror(errnum));
+        goto cleanup;
     }
 
-    WOLFSSL *ssl = wolfSSL_new(ctx);
+    ssl = wolfSSL_new(ctx);
     if (!ssl)
     {
-        fprintf(stderr, "E quic: wolfSSL_new\n");
-
-        goto WOLFSSL_cleanup;
+        fprintf(stderr, "E %s: wolfSSL_new\n");
+        goto cleanup;
     }
 
-    errnum = wolfSSL_UseALPN(ssl, PROTOCOL_NAME_LIST, PROTOCOL_NAME_LIST_SZ, WOLFSSL_ALPN_FAILED_ON_MISMATCH);
+    errnum = wolfSSL_UseALPN(ssl, PROTOCOL_NAME_LIST, sizeof(PROTOCOL_NAME_LIST) - 1, WOLFSSL_ALPN_FAILED_ON_MISMATCH);
     if (errnum != WOLFSSL_SUCCESS)
     {
-        fprintf(stderr, "E quic: wolfSSL_UseALPN: %s\n", wolfSSL_ERR_reason_error_string(errnum));
-
-        goto WOLFSSL_cleanup;
+        fprintf(stderr, "E %s: wolfSSL_UseALPN: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        goto cleanup;
     }
-
-    ngtcp2_conn *conn = NULL;
 
     ngtcp2_cid dcid = hd.scid;
 
@@ -252,9 +256,8 @@ void app_main(void)
     errnum = wolfSSL_RAND_bytes(scid.data, scid.datalen);
     if (errnum != WOLFSSL_SUCCESS)
     {
-        fprintf(stderr, "E quic: wolfSSL_RAND_bytes: %s\n", wolfSSL_ERR_reason_error_string(errnum));
-
-        goto WOLFSSL_cleanup;
+        fprintf(stderr, "E %s: wolfSSL_RAND_bytes: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        goto cleanup;
     }
 
     ngtcp2_path path = {
@@ -316,15 +319,17 @@ void app_main(void)
     ngtcp2_settings settings = {0};
     ngtcp2_settings_default(&settings);
     settings.initial_ts = timestamp();
-#if defined(DEBUG_NGTCP2) && !defined(NDEBUG_NGTCP2)
-    settings.log_printf = ngtcp2_log_printf;
+#if defined(DEBUG_NGTCP2)
+    settings.log_printf = ngtcp2_log;
 #endif
 
     ngtcp2_transport_params params = {0};
     ngtcp2_transport_params_default(&params);
     params.original_dcid = hd.dcid;
+    params.initial_max_stream_data_bidi_remote = NGTCP2_MAX_VARINT;
     params.initial_max_stream_data_uni = NGTCP2_MAX_VARINT;
     params.initial_max_data = NGTCP2_MAX_VARINT;
+    params.initial_max_streams_bidi = 1;
     params.initial_max_streams_uni = 1;
     params.max_datagram_frame_size = NGTCP2_DEFAULT_MAX_RECV_UDP_PAYLOAD_SIZE;
     params.original_dcid_present = 1;
@@ -332,9 +337,8 @@ void app_main(void)
     errnum = ngtcp2_conn_server_new(&conn, &dcid, &scid, &path, client_chosen_version, &callbacks, &settings, &params, NULL, NULL);
     if (errnum != 0)
     {
-        fprintf(stderr, "E quic: ngtcp2_conn_server_new: %s\n", ngtcp2_strerror(errnum));
-
-        goto ngtcp2_conn_cleanup;
+        fprintf(stderr, "E %s: ngtcp2_conn_server_new: %s\n", TAG, ngtcp2_strerror(errnum));
+        goto cleanup;
     }
 
     ngtcp2_crypto_conn_ref conn_ref = {
@@ -345,9 +349,8 @@ void app_main(void)
     errnum = wolfSSL_set_ex_data(ssl, 0, &conn_ref);
     if (errnum != WOLFSSL_SUCCESS)
     {
-        fprintf(stderr, "E quic: wolfSSL_set_ex_data: %s\n", wolfSSL_ERR_reason_error_string(errnum));
-
-        goto ngtcp2_conn_cleanup;
+        fprintf(stderr, "E %s: wolfSSL_set_ex_data: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        goto cleanup;
     }
 
     ngtcp2_conn_set_tls_native_handle(conn, ssl);
@@ -355,58 +358,52 @@ void app_main(void)
     errnum = ngtcp2_conn_read_pkt(conn, &path, NULL, readbuf, nread, timestamp());
     if (errnum != 0)
     {
-        fprintf(stderr, "E quic: ngtcp2_conn_read_pkt: %s\n", ngtcp2_strerror(errnum));
-
-        goto ngtcp2_conn_cleanup;
+        fprintf(stderr, "E %s: ngtcp2_conn_read_pkt: %s\n", TAG, ngtcp2_strerror(errnum));
+        goto cleanup;
     }
 
-    // TODO
-    return;
-
-    while (true)
+    while (false)
     {
         nread = read(readfd, readbuf, sizeof(readbuf));
         if (readbuf == -1)
         {
-            fprintf(stderr, "E quic: read: %s\n", strerror(errno));
-
-            goto ngtcp2_conn_cleanup;
-        }
-
-        errnum = ngtcp2_pkt_decode_version_cid(&vc, readbuf, nread, NGTCP2_MAX_CIDLEN);
-        if (errnum != 0)
-        {
-            fprintf(stderr, "E quic: ngtcp2_pkt_decode_version_cid: %s\n", ngtcp2_strerror(errnum));
-
-            goto fd_cleanup;
+            fprintf(stderr, "E %s: read: %s\n", TAG, strerror(errno));
+            goto cleanup;
         }
 
         errnum = ngtcp2_conn_read_pkt(conn, &path, NULL, readbuf, nread, timestamp());
         if (errnum != 0)
         {
-            fprintf(stderr, "E quic: ngtcp2_conn_read_pkt: %s\n", ngtcp2_strerror(errnum));
-
-            goto ngtcp2_conn_cleanup;
+            fprintf(stderr, "E %s: ngtcp2_conn_read_pkt: %s\n", TAG, ngtcp2_strerror(errnum));
+            goto cleanup;
         }
     }
 
-ngtcp2_conn_cleanup:
-    ngtcp2_conn_del(conn);
+cleanup:
+    if (conn)
+    {
+        ngtcp2_conn_del(conn);
+    }
 
-WOLFSSL_cleanup:
-    wolfSSL_free(ssl);
+    if (ssl)
+    {
+        wolfSSL_free(ssl);
+    }
 
-fd_cleanup:
-    close(fd);
+    if (fd != -1)
+    {
+        if (close(fd) != 0)
+        {
+            fprintf(stderr, "W %s: close: %s\n", TAG, strerror(errno));
+        }
+    }
 
-addrinfo_cleanup:
-    freeaddrinfo(ais);
+    if (ais)
+    {
+        freeaddrinfo(ais);
+    }
 
-WOLFSSL_CTX_cleanup:
-    wolfSSL_CTX_free(ctx);
-}
-
-int main(void)
-{
-    app_main();
+    if (ctx)
+    {
+    }
 }
