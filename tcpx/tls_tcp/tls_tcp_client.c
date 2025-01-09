@@ -211,7 +211,7 @@ int main(void)
     int fds[] = {readfd, writefd};
     size_t fds_len = sizeof(fds) / sizeof(*fds);
 
-    int nfds = -1;
+    int next_nfds = -1;
 
     for (size_t i = 0; i < fds_len; ++i)
     {
@@ -224,10 +224,10 @@ int main(void)
             goto ssl_cleanup;
         }
 
-        nfds = nfds > fd ? nfds : fd + 1;
-        if (nfds > FD_SETSIZE)
+        next_nfds = next_nfds > fd ? next_nfds : fd + 1;
+        if (next_nfds > FD_SETSIZE)
         {
-            fprintf(stderr, "E tls_tcp_client: nfds=%d > FD_SETSIZE=%d\n", nfds, FD_SETSIZE);
+            fprintf(stderr, "E tls_tcp_client: nfds=%d > FD_SETSIZE=%d\n", next_nfds, FD_SETSIZE);
 
             goto ssl_cleanup;
         }
@@ -253,7 +253,8 @@ int main(void)
         fd_set curr_readfds = next_readfds;
         fd_set curr_writefds = next_writefds;
 
-        if (select(nfds, &curr_readfds, &curr_writefds, NULL, NULL) == -1)
+        int curr_nfds = select(next_nfds, &curr_readfds, &curr_writefds, NULL, NULL);
+        if (curr_nfds == -1)
         {
             fprintf(stderr, "E tls_tcp_client: select: %s\n", strerror(errno));
 

@@ -19,6 +19,8 @@
 #define SERVICE "1025"
 #define NBUF 1200
 
+static const char *TAG = "udp_server";
+
 #ifdef ESP_PLATFORM
 void app_main(void)
 #else
@@ -46,7 +48,7 @@ int main(void)
     errnum = getaddrinfo(NAME, SERVICE, &req, &ais);
     if (errnum != 0)
     {
-        fprintf(stderr, "E udp_server: getaddrinfo name=%s service=%s domain=%d type=%d protocol=%d: %d\n", NAME, SERVICE, req.ai_family, req.ai_socktype, req.ai_protocol, errnum);
+        fprintf(stderr, "E %s: getaddrinfo name=%s service=%s domain=%d type=%d protocol=%d: %d\n", TAG, NAME, SERVICE, req.ai_family, req.ai_socktype, req.ai_protocol, errnum);
 
         goto ais_cleanup;
     }
@@ -66,12 +68,12 @@ int main(void)
         {
             if (!ai->ai_next)
             {
-                fprintf(stderr, "E udp_server: socket domain=%d type=%d protocol=%d: %s\n", ai->ai_family, ai->ai_socktype, ai->ai_protocol, strerror(errno));
+                fprintf(stderr, "E %s: socket domain=%d type=%d protocol=%d: %s\n", TAG, ai->ai_family, ai->ai_socktype, ai->ai_protocol, strerror(errno));
 
                 goto fd_cleanup;
             }
 
-            fprintf(stderr, "W udp_server: socket domain=%d type=%d protocol=%d: %s\n", ai->ai_family, ai->ai_socktype, ai->ai_protocol, strerror(errno));
+            fprintf(stderr, "W %s: socket domain=%d type=%d protocol=%d: %s\n", TAG, ai->ai_family, ai->ai_socktype, ai->ai_protocol, strerror(errno));
 
             continue;
         }
@@ -80,22 +82,22 @@ int main(void)
         {
             if (!ai->ai_next)
             {
-                fprintf(stderr, "E udp_server: bind fd=%d: %s\n", local_fd, strerror(errno));
+                fprintf(stderr, "E %s: bind fd=%d: %s\n", TAG, local_fd, strerror(errno));
 
                 goto fd_cleanup;
             }
 
-            fprintf(stderr, "W udp_server: bind fd=%d: %s\n", local_fd, strerror(errno));
+            fprintf(stderr, "W %s: bind fd=%d: %s\n", TAG, local_fd, strerror(errno));
 
             if (close(local_fd) != 0)
             {
-                fprintf(stderr, "W udp_server: close fd=%d: %s\n", local_fd, strerror(errno));
+                fprintf(stderr, "W %s: close fd=%d: %s\n", TAG, local_fd, strerror(errno));
             }
 
             continue;
         }
 
-        fprintf(stderr, "I udp_server: local_fd=%d\n", local_fd);
+        fprintf(stderr, "I %s: local_fd=%d\n", TAG, local_fd);
 
         memcpy(&local_addr, ai->ai_addr, ai->ai_addrlen);
         local_addr_len = ai->ai_addrlen;
@@ -108,12 +110,12 @@ int main(void)
 
     if (getnameinfo((struct sockaddr *)&local_addr, local_addr_len, local_host, sizeof(local_host), local_serv, sizeof(local_serv), NI_NUMERICHOST | NI_NUMERICSERV) != 0)
     {
-        fprintf(stderr, "W udp_server: getnameinfo local_addr: %s\n", strerror(errno));
+        fprintf(stderr, "W %s: getnameinfo local_addr: %s\n", TAG, strerror(errno));
     }
 
     if (*local_host != '\0' && *local_serv != '\0')
     {
-        fprintf(stderr, "I udp_server: local_host=%s local_serv=%s\n", local_host, local_serv);
+        fprintf(stderr, "I %s: local_host=%s local_serv=%s\n", TAG, local_host, local_serv);
     }
 
     int readfd = local_fd;
@@ -123,7 +125,7 @@ int main(void)
     int fds[] = {readfd, writefd};
     size_t fds_len = sizeof(fds) / sizeof(*fds);
 
-    int nfds = -1;
+    int next_nfds = -1;
 
     for (size_t i = 0; i < fds_len; ++i)
     {
@@ -131,15 +133,15 @@ int main(void)
 
         if (fcntl(fd, F_SETFL, fcntl(fd, F_GETFL) | O_NONBLOCK) != 0)
         {
-            fprintf(stderr, "E udp_server: fcntl fd=%d: %s\n", fd, strerror(errno));
+            fprintf(stderr, "E %s: fcntl fd=%d: %s\n", TAG, fd, strerror(errno));
 
             goto fd_cleanup;
         }
 
-        nfds = nfds > fd ? nfds : fd + 1;
-        if (nfds > FD_SETSIZE)
+        next_nfds = next_nfds > fd ? next_nfds : fd + 1;
+        if (next_nfds > FD_SETSIZE)
         {
-            fprintf(stderr, "E udp_server: nfds=%d > FD_SETSIZE=%d\n", nfds, FD_SETSIZE);
+            fprintf(stderr, "E %s: nfds=%d > FD_SETSIZE=%d\n", TAG, next_nfds, FD_SETSIZE);
 
             goto fd_cleanup;
         }
@@ -163,9 +165,10 @@ int main(void)
         fd_set curr_readfds = next_readfds;
         fd_set curr_writefds = next_writefds;
 
-        if (select(nfds, &curr_readfds, &curr_writefds, NULL, NULL) == -1)
+        int curr_nfds = select(next_nfds, &curr_readfds, &curr_writefds, NULL, NULL);
+        if (curr_nfds == -1)
         {
-            fprintf(stderr, "E udp_server: select: %s\n", strerror(errno));
+            fprintf(stderr, "E %s: select: %s\n", TAG, strerror(errno));
 
             goto fd_cleanup;
         }
@@ -189,7 +192,7 @@ int main(void)
                         break;
                     }
 
-                    fprintf(stderr, "E udp_server: recvfrom fd=%d: %s\n", readfd, strerror(errno));
+                    fprintf(stderr, "E %s: recvfrom fd=%d: %s\n", TAG, readfd, strerror(errno));
 
                     goto fd_cleanup;
                 }
@@ -199,12 +202,12 @@ int main(void)
 
                 if (getnameinfo((struct sockaddr *)&remote_addr, remote_addr_len, remote_host, sizeof(remote_host), remote_serv, sizeof(remote_serv), NI_NUMERICHOST | NI_NUMERICSERV) != 0)
                 {
-                    fprintf(stderr, "W udp_server: getnameinfo remote_addr: %s\n", strerror(errno));
+                    fprintf(stderr, "W %s: getnameinfo remote_addr: %s\n", TAG, strerror(errno));
                 }
 
                 if (*remote_host != '\0' && *remote_serv != '\0')
                 {
-                    fprintf(stderr, "I udp_server: remote_host=%s remote_serv=%s\n", remote_host, remote_serv);
+                    fprintf(stderr, "I %s: remote_host=%s remote_serv=%s\n", TAG, remote_host, remote_serv);
                 }
 
                 nread += n;
@@ -237,7 +240,7 @@ int main(void)
                         break;
                     }
 
-                    fprintf(stderr, "E udp_server: write fd=%d: %s\n", writefd, strerror(errno));
+                    fprintf(stderr, "E %s: write fd=%d: %s\n", TAG, writefd, strerror(errno));
 
                     goto fd_cleanup;
                 }
@@ -252,7 +255,7 @@ fd_cleanup:
     {
         if (close(local_fd) != 0)
         {
-            fprintf(stderr, "W udp_server: close fd=%d: %s\n", local_fd, strerror(errno));
+            fprintf(stderr, "W %s: close fd=%d: %s\n", TAG, local_fd, strerror(errno));
         }
     }
 
