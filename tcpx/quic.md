@@ -9,6 +9,10 @@
 * PERF
 * MD5
 
+## NGTCP2
+
+* client also calls readpkt
+
 ## NOTES
 
 * when connection timeout is updated, SET TIMEOUT VALUE OF SELECT TO NEW TIMEOUT IF NEW TIMEOUT IS SMALLER AND UPDATE TIMEOUTS EACH TIME SELECT RETURNS timeouts recommended
