@@ -31,8 +31,9 @@
 
 # MULTIPROCESSING
 
+* 1 READ CIRC BUFFER PER CLIENT AND 1 WRITE BUFFER FOR MAIN THREAD (or 1 per client?)
+
+NO MQ NEEDED WITH THIS APPROACH??
 * hash map [connection id] -> (thread, queue)
-    * LOAD BALANCE DYNAMICALLY?
-* 1 READ AND WRITE CIRC BUFFER PER THREAD
-* 1 MQ PER THREAD AND 1 MQ DOR MAIN THREAD
-    * Send number of bytes read and connection id
+* 1 MQ PER THREAD AND 1 MQ FOR MAIN THREAD
+    * Send number of bytes read and connection id (and stream id if applicable)
