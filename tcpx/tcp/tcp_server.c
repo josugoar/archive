@@ -1,8 +1,8 @@
 #define WITH_WOLFSSL
 #define NAME "localhost"
 #define SERVICE "1025"
-#define SERVER_CERT server_cert_der_1024
-#define SERVER_KEY server_key_der_1024
+#define CTX_SERVER_CERT server_cert_der_1024
+#define CTX_SERVER_KEY server_key_der_1024
 #define CLIENTS_LEN 4096
 #define BUF_LEN 1200
 
@@ -180,7 +180,7 @@ int main(void)
         goto cleanup;
     }
 
-    errnum = wolfSSL_CTX_use_certificate_chain_buffer_format(ctx, SERVER_CERT, sizeof(SERVER_CERT), WOLFSSL_FILETYPE_ASN1);
+    errnum = wolfSSL_CTX_use_certificate_chain_buffer_format(ctx, CTX_SERVER_CERT, sizeof(CTX_SERVER_CERT), WOLFSSL_FILETYPE_ASN1);
     if (errnum != WOLFSSL_SUCCESS)
     {
         fprintf(stderr, "%s %s: wolfSSL_CTX_use_certificate_chain_buffer_format: %s\n", "E", TAG, wolfSSL_ERR_reason_error_string(errnum));
@@ -188,7 +188,7 @@ int main(void)
         goto cleanup;
     }
 
-    errnum = wolfSSL_CTX_use_PrivateKey_buffer(ctx, SERVER_KEY, sizeof(SERVER_KEY), WOLFSSL_FILETYPE_ASN1);
+    errnum = wolfSSL_CTX_use_PrivateKey_buffer(ctx, CTX_SERVER_KEY, sizeof(CTX_SERVER_KEY), WOLFSSL_FILETYPE_ASN1);
     if (errnum != WOLFSSL_SUCCESS)
     {
         fprintf(stderr, "%s %s: wolfSSL_CTX_use_PrivateKey_buffer: %s\n", "E", TAG, wolfSSL_ERR_reason_error_string(errnum));

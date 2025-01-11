@@ -1,7 +1,7 @@
 #define WITH_WOLFSSL
 #define NAME "localhost"
 #define SERVICE "1025"
-#define CA_CERT ca_cert_der_1024
+#define CTX_CA_CERT ca_cert_der_1024
 #define BUF_LEN 1200
 
 #undef DEBUG_WOLFSSL
@@ -180,7 +180,7 @@ int main(void)
         goto cleanup;
     }
 
-    errnum = wolfSSL_CTX_load_verify_buffer(ctx, CA_CERT, sizeof(CA_CERT), WOLFSSL_FILETYPE_ASN1);
+    errnum = wolfSSL_CTX_load_verify_buffer(ctx, CTX_CA_CERT, sizeof(CTX_CA_CERT), WOLFSSL_FILETYPE_ASN1);
     if (errnum != WOLFSSL_SUCCESS)
     {
         fprintf(stderr, "%s %s: wolfSSL_CTX_load_verify_buffer: %s\n", "E", TAG, wolfSSL_ERR_reason_error_string(errnum));
