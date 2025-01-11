@@ -20,8 +20,8 @@
 
 #undef DEBUG_WOLFSSL
 #define DEBUG_NGTCP2
-#define SERVER_CERT server_cert_der_1024
-#define SERVER_KEY server_key_der_1024
+#define CTX_SERVER_CERT server_cert_der_1024
+#define CTX_SERVER_KEY server_key_der_1024
 #define NAME "localhost"
 #define SERVICE "1025"
 #define PROTOCOL_NAME_LIST "quic"
@@ -33,7 +33,7 @@ void wolfSSL_log(int log_level, const char *log_message)
 {
     (void)log_level;
 
-    fprintf(stderr, "V %s: %s\n", TAG, "wolfSSL", log_message);
+    fprintf(stderr, "%s %s: %s\n", "V", "wolfSSL", log_message);
 }
 #endif
 
@@ -45,7 +45,7 @@ void ngtcp2_log(void *user_data, const char *format, ...)
     va_list arg;
     va_start(arg, format);
 
-    fprintf(stderr, "V %s: ", "ngtcp2");
+    fprintf(stderr, "%s %s: ", "V", "ngtcp2");
     vfprintf(stderr, format, arg);
     fprintf(stderr, "\n");
 
@@ -59,7 +59,7 @@ ngtcp2_tstamp timestamp(void)
 
     if (clock_gettime(CLOCK_MONOTONIC, &tp) != 0)
     {
-        fprintf(stderr, "W %s: clock_gettime: %s\n", TAG, strerror(errno));
+        fprintf(stderr, "%s %s: clock_gettime: %s\n", "W", TAG, strerror(errno));
 
         return UINT64_MAX;
     }
@@ -80,8 +80,9 @@ int main(void)
 {
     int errnum = 0;
 
-    WOLFSSL_CTX *ctx = NULL;
+    struct addrinfo *ais = NULL;
     int fd = -1;
+    WOLFSSL_CTX *ctx = NULL;
     WOLFSSL *ssl = NULL;
     ngtcp2_conn *conn = NULL;
 
@@ -89,49 +90,15 @@ int main(void)
     errnum = wolfSSL_Debugging_ON();
     if (errnum != 0)
     {
-        fprintf(stderr, "V %s: wolfSSL_Debugging_ON: %s\n", TAG, TAG, wolfSSL_ERR_reason_error_string(errnum));
+        fprintf(stderr, "%s %s: wolfSSL_Debugging_ON: %s\n", "V", TAG, wolfSSL_ERR_reason_error_string(errnum));
     }
 
     errnum = wolfSSL_SetLoggingCb(wolfSSL_log);
     if (errnum != 0)
     {
-        fprintf(stderr, "V %s: wolfSSL_SetLoggingCb: %s\n", TAG, TAG, wolfSSL_ERR_reason_error_string(errnum));
+        fprintf(stderr, "%s %s: wolfSSL_SetLoggingCb: %s\n", "V", TAG, wolfSSL_ERR_reason_error_string(errnum));
     }
 #endif
-
-    ctx = wolfSSL_CTX_new(wolfTLSv1_3_server_method());
-    if (!ctx)
-    {
-        fprintf(stderr, "E %s: wolfSSL_CTX_new", TAG);
-        goto cleanup;
-    }
-
-    errnum = wolfSSL_CTX_use_certificate_chain_buffer_format(ctx, SERVER_CERT, sizeof(SERVER_CERT), WOLFSSL_FILETYPE_ASN1);
-    if (errnum != WOLFSSL_SUCCESS)
-    {
-        fprintf(stderr, "E %s: wolfSSL_CTX_use_certificate_chain_buffer_format: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
-        goto cleanup;
-    }
-
-    errnum = wolfSSL_CTX_use_PrivateKey_buffer(ctx, SERVER_KEY, sizeof(SERVER_KEY), WOLFSSL_FILETYPE_ASN1);
-    if (errnum != WOLFSSL_SUCCESS)
-    {
-        fprintf(stderr, "E %s: wolfSSL_CTX_use_PrivateKey_buffer: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
-        goto cleanup;
-    }
-
-    errnum = wolfSSL_CTX_check_private_key(ctx);
-    if (errnum != WOLFSSL_SUCCESS)
-    {
-        fprintf(stderr, "E %s: wolfSSL_CTX_check_private_key: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
-        goto cleanup;
-    }
-
-    if (ngtcp2_crypto_wolfssl_configure_server_context(ctx) != 0)
-    {
-        fprintf(stderr, "E %s: ngtcp2_crypto_wolfssl_configure_server_context\n");
-        goto cleanup;
-    }
 
     struct addrinfo req = {
         .ai_flags = AI_PASSIVE,
@@ -140,12 +107,10 @@ int main(void)
         .ai_protocol = 0,
     };
 
-    struct addrinfo *ais = NULL;
-
     errnum = getaddrinfo(NAME, SERVICE, &req, &ais);
     if (errnum != 0)
     {
-        fprintf(stderr, "E %s: getaddrinfo: %d\n", errnum);
+        fprintf(stderr, "%s %s: getaddrinfo: %d\n", "E", TAG, errnum);
         goto cleanup;
     }
 
@@ -162,11 +127,11 @@ int main(void)
         {
             if (!ai->ai_next)
             {
-                fprintf(stderr, "E %s: socket: %s\n", TAG, strerror(errno));
+                fprintf(stderr, "%s %s: socket: %s\n", "E", TAG, strerror(errno));
                 goto cleanup;
             }
 
-            fprintf(stderr, "W %s: socket: %s\n", TAG, strerror(errno));
+            fprintf(stderr, "%s %s: socket: %s\n", "W", TAG, strerror(errno));
 
             continue;
         }
@@ -175,15 +140,15 @@ int main(void)
         {
             if (!ai->ai_next)
             {
-                fprintf(stderr, "E %s: bind: %s\n", TAG, strerror(errno));
+                fprintf(stderr, "%s %s: bind: %s\n", "E", TAG, strerror(errno));
                 goto cleanup;
             }
 
-            fprintf(stderr, "W %s: bind: %s\n", TAG, strerror(errno));
+            fprintf(stderr, "%s %s: bind: %s\n", "W", TAG, strerror(errno));
 
             if (close(fd) != 0)
             {
-                fprintf(stderr, "W %s: close: %s\n", TAG, strerror(errno));
+                fprintf(stderr, "%s %s: close: %s\n", "W", TAG, strerror(errno));
             }
 
             continue;
@@ -193,6 +158,40 @@ int main(void)
         local_addr_len = ai->ai_addrlen;
 
         break;
+    }
+
+    ctx = wolfSSL_CTX_new(wolfTLSv1_3_server_method());
+    if (!ctx)
+    {
+        fprintf(stderr, "%s %s: wolfSSL_CTX_new", "E", TAG);
+        goto cleanup;
+    }
+
+    errnum = wolfSSL_CTX_use_certificate_chain_buffer_format(ctx, CTX_SERVER_CERT, sizeof(CTX_SERVER_CERT), WOLFSSL_FILETYPE_ASN1);
+    if (errnum != WOLFSSL_SUCCESS)
+    {
+        fprintf(stderr, "%s %s: wolfSSL_CTX_use_certificate_chain_buffer_format: %s\n", "E", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        goto cleanup;
+    }
+
+    errnum = wolfSSL_CTX_use_PrivateKey_buffer(ctx, CTX_SERVER_KEY, sizeof(CTX_SERVER_KEY), WOLFSSL_FILETYPE_ASN1);
+    if (errnum != WOLFSSL_SUCCESS)
+    {
+        fprintf(stderr, "%s %s: wolfSSL_CTX_use_PrivateKey_buffer: %s\n", "E", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        goto cleanup;
+    }
+
+    errnum = wolfSSL_CTX_check_private_key(ctx);
+    if (errnum != WOLFSSL_SUCCESS)
+    {
+        fprintf(stderr, "%s %s: wolfSSL_CTX_check_private_key: %s\n", "E", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        goto cleanup;
+    }
+
+    if (ngtcp2_crypto_wolfssl_configure_server_context(ctx) != 0)
+    {
+        fprintf(stderr, "%s %s: ngtcp2_crypto_wolfssl_configure_server_context\n", "E", TAG);
+        goto cleanup;
     }
 
     int readfd = fd;
@@ -207,13 +206,13 @@ int main(void)
     nread = recvfrom(readfd, readbuf, sizeof(readbuf), 0, (struct sockaddr *)&remote_addr, &remote_addr_len);
     if (nread == -1)
     {
-        fprintf(stderr, "E %s: recvfrom: %s\n", TAG, strerror(errno));
+        fprintf(stderr, "%s %s: recvfrom: %s\n", "E", TAG, strerror(errno));
         goto cleanup;
     }
 
     if (connect(fd, (struct sockaddr *)&remote_addr, remote_addr_len) != 0)
     {
-        fprintf(stderr, "E %s: connect: %s\n", TAG, strerror(errno));
+        fprintf(stderr, "%s %s: connect: %s\n", "E", TAG, strerror(errno));
         goto cleanup;
     }
 
@@ -222,7 +221,7 @@ int main(void)
     errnum = ngtcp2_pkt_decode_version_cid(&vc, readbuf, nread, NGTCP2_MAX_CIDLEN);
     if (errnum != 0)
     {
-        fprintf(stderr, "E %s: ngtcp2_pkt_decode_version_cid: %s\n", TAG, ngtcp2_strerror(errnum));
+        fprintf(stderr, "%s %s: ngtcp2_pkt_decode_version_cid: %s\n", "E", TAG, ngtcp2_strerror(errnum));
         goto cleanup;
     }
 
@@ -231,21 +230,21 @@ int main(void)
     errnum = ngtcp2_accept(&hd, readbuf, nread);
     if (errnum != 0)
     {
-        fprintf(stderr, "E %s: ngtcp2_accept: %s\n", TAG, ngtcp2_strerror(errnum));
+        fprintf(stderr, "%s %s: ngtcp2_accept: %s\n", "E", TAG, ngtcp2_strerror(errnum));
         goto cleanup;
     }
 
     ssl = wolfSSL_new(ctx);
     if (!ssl)
     {
-        fprintf(stderr, "E %s: wolfSSL_new\n");
+        fprintf(stderr, "%s %s: wolfSSL_new\n", "E", TAG);
         goto cleanup;
     }
 
     errnum = wolfSSL_UseALPN(ssl, PROTOCOL_NAME_LIST, sizeof(PROTOCOL_NAME_LIST) - 1, WOLFSSL_ALPN_FAILED_ON_MISMATCH);
     if (errnum != WOLFSSL_SUCCESS)
     {
-        fprintf(stderr, "E %s: wolfSSL_UseALPN: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        fprintf(stderr, "%s %s: wolfSSL_UseALPN: %s\n", "E", TAG, wolfSSL_ERR_reason_error_string(errnum));
         goto cleanup;
     }
 
@@ -256,7 +255,7 @@ int main(void)
     errnum = wolfSSL_RAND_bytes(scid.data, scid.datalen);
     if (errnum != WOLFSSL_SUCCESS)
     {
-        fprintf(stderr, "E %s: wolfSSL_RAND_bytes: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        fprintf(stderr, "%s %s: wolfSSL_RAND_bytes: %s\n", "E", TAG, wolfSSL_ERR_reason_error_string(errnum));
         goto cleanup;
     }
 
@@ -337,7 +336,7 @@ int main(void)
     errnum = ngtcp2_conn_server_new(&conn, &dcid, &scid, &path, client_chosen_version, &callbacks, &settings, &params, NULL, NULL);
     if (errnum != 0)
     {
-        fprintf(stderr, "E %s: ngtcp2_conn_server_new: %s\n", TAG, ngtcp2_strerror(errnum));
+        fprintf(stderr, "%s %s: ngtcp2_conn_server_new: %s\n", "E", TAG, ngtcp2_strerror(errnum));
         goto cleanup;
     }
 
@@ -349,7 +348,7 @@ int main(void)
     errnum = wolfSSL_set_ex_data(ssl, 0, &conn_ref);
     if (errnum != WOLFSSL_SUCCESS)
     {
-        fprintf(stderr, "E %s: wolfSSL_set_ex_data: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        fprintf(stderr, "%s %s: wolfSSL_set_ex_data: %s\n", "E", TAG, wolfSSL_ERR_reason_error_string(errnum));
         goto cleanup;
     }
 
@@ -358,7 +357,7 @@ int main(void)
     errnum = ngtcp2_conn_read_pkt(conn, &path, NULL, readbuf, nread, timestamp());
     if (errnum != 0)
     {
-        fprintf(stderr, "E %s: ngtcp2_conn_read_pkt: %s\n", TAG, ngtcp2_strerror(errnum));
+        fprintf(stderr, "%s %s: ngtcp2_conn_read_pkt: %s\n", "E", TAG, ngtcp2_strerror(errnum));
         goto cleanup;
     }
 
@@ -367,14 +366,14 @@ int main(void)
         nread = read(readfd, readbuf, sizeof(readbuf));
         if (readbuf == -1)
         {
-            fprintf(stderr, "E %s: read: %s\n", TAG, strerror(errno));
+            fprintf(stderr, "%s %s: read: %s\n", "E", TAG, strerror(errno));
             goto cleanup;
         }
 
         errnum = ngtcp2_conn_read_pkt(conn, &path, NULL, readbuf, nread, timestamp());
         if (errnum != 0)
         {
-            fprintf(stderr, "E %s: ngtcp2_conn_read_pkt: %s\n", TAG, ngtcp2_strerror(errnum));
+            fprintf(stderr, "%s %s: ngtcp2_conn_read_pkt: %s\n", "E", TAG, ngtcp2_strerror(errnum));
             goto cleanup;
         }
     }
@@ -390,20 +389,21 @@ cleanup:
         wolfSSL_free(ssl);
     }
 
+    if (ctx)
+    {
+        wolfSSL_CTX_free(ctx);
+    }
+
     if (fd != -1)
     {
         if (close(fd) != 0)
         {
-            fprintf(stderr, "W %s: close: %s\n", TAG, strerror(errno));
+            fprintf(stderr, "%s %s: close: %s\n", "W", TAG, strerror(errno));
         }
     }
 
     if (ais)
     {
         freeaddrinfo(ais);
-    }
-
-    if (ctx)
-    {
     }
 }
