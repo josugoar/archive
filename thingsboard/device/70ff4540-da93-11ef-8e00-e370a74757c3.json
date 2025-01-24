@@ -54,8 +54,16 @@
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "active",
-      "lastUpdateTs" : 1737751228800,
+      "lastUpdateTs" : 1737751841060,
       "longValue" : null,
+      "strValue" : null
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "inactivityAlarmTime",
+      "lastUpdateTs" : 1737751841060,
+      "longValue" : 1737751841007,
       "strValue" : null
     }, {
       "booleanValue" : null,
@@ -90,6 +98,46 @@
       "longValue" : null,
       "strValue" : null
     } ],
-    "SHARED_SCOPE" : [ ]
+    "SHARED_SCOPE" : [ {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "fw_checksum",
+      "lastUpdateTs" : 1737754131181,
+      "longValue" : null,
+      "strValue" : "995a891a0a04ed3706431ec77fcf6812cc5607de4e7e42e948f56d50f68b58e7"
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "fw_checksum_algorithm",
+      "lastUpdateTs" : 1737754131181,
+      "longValue" : null,
+      "strValue" : "SHA256"
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "fw_size",
+      "lastUpdateTs" : 1737754131181,
+      "longValue" : 174624,
+      "strValue" : null
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "fw_title",
+      "lastUpdateTs" : 1737754131181,
+      "longValue" : null,
+      "strValue" : "Air Quality Sensor"
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "fw_version",
+      "lastUpdateTs" : 1737754131181,
+      "longValue" : null,
+      "strValue" : "0.0.0"
+    } ]
   }
 }

@@ -7,14 +7,17 @@
       "id" : "6e6bc920-da93-11ef-8e00-e370a74757c3"
     },
     "defaultEdgeRuleChainId" : null,
-    "defaultQueueName" : "",
+    "defaultQueueName" : null,
     "defaultRuleChainId" : {
       "entityType" : "RULE_CHAIN",
-      "id" : "6f8d3eb0-da93-11ef-8e00-e370a74757c3"
+      "id" : "a1833e90-da95-11ef-8e00-e370a74757c3"
     },
     "description" : "",
     "externalId" : null,
-    "firmwareId" : null,
+    "firmwareId" : {
+      "entityType" : "OTA_PACKAGE",
+      "id" : "0f24e670-da9a-11ef-8e00-e370a74757c3"
+    },
     "id" : {
       "entityType" : "DEVICE_PROFILE",
       "id" : "70cc7570-da93-11ef-8e00-e370a74757c3"
@@ -159,14 +162,14 @@
         "type" : "DEFAULT"
       },
       "provisionConfiguration" : {
-        "type" : "DISABLED",
-        "provisionDeviceSecret" : null
+        "type" : "ALLOW_CREATE_NEW_DEVICES",
+        "provisionDeviceSecret" : "pcsbby11gjanbz13kxvg"
       },
       "transportConfiguration" : {
         "type" : "MQTT",
         "deviceAttributesSubscribeTopic" : "v1/devices/me/attributes",
         "deviceAttributesTopic" : "v1/devices/me/attributes",
-        "deviceTelemetryTopic" : "v1/devices/me/telemetry",
+        "deviceTelemetryTopic" : "v1/devices/me/telemetry/+/+/+/+/+",
         "sendAckOnValidationException" : false,
         "sparkplug" : false,
         "sparkplugAttributesMetricNames" : null,
@@ -175,8 +178,8 @@
         }
       }
     },
-    "provisionDeviceKey" : null,
-    "provisionType" : "DISABLED",
+    "provisionDeviceKey" : "rjp00esimbz4679fu466",
+    "provisionType" : "ALLOW_CREATE_NEW_DEVICES",
     "softwareId" : null,
     "transportType" : "MQTT",
     "type" : "DEFAULT"

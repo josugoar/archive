@@ -203,6 +203,14 @@
     "version" : 2140241
   } ],
   "attributes" : {
-    "SERVER_SCOPE" : [ ]
+    "SERVER_SCOPE" : [ {
+      "booleanValue" : false,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "waterPumpActive",
+      "lastUpdateTs" : 1737751829159,
+      "longValue" : null,
+      "strValue" : null
+    } ]
   }
 }

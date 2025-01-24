@@ -7,159 +7,12 @@
     "mobileOrder" : 1,
     "configuration" : {
       "widgets" : {
-        "181424bc-7051-1cac-3583-b959bddceca2" : {
-          "type" : "latest",
-          "sizeX" : 13,
-          "sizeY" : 6,
-          "config" : {
-            "datasources" : [ {
-              "type" : "entity",
-              "name" : null,
-              "entityAliasId" : "12ae98c7-1ea2-52cf-64d5-763e9d993547",
-              "filterId" : null,
-              "dataKeys" : [ {
-                "name" : "active",
-                "type" : "attribute",
-                "label" : "active",
-                "color" : "#607d8b",
-                "settings" : { },
-                "_hash" : 0.30926987994082844
-              }, {
-                "name" : "xPos",
-                "type" : "attribute",
-                "label" : "xPos",
-                "color" : "#4caf50",
-                "settings" : { },
-                "_hash" : 0.6110834618211485
-              }, {
-                "name" : "yPos",
-                "type" : "attribute",
-                "label" : "yPos",
-                "color" : "#f44336",
-                "settings" : { },
-                "_hash" : 0.2489853343002537
-              }, {
-                "name" : "co2",
-                "type" : "timeseries",
-                "label" : "co2",
-                "color" : "#ffc107",
-                "settings" : { },
-                "_hash" : 0.8535015473029672
-              }, {
-                "name" : "tvoc",
-                "type" : "timeseries",
-                "label" : "tvoc",
-                "color" : "#607d8b",
-                "settings" : { },
-                "_hash" : 0.05623109645986113
-              } ]
-            } ],
-            "timewindow" : {
-              "displayValue" : "",
-              "selectedTab" : 0,
-              "realtime" : {
-                "realtimeType" : 1,
-                "interval" : 1000,
-                "timewindowMs" : 60000,
-                "quickInterval" : "CURRENT_DAY"
-              },
-              "history" : {
-                "historyType" : 0,
-                "interval" : 1000,
-                "timewindowMs" : 60000,
-                "fixedTimewindow" : {
-                  "startTimeMs" : 1694102625274,
-                  "endTimeMs" : 1694189025274
-                },
-                "quickInterval" : "CURRENT_DAY"
-              },
-              "aggregation" : {
-                "type" : "AVG",
-                "limit" : 25000
-              }
-            },
-            "showTitle" : false,
-            "backgroundColor" : "#fff",
-            "color" : "rgba(0, 0, 0, 0.87)",
-            "padding" : "8px",
-            "settings" : {
-              "fitMapBounds" : true,
-              "latKeyName" : "latitude",
-              "lngKeyName" : "longitude",
-              "showLabel" : true,
-              "label" : "${entityName}",
-              "tooltipPattern" : "<b>${entityName}</b><br/><br/><b>CO₂:</b> ${co2:1} ppm<br/><b>TVOCs:</b> ${tvoc:0} mg/m³<br/><br/>",
-              "markerImageSize" : 60,
-              "useColorFunction" : false,
-              "markerImages" : [ ],
-              "useMarkerImageFunction" : false,
-              "colorFunction" : "\n",
-              "color" : "#fe7569",
-              "mapProvider" : "OpenStreetMap.HOT",
-              "showTooltip" : true,
-              "autocloseTooltip" : true,
-              "customProviderTileUrl" : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-              "defaultCenterPosition" : "0,0",
-              "showTooltipAction" : "click",
-              "polygonKeyName" : "coordinates",
-              "polygonOpacity" : 0.5,
-              "polygonStrokeOpacity" : 1,
-              "polygonStrokeWeight" : 1,
-              "zoomOnClick" : true,
-              "showCoverageOnHover" : true,
-              "animate" : true,
-              "maxClusterRadius" : 80,
-              "removeOutsideVisibleBounds" : true,
-              "useLabelFunction" : true,
-              "defaultZoomLevel" : 14,
-              "provider" : "image-map",
-              "mapPageSize" : 16384,
-              "xPosKeyName" : "xPos",
-              "yPosKeyName" : "yPos",
-              "markerOffsetX" : 0.5,
-              "markerOffsetY" : 1,
-              "posFunction" : "return {x: origXPos, y: origYPos};",
-              "markerImage" : "tb-image;/api/images/tenant/indoor_air_quality_dashboard_widget_sensors_map_marker_image.svg",
-              "imageEntityAlias" : "Office",
-              "imageUrlAttribute" : "plan",
-              "mapImageUrl" : "tb-image;/api/images/system/label_widget_system_widget_background.svg",
-              "labelFunction" : "var color = '#2A7DEC';\nreturn '<div style=\"border-radius: 15px; border: solid #ffffff 2px; background-color: #fff; padding: 3px 0px 3px 0px;\"><span style=\"border: solid ' + color + ' 2px; border-radius: 15px; color: ' + color + '; padding: 4px 12px 4px 12px; font-size: 14px; font-weight: 600;\">' + \n           '${entityLabel}' + \n        '</span></div>';"
-            },
-            "title" : "Sensors map",
-            "dropShadow" : true,
-            "enableFullscreen" : false,
-            "titleStyle" : {
-              "fontSize" : "16px",
-              "fontWeight" : 400
-            },
-            "useDashboardTimewindow" : true,
-            "showLegend" : false,
-            "widgetStyle" : {
-              "border-radius" : "8px",
-              "box-shadow" : "0px 0px 5px rgba(0, 0, 0, 0.05), 0px 0px 20px -10px rgba(16, 16, 16, 0.35)"
-            },
-            "actions" : {
-              "headerButton" : [ ],
-              "tooltipAction" : [ ]
-            },
-            "showTitleIcon" : false,
-            "titleIcon" : null,
-            "iconColor" : "rgba(0, 0, 0, 0.87)",
-            "iconSize" : "24px",
-            "titleTooltip" : "",
-            "displayTimewindow" : true,
-            "enableDataExport" : false
-          },
-          "id" : "181424bc-7051-1cac-3583-b959bddceca2",
-          "typeFullFqn" : "system.maps_v2.openstreetmap"
-        },
         "bc0597c2-9294-be92-8122-f8dc0b24d920" : {
           "type" : "alarm",
           "sizeX" : 13,
           "sizeY" : 5,
           "config" : {
             "timewindow" : {
-              "hideInterval" : false,
               "hideAggregation" : false,
               "hideAggInterval" : false,
               "hideTimezone" : false,
@@ -361,9 +214,6 @@
               "latestDataKeys" : [ ]
             } ],
             "timewindow" : {
-              "hideInterval" : false,
-              "hideLastInterval" : false,
-              "hideQuickInterval" : false,
               "hideAggregation" : false,
               "hideAggInterval" : false,
               "hideTimezone" : false,
@@ -739,9 +589,6 @@
               "latestDataKeys" : [ ]
             } ],
             "timewindow" : {
-              "hideInterval" : false,
-              "hideLastInterval" : false,
-              "hideQuickInterval" : false,
               "hideAggregation" : false,
               "hideAggInterval" : false,
               "hideTimezone" : false,
@@ -1028,6 +875,302 @@
           "row" : 0,
           "col" : 0,
           "id" : "cfdef995-b5b5-deb5-840a-4d240252f5e0"
+        },
+        "61b8d1c8-583f-d775-1ef8-3640b9133bd7" : {
+          "type" : "latest",
+          "sizeX" : 13,
+          "sizeY" : 6,
+          "config" : {
+            "datasources" : [ {
+              "type" : "entity",
+              "name" : null,
+              "entityAliasId" : "12ae98c7-1ea2-52cf-64d5-763e9d993547",
+              "filterId" : null,
+              "dataKeys" : [ {
+                "name" : "active",
+                "type" : "attribute",
+                "label" : "active",
+                "color" : "#607d8b",
+                "settings" : { },
+                "_hash" : 0.30926987994082844
+              }, {
+                "name" : "xPos",
+                "type" : "attribute",
+                "label" : "xPos",
+                "color" : "#4caf50",
+                "settings" : { },
+                "_hash" : 0.6110834618211485
+              }, {
+                "name" : "yPos",
+                "type" : "attribute",
+                "label" : "yPos",
+                "color" : "#f44336",
+                "settings" : { },
+                "_hash" : 0.2489853343002537
+              }, {
+                "name" : "co2",
+                "type" : "timeseries",
+                "label" : "co2",
+                "color" : "#ffc107",
+                "settings" : { },
+                "_hash" : 0.8535015473029672
+              }, {
+                "name" : "tvoc",
+                "type" : "timeseries",
+                "label" : "tvoc",
+                "color" : "#607d8b",
+                "settings" : { },
+                "_hash" : 0.05623109645986113
+              } ]
+            } ],
+            "timewindow" : {
+              "displayValue" : "",
+              "selectedTab" : 0,
+              "realtime" : {
+                "realtimeType" : 1,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideQuickInterval" : false
+              },
+              "history" : {
+                "historyType" : 0,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "fixedTimewindow" : {
+                  "startTimeMs" : 1694102720479,
+                  "endTimeMs" : 1694189120479
+                },
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideFixedInterval" : false,
+                "hideQuickInterval" : false
+              },
+              "aggregation" : {
+                "type" : "AVG",
+                "limit" : 25000
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "#fff",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "8px",
+            "settings" : {
+              "provider" : "image-map",
+              "gmApiKey" : "AIzaSyDoEx2kaGz3PxwbI9T7ccTSg5xjdw8Nw8Q",
+              "gmDefaultMapType" : "roadmap",
+              "mapProvider" : "OpenStreetMap.HOT",
+              "useCustomProvider" : false,
+              "customProviderTileUrl" : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              "mapProviderHere" : "HERE.normalDay",
+              "credentials" : {
+                "useV3" : true,
+                "app_id" : "AhM6TzD9ThyK78CT3ptx",
+                "app_code" : "p6NPiITB3Vv0GMUFnkLOOg",
+                "apiKey" : "kVXykxAfZ6LS4EbCTO02soFVfjA7HoBzNVVH9u7nzoE"
+              },
+              "mapImageUrl" : "tb-image;/api/images/system/label_widget_system_widget_background.svg",
+              "imageEntityAlias" : "Office",
+              "imageUrlAttribute" : "plan",
+              "tmApiKey" : "84d6d83e0e51e481e50454ccbe8986b",
+              "tmDefaultMapType" : "roadmap",
+              "latKeyName" : "latitude",
+              "lngKeyName" : "longitude",
+              "xPosKeyName" : "xPos",
+              "yPosKeyName" : "yPos",
+              "defaultZoomLevel" : 14,
+              "defaultCenterPosition" : "0,0",
+              "disableScrollZooming" : true,
+              "disableDoubleClickZooming" : false,
+              "disableZoomControl" : false,
+              "fitMapBounds" : true,
+              "useDefaultCenterPosition" : false,
+              "mapPageSize" : 16384,
+              "markerOffsetX" : 0.5,
+              "markerOffsetY" : 1,
+              "posFunction" : "return {x: origXPos, y: origYPos};",
+              "draggableMarker" : false,
+              "showLabel" : true,
+              "useLabelFunction" : true,
+              "label" : "${entityName}",
+              "labelFunction" : "var color = '#2A7DEC';\nreturn '<div style=\"border-radius: 15px; border: solid #ffffff 2px; background-color: #fff; padding: 3px 0px 3px 0px;\"><span style=\"border: solid ' + color + ' 2px; border-radius: 15px; color: ' + color + '; padding: 4px 12px 4px 12px; font-size: 14px; font-weight: 600;\">' + \n           '${entityLabel}' + \n        '</span></div>';",
+              "showTooltip" : true,
+              "showTooltipAction" : "click",
+              "autocloseTooltip" : true,
+              "useTooltipFunction" : false,
+              "tooltipPattern" : "<b>${entityName}</b><br/><br/><b>CO₂:</b> ${co2:1} ppm<br/><b>TVOCs:</b> ${tvoc:0} mg/m³<br/><br/>",
+              "tooltipFunction" : null,
+              "tooltipOffsetX" : 0,
+              "tooltipOffsetY" : -1,
+              "color" : "#fe7569",
+              "useColorFunction" : false,
+              "colorFunction" : "\n",
+              "useMarkerImageFunction" : false,
+              "markerImage" : "tb-image;/api/images/tenant/indoor_air_quality_dashboard_widget_sensors_map_marker_image.svg",
+              "markerImageSize" : 60,
+              "markerImageFunction" : null,
+              "markerImages" : [ ],
+              "showPolygon" : false,
+              "polygonKeyName" : "coordinates",
+              "editablePolygon" : false,
+              "showPolygonLabel" : false,
+              "usePolygonLabelFunction" : false,
+              "polygonLabel" : "${entityName}",
+              "polygonLabelFunction" : null,
+              "showPolygonTooltip" : false,
+              "showPolygonTooltipAction" : "click",
+              "autoClosePolygonTooltip" : true,
+              "usePolygonTooltipFunction" : false,
+              "polygonTooltipPattern" : "<b>${entityName}</b><br/><br/><b>TimeStamp:</b> ${ts:7}",
+              "polygonTooltipFunction" : null,
+              "polygonColor" : "#3388ff",
+              "polygonOpacity" : 0.5,
+              "usePolygonColorFunction" : false,
+              "polygonColorFunction" : null,
+              "polygonStrokeColor" : "#3388ff",
+              "polygonStrokeOpacity" : 1,
+              "polygonStrokeWeight" : 1,
+              "usePolygonStrokeColorFunction" : false,
+              "polygonStrokeColorFunction" : null,
+              "showCircle" : false,
+              "circleKeyName" : "perimeter",
+              "editableCircle" : false,
+              "showCircleLabel" : false,
+              "useCircleLabelFunction" : false,
+              "circleLabel" : "${entityName}",
+              "circleLabelFunction" : null,
+              "showCircleTooltip" : false,
+              "showCircleTooltipAction" : "click",
+              "autoCloseCircleTooltip" : true,
+              "useCircleTooltipFunction" : false,
+              "circleTooltipPattern" : "<b>${entityName}</b><br/><br/><b>TimeStamp:</b> ${ts:7}",
+              "circleTooltipFunction" : null,
+              "circleFillColor" : "#3388ff",
+              "circleFillColorOpacity" : 0.2,
+              "useCircleFillColorFunction" : false,
+              "circleFillColorFunction" : null,
+              "circleStrokeColor" : "#3388ff",
+              "circleStrokeOpacity" : 1,
+              "circleStrokeWeight" : 3,
+              "useCircleStrokeColorFunction" : false,
+              "circleStrokeColorFunction" : null
+            },
+            "title" : "Sensors map",
+            "dropShadow" : false,
+            "enableFullscreen" : false,
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400
+            },
+            "useDashboardTimewindow" : true,
+            "showLegend" : false,
+            "widgetStyle" : {
+              "border-radius" : "8px",
+              "box-shadow" : "0px 0px 5px rgba(0, 0, 0, 0.05), 0px 0px 20px -10px rgba(16, 16, 16, 0.35)"
+            },
+            "actions" : {
+              "headerButton" : [ ],
+              "tooltipAction" : [ ]
+            },
+            "showTitleIcon" : false,
+            "titleIcon" : null,
+            "iconColor" : "rgba(0, 0, 0, 0.87)",
+            "iconSize" : "24px",
+            "titleTooltip" : "",
+            "displayTimewindow" : true,
+            "enableDataExport" : false,
+            "widgetCss" : "",
+            "pageSize" : 1024,
+            "noDataDisplayMessage" : ""
+          },
+          "id" : "61b8d1c8-583f-d775-1ef8-3640b9133bd7",
+          "typeFullFqn" : "system.maps_v2.openstreetmap"
+        },
+        "a4288e58-4886-ff4f-2d53-537c94873eae" : {
+          "typeFullFqn" : "system.input_widgets.update_multiple_attributes",
+          "type" : "latest",
+          "sizeX" : 7.5,
+          "sizeY" : 3,
+          "config" : {
+            "datasources" : [ {
+              "type" : "entity",
+              "name" : "",
+              "entityAliasId" : "12ae98c7-1ea2-52cf-64d5-763e9d993547",
+              "dataKeys" : [ {
+                "name" : "samplingRate",
+                "type" : "attribute",
+                "label" : "samplingRate",
+                "color" : "#2196f3",
+                "settings" : { },
+                "_hash" : 0.11127325921701314
+              } ],
+              "alarmFilterConfig" : {
+                "statusList" : [ "ACTIVE" ]
+              }
+            } ],
+            "timewindow" : {
+              "displayValue" : "",
+              "selectedTab" : 0,
+              "realtime" : {
+                "realtimeType" : 1,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideQuickInterval" : false
+              },
+              "history" : {
+                "historyType" : 0,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "fixedTimewindow" : {
+                  "startTimeMs" : 1737672968972,
+                  "endTimeMs" : 1737759368972
+                },
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideFixedInterval" : false,
+                "hideQuickInterval" : false
+              },
+              "aggregation" : {
+                "type" : "AVG",
+                "limit" : 2500
+              }
+            },
+            "showTitle" : true,
+            "backgroundColor" : "#fff",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "8px",
+            "settings" : {
+              "groupTitle" : "${entityName}",
+              "showActionButtons" : true,
+              "fieldsAlignment" : "row",
+              "fieldsInRow" : 2,
+              "columnGap" : 10,
+              "rowGap" : 5
+            },
+            "title" : "Update Multiple Attributes",
+            "dropShadow" : true,
+            "enableFullscreen" : false,
+            "enableDataExport" : false,
+            "widgetStyle" : { },
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400
+            },
+            "useDashboardTimewindow" : true,
+            "showLegend" : false,
+            "actions" : { },
+            "displayTimewindow" : true
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "a4288e58-4886-ff4f-2d53-537c94873eae"
         }
       },
       "states" : {
@@ -1037,14 +1180,6 @@
           "layouts" : {
             "main" : {
               "widgets" : {
-                "181424bc-7051-1cac-3583-b959bddceca2" : {
-                  "sizeX" : 9,
-                  "sizeY" : 6,
-                  "row" : 6,
-                  "col" : 0,
-                  "mobileOrder" : 4,
-                  "mobileHeight" : 3
-                },
                 "bc0597c2-9294-be92-8122-f8dc0b24d920" : {
                   "sizeX" : 9,
                   "sizeY" : 6,
@@ -1068,6 +1203,18 @@
                   "mobileHeight" : 6,
                   "row" : 6,
                   "col" : 9
+                },
+                "61b8d1c8-583f-d775-1ef8-3640b9133bd7" : {
+                  "sizeX" : 9,
+                  "sizeY" : 3,
+                  "row" : 6,
+                  "col" : 0
+                },
+                "a4288e58-4886-ff4f-2d53-537c94873eae" : {
+                  "sizeX" : 9,
+                  "sizeY" : 3,
+                  "row" : 9,
+                  "col" : 0
                 }
               },
               "gridSettings" : {
@@ -1080,7 +1227,8 @@
                 "mobileRowHeight" : 70,
                 "margin" : 10,
                 "backgroundImageUrl" : null,
-                "outerMargin" : true
+                "outerMargin" : true,
+                "layoutType" : "default"
               }
             }
           }
@@ -1118,7 +1266,6 @@
       "timewindow" : {
         "displayValue" : "",
         "selectedTab" : 0,
-        "hideInterval" : false,
         "hideAggregation" : false,
         "hideAggInterval" : false,
         "realtime" : {

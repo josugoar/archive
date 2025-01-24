@@ -41,7 +41,7 @@
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "active",
-      "lastUpdateTs" : 1737751228785,
+      "lastUpdateTs" : 1737751841081,
       "longValue" : null,
       "strValue" : null
     }, {
@@ -59,6 +59,14 @@
       "key" : "humidityAlarmThreshold",
       "lastUpdateTs" : 1737751226253,
       "longValue" : 45,
+      "strValue" : null
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "inactivityAlarmTime",
+      "lastUpdateTs" : 1737751841081,
+      "longValue" : 1737751841007,
       "strValue" : null
     }, {
       "booleanValue" : null,

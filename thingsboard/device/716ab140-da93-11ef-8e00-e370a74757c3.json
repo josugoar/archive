@@ -54,7 +54,7 @@
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "active",
-      "lastUpdateTs" : 1737751228788,
+      "lastUpdateTs" : 1737751829469,
       "longValue" : null,
       "strValue" : null
     }, {
@@ -65,6 +65,14 @@
       "lastUpdateTs" : 1737751227029,
       "longValue" : null,
       "strValue" : "{\"secretKey\": \"Charging port Secret Key\", \"expirationTime\": 1893448800000}"
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "inactivityAlarmTime",
+      "lastUpdateTs" : 1737751829469,
+      "longValue" : 1737751828900,
+      "strValue" : null
     }, {
       "booleanValue" : null,
       "doubleValue" : 33.782736,
