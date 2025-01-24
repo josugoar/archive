@@ -1,0 +1,418 @@
+{
+  "entityType" : "DASHBOARD",
+  "entity" : {
+    "title" : "Arduino DHT22: Temperature & Humidity Demo Dashboard (Deprecated)",
+    "image" : null,
+    "mobileHide" : true,
+    "mobileOrder" : null,
+    "configuration" : {
+      "description" : "Demo dashboard for sample applications that upload temperature and humidity received from Arduino with DHT22 sensor",
+      "widgets" : {
+        "9d4f97af-4712-9a53-0593-c6d05933f6f2" : {
+          "type" : "timeseries",
+          "sizeX" : 8,
+          "sizeY" : 5,
+          "row" : 0,
+          "col" : 0,
+          "config" : {
+            "datasources" : [ {
+              "type" : "entity",
+              "dataKeys" : [ {
+                "name" : "temperature",
+                "label" : "Temperature, °C",
+                "type" : "timeseries",
+                "color" : "#2196f3",
+                "settings" : {
+                  "showLines" : true,
+                  "fillLines" : false,
+                  "showPoints" : false
+                },
+                "_hash" : 0.7438679421517123
+              } ],
+              "name" : "Arduino Uno Demo Device",
+              "entityAliasId" : "e77ccc0f-2c19-138d-b1ed-fe9aa81cfb6f"
+            } ],
+            "timewindow" : {
+              "realtime" : {
+                "timewindowMs" : 120000
+              }
+            },
+            "showTitle" : true,
+            "backgroundColor" : "#fff",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "8px",
+            "settings" : {
+              "showLegend" : true,
+              "legendConfig" : {
+                "direction" : "column",
+                "position" : "bottom",
+                "sortDataKeys" : false,
+                "showMin" : false,
+                "showMax" : false,
+                "showAvg" : true,
+                "showTotal" : false,
+                "showLatest" : false
+              }
+            },
+            "title" : "Temperature"
+          },
+          "id" : "9d4f97af-4712-9a53-0593-c6d05933f6f2",
+          "typeFullFqn" : "system.charts.basic_timeseries"
+        },
+        "a2e16b7f-cd62-2d17-1cbd-e74029edc54c" : {
+          "type" : "latest",
+          "sizeX" : 4,
+          "sizeY" : 5,
+          "row" : 0,
+          "col" : 8,
+          "config" : {
+            "datasources" : [ {
+              "type" : "entity",
+              "dataKeys" : [ {
+                "name" : "temperature",
+                "type" : "timeseries",
+                "label" : "temperature",
+                "color" : "#2196f3",
+                "settings" : { },
+                "_hash" : 0.12513745304517898
+              } ],
+              "name" : "Arduino Uno Demo Device",
+              "entityAliasId" : "e77ccc0f-2c19-138d-b1ed-fe9aa81cfb6f"
+            } ],
+            "timewindow" : {
+              "displayValue" : "",
+              "selectedTab" : 0,
+              "realtime" : {
+                "realtimeType" : 1,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "history" : {
+                "historyType" : 0,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "fixedTimewindow" : {
+                  "startTimeMs" : 1694103021989,
+                  "endTimeMs" : 1694189421989
+                },
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "aggregation" : {
+                "type" : "AVG",
+                "limit" : 25000
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "#000000",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "0px",
+            "settings" : {
+              "maxValue" : 125,
+              "donutStartAngle" : 90,
+              "showValue" : true,
+              "showMinMax" : true,
+              "gaugeWidthScale" : 0.75,
+              "levelColors" : [ "#304ffe", "#7e57c2", "#ff4081", "#d32f2f" ],
+              "refreshAnimationType" : "<>",
+              "refreshAnimationTime" : 700,
+              "startAnimationType" : "<>",
+              "startAnimationTime" : 700,
+              "titleFont" : {
+                "family" : "RobotoDraft",
+                "size" : 12,
+                "style" : "normal",
+                "weight" : "500"
+              },
+              "labelFont" : {
+                "family" : "RobotoDraft",
+                "size" : 8,
+                "style" : "normal",
+                "weight" : "500"
+              },
+              "valueFont" : {
+                "family" : "Segment7Standard",
+                "style" : "normal",
+                "weight" : "500",
+                "size" : 14
+              },
+              "minMaxFont" : {
+                "family" : "Segment7Standard",
+                "size" : 8,
+                "style" : "normal",
+                "weight" : "500"
+              },
+              "dashThickness" : 0.85,
+              "decimals" : 1,
+              "gaugeColor" : "#333333",
+              "neonGlowBrightness" : 35,
+              "gaugeType" : "verticalBar",
+              "minValue" : -40,
+              "showUnitTitle" : true,
+              "unitTitle" : "Temperature °C"
+            },
+            "title" : "Digital thermometer"
+          },
+          "id" : "a2e16b7f-cd62-2d17-1cbd-e74029edc54c",
+          "typeFullFqn" : "system.digital_gauges.digital_thermometer"
+        },
+        "fbbe947b-14b1-2967-dad7-614417445a61" : {
+          "type" : "timeseries",
+          "sizeX" : 8,
+          "sizeY" : 5,
+          "row" : 5,
+          "col" : 0,
+          "config" : {
+            "datasources" : [ {
+              "type" : "entity",
+              "dataKeys" : [ {
+                "name" : "humidity",
+                "label" : "Humidity, %",
+                "type" : "timeseries",
+                "color" : "#2196f3",
+                "settings" : {
+                  "showLines" : true,
+                  "fillLines" : false,
+                  "showPoints" : false
+                },
+                "_hash" : 0.37845111848900936
+              } ],
+              "name" : "Arduino Uno Demo Device",
+              "entityAliasId" : "e77ccc0f-2c19-138d-b1ed-fe9aa81cfb6f"
+            } ],
+            "timewindow" : {
+              "realtime" : {
+                "timewindowMs" : 120000
+              }
+            },
+            "showTitle" : true,
+            "backgroundColor" : "#fff",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "8px",
+            "settings" : {
+              "showLegend" : true,
+              "legendConfig" : {
+                "direction" : "column",
+                "position" : "bottom",
+                "sortDataKeys" : false,
+                "showMin" : false,
+                "showMax" : false,
+                "showAvg" : true,
+                "showTotal" : false,
+                "showLatest" : false
+              }
+            },
+            "title" : "Humidity Level"
+          },
+          "id" : "fbbe947b-14b1-2967-dad7-614417445a61",
+          "typeFullFqn" : "system.charts.basic_timeseries"
+        },
+        "47ebb6e9-6cf2-4826-58de-692a5c512997" : {
+          "type" : "latest",
+          "sizeX" : 4,
+          "sizeY" : 5,
+          "row" : 5,
+          "col" : 8,
+          "config" : {
+            "datasources" : [ {
+              "type" : "entity",
+              "dataKeys" : [ {
+                "name" : "humidity",
+                "label" : "humidity",
+                "type" : "timeseries",
+                "color" : "#2196f3",
+                "settings" : { },
+                "_hash" : 0.3269453210790785
+              } ],
+              "name" : "Arduino Uno Demo Device",
+              "entityAliasId" : "e77ccc0f-2c19-138d-b1ed-fe9aa81cfb6f"
+            } ],
+            "timewindow" : {
+              "displayValue" : "",
+              "selectedTab" : 0,
+              "realtime" : {
+                "realtimeType" : 1,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "history" : {
+                "historyType" : 0,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "fixedTimewindow" : {
+                  "startTimeMs" : 1694103021989,
+                  "endTimeMs" : 1694189421989
+                },
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "aggregation" : {
+                "type" : "AVG",
+                "limit" : 25000
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "#000000",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "0px",
+            "settings" : {
+              "maxValue" : 100,
+              "donutStartAngle" : 90,
+              "showValue" : true,
+              "showMinMax" : true,
+              "gaugeWidthScale" : 0.75,
+              "levelColors" : [ "#3d5afe", "#0288d1" ],
+              "refreshAnimationType" : "<>",
+              "refreshAnimationTime" : 700,
+              "startAnimationType" : "<>",
+              "startAnimationTime" : 700,
+              "titleFont" : {
+                "family" : "RobotoDraft",
+                "size" : 12,
+                "style" : "normal",
+                "weight" : "500"
+              },
+              "labelFont" : {
+                "family" : "RobotoDraft",
+                "size" : 8,
+                "style" : "normal",
+                "weight" : "500"
+              },
+              "valueFont" : {
+                "family" : "Segment7Standard",
+                "style" : "normal",
+                "weight" : "500",
+                "size" : 14
+              },
+              "minMaxFont" : {
+                "family" : "Segment7Standard",
+                "size" : 8,
+                "style" : "normal",
+                "weight" : "normal"
+              },
+              "neonGlowBrightness" : 20,
+              "decimals" : 0,
+              "showUnitTitle" : true,
+              "gaugeColor" : "#151c3d",
+              "gaugeType" : "verticalBar",
+              "showTitle" : false,
+              "minValue" : 0,
+              "dashThickness" : 0.85,
+              "unitTitle" : "Humidity %"
+            },
+            "title" : "Digital vertical bar"
+          },
+          "id" : "47ebb6e9-6cf2-4826-58de-692a5c512997",
+          "typeFullFqn" : "system.digital_gauges.digital_vertical_bar"
+        }
+      },
+      "states" : {
+        "default" : {
+          "name" : "Arduino DHT22: Temperature & Humidity Demo Dashboard (Deprecated)",
+          "root" : true,
+          "layouts" : {
+            "main" : {
+              "widgets" : {
+                "9d4f97af-4712-9a53-0593-c6d05933f6f2" : {
+                  "sizeX" : 8,
+                  "sizeY" : 5,
+                  "row" : 0,
+                  "col" : 0
+                },
+                "a2e16b7f-cd62-2d17-1cbd-e74029edc54c" : {
+                  "sizeX" : 4,
+                  "sizeY" : 5,
+                  "row" : 0,
+                  "col" : 8
+                },
+                "fbbe947b-14b1-2967-dad7-614417445a61" : {
+                  "sizeX" : 8,
+                  "sizeY" : 5,
+                  "row" : 5,
+                  "col" : 0
+                },
+                "47ebb6e9-6cf2-4826-58de-692a5c512997" : {
+                  "sizeX" : 4,
+                  "sizeY" : 5,
+                  "row" : 5,
+                  "col" : 8
+                }
+              },
+              "gridSettings" : {
+                "backgroundColor" : "#eeeeee",
+                "columns" : 24,
+                "margin" : 10,
+                "outerMargin" : true,
+                "backgroundSizeMode" : "100%"
+              }
+            }
+          }
+        }
+      },
+      "entityAliases" : {
+        "e77ccc0f-2c19-138d-b1ed-fe9aa81cfb6f" : {
+          "id" : "e77ccc0f-2c19-138d-b1ed-fe9aa81cfb6f",
+          "alias" : "Arduino UNO Demo Device",
+          "filter" : {
+            "type" : "entityList",
+            "entityType" : "DEVICE",
+            "resolveMultiple" : false,
+            "entityList" : [ "6cddaf10-da93-11ef-8e00-e370a74757c3" ]
+          }
+        }
+      },
+      "filters" : { },
+      "timewindow" : {
+        "displayValue" : "",
+        "hideInterval" : false,
+        "hideLastInterval" : false,
+        "hideQuickInterval" : false,
+        "hideAggregation" : false,
+        "hideAggInterval" : false,
+        "hideTimezone" : false,
+        "selectedTab" : 0,
+        "realtime" : {
+          "realtimeType" : 0,
+          "interval" : 1000,
+          "timewindowMs" : 60000,
+          "quickInterval" : "CURRENT_DAY"
+        },
+        "history" : {
+          "historyType" : 0,
+          "interval" : 1000,
+          "timewindowMs" : 60000,
+          "fixedTimewindow" : {
+            "startTimeMs" : 1694103021989,
+            "endTimeMs" : 1694189421989
+          },
+          "quickInterval" : "CURRENT_DAY"
+        },
+        "aggregation" : {
+          "type" : "AVG",
+          "limit" : 25000
+        }
+      },
+      "settings" : {
+        "stateControllerId" : "entity",
+        "showTitle" : false,
+        "showDashboardsSelect" : true,
+        "showEntitiesSelect" : true,
+        "showDashboardTimewindow" : true,
+        "showDashboardExport" : true,
+        "toolbarAlwaysOpen" : true
+      }
+    },
+    "name" : "Arduino DHT22: Temperature & Humidity Demo Dashboard (Deprecated)",
+    "resources" : null,
+    "assignedCustomers" : null,
+    "externalId" : null,
+    "id" : {
+      "entityType" : "DASHBOARD",
+      "id" : "6d30d820-da93-11ef-8e00-e370a74757c3"
+    }
+  },
+  "relations" : [ ],
+  "attributes" : {
+    "SERVER_SCOPE" : [ ]
+  }
+}

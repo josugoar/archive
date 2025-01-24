@@ -1,0 +1,37 @@
+{
+  "entityType" : "TB_RESOURCE",
+  "entity" : {
+    "data" : "PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIG9wYWNpdHk9Ii4zIiBkPSJNMTAyIDEzOS41YzAgNS43OTktMTIuMDg4IDEwLjUtMjcgMTAuNXMtMjctNC43MDEtMjctMTAuNVM2MC4wODggMTI5IDc1IDEyOXMyNyA0LjcwMSAyNyAxMC41WiIgZmlsbD0iIzAwMCIvPgo8cGF0aCBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03NSAxMzkuMDAxYTQgNCAwIDAgMS0zLjI1MS0xLjY3MWMtNC43NjEtNi42NDgtMTAuMDU4LTEyLjMxOS0xNS40Mi0xNy42NTUtMS44LTEuNzkxLTMuNjM4LTMuNTcyLTUuNDctNS4zNDgtMy41MjgtMy40Mi03LjAzNS02LjgxOS0xMC4yMDgtMTAuMjI1LTkuODc0LTEwLjU5OC0xNy42NS0yMi4zOTctMTcuNjUtNDAuMjEyIDAtMjguOTY4IDIyLjE2Ni01Mi44ODkgNTItNTIuODg5IDI5Ljg0MyAwIDUyIDIzLjkyMiA1MiA1Mi44ODkgMCAxNy44MTctNy43NzQgMjkuNjE0LTE3LjY0NyA0MC4yMS0zLjE3MyAzLjQwNi02LjY3OSA2LjgwNS0xMC4yMDcgMTAuMjI0LTEuODMyIDEuNzc2LTMuNjcgMy41NTctNS40NyA1LjM0OC01LjM2MyA1LjMzNi0xMC42NiAxMS4wMDgtMTUuNDI0IDE3LjY1OEE0IDQgMCAwIDEgNzUgMTM5LjAwMXoiIGZpbGw9IiNmZmYiLz4KPHBhdGggZD0iTTc1IDEzNWMxOS44MDQtMjcuNjUgNDgtMzguMzE5IDQ4LTcxLjExMUMxMjMgMzcgMTAyLjUwNSAxNSA3NSAxNWMtMjcuNDk2IDAtNDggMjItNDggNDguODg5IDAgMzIuNzg4IDI4LjIwNSA0My40NyA0OCA3MS4xMTFaIiBmaWxsPSIjMGYxNjFkIiBmaWxsLW9wYWNpdHk9Ii4zNSIvPjxwYXRoIGQ9Ik0xMDkuMDAxIDYzLjAwMWMwIDE4Ljc3OC0xNS4yMjIgMzQtMzQgMzRzLTM0LTE1LjIyMi0zNC0zNCAxNS4yMjItMzQgMzQtMzQgMzQgMTUuMjIyIDM0IDM0WiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNODMuNjg4IDUxLjg4OSA4My42NjcgNDNoLTQuMzM0djguODg5aC04LjY2NlY0M2gtNC4zMzR2OC44ODloLS4wMjFDNjQuMTY3IDUxLjg2NyA2MiA1NC4wODkgNjIgNTYuMzF2MTIuMmw3LjU4MyA3LjgyMlY4M2gxMC44MzR2LTYuNjY3bDcuNTgzLTcuOFY1Ni4zMTFjMC0yLjIyMi0yLjE2Ny00LjQ0NC00LjMxMi00LjQyMloiIGZpbGw9IiMwZjE2MWQiIGZpbGwtb3BhY2l0eT0iLjM1Ii8+Cjwvc3ZnPg==",
+    "descriptor" : {
+      "mediaType" : "image/svg+xml",
+      "width" : 150,
+      "height" : 150,
+      "size" : 1207,
+      "etag" : "0b3390ad1b298cfe794c21b55347f517598025ee7c6d99b33db70679a53a2724",
+      "previewDescriptor" : {
+        "mediaType" : "image/svg+xml",
+        "width" : 150,
+        "height" : 150,
+        "size" : 1207,
+        "etag" : "0b3390ad1b298cfe794c21b55347f517598025ee7c6d99b33db70679a53a2724"
+      }
+    },
+    "etag" : "0b3390ad1b298cfe794c21b55347f517598025ee7c6d99b33db70679a53a2724",
+    "externalId" : null,
+    "fileName" : "ev_charging_stations_dashboard_widget_new_openstreetmap_marker_image_1.svg",
+    "id" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "6ea0e2e0-da93-11ef-8e00-e370a74757c3"
+    },
+    "link" : "/api/images/tenant/ev_charging_stations_dashboard_widget_new_openstreetmap_marker_image_1.svg",
+    "name" : "\"EV Charging Stations\" dashboard widget \"New OpenStreetMap\" marker image 1",
+    "preview" : null,
+    "public" : true,
+    "publicLink" : "/api/images/public/BMqkK6O3cndS7SCxMk4km25RsZkrw5Ce",
+    "publicResourceKey" : "BMqkK6O3cndS7SCxMk4km25RsZkrw5Ce",
+    "resourceKey" : "ev_charging_stations_dashboard_widget_new_openstreetmap_marker_image_1.svg",
+    "resourceSubType" : "IMAGE",
+    "resourceType" : "IMAGE",
+    "title" : "\"EV Charging Stations\" dashboard widget \"New OpenStreetMap\" marker image 1"
+  }
+}

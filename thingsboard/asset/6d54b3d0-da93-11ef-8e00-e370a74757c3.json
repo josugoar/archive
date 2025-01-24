@@ -1,0 +1,100 @@
+{
+  "entityType" : "ASSET",
+  "entity" : {
+    "additionalInfo" : null,
+    "assetProfileId" : {
+      "entityType" : "ASSET_PROFILE",
+      "id" : "6d51f4b0-da93-11ef-8e00-e370a74757c3"
+    },
+    "customerId" : {
+      "entityType" : "CUSTOMER",
+      "id" : "6d465bf0-da93-11ef-8e00-e370a74757c3"
+    },
+    "externalId" : null,
+    "id" : {
+      "entityType" : "ASSET",
+      "id" : "6d54b3d0-da93-11ef-8e00-e370a74757c3"
+    },
+    "label" : "Office",
+    "name" : "Office center",
+    "type" : "office"
+  },
+  "relations" : [ {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "ASSET",
+      "id" : "6d54b3d0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "70ff4540-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Contains",
+    "typeGroup" : "COMMON",
+    "version" : 2140211
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "ASSET",
+      "id" : "6d54b3d0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "711a9570-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Contains",
+    "typeGroup" : "COMMON",
+    "version" : 2140212
+  } ],
+  "attributes" : {
+    "SERVER_SCOPE" : [ {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "address",
+      "lastUpdateTs" : 1737751220252,
+      "longValue" : null,
+      "strValue" : "246 Bowery New York NY 10012 United States"
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "email",
+      "lastUpdateTs" : 1737751220252,
+      "longValue" : null,
+      "strValue" : "support@office-center.com"
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : 33.782736,
+      "jsonValue" : null,
+      "key" : "latitude",
+      "lastUpdateTs" : 1737751220252,
+      "longValue" : null,
+      "strValue" : null
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : -118.132032,
+      "jsonValue" : null,
+      "key" : "longitude",
+      "lastUpdateTs" : 1737751220252,
+      "longValue" : null,
+      "strValue" : null
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "phone",
+      "lastUpdateTs" : 1737751220252,
+      "longValue" : null,
+      "strValue" : "+1112223334"
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "plan",
+      "lastUpdateTs" : 1737751220252,
+      "longValue" : null,
+      "strValue" : "https://img.thingsboard.io/dashboards/smart-building/office-floor-plan.jpg"
+    } ]
+  }
+}

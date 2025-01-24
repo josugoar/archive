@@ -1,0 +1,76 @@
+{
+  "entityType" : "DEVICE",
+  "entity" : {
+    "additionalInfo" : null,
+    "customerId" : {
+      "entityType" : "CUSTOMER",
+      "id" : "13814000-1dd2-11b2-8080-808080808080"
+    },
+    "deviceData" : {
+      "configuration" : {
+        "type" : "DEFAULT"
+      },
+      "transportConfiguration" : {
+        "type" : "DEFAULT"
+      }
+    },
+    "deviceProfileId" : {
+      "entityType" : "DEVICE_PROFILE",
+      "id" : "70e7c5a0-da93-11ef-8e00-e370a74757c3"
+    },
+    "externalId" : null,
+    "firmwareId" : null,
+    "id" : {
+      "entityType" : "DEVICE",
+      "id" : "725a6870-da93-11ef-8e00-e370a74757c3"
+    },
+    "label" : null,
+    "name" : "Water level meter",
+    "softwareId" : null,
+    "type" : "Water sensor"
+  },
+  "credentials" : {
+    "credentialsId" : "AOdt1ao9mdV0juSa5EUu",
+    "credentialsType" : "ACCESS_TOKEN",
+    "credentialsValue" : null
+  },
+  "relations" : [ {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "ASSET",
+      "id" : "6d71d8c0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "725a6870-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Contains",
+    "typeGroup" : "COMMON",
+    "version" : 2140237
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "725a6870-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140238
+  } ],
+  "attributes" : {
+    "SERVER_SCOPE" : [ {
+      "booleanValue" : false,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "active",
+      "lastUpdateTs" : 1737751228686,
+      "longValue" : null,
+      "strValue" : null
+    } ],
+    "SHARED_SCOPE" : [ ]
+  }
+}

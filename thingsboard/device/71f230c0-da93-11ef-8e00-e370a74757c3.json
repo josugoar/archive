@@ -1,0 +1,84 @@
+{
+  "entityType" : "DEVICE",
+  "entity" : {
+    "additionalInfo" : null,
+    "customerId" : {
+      "entityType" : "CUSTOMER",
+      "id" : "13814000-1dd2-11b2-8080-808080808080"
+    },
+    "deviceData" : {
+      "configuration" : {
+        "type" : "DEFAULT"
+      },
+      "transportConfiguration" : {
+        "type" : "DEFAULT"
+      }
+    },
+    "deviceProfileId" : {
+      "entityType" : "DEVICE_PROFILE",
+      "id" : "70e02480-da93-11ef-8e00-e370a74757c3"
+    },
+    "externalId" : null,
+    "firmwareId" : null,
+    "id" : {
+      "entityType" : "DEVICE",
+      "id" : "71f230c0-da93-11ef-8e00-e370a74757c3"
+    },
+    "label" : null,
+    "name" : "Heat pump",
+    "softwareId" : null,
+    "type" : "Heat pump"
+  },
+  "credentials" : {
+    "credentialsId" : "bPmWFVwEuG5DSUPYF8pT",
+    "credentialsType" : "ACCESS_TOKEN",
+    "credentialsValue" : null
+  },
+  "relations" : [ {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "ASSET",
+      "id" : "6d71d8c0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "71f230c0-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Contains",
+    "typeGroup" : "COMMON",
+    "version" : 2140223
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "71f230c0-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140224
+  } ],
+  "attributes" : {
+    "SERVER_SCOPE" : [ {
+      "booleanValue" : false,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "active",
+      "lastUpdateTs" : 1737751228068,
+      "longValue" : null,
+      "strValue" : null
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "lastMaintenanceDate",
+      "lastUpdateTs" : 1737751228007,
+      "longValue" : 1737751228006,
+      "strValue" : null
+    } ],
+    "SHARED_SCOPE" : [ ]
+  }
+}

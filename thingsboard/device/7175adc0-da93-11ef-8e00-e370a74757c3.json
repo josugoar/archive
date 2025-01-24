@@ -1,0 +1,250 @@
+{
+  "entityType" : "DEVICE",
+  "entity" : {
+    "additionalInfo" : {
+      "gateway" : true
+    },
+    "customerId" : {
+      "entityType" : "CUSTOMER",
+      "id" : "13814000-1dd2-11b2-8080-808080808080"
+    },
+    "deviceData" : {
+      "configuration" : {
+        "type" : "DEFAULT"
+      },
+      "transportConfiguration" : {
+        "type" : "DEFAULT"
+      }
+    },
+    "deviceProfileId" : {
+      "entityType" : "DEVICE_PROFILE",
+      "id" : "69cff9e0-da93-11ef-8e00-e370a74757c3"
+    },
+    "externalId" : null,
+    "firmwareId" : null,
+    "id" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "label" : null,
+    "name" : "Pool System Gateway",
+    "softwareId" : null,
+    "type" : "default"
+  },
+  "credentials" : {
+    "credentialsId" : "cHVRhJ2ZUuURYYL5sSjh",
+    "credentialsType" : "ACCESS_TOKEN",
+    "credentialsValue" : null
+  },
+  "relations" : [ {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "719f55d0-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140216
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "71b28fb0-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140218
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "71c2e360-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140220
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "71dc37c0-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140222
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "71f230c0-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140224
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "720d59e0-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140226
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "722f39c0-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140228
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "72399a00-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140230
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "723ddfc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140232
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "72461d20-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140234
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "724be980-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140236
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "725a6870-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140238
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "726df070-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140240
+  }, {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "DEVICE",
+      "id" : "7175adc0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "7277b470-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Created",
+    "typeGroup" : "COMMON",
+    "version" : 2140242
+  } ],
+  "attributes" : {
+    "SERVER_SCOPE" : [ {
+      "booleanValue" : false,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "active",
+      "lastUpdateTs" : 1737751227339,
+      "longValue" : null,
+      "strValue" : null
+    } ],
+    "SHARED_SCOPE" : [ {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : "{\"mode\":\"advanced\",\"name\":\"Gateway connector\",\"type\":\"modbus\",\"enableRemoteLogging\":false,\"logLevel\":\"INFO\",\"sendDataOnlyOnChange\":false,\"configuration\":\"gatewayConnector.json\",\"configurationJson\":{\"master\":{\"slaves\":[{\"name\":\"Main intake valve\",\"host\":\"host.docker.internal\",\"port\":5021,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":1,\"deviceName\":\"Main intake valve\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"opened\",\"type\":\"bits\",\"functionCode\":1,\"objectsCount\":8,\"address\":0,\"bit\":7}],\"attributeUpdates\":[],\"rpc\":[{\"tag\":\"setOpened\",\"type\":\"bits\",\"functionCode\":5,\"objectsCount\":1,\"address\":0}]},{\"name\":\"Water pump\",\"host\":\"host.docker.internal\",\"port\":5022,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":2,\"deviceName\":\"Water pump\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"running\",\"type\":\"bits\",\"functionCode\":1,\"objectsCount\":8,\"address\":0,\"bit\":7},{\"tag\":\"flowRate\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":1,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":5000}},{\"tag\":\"vibration\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":2,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":10000}},{\"tag\":\"temperature\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":3,\"divider\":10,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":10000}},{\"tag\":\"powerConsumption\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":4,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":10000}},{\"tag\":\"rotationSpeed\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":5,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":10000}},{\"tag\":\"pressure\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":6,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":10000}}],\"attributeUpdates\":[],\"rpc\":[{\"tag\":\"setRunning\",\"type\":\"bits\",\"functionCode\":5,\"objectsCount\":1,\"address\":0}]},{\"name\":\"Sand filter\",\"host\":\"host.docker.internal\",\"port\":5023,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":3,\"deviceName\":\"Sand filter\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"flowRate\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":0,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":5000}},{\"tag\":\"mode\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":1},{\"tag\":\"filterLifeRemaining\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":2},{\"tag\":\"rotationSpeed\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":3,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":10000}},{\"tag\":\"pressure\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":5},{\"tag\":\"vibration\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":6,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":10000}}],\"attributeUpdates\":[],\"rpc\":[{\"tag\":\"setMode\",\"type\":\"16uint\",\"functionCode\":6,\"objectsCount\":1,\"address\":1},{\"tag\":\"setPressureUnits\",\"type\":\"16uint\",\"functionCode\":6,\"objectsCount\":1,\"address\":4}]},{\"name\":\"Throughpass valve\",\"host\":\"host.docker.internal\",\"port\":5024,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":4,\"deviceName\":\"Throughpass valve\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"opened\",\"type\":\"bits\",\"functionCode\":1,\"objectsCount\":8,\"address\":0,\"bit\":7}],\"attributeUpdates\":[],\"rpc\":[{\"tag\":\"setOpened\",\"type\":\"bits\",\"functionCode\":5,\"objectsCount\":1,\"address\":0}]},{\"name\":\"Heat pump\",\"host\":\"host.docker.internal\",\"port\":5025,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":3000,\"unitId\":5,\"deviceName\":\"Heat pump\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"running\",\"type\":\"bits\",\"functionCode\":1,\"objectsCount\":8,\"address\":0,\"bit\":7},{\"tag\":\"targetTemperature\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":0,\"divider\":10},{\"tag\":\"currentInTemperature\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":1,\"divider\":10},{\"tag\":\"currentOutTemperature\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":2,\"divider\":10},{\"tag\":\"powerConsumption\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":3,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":10000}},{\"tag\":\"ambientTemperature\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":4,\"divider\":10,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":10000}},{\"tag\":\"rotationSpeed\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":5,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":10000}},{\"tag\":\"compressorTemperature\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":6,\"divider\":10,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":5000}},{\"tag\":\"vibration\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":7,\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":10000}},{\"tag\":\"refrigerantPressure\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":8}],\"attributeUpdates\":[{\"tag\":\"targetTemperature\",\"type\":\"32int\",\"functionCode\":6,\"objectsCount\":1,\"address\":0,\"multiplier\":10}],\"rpc\":[{\"tag\":\"setRunning\",\"type\":\"bits\",\"functionCode\":5,\"objectsCount\":1,\"address\":0}]},{\"name\":\"Filter PH sensor\",\"host\":\"host.docker.internal\",\"port\":5026,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":6,\"deviceName\":\"Filter PH sensor\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_REPORT_PERIOD\",\"reportPeriod\":5000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"phLevel\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":0,\"divider\":10}],\"attributeUpdates\":[],\"rpc\":[]},{\"name\":\"Heat pump intake valve\",\"host\":\"host.docker.internal\",\"port\":5027,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":7,\"deviceName\":\"Heat pump intake valve\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"opened\",\"type\":\"bits\",\"functionCode\":1,\"objectsCount\":8,\"address\":0,\"bit\":7}],\"attributeUpdates\":[],\"rpc\":[{\"tag\":\"setOpened\",\"type\":\"bits\",\"functionCode\":5,\"objectsCount\":1,\"address\":0}]},{\"name\":\"Heat pump outgoing valve\",\"host\":\"host.docker.internal\",\"port\":5028,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":8,\"deviceName\":\"Heat pump outgoing valve\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"opened\",\"type\":\"bits\",\"functionCode\":1,\"objectsCount\":8,\"address\":0,\"bit\":7}],\"attributeUpdates\":[],\"rpc\":[{\"tag\":\"setOpened\",\"type\":\"bits\",\"functionCode\":5,\"objectsCount\":1,\"address\":0}]},{\"name\":\"Pool intake valve\",\"host\":\"host.docker.internal\",\"port\":5029,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":9,\"deviceName\":\"Pool intake valve\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"opened\",\"type\":\"bits\",\"functionCode\":1,\"objectsCount\":8,\"address\":0,\"bit\":7}],\"attributeUpdates\":[],\"rpc\":[{\"tag\":\"setOpened\",\"type\":\"bits\",\"functionCode\":5,\"objectsCount\":1,\"address\":0}]},{\"name\":\"Pool weir valve\",\"host\":\"host.docker.internal\",\"port\":5030,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":10,\"deviceName\":\"Pool weir valve\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"opened\",\"type\":\"bits\",\"functionCode\":1,\"objectsCount\":8,\"address\":0,\"bit\":7}],\"attributeUpdates\":[],\"rpc\":[{\"tag\":\"setOpened\",\"type\":\"bits\",\"functionCode\":5,\"objectsCount\":1,\"address\":0}]},{\"name\":\"Pool drain valve\",\"host\":\"host.docker.internal\",\"port\":5031,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":11,\"deviceName\":\"Pool drain valve\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"opened\",\"type\":\"bits\",\"functionCode\":1,\"objectsCount\":8,\"address\":0,\"bit\":7}],\"attributeUpdates\":[],\"rpc\":[{\"tag\":\"setOpened\",\"type\":\"bits\",\"functionCode\":5,\"objectsCount\":1,\"address\":0}]},{\"name\":\"Water level meter\",\"host\":\"host.docker.internal\",\"port\":5032,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":12,\"deviceName\":\"Water level meter\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"waterLevel\",\"type\":\"16uint\",\"functionCode\":3,\"objectsCount\":1,\"address\":0}],\"attributeUpdates\":[],\"rpc\":[]},{\"name\":\"Water pump outgoing valve\",\"host\":\"host.docker.internal\",\"port\":5033,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":13,\"deviceName\":\"Water pump outgoing valve\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"opened\",\"type\":\"bits\",\"functionCode\":1,\"objectsCount\":8,\"address\":0,\"bit\":7}],\"attributeUpdates\":[],\"rpc\":[{\"tag\":\"setOpened\",\"type\":\"bits\",\"functionCode\":5,\"objectsCount\":1,\"address\":0}]},{\"name\":\"Drain valve\",\"host\":\"host.docker.internal\",\"port\":5034,\"type\":\"tcp\",\"method\":\"socket\",\"timeout\":3,\"byteOrder\":\"BIG\",\"wordOrder\":\"LITTLE\",\"retries\":true,\"retryOnEmpty\":true,\"retryOnInvalid\":true,\"pollPeriod\":1000,\"unitId\":14,\"deviceName\":\"Drain valve\",\"deviceType\":\"default\",\"reportStrategy\":{\"type\":\"ON_CHANGE_OR_REPORT_PERIOD\",\"reportPeriod\":30000},\"connectAttemptTimeMs\":3000,\"connectAttemptCount\":3,\"waitAfterFailedAttemptsMs\":30000,\"attributes\":[],\"timeseries\":[{\"tag\":\"opened\",\"type\":\"bits\",\"functionCode\":1,\"objectsCount\":8,\"address\":0,\"bit\":7}],\"attributeUpdates\":[],\"rpc\":[{\"tag\":\"setOpened\",\"type\":\"bits\",\"functionCode\":5,\"objectsCount\":1,\"address\":0}]}]},\"slave\":{}},\"configVersion\":\"3.5.2\"}",
+      "key" : "Gateway connector",
+      "lastUpdateTs" : 1737751227304,
+      "longValue" : null,
+      "strValue" : null
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : "[\"Gateway connector\"]",
+      "key" : "active_connectors",
+      "lastUpdateTs" : 1737751227304,
+      "longValue" : null,
+      "strValue" : null
+    } ]
+  }
+}

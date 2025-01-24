@@ -1,0 +1,37 @@
+{
+  "entityType" : "TB_RESOURCE",
+  "entity" : {
+    "data" : "PHN2ZyB3aWR0aD0iMTQ4IiBoZWlnaHQ9IjE0OCIgdmlld0JveD0iMCAwIDE0OCAxNDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNDgiIGhlaWdodD0iMTQ4IiBmaWxsPSIjRkFGQUZBIi8+CjxyZWN0IHdpZHRoPSIxNDgiIGhlaWdodD0iMTQ4IiBmaWxsPSIjRkFGQUZBIi8+CjxwYXRoIGQ9Ik0zNCA1MEMzNCA0MS4xNjM0IDQxLjE2MzQgMzQgNTAgMzRIOThDMTA2LjgzNyAzNCAxMTQgNDEuMTYzNCAxMTQgNTBWOThDMTE0IDEwNi44MzcgMTA2LjgzNyAxMTQgOTggMTE0SDUwQzQxLjE2MzQgMTE0IDM0IDEwNi44MzcgMzQgOThWNTBaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTUwIDMySDk4QzEwNy45NDEgMzIgMTE2IDQwLjA1ODkgMTE2IDUwVjk4QzExNiAxMDcuOTQxIDEwNy45NDEgMTE2IDk4IDExNkg1MEM0MC4wNTg5IDExNiAzMiAxMDcuOTQxIDMyIDk4VjUwQzMyIDQwLjA1ODkgNDAuMDU4OSAzMiA1MCAzMlpNNTAgMzRDNDEuMTYzNCAzNCAzNCA0MS4xNjM0IDM0IDUwVjk4QzM0IDEwNi44MzcgNDEuMTYzNCAxMTQgNTAgMTE0SDk4QzEwNi44MzcgMTE0IDExNCAxMDYuODM3IDExNCA5OFY1MEMxMTQgNDEuMTYzNCAxMDYuODM3IDM0IDk4IDM0SDUwWiIgZmlsbD0iIzI4MjgyOCIgZmlsbC1vcGFjaXR5PSIwLjA1Ii8+CjxwYXRoIGQ9Ik03MSA4NlY3N0g3N1Y4Nkg4NC41Vjc0SDg5TDc0IDYwLjVMNTkgNzRINjMuNVY4Nkg3MVoiIGZpbGw9IiMzMDU2ODAiLz4KPC9zdmc+Cg==",
+    "descriptor" : {
+      "mediaType" : "image/svg+xml",
+      "width" : 148,
+      "height" : 148,
+      "size" : 808,
+      "etag" : "40661aa6dd61c4720d25f64621877a7f53e52623f822934036691a963f37e52b",
+      "previewDescriptor" : {
+        "mediaType" : "image/svg+xml",
+        "width" : 148,
+        "height" : 148,
+        "size" : 808,
+        "etag" : "40661aa6dd61c4720d25f64621877a7f53e52623f822934036691a963f37e52b"
+      }
+    },
+    "etag" : "40661aa6dd61c4720d25f64621877a7f53e52623f822934036691a963f37e52b",
+    "externalId" : null,
+    "fileName" : "home_dashboard_image.svg",
+    "id" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "6d7e34d0-da93-11ef-8e00-e370a74757c3"
+    },
+    "link" : "/api/images/tenant/home_dashboard_image.svg",
+    "name" : "\"Home\" dashboard image",
+    "preview" : null,
+    "public" : true,
+    "publicLink" : "/api/images/public/QDRYvLhEPsWJFEsVmXd29Jg7CkORKHUj",
+    "publicResourceKey" : "QDRYvLhEPsWJFEsVmXd29Jg7CkORKHUj",
+    "resourceKey" : "home_dashboard_image.svg",
+    "resourceSubType" : "IMAGE",
+    "resourceType" : "IMAGE",
+    "title" : "\"Home\" dashboard image"
+  }
+}

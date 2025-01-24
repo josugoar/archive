@@ -1,0 +1,37 @@
+{
+  "entityType" : "TB_RESOURCE",
+  "entity" : {
+    "data" : "PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iOCIgY3k9IjgiIHI9IjciIGZpbGw9IiMzMDU2ODAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIvPgo8L3N2Zz4K",
+    "descriptor" : {
+      "mediaType" : "image/svg+xml",
+      "width" : 16,
+      "height" : 16,
+      "size" : 180,
+      "etag" : "089073ae010e7fa821ff2b86140808c82c7176a350d7082bb84045a20cf43103",
+      "previewDescriptor" : {
+        "mediaType" : "image/svg+xml",
+        "width" : 16,
+        "height" : 16,
+        "size" : 180,
+        "etag" : "089073ae010e7fa821ff2b86140808c82c7176a350d7082bb84045a20cf43103"
+      }
+    },
+    "etag" : "089073ae010e7fa821ff2b86140808c82c7176a350d7082bb84045a20cf43103",
+    "externalId" : null,
+    "fileName" : "sensors_dashboard_widget_new_openstreetmap_marker_image.svg",
+    "id" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "6df1b720-da93-11ef-8e00-e370a74757c3"
+    },
+    "link" : "/api/images/tenant/sensors_dashboard_widget_new_openstreetmap_marker_image.svg",
+    "name" : "\"Sensors\" dashboard widget \"New OpenStreetMap\" marker image",
+    "preview" : null,
+    "public" : true,
+    "publicLink" : "/api/images/public/0IKmRP45O3rQX2BDrotZe1YRNZ0Wnbgi",
+    "publicResourceKey" : "0IKmRP45O3rQX2BDrotZe1YRNZ0Wnbgi",
+    "resourceKey" : "sensors_dashboard_widget_new_openstreetmap_marker_image.svg",
+    "resourceSubType" : "IMAGE",
+    "resourceType" : "IMAGE",
+    "title" : "\"Sensors\" dashboard widget \"New OpenStreetMap\" marker image"
+  }
+}

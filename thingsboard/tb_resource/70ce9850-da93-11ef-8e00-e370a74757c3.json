@@ -1,0 +1,37 @@
+{
+  "entityType" : "TB_RESOURCE",
+  "entity" : {
+    "data" : "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNTQiIGhlaWdodD0iNjUiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDU0IDY1IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogPHJlY3Qgd2lkdGg9IjU0IiBoZWlnaHQ9IjY1IiBmaWxsPSIjZmZmIiBzdHJva2Utd2lkdGg9Ii41NTE0MSIvPgogPHBhdGggZD0ibTQzLjQwNyAyMS45IDAuMDIxOC0wLjAyMjItOC4xMTY0LTguMjY2Ny0yLjMxMjcgMi4zNTU2IDQuNjAzNiA0LjY4ODljLTIuMDUwOSAwLjgtMy41MTI3IDIuOC0zLjUxMjcgNS4xNzc3IDAgMy4wNjY3IDIuNDQzNiA1LjU1NTYgNS40NTQ1IDUuNTU1NiAwLjc4NTUgMCAxLjUwNTUtMC4xNzc4IDIuMTgxOS0wLjQ2Njd2MTYuMDIyYzAgMS4yMjIzLTAuOTgxOSAyLjIyMjMtMi4xODE5IDIuMjIyM3MtMi4xODE4LTEtMi4xODE4LTIuMjIyM3YtMTBjMC0yLjQ0NDQtMS45NjM2LTQuNDQ0NC00LjM2MzYtNC40NDQ0aC0yLjE4MTh2LTE1LjU1NmMwLTIuNDQ0NC0xLjk2MzctNC40NDQ0LTQuMzYzNy00LjQ0NDRoLTEzLjA5MWMtMi40IDAtNC4zNjM2IDItNC4zNjM2IDQuNDQ0NHYzNS41NTZoMjEuODE4di0xNi42NjdoMy4yNzI3djExLjExMWMwIDMuMDY2NyAyLjQ0MzYgNS41NTU2IDUuNDU0NSA1LjU1NTYgMy4wMTEgMCA1LjQ1NDYtMi40ODg5IDUuNDU0Ni01LjU1NTZ2LTIxLjExMWMwLTEuNTMzMy0wLjYxMDktMi45MzMzLTEuNTkyNy0zLjkzMzN6bS0zLjg2MTkgNi4xNTU2Yy0xLjIgMC0yLjE4MTgtMS0yLjE4MTgtMi4yMjIzIDAtMS4yMjIyIDAuOTgxOC0yLjIyMjIgMi4xODE4LTIuMjIyMnMyLjE4MTkgMSAyLjE4MTkgMi4yMjIyYzAgMS4yMjIzLTAuOTgxOSAyLjIyMjMtMi4xODE5IDIuMjIyM3ptLTIxLjgxOCAxNy43Nzh2LTEwaC00LjM2MzdsOC43MjczLTE2LjY2N3YxMS4xMTFoNC4zNjM2eiIgZmlsbD0iIzI1YzkzNSIvPgo8L3N2Zz4K",
+    "descriptor" : {
+      "mediaType" : "image/svg+xml",
+      "width" : 54,
+      "height" : 65,
+      "size" : 972,
+      "etag" : "78ad68e4e6010c800b966ebd08daa7611a4f1ccb57a1de43d88cdedb5bc6f071",
+      "previewDescriptor" : {
+        "mediaType" : "image/svg+xml",
+        "width" : 54,
+        "height" : 65,
+        "size" : 972,
+        "etag" : "78ad68e4e6010c800b966ebd08daa7611a4f1ccb57a1de43d88cdedb5bc6f071"
+      }
+    },
+    "etag" : "78ad68e4e6010c800b966ebd08daa7611a4f1ccb57a1de43d88cdedb5bc6f071",
+    "externalId" : null,
+    "fileName" : "charging_port_device_profile_image.svg",
+    "id" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "70ce9850-da93-11ef-8e00-e370a74757c3"
+    },
+    "link" : "/api/images/tenant/charging_port_device_profile_image.svg",
+    "name" : "\"Charging port\" device profile image",
+    "preview" : null,
+    "public" : true,
+    "publicLink" : "/api/images/public/Q3XEG8rtW6dG1yasfFftRGrfhKkYLkG2",
+    "publicResourceKey" : "Q3XEG8rtW6dG1yasfFftRGrfhKkYLkG2",
+    "resourceKey" : "charging_port_device_profile_image.svg",
+    "resourceSubType" : "IMAGE",
+    "resourceType" : "IMAGE",
+    "title" : "\"Charging port\" device profile image"
+  }
+}

@@ -1,0 +1,1217 @@
+{
+  "entityType" : "DASHBOARD",
+  "entity" : {
+    "title" : "Sensors",
+    "image" : "tb-image;/api/images/tenant/sensors_dashboard_image.svg",
+    "mobileHide" : false,
+    "mobileOrder" : 5,
+    "configuration" : {
+      "description" : "",
+      "widgets" : {
+        "6ba002b6-2a36-175e-454c-ec1f29aa3f85" : {
+          "type" : "static",
+          "sizeX" : 7.5,
+          "sizeY" : 3,
+          "config" : {
+            "datasources" : [ ],
+            "timewindow" : {
+              "realtime" : {
+                "timewindowMs" : 60000
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "rgba(255,255,255,0)",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "0px",
+            "settings" : {
+              "cardCss" : ".card {\n    width: 100%;\n    height: 100%;\n    box-sizing: border-box;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    border-radius: 4px;\n    background-color: #305680;\n}\n\n.card .content {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    width: 100%;\n    padding: 0 15px;\n}\n\n.card .description {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n}\n\n.card .description_text {\n    margin-left: 20px;\n    font-size: 22px;\n    font-weight: 500;\n    line-height: 26px;\n    letter-spacing: 0.05px;\n    color: #fff;\n}\n\n.card .description_navigation {\n    display: flex;\n}",
+              "cardHtml" : "<div class='card' id=\"claim\">\n    <div class='content'>\n        <div class='description'>\n            <svg width=\"24\" height=\"24\" viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                <path d=\"M6.125 3.875V6.125H3.875V3.875H6.125ZM7.25 2.75H2.75V7.25H7.25V2.75ZM6.125 9.875V12.125H3.875V9.875H6.125ZM7.25 8.75H2.75V13.25H7.25V8.75ZM12.125 3.875V6.125H9.875V3.875H12.125ZM13.25 2.75H8.75V7.25H13.25V2.75ZM8.75 8.75H9.875V9.875H8.75V8.75ZM9.875 9.875H11V11H9.875V9.875ZM11 8.75H12.125V9.875H11V8.75ZM8.75 11H9.875V12.125H8.75V11ZM9.875 12.125H11V13.25H9.875V12.125ZM11 11H12.125V12.125H11V11ZM12.125 9.875H13.25V11H12.125V9.875ZM12.125 12.125H13.25V13.25H12.125V12.125ZM15.5 4.25H14V2H11.75V0.5H15.5V4.25ZM15.5 15.5V11.75H14V14H11.75V15.5H15.5ZM0.5 15.5H4.25V14H2V11.75H0.5V15.5ZM0.5 0.5V4.25H2V2H4.25V0.5H0.5Z\" fill=\"#fff\"/>\n            </svg>\n            <div class=\"description_text\">Add sensor</div>\n        </div>\n    </div>\n</div>"
+            },
+            "title" : "New HTML Card",
+            "dropShadow" : false,
+            "showTitleIcon" : false,
+            "iconColor" : "rgba(0, 0, 0, 0.87)",
+            "iconSize" : "24px",
+            "titleTooltip" : "",
+            "enableFullscreen" : false,
+            "widgetStyle" : {
+              "border-radius" : "8px",
+              "box-shadow" : "0px 0px 5px rgba(0, 0, 0, 0.05), 0px 0px 20px -10px rgba(16, 16, 16, 0.35)"
+            },
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400
+            },
+            "showLegend" : false,
+            "actions" : {
+              "elementClick" : [ {
+                "name" : "claim",
+                "icon" : "more_horiz",
+                "type" : "mobileAction",
+                "mobileAction" : {
+                  "type" : "scanQrCode",
+                  "handleEmptyResultFunction" : "// widgetContext.showErrorToast('Scan QR code action was canceled!');",
+                  "handleErrorFunction" : "widgetContext.showErrorToast('Failed to scan QR code');",
+                  "processQrCodeFunction" : "$scope = widgetContext.$scope;\nlet $injector = $scope.$injector;\nlet $translate = $injector.get(widgetContext.servicesMap.get('translate'));\nlet deviceService = $injector.get(widgetContext.servicesMap.get('deviceService'));\nlet deviceNotFound = $translate.instant('widgets.input-widgets.claim-not-found');\nlet failedClaimDevice = $translate.instant('widgets.input-widgets.claim-failed');\nlet claimDeviceInfo = JSON.parse(code);\nlet deviceName = claimDeviceInfo.deviceName;\nlet secretKey = claimDeviceInfo.secretKey;\nlet claimRequest = {\n    secretKey: secretKey\n};\ndeviceService.claimDevice(deviceName, claimRequest, { ignoreErrors: true }).subscribe(\n    function (data) {\n        widgetContext.showSuccessToast('Device \\'' + deviceName + '\\' successfully claimed!');\n        widgetContext.updateAliases();\n    },\n    function (error) {\n        if(error.status == 404) {\n            widgetContext.showErrorToast(deviceNotFound);\n        } else {\n            if (error.status !== 400 && error.error && error.error.message) {\n                showDialog('Failed to claim device', error.error.message);\n            } else {\n                widgetContext.showErrorToast(failedClaimDevice);\n            }\n        }\n    }\n);\n\nfunction showDialog(title, error) {\n    setTimeout(function() {\n        widgetContext.dialogs.alert(title, error).subscribe();\n    }, 100);\n}"
+                },
+                "id" : "16442fd3-1bd5-4443-e1fd-63ac98324623"
+              } ]
+            }
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "6ba002b6-2a36-175e-454c-ec1f29aa3f85",
+          "typeFullFqn" : "system.cards.html_card"
+        },
+        "99ea19b2-0c78-4b0b-fd46-71b6dce817f5" : {
+          "type" : "latest",
+          "sizeX" : 7.5,
+          "sizeY" : 6.5,
+          "config" : {
+            "timewindow" : {
+              "displayValue" : "",
+              "selectedTab" : 0,
+              "realtime" : {
+                "realtimeType" : 1,
+                "interval" : 1000,
+                "timewindowMs" : 86400000,
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "history" : {
+                "historyType" : 0,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "fixedTimewindow" : {
+                  "startTimeMs" : 1694102759548,
+                  "endTimeMs" : 1694189159548
+                },
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "aggregation" : {
+                "type" : "NONE",
+                "limit" : 200
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "rgb(255, 255, 255)",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "4px",
+            "settings" : {
+              "enableSearch" : true,
+              "displayPagination" : true,
+              "defaultPageSize" : 10,
+              "defaultSortOrder" : "name",
+              "displayEntityName" : false,
+              "displayEntityType" : false,
+              "entitiesTitle" : "Sensors",
+              "enableSelectColumnDisplay" : false,
+              "enableStickyHeader" : true,
+              "enableStickyAction" : true,
+              "entityNameColumnTitle" : "Name"
+            },
+            "title" : "New Device admin table",
+            "dropShadow" : false,
+            "enableFullscreen" : false,
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400,
+              "padding" : "5px"
+            },
+            "useDashboardTimewindow" : false,
+            "showLegend" : false,
+            "datasources" : [ {
+              "type" : "entity",
+              "name" : null,
+              "entityAliasId" : "c9b3786e-7fd6-8af9-fc76-7cc0a11432cf",
+              "filterId" : "d05a31bc-db99-c984-a7be-fd6b48a90591",
+              "dataKeys" : [ {
+                "name" : "name",
+                "type" : "entityField",
+                "label" : "Name",
+                "color" : "#4caf50",
+                "settings" : {
+                  "columnWidth" : "50%",
+                  "useCellStyleFunction" : false,
+                  "cellStyleFunction" : "",
+                  "useCellContentFunction" : false,
+                  "cellContentFunction" : "",
+                  "defaultColumnVisibility" : "visible",
+                  "columnSelectionToDisplay" : "enabled"
+                },
+                "_hash" : 0.9948881022569502,
+                "units" : null,
+                "decimals" : null,
+                "funcBody" : null,
+                "usePostProcessing" : null,
+                "postFuncBody" : null
+              }, {
+                "name" : "active",
+                "type" : "attribute",
+                "label" : "Status",
+                "color" : "#2196f3",
+                "settings" : {
+                  "columnWidth" : "50%",
+                  "useCellStyleFunction" : false,
+                  "useCellContentFunction" : false,
+                  "cellContentFunction" : "",
+                  "defaultColumnVisibility" : "visible",
+                  "columnSelectionToDisplay" : "enabled"
+                },
+                "_hash" : 0.818728024094564,
+                "units" : null,
+                "decimals" : null,
+                "funcBody" : null,
+                "usePostProcessing" : true,
+                "postFuncBody" : "if (value === 'true') {\n    return 'Active';\n}\nreturn 'Inactive';"
+              } ]
+            } ],
+            "showTitleIcon" : false,
+            "titleIcon" : "more_horiz",
+            "iconColor" : "rgba(0, 0, 0, 0.87)",
+            "iconSize" : "24px",
+            "titleTooltip" : "",
+            "widgetStyle" : {
+              "border-radius" : "8px",
+              "box-shadow" : "0px 0px 5px rgba(0, 0, 0, 0.05), 0px 0px 20px -10px rgba(16, 16, 16, 0.35)"
+            },
+            "displayTimewindow" : true,
+            "actions" : {
+              "headerButton" : [ {
+                "name" : "Location",
+                "icon" : "pin_drop",
+                "useShowWidgetActionFunction" : null,
+                "showWidgetActionFunction" : "return true;",
+                "type" : "openDashboardState",
+                "targetDashboardStateId" : "location",
+                "setEntityId" : false,
+                "stateEntityParamName" : null,
+                "openRightLayout" : false,
+                "popoverPreferredPlacement" : "bottom",
+                "popoverHideOnClickOutside" : true,
+                "popoverHideDashboardToolbar" : true,
+                "popoverWidth" : "300px",
+                "popoverHeight" : "400px",
+                "popoverStyle" : { },
+                "openInSeparateDialog" : false,
+                "openInPopover" : true,
+                "id" : "28ac61fa-af4f-fb2a-aeeb-28a88b0584f4"
+              } ],
+              "actionCellButton" : [ {
+                "name" : "Delete sensor",
+                "icon" : "delete",
+                "type" : "custom",
+                "customFunction" : "$scope = widgetContext.$scope;\nlet $injector = $scope.$injector;\nlet deviceService = $injector.get(widgetContext.servicesMap.get('deviceService'));\ndeviceService.unclaimDevice(entityName, { ignoreErrors: true }).subscribe(\n            function (data) {\n                widgetContext.showSuccessToast('Device \\'' + entityName + '\\' successfully unclaimed!');\n                widgetContext.updateAliases();\n            },\n            function (error) {\n                let errorMessage = 'Failed to unclaim device';\n                if (error.error && error.error.message) {\n                    showDialog('Failed to unclaim device', error.error.message);\n                } else {\n                    widgetContext.showErrorToast('Failed to unclaim device');\n                }\n                showDialog('Failed to unclaim device', errorMessage);\n            }\n);\nfunction showDialog(title, error) {\n    setTimeout(function() {\n        widgetContext.dialogs.alert(title, error).subscribe();\n    }, 100);\n}",
+                "id" : "ec2708f6-9ff0-186b-e4fc-7635ebfa3074"
+              } ],
+              "rowClick" : [ {
+                "name" : "details",
+                "icon" : "more_horiz",
+                "type" : "updateDashboardState",
+                "targetDashboardStateId" : null,
+                "setEntityId" : true,
+                "stateEntityParamName" : null,
+                "openRightLayout" : true,
+                "id" : "b494ad1d-9740-d5cf-9ba2-3705d68f21b9"
+              } ]
+            }
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "99ea19b2-0c78-4b0b-fd46-71b6dce817f5",
+          "typeFullFqn" : "system.entity_admin_widgets.device_admin_table"
+        },
+        "96ad46f2-e7a6-ee08-fec0-16c6fa203be9" : {
+          "type" : "latest",
+          "sizeX" : 7.5,
+          "sizeY" : 3,
+          "config" : {
+            "datasources" : [ {
+              "type" : "entity",
+              "name" : null,
+              "entityAliasId" : "2cb65a1f-26fc-645d-fc17-a5a263d1ed07",
+              "filterId" : null,
+              "dataKeys" : [ {
+                "name" : "latitude",
+                "type" : "attribute",
+                "label" : "Latitude",
+                "color" : "#f44336",
+                "settings" : {
+                  "dataKeyType" : "server",
+                  "dataKeyValueType" : "string",
+                  "step" : 1,
+                  "required" : false,
+                  "requiredErrorMessage" : "",
+                  "minValueErrorMessage" : "",
+                  "maxValueErrorMessage" : "",
+                  "invalidDateErrorMessage" : "",
+                  "isEditable" : "editable",
+                  "dataKeyHidden" : false
+                },
+                "_hash" : 0.8688151547961314,
+                "units" : null,
+                "decimals" : null,
+                "funcBody" : null,
+                "usePostProcessing" : null,
+                "postFuncBody" : null
+              }, {
+                "name" : "longitude",
+                "type" : "attribute",
+                "label" : "Longitude",
+                "color" : "#ffc107",
+                "settings" : {
+                  "dataKeyType" : "server",
+                  "dataKeyValueType" : "string",
+                  "step" : 1,
+                  "required" : false,
+                  "requiredErrorMessage" : "",
+                  "minValueErrorMessage" : "",
+                  "maxValueErrorMessage" : "",
+                  "invalidDateErrorMessage" : "",
+                  "isEditable" : "editable",
+                  "dataKeyHidden" : false
+                },
+                "_hash" : 0.722264910110735,
+                "units" : null,
+                "decimals" : null,
+                "funcBody" : null,
+                "usePostProcessing" : null,
+                "postFuncBody" : null
+              } ]
+            } ],
+            "timewindow" : {
+              "displayValue" : "",
+              "selectedTab" : 0,
+              "realtime" : {
+                "realtimeType" : 1,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "history" : {
+                "historyType" : 0,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "fixedTimewindow" : {
+                  "startTimeMs" : 1694102759548,
+                  "endTimeMs" : 1694189159548
+                },
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "aggregation" : {
+                "type" : "AVG",
+                "limit" : 25000
+              }
+            },
+            "showTitle" : true,
+            "backgroundColor" : "#fff",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "8px",
+            "settings" : {
+              "showActionButtons" : false,
+              "showResultMessage" : true,
+              "fieldsAlignment" : "column",
+              "fieldsInRow" : 2,
+              "groupTitle" : "${entityName}",
+              "widgetTitle" : "Sensor setting"
+            },
+            "title" : "New Update Multiple Attributes",
+            "dropShadow" : false,
+            "enableFullscreen" : false,
+            "enableDataExport" : false,
+            "widgetStyle" : {
+              "border-radius" : "8px",
+              "box-shadow" : "0px 0px 5px rgba(0, 0, 0, 0.05), 0px 0px 20px -10px rgba(16, 16, 16, 0.35)"
+            },
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400,
+              "textAlign" : "center"
+            },
+            "useDashboardTimewindow" : true,
+            "showLegend" : false,
+            "actions" : { },
+            "showTitleIcon" : false,
+            "iconColor" : "rgba(0, 0, 0, 0.87)",
+            "iconSize" : "24px",
+            "titleTooltip" : ""
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "96ad46f2-e7a6-ee08-fec0-16c6fa203be9",
+          "typeFullFqn" : "system.input_widgets.update_multiple_attributes"
+        },
+        "9126dfbd-24f1-dce3-2a05-51be7fafebde" : {
+          "type" : "static",
+          "sizeX" : 7.5,
+          "sizeY" : 3,
+          "config" : {
+            "datasources" : [ ],
+            "timewindow" : {
+              "realtime" : {
+                "timewindowMs" : 60000
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "rgba(255,255,255,0)",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "0px",
+            "settings" : {
+              "cardCss" : ".card {\n    width: 100%;\n    height: 100%;\n    box-sizing: border-box;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    border-radius: 4px;\n    background-color: #305680;\n}\n\n.card .content {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    width: 100%;\n    padding: 0 15px;\n}\n\n.card .description {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n}\n\n.card .description_text {\n    margin-left: 20px;\n    font-size: 22px;\n    font-weight: 500;\n    line-height: 24px;\n    letter-spacing: 0.05px;\n    color: #fff;\n}\n\n.card .description_navigation {\n    display: flex;\n}",
+              "cardHtml" : "<div class='card' id=\"phoneLocation\">\n    <div class='content'>\n        <div class='description'>\n            <svg style=\"width:22px;height:22px\" viewBox=\"0 0 24 24\">\n                <path fill=\"#fff\" d=\"M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M3.05,13H1V11H3.05C3.5,6.83 6.83,3.5 11,3.05V1H13V3.05C17.17,3.5 20.5,6.83 20.95,11H23V13H20.95C20.5,17.17 17.17,20.5 13,20.95V23H11V20.95C6.83,20.5 3.5,17.17 3.05,13M12,5A7,7 0 0,0 5,12A7,7 0 0,0 12,19A7,7 0 0,0 19,12A7,7 0 0,0 12,5Z\" />\n            </svg>\n            <div class=\"description_text\">Set location</div>\n        </div>\n    </div>\n</div>"
+            },
+            "title" : "New HTML Card",
+            "dropShadow" : false,
+            "showTitleIcon" : false,
+            "iconColor" : "rgba(0, 0, 0, 0.87)",
+            "iconSize" : "24px",
+            "titleTooltip" : "",
+            "enableFullscreen" : false,
+            "widgetStyle" : {
+              "border-radius" : "8px",
+              "box-shadow" : "0px 0px 5px rgba(0, 0, 0, 0.05), 0px 0px 20px -10px rgba(16, 16, 16, 0.35)"
+            },
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400
+            },
+            "showLegend" : false,
+            "actions" : {
+              "elementClick" : [ {
+                "name" : "phoneLocation",
+                "icon" : "more_horiz",
+                "type" : "mobileAction",
+                "mobileAction" : {
+                  "type" : "getLocation",
+                  "handleEmptyResultFunction" : "widgetContext.showErrorToast('Failed to get phone location');",
+                  "handleErrorFunction" : "widgetContext.showErrorToast('Failed to get phone location');",
+                  "processLocationFunction" : "// Function body to process current location of the phone. \n// - latitude - phone location latitude\n// - longitude - phone location longitude\n\nsaveEntityLocationAttributes('latitude', 'longitude', latitude, longitude);\n\n\nfunction saveEntityLocationAttributes(latitudeAttributeName, longitudeAttributeName, latitude, longitude) {\n    const entityId = widgetContext.stateController.getStateParams().entityId;\n    if (entityId) {\n        let attributes = [\n            { key: latitudeAttributeName, value: latitude },\n            { key: longitudeAttributeName, value: longitude }\n        ];\n        widgetContext.attributeService.saveEntityAttributes(entityId, \"SERVER_SCOPE\", attributes).subscribe(\n           function() {\n               widgetContext.showSuccessToast('Updated location!');\n           },\n           function(error) {\n               widgetContext.showErrorToast('Updated location failed');\n           }\n        );\n    }\n}"
+                },
+                "id" : "16442fd3-1bd5-4443-e1fd-63ac98324623"
+              } ]
+            }
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "9126dfbd-24f1-dce3-2a05-51be7fafebde",
+          "typeFullFqn" : "system.cards.html_card"
+        },
+        "3678dda0-01b5-fd82-5aa0-7889f220ff94" : {
+          "type" : "latest",
+          "sizeX" : 8.5,
+          "sizeY" : 6,
+          "config" : {
+            "datasources" : [ {
+              "type" : "entity",
+              "name" : null,
+              "entityAliasId" : "c9b3786e-7fd6-8af9-fc76-7cc0a11432cf",
+              "filterId" : null,
+              "dataKeys" : [ {
+                "name" : "type",
+                "type" : "entityField",
+                "label" : "Type",
+                "color" : "#f44336",
+                "settings" : { },
+                "_hash" : 0.9162271500339811
+              }, {
+                "name" : "latitude",
+                "type" : "attribute",
+                "label" : "latitude",
+                "color" : "#2196f3",
+                "settings" : { },
+                "_hash" : 0.92642481299289
+              }, {
+                "name" : "longitude",
+                "type" : "attribute",
+                "label" : "longitude",
+                "color" : "#4caf50",
+                "settings" : { },
+                "_hash" : 0.551709051974892
+              } ]
+            } ],
+            "timewindow" : {
+              "displayValue" : "",
+              "selectedTab" : 0,
+              "realtime" : {
+                "realtimeType" : 1,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "history" : {
+                "historyType" : 0,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "fixedTimewindow" : {
+                  "startTimeMs" : 1694102759548,
+                  "endTimeMs" : 1694189159548
+                },
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "aggregation" : {
+                "type" : "AVG",
+                "limit" : 25000
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "#fff",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "0px",
+            "settings" : {
+              "fitMapBounds" : true,
+              "latKeyName" : "latitude",
+              "lngKeyName" : "longitude",
+              "showLabel" : true,
+              "label" : "${entityName}",
+              "tooltipPattern" : "<b>${entityName}</b><br/><br/><b>Type:</b> ${Type}<br/><b>Latitude:</b> ${latitude:7}<br/><b>Longitude:</b> ${longitude:7}<br/>",
+              "markerImageSize" : 20,
+              "useColorFunction" : false,
+              "markerImages" : [ ],
+              "useMarkerImageFunction" : false,
+              "colorFunction" : "var type = dsData[dsIndex]['Type'];\nif (type == 'colorpin') {\n\tvar temperature = dsData[dsIndex]['temperature'];\n\tif (typeof temperature !== undefined) {\n\t    var percent = (temperature + 60)/120 * 100;\n\t    return tinycolor.mix('blue', 'red', amount = percent).toHexString();\n\t}\n\treturn 'blue';\n}\n",
+              "color" : "#fe7569",
+              "mapProvider" : "CartoDB.Positron",
+              "showTooltip" : true,
+              "autocloseTooltip" : true,
+              "tooltipFunction" : "var deviceType = dsData[dsIndex]['Type'];\r\nif (typeof deviceType !== undefined) {\r\n    if (deviceType == \"energy meter\") {\r\n        return '<b>${entityName}</b><br/><b>Energy:</b> ${energy:2} kWt<br/>';\r\n    } else if (deviceType == \"thermometer\") {\r\n        return '<b>${entityName}</b><br/><b>Temperature:</b> ${temperature:2} °C<br/>';\r\n    }\r\n}",
+              "labelFunction" : "var deviceType = dsData[dsIndex]['Type'];\r\nif (typeof deviceType !== undefined) {\r\n    if (deviceType == \"energy meter\") {\r\n        return '<span style=\"color:orange;\">${entityName}, ${energy:2} kWt</span>';\r\n    } else if (deviceType == \"thermometer\") {\r\n        return '<span style=\"color:blue;\">${entityName}, ${temperature:2} °C</span>';\r\n    }\r\n}",
+              "provider" : "openstreet-map",
+              "defaultCenterPosition" : "0,0",
+              "showTooltipAction" : "click",
+              "mapPageSize" : 16384,
+              "useTooltipFunction" : false,
+              "markerImage" : "tb-image;/api/images/tenant/sensors_dashboard_widget_new_openstreetmap_marker_image.svg",
+              "useClusterMarkers" : true,
+              "zoomOnClick" : true,
+              "showCoverageOnHover" : true,
+              "animate" : true,
+              "maxClusterRadius" : 80,
+              "removeOutsideVisibleBounds" : true
+            },
+            "title" : "New OpenStreetMap",
+            "dropShadow" : false,
+            "enableFullscreen" : false,
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400
+            },
+            "useDashboardTimewindow" : true,
+            "showLegend" : false,
+            "widgetStyle" : { },
+            "actions" : { },
+            "showTitleIcon" : false,
+            "iconColor" : "rgba(0, 0, 0, 0.87)",
+            "iconSize" : "24px",
+            "titleTooltip" : ""
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "3678dda0-01b5-fd82-5aa0-7889f220ff94",
+          "typeFullFqn" : "system.maps_v2.openstreetmap"
+        },
+        "5b2fa363-14ed-a16d-3fff-606884333786" : {
+          "type" : "static",
+          "sizeX" : 7.5,
+          "sizeY" : 3,
+          "config" : {
+            "datasources" : [ ],
+            "timewindow" : {
+              "realtime" : {
+                "timewindowMs" : 60000
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "rgba(255,255,255,0)",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "0px",
+            "settings" : {
+              "cardCss" : ".card {\n    width: 100%;\n    height: 100%;\n    box-sizing: border-box;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    border-radius: 4px;\n    background-color: #305680;\n}\n\n.card .content {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    width: 100%;\n    padding: 0 15px;\n}\n\n.card .description {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n}\n\n.card .description_text {\n    margin-left: 20px;\n    font-size: 22px;\n    font-weight: 500;\n    line-height: 24px;\n    letter-spacing: 0.05px;\n    color: #fff;\n}",
+              "cardHtml" : "<div class='card' id=\"claim\">\n    <div class='content'>\n        <div class='description'>\n            <svg style=\"width:22px;height:22px\" viewBox=\"0 0 24 24\">\n                <path fill=\"#fff\" d=\"M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z\" />\n            </svg>\n            <div class=\"description_text\">Take photo</div>\n        </div>\n    </div>\n</div>"
+            },
+            "title" : "New HTML Card",
+            "dropShadow" : false,
+            "showTitleIcon" : false,
+            "iconColor" : "rgba(0, 0, 0, 0.87)",
+            "iconSize" : "24px",
+            "titleTooltip" : "",
+            "enableFullscreen" : false,
+            "widgetStyle" : {
+              "border-radius" : "8px",
+              "box-shadow" : "0px 0px 5px rgba(0, 0, 0, 0.05), 0px 0px 20px -10px rgba(16, 16, 16, 0.35)"
+            },
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400
+            },
+            "showLegend" : false,
+            "actions" : {
+              "elementClick" : [ {
+                "name" : "claim",
+                "icon" : "more_horiz",
+                "type" : "mobileAction",
+                "mobileAction" : {
+                  "type" : "takePhoto",
+                  "handleEmptyResultFunction" : "",
+                  "handleErrorFunction" : "widgetContext.showErrorToast('No permission to work with the camera');\n",
+                  "processImageFunction" : "saveEntityImageAttribute('image', imageUrl);\n\nfunction saveEntityImageAttribute(attributeName, imageUrl) {\n    const entityId = widgetContext.stateController.getStateParams().entityId;\n    if (entityId) {\n        let attributes = [{\n            key: attributeName, value: imageUrl\n        }];\n        widgetContext.attributeService.saveEntityAttributes(entityId, \"SERVER_SCOPE\", attributes).subscribe(\n           function() {\n               widgetContext.showSuccessToast('Photo saved!');\n           },\n           function(error) {\n               widgetContext.showErrorToast('Photo save failed');\n           }\n        );\n    }\n}\n"
+                },
+                "id" : "16442fd3-1bd5-4443-e1fd-63ac98324623"
+              } ]
+            }
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "5b2fa363-14ed-a16d-3fff-606884333786",
+          "typeFullFqn" : "system.cards.html_card"
+        },
+        "73424c3f-231b-824d-8843-50ecbf6ec77f" : {
+          "type" : "latest",
+          "sizeX" : 8.5,
+          "sizeY" : 6,
+          "config" : {
+            "datasources" : [ {
+              "type" : "entity",
+              "name" : null,
+              "entityAliasId" : "2cb65a1f-26fc-645d-fc17-a5a263d1ed07",
+              "filterId" : null,
+              "dataKeys" : [ {
+                "name" : "type",
+                "type" : "entityField",
+                "label" : "Type",
+                "color" : "#f44336",
+                "settings" : { },
+                "_hash" : 0.7232763188523175
+              }, {
+                "name" : "latitude",
+                "type" : "attribute",
+                "label" : "latitude",
+                "color" : "#2196f3",
+                "settings" : { },
+                "_hash" : 0.92642481299289
+              }, {
+                "name" : "longitude",
+                "type" : "attribute",
+                "label" : "longitude",
+                "color" : "#4caf50",
+                "settings" : { },
+                "_hash" : 0.551709051974892
+              } ]
+            } ],
+            "timewindow" : {
+              "displayValue" : "",
+              "selectedTab" : 0,
+              "realtime" : {
+                "realtimeType" : 1,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "history" : {
+                "historyType" : 0,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "fixedTimewindow" : {
+                  "startTimeMs" : 1694102759548,
+                  "endTimeMs" : 1694189159548
+                },
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "aggregation" : {
+                "type" : "AVG",
+                "limit" : 25000
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "#fff",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "8px",
+            "settings" : {
+              "fitMapBounds" : true,
+              "latKeyName" : "latitude",
+              "lngKeyName" : "longitude",
+              "showLabel" : true,
+              "label" : "${entityName}",
+              "tooltipPattern" : "<b>${entityName}</b><br/><br/><b>Type:</b> ${Type}<br/><b>Latitude:</b> ${latitude:7}<br/><b>Longitude:</b> ${longitude:7}<br/>",
+              "markerImageSize" : 20,
+              "useColorFunction" : false,
+              "markerImages" : [ "tb-image;/api/images/system/map_marker_image_0.png", "tb-image;/api/images/system/map_marker_image_1.png", "tb-image;/api/images/system/map_marker_image_2.png", "tb-image;/api/images/system/map_marker_image_3.png" ],
+              "useMarkerImageFunction" : false,
+              "colorFunction" : "var type = dsData[dsIndex]['Type'];\nif (type == 'colorpin') {\n\tvar temperature = dsData[dsIndex]['temperature'];\n\tif (typeof temperature !== undefined) {\n\t    var percent = (temperature + 60)/120 * 100;\n\t    return tinycolor.mix('blue', 'red', amount = percent).toHexString();\n\t}\n\treturn 'blue';\n}\n",
+              "markerImageFunction" : "var type = dsData[dsIndex]['Type'];\nif (type == 'thermometer') {\n\tvar res = {\n\t    url: images[0],\n\t    size: 40\n\t}\n\tvar temperature = dsData[dsIndex]['temperature'];\n\tif (typeof temperature !== undefined) {\n\t    var percent = (temperature + 60)/120;\n\t    var index = Math.min(3, Math.floor(4 * percent));\n\t    res.url = images[index];\n\t}\n\treturn res;\n}",
+              "color" : "#fe7569",
+              "mapProvider" : "CartoDB.Positron",
+              "showTooltip" : true,
+              "autocloseTooltip" : true,
+              "tooltipFunction" : "var deviceType = dsData[dsIndex]['Type'];\r\nif (typeof deviceType !== undefined) {\r\n    if (deviceType == \"energy meter\") {\r\n        return '<b>${entityName}</b><br/><b>Energy:</b> ${energy:2} kWt<br/>';\r\n    } else if (deviceType == \"thermometer\") {\r\n        return '<b>${entityName}</b><br/><b>Temperature:</b> ${temperature:2} °C<br/>';\r\n    }\r\n}",
+              "labelFunction" : "var deviceType = dsData[dsIndex]['Type'];\r\nif (typeof deviceType !== undefined) {\r\n    if (deviceType == \"energy meter\") {\r\n        return '<span style=\"color:orange;\">${entityName}, ${energy:2} kWt</span>';\r\n    } else if (deviceType == \"thermometer\") {\r\n        return '<span style=\"color:blue;\">${entityName}, ${temperature:2} °C</span>';\r\n    }\r\n}",
+              "provider" : "openstreet-map",
+              "defaultCenterPosition" : "0,0",
+              "showTooltipAction" : "click",
+              "mapPageSize" : 16384,
+              "useTooltipFunction" : false,
+              "markerImage" : "tb-image;/api/images/tenant/sensors_dashboard_widget_new_openstreetmap_marker_image.svg"
+            },
+            "title" : "New OpenStreetMap",
+            "dropShadow" : false,
+            "enableFullscreen" : false,
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400
+            },
+            "useDashboardTimewindow" : true,
+            "showLegend" : false,
+            "widgetStyle" : {
+              "border-radius" : "8px",
+              "box-shadow" : "0px 0px 5px rgba(0, 0, 0, 0.05), 0px 0px 20px -10px rgba(16, 16, 16, 0.35)"
+            },
+            "actions" : { },
+            "showTitleIcon" : false,
+            "iconColor" : "rgba(0, 0, 0, 0.87)",
+            "iconSize" : "24px",
+            "titleTooltip" : ""
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "73424c3f-231b-824d-8843-50ecbf6ec77f",
+          "typeFullFqn" : "system.maps_v2.openstreetmap"
+        },
+        "70c0a4a4-acf1-8cba-547e-4a764cb615e2" : {
+          "type" : "latest",
+          "sizeX" : 7.5,
+          "sizeY" : 3,
+          "config" : {
+            "datasources" : [ {
+              "type" : "entity",
+              "name" : null,
+              "entityAliasId" : "2cb65a1f-26fc-645d-fc17-a5a263d1ed07",
+              "filterId" : null,
+              "dataKeys" : [ {
+                "name" : "image",
+                "type" : "attribute",
+                "label" : "image",
+                "color" : "#2196f3",
+                "settings" : { },
+                "_hash" : 0.8781394085497725
+              } ]
+            } ],
+            "timewindow" : {
+              "displayValue" : "",
+              "selectedTab" : 0,
+              "realtime" : {
+                "realtimeType" : 1,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "history" : {
+                "historyType" : 0,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "fixedTimewindow" : {
+                  "startTimeMs" : 1694102759548,
+                  "endTimeMs" : 1694189159548
+                },
+                "quickInterval" : "CURRENT_DAY"
+              },
+              "aggregation" : {
+                "type" : "AVG",
+                "limit" : 25000
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "#fff",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "0px",
+            "settings" : {
+              "cardCss" : ".card {\n    width: 100%;\n    height: 100%;\n    border-top: 1px solid #E0E0E0;\n    box-sizing: border-box;\n    display: flex;\n    flex-direction: column;\n}\n\n.card .header {\n  font-size: 1.15em;\n  font-weight: 500;\n  padding: 16px 22px 5px;\n}\n\n.card .content {\n    display: flex;\n    flex-direction: column;\n    align-items: stretch;\n    justify-content: flex-start;\n    height: 100%;\n    overflow-y: auto;\n    box-sizing: border-box;\n}\n\n.card .meter-photo {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    z-index: 0;\n}\n\n.card .meter-photo img {\n    width: auto;\n    height: 100%;\n    object-fit: contain;\n}\n\n@media (min-width: 960px) and (max-width: 1200px) {\n    .card .header {\n        font-size: 0.9em;\n    }\n}",
+              "cardHtml" : "<div class='card'>\n    <div class=\"header\">\n        <span>Photo</span>\n    </div>\n    <div class='content'>\n       <div class='meter-photo'>\n            <img src=\"${image}\">\n        </div>\n    </div>\n</div>"
+            },
+            "title" : "New HTML Value Card",
+            "dropShadow" : false,
+            "enableFullscreen" : false,
+            "widgetStyle" : {
+              "border-radius" : "8px",
+              "box-shadow" : "0px 0px 5px rgba(0, 0, 0, 0.05), 0px 0px 20px -10px rgba(16, 16, 16, 0.35)"
+            },
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400
+            },
+            "useDashboardTimewindow" : true,
+            "showLegend" : false,
+            "actions" : { },
+            "showTitleIcon" : false,
+            "iconColor" : "rgba(0, 0, 0, 0.87)",
+            "iconSize" : "24px",
+            "titleTooltip" : ""
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "70c0a4a4-acf1-8cba-547e-4a764cb615e2",
+          "typeFullFqn" : "system.cards.html_value_card"
+        },
+        "06235e79-4002-d200-3792-f0a50fc28ce4" : {
+          "type" : "static",
+          "sizeX" : 7.5,
+          "sizeY" : 3,
+          "config" : {
+            "datasources" : [ ],
+            "timewindow" : {
+              "realtime" : {
+                "timewindowMs" : 60000
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "rgb(255, 255, 255)",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "0px",
+            "settings" : {
+              "cardCss" : ".card {\n    width: 100%;\n    height: 100%;\n    padding: 16px 22px;\n}\n\n.card > h4 {\n    font-weight: 500;\n    margin: 0px;\n    display: flex;\n    justify-content: space-between;\n    font-size: 18px;\n    line-height: 21px;\n}\n\n.card .container {\n    display: flex;\n    height: 100%;\n    align-items: center;\n    justify-content: center;\n}\n\n.card .container .block{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column;\n    flex: 1 1 0%;\n}\n\n.card .container .block.tel svg {\n    margin-bottom: 15px;\n}\n\n.card .container .block.mail svg {\n    margin-bottom: 16px;\n}\n\n.card .container .block.web svg {\n    margin-bottom: 12px;\n}\n\n\n.card .container .divider {\n    display: block;\n    width: 1px;\n    height: 66px;\n    margin: 0;\n    border-right-width: 1px;\n    border-right-style: solid;\n    border-right-color: #E4E4E4;\n}\n\n@media (max-width: 599px) {\n    .card .container{\n        flex-direction: column;\n        align-items: start;\n    }\n    \n    .card .container .divider {\n        display: none;\n    }\n    \n    .card .container .block {\n        justify-content: start;\n        flex-direction: row;\n    }\n    \n    .card .container .block.tel svg {\n        margin-bottom: 0;\n        margin-right: 15px;\n    }\n    \n    .card .container .block.mail svg {\n        margin-bottom: 0;\n        margin-right: 15px;\n    }\n    \n    .card .container .block.web svg {\n        margin-bottom: 0;\n        margin-right: 15px;\n    }\n}",
+              "cardHtml" : "<div class=\"card\">\n    <h4 id=\"contact-us\"><span>Contact Us</span></h4>\n    <div class=\"container\">\n        <div class=\"block tel\">\n            <svg width=\"19\" height=\"18\" viewBox=\"0 0 19 18\" fill=\"none\" id=\"call\">\n                <path d=\"M17.343 12.38C16.113 12.38 14.923 12.18 13.813 11.82C13.463 11.7 13.073 11.79 12.803 12.06L11.233 14.03C8.40301 12.68 5.75301 10.13 4.34301 7.2L6.29301 5.54C6.56301 5.26 6.64301 4.87 6.53301 4.52C6.16301 3.41 5.97301 2.22 5.97301 0.99C5.97301 0.45 5.52301 0 4.98301 0H1.52301C0.983008 0 0.333008 0.24 0.333008 0.99C0.333008 10.28 8.06301 18 17.343 18C18.053 18 18.333 17.37 18.333 16.82V13.37C18.333 12.83 17.883 12.38 17.343 12.38Z\" fill=\"#0F161D\"/>\n            </svg>\n            <a href=\"tel:+1 415 766 9144\">+1 415 766 9144</a>\n        </div>\n        <div class=\"divider\"></div>\n        <div class=\"block mail\">\n            <svg width=\"20\" height=\"16\" viewBox=\"0 0 20 16\" fill=\"none\">\n                <path d=\"M18 0H2C0.9 0 0.00999999 0.9 0.00999999 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z\" fill=\"#0F161D\"/>\n            </svg>\n            <a href=\"mailto:info@thingsboard.io\">info@thingsboard.io</a>\n        </div>\n        <div class=\"divider\"></div>\n        <div class=\"block web\">\n            <svg width=\"21\" height=\"20\" viewBox=\"0 0 21 20\" fill=\"none\">\n                <path d=\"M10.666 0C5.14602 0 0.666016 4.48 0.666016 10C0.666016 15.52 5.14602 20 10.666 20C16.186 20 20.666 15.52 20.666 10C20.666 4.48 16.186 0 10.666 0ZM9.66602 17.93C5.71602 17.44 2.66602 14.08 2.66602 10C2.66602 9.38 2.74602 8.79 2.87602 8.21L7.66602 13V14C7.66602 15.1 8.56602 16 9.66602 16V17.93ZM16.566 15.39C16.306 14.58 15.566 14 14.666 14H13.666V11C13.666 10.45 13.216 10 12.666 10H6.66602V8H8.66602C9.21602 8 9.66602 7.55 9.66602 7V5H11.666C12.766 5 13.666 4.1 13.666 3V2.59C16.596 3.78 18.666 6.65 18.666 10C18.666 12.08 17.866 13.97 16.566 15.39Z\" fill=\"#0F161D\"/>\n            </svg>\n            <a href=\"https://thingsboard.io\" target=\"_blank\">thingsboard.io</a>\n        </div>\n    </div>\n</div>"
+            },
+            "title" : "New HTML Card",
+            "dropShadow" : false,
+            "showTitleIcon" : false,
+            "iconColor" : "rgba(0, 0, 0, 0.87)",
+            "iconSize" : "24px",
+            "titleTooltip" : "",
+            "enableFullscreen" : false,
+            "widgetStyle" : {
+              "border-radius" : "8px",
+              "box-shadow" : "0px 0px 5px rgba(0, 0, 0, 0.05), 0px 0px 20px -10px rgba(16, 16, 16, 0.35)"
+            },
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400
+            },
+            "showLegend" : false,
+            "actions" : {
+              "elementClick" : [ {
+                "name" : "call",
+                "icon" : "more_horiz",
+                "type" : "mobileAction",
+                "mobileAction" : {
+                  "type" : "makePhoneCall",
+                  "handleEmptyResultFunction" : "",
+                  "handleErrorFunction" : "widgetContext.showErrorToast('Failed to make phone call');\n",
+                  "getPhoneNumberFunction" : "return 14157669144;",
+                  "processLaunchResultFunction" : "// Optional function body to process result of attempt to launch external mobile application (for ex. map application or phone call application). \n// - launched - boolean value indicating if the external application was successfully launched.\n\nif (!launched) {\n    widgetContext.showErrorToast('Failed to launch');\n}\n"
+                },
+                "id" : "802f9df6-67e2-98da-dce2-fae242361e7f"
+              } ]
+            }
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "06235e79-4002-d200-3792-f0a50fc28ce4",
+          "typeFullFqn" : "system.cards.html_card"
+        },
+        "d9dfb3e6-919d-ff83-debc-87188924b41b" : {
+          "type" : "static",
+          "sizeX" : 7.5,
+          "sizeY" : 3,
+          "config" : {
+            "datasources" : [ ],
+            "timewindow" : {
+              "realtime" : {
+                "timewindowMs" : 60000
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "rgba(255,255,255,0)",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "0px",
+            "settings" : {
+              "cardHtml" : "<div class='card' id=\"openMapLocatin\">\n    <div class='content'>\n        <div class='description'>\n            <svg width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\">\n                <path d=\"M8 10C6.9 10 6 9.1 6 8C6 6.9 6.9 6 8 6C9.1 6 10 6.9 10 8C10 9.1 9.1 10 8 10ZM14 8.2C14 4.57 11.35 2 8 2C4.65 2 2 4.57 2 8.2C2 10.54 3.95 13.64 8 17.34C12.05 13.64 14 10.54 14 8.2ZM8 0C12.2 0 16 3.22 16 8.2C16 11.52 13.33 15.45 8 20C2.67 15.45 0 11.52 0 8.2C0 3.22 3.8 0 8 0Z\" fill=\"white\"/>\n            </svg>\n            <div class=\"description_text\">Open location</div>\n        </div>\n    </div>\n</div>",
+              "cardCss" : ".card {\n    width: 100%;\n    height: 100%;\n    box-sizing: border-box;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    border-radius: 4px;\n    background-color: #305680;\n}\n\n.card .content {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    width: 100%;\n    padding: 0 15px;\n}\n\n.card .description {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n}\n\n.card .description_text {\n    margin-left: 20px;\n    font-size: 22px;\n    font-weight: 500;\n    line-height: 24px;\n    letter-spacing: 0.05px;\n    color: #fff;\n}\n\n.card .description_navigation {\n    display: flex;\n}"
+            },
+            "title" : "New HTML Card",
+            "dropShadow" : false,
+            "showTitleIcon" : false,
+            "iconColor" : "rgba(0, 0, 0, 0.87)",
+            "iconSize" : "24px",
+            "titleTooltip" : "",
+            "enableFullscreen" : false,
+            "widgetStyle" : {
+              "border-radius" : "8px",
+              "box-shadow" : "0px 0px 5px rgba(0, 0, 0, 0.05), 0px 0px 20px -10px rgba(16, 16, 16, 0.35)"
+            },
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400
+            },
+            "showLegend" : false,
+            "actions" : {
+              "elementClick" : [ {
+                "name" : "openMapLocatin",
+                "icon" : "more_horiz",
+                "useShowWidgetActionFunction" : null,
+                "showWidgetActionFunction" : "return true;",
+                "type" : "mobileAction",
+                "mobileAction" : {
+                  "type" : "mapLocation",
+                  "handleEmptyResultFunction" : "",
+                  "handleErrorFunction" : "widgetContext.showErrorToast('Failed to open map location');",
+                  "getLocationFunction" : "return getLocationFromEntityAttributes();\n\nfunction getLocationFromEntityAttributes() {\n    const entityId = widgetContext.stateController.getStateParams().entityId;\n    if (entityId) {\n        return widgetContext.attributeService.getEntityAttributes(entityId, 'SERVER_SCOPE', ['latitude', 'longitude']).pipe(widgetContext.rxjs.map(function(attributeData) {\n            var res = [0,0];\n            if (attributeData && attributeData.length === 2) {\n                res[0] = attributeData.filter(function (data) { return data.key === 'latitude'})[0].value;\n                res[1] = attributeData.filter(function (data) { return data.key === 'longitude'})[0].value;\n            }\n            return res;\n        }));\n    } else {\n        return [0,0];\n    }\n}\n",
+                  "processLaunchResultFunction" : "if (!launched) {\n    widgetContext.showErrorToast('Failed to launch');\n} \n"
+                },
+                "openInSeparateDialog" : false,
+                "openInPopover" : false,
+                "id" : "16442fd3-1bd5-4443-e1fd-63ac98324623"
+              } ]
+            }
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "d9dfb3e6-919d-ff83-debc-87188924b41b",
+          "typeFullFqn" : "system.cards.html_card"
+        },
+        "8e40356e-ad2d-b1fb-0794-c6861f198405" : {
+          "type" : "static",
+          "sizeX" : 7.5,
+          "sizeY" : 3,
+          "config" : {
+            "datasources" : [ ],
+            "timewindow" : {
+              "realtime" : {
+                "timewindowMs" : 60000
+              }
+            },
+            "showTitle" : false,
+            "backgroundColor" : "rgba(255,255,255,0)",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "0px",
+            "settings" : {
+              "cardHtml" : "<div class='card' id=\"openMapDirection\">\n    <div class='content'>\n        <div class='description'>\n            <svg width=\"23\" height=\"22\" viewBox=\"0 0 23 22\" fill=\"none\">\n                <path d=\"M21.9299 9.58993L12.9199 0.579928C12.1699 -0.170072 10.8499 -0.180072 10.0899 0.579928L1.08988 9.57993C0.309883 10.3599 0.309883 11.6199 1.08988 12.3999L10.0899 21.3999C10.4799 21.7899 10.9899 21.9799 11.4999 21.9799C12.0099 21.9799 12.5199 21.7899 12.9099 21.3999L21.8999 12.4099C22.6899 11.6499 22.6999 10.3899 21.9299 9.58993ZM11.5099 19.9899L2.50988 10.9899L11.5099 1.98993L20.5099 10.9899L11.5099 19.9899ZM7.49988 9.99993V13.9999H9.49988V10.9999H13.4999V13.4999L16.9999 9.99993L13.4999 6.49993V8.99993H8.49988C7.94988 8.99993 7.49988 9.44993 7.49988 9.99993Z\" fill=\"white\"/>\n            </svg>\n            <div class=\"description_text\">Get direction</div>\n        </div>\n    </div>\n</div>",
+              "cardCss" : ".card {\n    width: 100%;\n    height: 100%;\n    box-sizing: border-box;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    border-radius: 4px;\n    background-color: #305680;\n}\n\n.card .content {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    height: 100%;\n    width: 100%;\n    padding: 0 15px;\n}\n\n.card .description {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n}\n\n.card .description_text {\n    margin-left: 20px;\n    font-size: 22px;\n    font-weight: 500;\n    line-height: 24px;\n    letter-spacing: 0.05px;\n    color: #fff;\n}\n\n.card .description_navigation {\n    display: flex;\n}"
+            },
+            "title" : "New HTML Card",
+            "dropShadow" : false,
+            "showTitleIcon" : false,
+            "iconColor" : "rgba(0, 0, 0, 0.87)",
+            "iconSize" : "24px",
+            "titleTooltip" : "",
+            "enableFullscreen" : false,
+            "widgetStyle" : {
+              "border-radius" : "8px",
+              "box-shadow" : "0px 0px 5px rgba(0, 0, 0, 0.05), 0px 0px 20px -10px rgba(16, 16, 16, 0.35)"
+            },
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400
+            },
+            "showLegend" : false,
+            "actions" : {
+              "elementClick" : [ {
+                "name" : "openMapDirection",
+                "icon" : "more_horiz",
+                "useShowWidgetActionFunction" : null,
+                "showWidgetActionFunction" : "return true;",
+                "type" : "mobileAction",
+                "mobileAction" : {
+                  "type" : "mapDirection",
+                  "handleEmptyResultFunction" : "",
+                  "handleErrorFunction" : "widgetContext.showErrorToast('Failed to open map directions');",
+                  "getLocationFunction" : "return getLocationFromEntityAttributes();\n\nfunction getLocationFromEntityAttributes() {\n    const entityId = widgetContext.stateController.getStateParams().entityId;\n    if (entityId) {\n        return widgetContext.attributeService.getEntityAttributes(entityId, 'SERVER_SCOPE', ['latitude', 'longitude']).pipe(widgetContext.rxjs.map(function(attributeData) {\n            var res = [0,0];\n            if (attributeData && attributeData.length === 2) {\n                res[0] = attributeData.filter(function (data) { return data.key === 'latitude'})[0].value;\n                res[1] = attributeData.filter(function (data) { return data.key === 'longitude'})[0].value;\n            }\n            return res;\n        }));\n    } else {\n        return [0,0];\n    }\n}",
+                  "processLaunchResultFunction" : "if(!launched) {\n    widgetContext.showErrorToast('Failed to launched open map directions');\n}\n"
+                },
+                "openInSeparateDialog" : false,
+                "openInPopover" : false,
+                "id" : "16442fd3-1bd5-4443-e1fd-63ac98324623"
+              } ]
+            }
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "8e40356e-ad2d-b1fb-0794-c6861f198405",
+          "typeFullFqn" : "system.cards.html_card"
+        }
+      },
+      "states" : {
+        "default" : {
+          "name" : "Sensors",
+          "root" : true,
+          "layouts" : {
+            "main" : {
+              "widgets" : {
+                "6ba002b6-2a36-175e-454c-ec1f29aa3f85" : {
+                  "sizeX" : 12,
+                  "sizeY" : 1,
+                  "mobileOrder" : 1,
+                  "mobileHeight" : 1,
+                  "row" : 0,
+                  "col" : 0
+                },
+                "99ea19b2-0c78-4b0b-fd46-71b6dce817f5" : {
+                  "sizeX" : 12,
+                  "sizeY" : 13,
+                  "row" : 1,
+                  "col" : 0,
+                  "mobileHeight" : 10
+                }
+              },
+              "gridSettings" : {
+                "backgroundColor" : "#f7f8fa",
+                "columns" : 12,
+                "margin" : 10,
+                "backgroundSizeMode" : "100%",
+                "autoFillHeight" : true,
+                "backgroundImageUrl" : null,
+                "mobileAutoFillHeight" : true,
+                "mobileRowHeight" : 70,
+                "outerMargin" : true
+              }
+            },
+            "right" : {
+              "widgets" : {
+                "96ad46f2-e7a6-ee08-fec0-16c6fa203be9" : {
+                  "sizeX" : 6,
+                  "sizeY" : 5,
+                  "row" : 1,
+                  "col" : 6,
+                  "mobileHeight" : 4,
+                  "mobileHide" : true
+                },
+                "9126dfbd-24f1-dce3-2a05-51be7fafebde" : {
+                  "sizeX" : 4,
+                  "sizeY" : 1,
+                  "row" : 0,
+                  "col" : 0,
+                  "mobileHeight" : 1
+                },
+                "5b2fa363-14ed-a16d-3fff-606884333786" : {
+                  "sizeX" : 12,
+                  "sizeY" : 1,
+                  "mobileHeight" : 1,
+                  "row" : 6,
+                  "col" : 0
+                },
+                "73424c3f-231b-824d-8843-50ecbf6ec77f" : {
+                  "sizeX" : 6,
+                  "sizeY" : 5,
+                  "mobileHeight" : 6,
+                  "row" : 1,
+                  "col" : 0
+                },
+                "70c0a4a4-acf1-8cba-547e-4a764cb615e2" : {
+                  "sizeX" : 12,
+                  "sizeY" : 5,
+                  "mobileHeight" : 7,
+                  "row" : 7,
+                  "col" : 0
+                },
+                "06235e79-4002-d200-3792-f0a50fc28ce4" : {
+                  "sizeX" : 12,
+                  "sizeY" : 3,
+                  "mobileHeight" : 4,
+                  "row" : 12,
+                  "col" : 0
+                },
+                "d9dfb3e6-919d-ff83-debc-87188924b41b" : {
+                  "sizeX" : 4,
+                  "sizeY" : 1,
+                  "mobileHeight" : 1,
+                  "row" : 0,
+                  "col" : 4
+                },
+                "8e40356e-ad2d-b1fb-0794-c6861f198405" : {
+                  "sizeX" : 4,
+                  "sizeY" : 1,
+                  "mobileHeight" : 1,
+                  "row" : 0,
+                  "col" : 8
+                }
+              },
+              "gridSettings" : {
+                "backgroundColor" : "#f7f8fa",
+                "columns" : 12,
+                "margin" : 10,
+                "backgroundSizeMode" : "100%",
+                "autoFillHeight" : false,
+                "backgroundImageUrl" : null,
+                "mobileAutoFillHeight" : false,
+                "mobileRowHeight" : 50,
+                "outerMargin" : true
+              }
+            }
+          }
+        },
+        "location" : {
+          "name" : "Location",
+          "root" : false,
+          "layouts" : {
+            "main" : {
+              "widgets" : {
+                "3678dda0-01b5-fd82-5aa0-7889f220ff94" : {
+                  "sizeX" : 24,
+                  "sizeY" : 12,
+                  "row" : 0,
+                  "col" : 0
+                }
+              },
+              "gridSettings" : {
+                "backgroundColor" : "#f7f8fa",
+                "columns" : 24,
+                "margin" : 0,
+                "backgroundSizeMode" : "100%",
+                "autoFillHeight" : true,
+                "backgroundImageUrl" : null,
+                "mobileAutoFillHeight" : true,
+                "mobileRowHeight" : 70,
+                "outerMargin" : true
+              }
+            }
+          }
+        }
+      },
+      "entityAliases" : {
+        "c9b3786e-7fd6-8af9-fc76-7cc0a11432cf" : {
+          "id" : "c9b3786e-7fd6-8af9-fc76-7cc0a11432cf",
+          "alias" : "Sensors",
+          "filter" : {
+            "type" : "entityType",
+            "resolveMultiple" : true,
+            "entityType" : "DEVICE"
+          }
+        },
+        "2cb65a1f-26fc-645d-fc17-a5a263d1ed07" : {
+          "id" : "2cb65a1f-26fc-645d-fc17-a5a263d1ed07",
+          "alias" : "Current sensor",
+          "filter" : {
+            "type" : "stateEntity",
+            "resolveMultiple" : false,
+            "stateEntityParamName" : null,
+            "defaultStateEntity" : null
+          }
+        }
+      },
+      "filters" : {
+        "d05a31bc-db99-c984-a7be-fd6b48a90591" : {
+          "id" : "d05a31bc-db99-c984-a7be-fd6b48a90591",
+          "filter" : "Sensor devices",
+          "keyFilters" : [ {
+            "key" : {
+              "type" : "ENTITY_FIELD",
+              "key" : "type"
+            },
+            "valueType" : "STRING",
+            "predicates" : [ {
+              "keyFilterPredicate" : {
+                "operation" : "OR",
+                "predicates" : [ {
+                  "keyFilterPredicate" : {
+                    "operation" : "CONTAINS",
+                    "value" : {
+                      "defaultValue" : "sensor",
+                      "dynamicValue" : null
+                    },
+                    "ignoreCase" : true,
+                    "type" : "STRING"
+                  },
+                  "userInfo" : {
+                    "editable" : true,
+                    "label" : "",
+                    "autogeneratedLabel" : true,
+                    "order" : 0
+                  }
+                }, {
+                  "keyFilterPredicate" : {
+                    "operation" : "EQUAL",
+                    "value" : {
+                      "defaultValue" : "Charging port",
+                      "dynamicValue" : null
+                    },
+                    "ignoreCase" : false,
+                    "type" : "STRING"
+                  },
+                  "userInfo" : {
+                    "editable" : true,
+                    "label" : "",
+                    "autogeneratedLabel" : true,
+                    "order" : 0
+                  }
+                } ],
+                "type" : "COMPLEX"
+              },
+              "userInfo" : {
+                "editable" : true,
+                "label" : "",
+                "autogeneratedLabel" : true,
+                "order" : 0
+              }
+            } ]
+          } ],
+          "editable" : false
+        }
+      },
+      "timewindow" : {
+        "displayValue" : "",
+        "hideInterval" : false,
+        "hideAggregation" : false,
+        "hideAggInterval" : false,
+        "hideTimezone" : false,
+        "selectedTab" : 0,
+        "realtime" : {
+          "realtimeType" : 0,
+          "interval" : 1000,
+          "timewindowMs" : 60000,
+          "quickInterval" : "CURRENT_DAY"
+        },
+        "history" : {
+          "historyType" : 0,
+          "interval" : 1000,
+          "timewindowMs" : 60000,
+          "fixedTimewindow" : {
+            "startTimeMs" : 1629358263226,
+            "endTimeMs" : 1629444663226
+          },
+          "quickInterval" : "CURRENT_DAY"
+        },
+        "aggregation" : {
+          "type" : "AVG",
+          "limit" : 25000
+        }
+      },
+      "settings" : {
+        "stateControllerId" : "entity",
+        "showTitle" : false,
+        "showDashboardsSelect" : false,
+        "showEntitiesSelect" : false,
+        "showDashboardTimewindow" : false,
+        "showDashboardExport" : false,
+        "toolbarAlwaysOpen" : true,
+        "titleColor" : "rgba(0,0,0,0.870588)",
+        "showDashboardLogo" : false,
+        "dashboardLogoUrl" : null,
+        "hideToolbar" : true,
+        "showFilters" : false,
+        "showUpdateDashboardImage" : false
+      }
+    },
+    "name" : "Sensors",
+    "resources" : null,
+    "assignedCustomers" : [ {
+      "customerId" : {
+        "entityType" : "CUSTOMER",
+        "id" : "6d4f5ca0-da93-11ef-8e00-e370a74757c3"
+      },
+      "title" : "Device Claiming Customer",
+      "public" : false
+    }, {
+      "customerId" : {
+        "entityType" : "CUSTOMER",
+        "id" : "6d465bf0-da93-11ef-8e00-e370a74757c3"
+      },
+      "title" : "Demo Customer",
+      "public" : false
+    } ],
+    "externalId" : null,
+    "id" : {
+      "entityType" : "DASHBOARD",
+      "id" : "6e148160-da93-11ef-8e00-e370a74757c3"
+    }
+  },
+  "relations" : [ ],
+  "attributes" : {
+    "SERVER_SCOPE" : [ ]
+  }
+}

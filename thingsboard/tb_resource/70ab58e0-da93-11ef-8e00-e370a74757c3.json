@@ -1,0 +1,37 @@
+{
+  "entityType" : "TB_RESOURCE",
+  "entity" : {
+    "data" : "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNTQiIGhlaWdodD0iNjUiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDU0IDY1IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogPHJlY3Qgd2lkdGg9IjU0IiBoZWlnaHQ9IjY1IiBmaWxsPSIjZmZmIiBzdHJva2Utd2lkdGg9Ii41NTE0MSIvPgogPHBhdGggZD0ibTIzIDM0LjM0NC0xLjMzMjMgMS4xOTI1Yy0xLjY0MzEgMS40NzA2LTIuNjY3NyAzLjU5NDktMi42Njc3IDUuOTYzOSAwIDQuNDE4MyAzLjU4MTcgOCA4IDhzOC0zLjU4MTcgOC04YzAtMi4zNjktMS4wMjQ2LTQuNDkzMy0yLjY2NzctNS45NjM5bC0xLjMzMjMtMS4xOTI1di0xNC44NDRjMC0yLjIwOTEtMS43OTA5LTQtNC00cy00IDEuNzkwOS00IDR6bS00LTE0Ljg0NGMwLTQuNDE4MyAzLjU4MTctOCA4LTggNC4wNzk2IDAgNy40NDYgMy4wNTM3IDcuOTM4MSA3aDEuNTYxOWMwLjgyODQgMCAxLjUgMC42NzE2IDEuNSAxLjVzLTAuNjcxNiAxLjUtMS41IDEuNWgtMS41djNoMS41YzAuODI4NCAwIDEuNSAwLjY3MTYgMS41IDEuNXMtMC42NzE2IDEuNS0xLjUgMS41aC0xLjV2NS4wNTU2YzIuNDU1IDIuMTk3MyA0IDUuMzkwNCA0IDguOTQ0NCAwIDYuNjI3NC01LjM3MjYgMTItMTIgMTJzLTEyLTUuMzcyNi0xMi0xMmMwLTMuNTU0IDEuNTQ1LTYuNzQ3MSA0LTguOTQ0NHptMTQgMjJjMCAzLjMxMzctMi42ODYzIDYtNiA2cy02LTIuNjg2My02LTZjMC0yLjYxMjQgMS42Njk2LTQuODM0OSA0LTUuNjU4NnYtMTAuMzQxaDR2MTAuMzQxYzIuMzMwNCAwLjgyMzcgNCAzLjA0NjIgNCA1LjY1ODZ6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNmYzY1MzIiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K",
+    "descriptor" : {
+      "mediaType" : "image/svg+xml",
+      "width" : 54,
+      "height" : 65,
+      "size" : 894,
+      "etag" : "481157e3d261a92d93002bb64fd09f6cca139864741628c0bf10a12259a6305a",
+      "previewDescriptor" : {
+        "mediaType" : "image/svg+xml",
+        "width" : 54,
+        "height" : 65,
+        "size" : 894,
+        "etag" : "481157e3d261a92d93002bb64fd09f6cca139864741628c0bf10a12259a6305a"
+      }
+    },
+    "etag" : "481157e3d261a92d93002bb64fd09f6cca139864741628c0bf10a12259a6305a",
+    "externalId" : null,
+    "fileName" : "temperature_sensor_device_profile_image.svg",
+    "id" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "70ab58e0-da93-11ef-8e00-e370a74757c3"
+    },
+    "link" : "/api/images/tenant/temperature_sensor_device_profile_image.svg",
+    "name" : "\"Temperature Sensor\" device profile image",
+    "preview" : null,
+    "public" : true,
+    "publicLink" : "/api/images/public/4JGjCCMIUQSyxfbfsiJ47HB4xdUKE6HB",
+    "publicResourceKey" : "4JGjCCMIUQSyxfbfsiJ47HB4xdUKE6HB",
+    "resourceKey" : "temperature_sensor_device_profile_image.svg",
+    "resourceSubType" : "IMAGE",
+    "resourceType" : "IMAGE",
+    "title" : "\"Temperature Sensor\" device profile image"
+  }
+}

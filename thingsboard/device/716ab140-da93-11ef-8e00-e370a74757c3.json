@@ -1,0 +1,127 @@
+{
+  "entityType" : "DEVICE",
+  "entity" : {
+    "additionalInfo" : null,
+    "customerId" : {
+      "entityType" : "CUSTOMER",
+      "id" : "6d465bf0-da93-11ef-8e00-e370a74757c3"
+    },
+    "deviceData" : {
+      "configuration" : {
+        "type" : "DEFAULT"
+      },
+      "transportConfiguration" : {
+        "type" : "MQTT"
+      }
+    },
+    "deviceProfileId" : {
+      "entityType" : "DEVICE_PROFILE",
+      "id" : "70dc7b00-da93-11ef-8e00-e370a74757c3"
+    },
+    "externalId" : null,
+    "firmwareId" : null,
+    "id" : {
+      "entityType" : "DEVICE",
+      "id" : "716ab140-da93-11ef-8e00-e370a74757c3"
+    },
+    "label" : null,
+    "name" : "Charging Port 2",
+    "softwareId" : null,
+    "type" : "Charging port"
+  },
+  "credentials" : {
+    "credentialsId" : "gKhyL5lQSI1cQN0RxQta",
+    "credentialsType" : "ACCESS_TOKEN",
+    "credentialsValue" : null
+  },
+  "relations" : [ {
+    "additionalInfo" : null,
+    "from" : {
+      "entityType" : "ASSET",
+      "id" : "6d6d6bf0-da93-11ef-8e00-e370a74757c3"
+    },
+    "to" : {
+      "entityType" : "DEVICE",
+      "id" : "716ab140-da93-11ef-8e00-e370a74757c3"
+    },
+    "type" : "Contains",
+    "typeGroup" : "COMMON",
+    "version" : 2140214
+  } ],
+  "attributes" : {
+    "SERVER_SCOPE" : [ {
+      "booleanValue" : false,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "active",
+      "lastUpdateTs" : 1737751228788,
+      "longValue" : null,
+      "strValue" : null
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "claimingData",
+      "lastUpdateTs" : 1737751227029,
+      "longValue" : null,
+      "strValue" : "{\"secretKey\": \"Charging port Secret Key\", \"expirationTime\": 1893448800000}"
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : 33.782736,
+      "jsonValue" : null,
+      "key" : "latitude",
+      "lastUpdateTs" : 1737751227029,
+      "longValue" : null,
+      "strValue" : null
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : -118.132032,
+      "jsonValue" : null,
+      "key" : "longitude",
+      "lastUpdateTs" : 1737751227029,
+      "longValue" : null,
+      "strValue" : null
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "maxPortPower",
+      "lastUpdateTs" : 1737751227029,
+      "longValue" : 50,
+      "strValue" : null
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "portType",
+      "lastUpdateTs" : 1737751227029,
+      "longValue" : null,
+      "strValue" : "CCS"
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "status",
+      "lastUpdateTs" : 1737751227029,
+      "longValue" : null,
+      "strValue" : "occupied"
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : 0.3,
+      "jsonValue" : null,
+      "key" : "xPos",
+      "lastUpdateTs" : 1737751227029,
+      "longValue" : null,
+      "strValue" : null
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : 0.5,
+      "jsonValue" : null,
+      "key" : "yPos",
+      "lastUpdateTs" : 1737751227029,
+      "longValue" : null,
+      "strValue" : null
+    } ],
+    "SHARED_SCOPE" : [ ]
+  }
+}
