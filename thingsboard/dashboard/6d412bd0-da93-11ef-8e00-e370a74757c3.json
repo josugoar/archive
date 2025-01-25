@@ -405,8 +405,11 @@
     },
     "name" : "DHT22: Temperature & Humidity Demo Dashboard (Deprecated)",
     "resources" : null,
-    "assignedCustomers" : null,
-    "externalId" : null,
+    "assignedCustomers" : [ ],
+    "externalId" : {
+      "entityType" : "DASHBOARD",
+      "id" : "6d412bd0-da93-11ef-8e00-e370a74757c3"
+    },
     "id" : {
       "entityType" : "DASHBOARD",
       "id" : "6d412bd0-da93-11ef-8e00-e370a74757c3"

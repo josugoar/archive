@@ -4230,7 +4230,7 @@
             "defaultStateEntity" : null,
             "rootEntity" : {
               "entityType" : "ASSET",
-              "id" : "dc4b7540-1498-11ec-ae40-37d2df2b0dc3"
+              "id" : "692e62b0-da93-11ef-8e00-e370a74757c3"
             },
             "direction" : "FROM",
             "maxLevel" : 1,
@@ -4442,8 +4442,11 @@
     },
     "name" : "Home",
     "resources" : null,
-    "assignedCustomers" : null,
-    "externalId" : null,
+    "assignedCustomers" : [ ],
+    "externalId" : {
+      "entityType" : "DASHBOARD",
+      "id" : "6d85fd00-da93-11ef-8e00-e370a74757c3"
+    },
     "id" : {
       "entityType" : "DASHBOARD",
       "id" : "6d85fd00-da93-11ef-8e00-e370a74757c3"

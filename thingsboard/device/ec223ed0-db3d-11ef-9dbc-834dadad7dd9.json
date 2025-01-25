@@ -18,94 +18,86 @@
       "entityType" : "DEVICE_PROFILE",
       "id" : "70cc7570-da93-11ef-8e00-e370a74757c3"
     },
-    "externalId" : {
-      "entityType" : "DEVICE",
-      "id" : "711a9570-da93-11ef-8e00-e370a74757c3"
-    },
+    "externalId" : null,
     "firmwareId" : null,
     "id" : {
       "entityType" : "DEVICE",
-      "id" : "711a9570-da93-11ef-8e00-e370a74757c3"
+      "id" : "ec223ed0-db3d-11ef-9dbc-834dadad7dd9"
     },
     "label" : null,
-    "name" : "Air Quality Sensor T1",
+    "name" : "f6G7LBDNvGcuItt31bqd",
     "softwareId" : null,
     "type" : "Air Quality Sensor"
   },
   "credentials" : {
-    "credentialsId" : "zcXVK79r32Sq94CsZua3",
+    "credentialsId" : "JrUWHyWsQISoMapELMf5",
     "credentialsType" : "ACCESS_TOKEN",
     "credentialsValue" : null
   },
-  "relations" : [ {
-    "additionalInfo" : null,
-    "from" : {
-      "entityType" : "ASSET",
-      "id" : "6d54b3d0-da93-11ef-8e00-e370a74757c3"
-    },
-    "to" : {
-      "entityType" : "DEVICE",
-      "id" : "711a9570-da93-11ef-8e00-e370a74757c3"
-    },
-    "type" : "Contains",
-    "typeGroup" : "COMMON",
-    "version" : 2140212
-  } ],
+  "relations" : [ ],
   "attributes" : {
     "SERVER_SCOPE" : [ {
-      "booleanValue" : false,
+      "booleanValue" : true,
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "active",
-      "lastUpdateTs" : 1737751829004,
+      "lastUpdateTs" : 1737824448329,
       "longValue" : null,
       "strValue" : null
     }, {
       "booleanValue" : null,
       "doubleValue" : null,
       "jsonValue" : null,
-      "key" : "claimingData",
-      "lastUpdateTs" : 1737751226789,
-      "longValue" : null,
-      "strValue" : "{\"secretKey\": \"Air Quality Sensor Secret Key\", \"expirationTime\": 1893448800000}"
+      "key" : "lastActivityTime",
+      "lastUpdateTs" : 1737827762433,
+      "longValue" : 1737827760206,
+      "strValue" : null
     }, {
       "booleanValue" : null,
       "doubleValue" : null,
       "jsonValue" : null,
-      "key" : "inactivityAlarmTime",
-      "lastUpdateTs" : 1737751829004,
-      "longValue" : 1737751828900,
+      "key" : "lastConnectTime",
+      "lastUpdateTs" : 1737824448328,
+      "longValue" : 1737824448328,
       "strValue" : null
     }, {
       "booleanValue" : null,
       "doubleValue" : 33.782736,
       "jsonValue" : null,
       "key" : "latitude",
-      "lastUpdateTs" : 1737751226789,
+      "lastUpdateTs" : 1737826290215,
       "longValue" : null,
       "strValue" : null
     }, {
       "booleanValue" : null,
-      "doubleValue" : -118.132032,
+      "doubleValue" : -119.132032,
       "jsonValue" : null,
       "key" : "longitude",
-      "lastUpdateTs" : 1737751226789,
+      "lastUpdateTs" : 1737826300015,
       "longValue" : null,
       "strValue" : null
     }, {
       "booleanValue" : null,
-      "doubleValue" : 0.26,
+      "doubleValue" : null,
+      "jsonValue" : null,
+      "key" : "provisionState",
+      "lastUpdateTs" : 1737824447594,
+      "longValue" : null,
+      "strValue" : "provisioned"
+    }, {
+      "booleanValue" : null,
+      "doubleValue" : 0.42304147465437786,
       "jsonValue" : null,
       "key" : "xPos",
-      "lastUpdateTs" : 1737751226789,
+      "lastUpdateTs" : 1737826315102,
       "longValue" : null,
       "strValue" : null
     }, {
       "booleanValue" : null,
-      "doubleValue" : 0.52,
+      "doubleValue" : 0.5190651906519065,
       "jsonValue" : null,
       "key" : "yPos",
-      "lastUpdateTs" : 1737751226789,
+      "lastUpdateTs" : 1737826315102,
       "longValue" : null,
       "strValue" : null
     } ],
@@ -114,7 +106,7 @@
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "fw_checksum",
-      "lastUpdateTs" : 1737754131181,
+      "lastUpdateTs" : 1737824447583,
       "longValue" : null,
       "strValue" : "995a891a0a04ed3706431ec77fcf6812cc5607de4e7e42e948f56d50f68b58e7"
     }, {
@@ -122,7 +114,7 @@
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "fw_checksum_algorithm",
-      "lastUpdateTs" : 1737754131181,
+      "lastUpdateTs" : 1737824447583,
       "longValue" : null,
       "strValue" : "SHA256"
     }, {
@@ -130,7 +122,7 @@
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "fw_size",
-      "lastUpdateTs" : 1737754131181,
+      "lastUpdateTs" : 1737824447583,
       "longValue" : 174624,
       "strValue" : null
     }, {
@@ -138,7 +130,7 @@
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "fw_title",
-      "lastUpdateTs" : 1737754131181,
+      "lastUpdateTs" : 1737824447583,
       "longValue" : null,
       "strValue" : "Air Quality Sensor"
     }, {
@@ -146,7 +138,7 @@
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "fw_version",
-      "lastUpdateTs" : 1737754131181,
+      "lastUpdateTs" : 1737824447583,
       "longValue" : null,
       "strValue" : "0.0.0"
     } ]

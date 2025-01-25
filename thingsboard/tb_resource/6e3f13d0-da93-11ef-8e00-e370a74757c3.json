@@ -17,7 +17,10 @@
       }
     },
     "etag" : "9d06d880a7e3dfca0e738ed55af41753a2044649b65905a8413fbba601999f36",
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "6e3f13d0-da93-11ef-8e00-e370a74757c3"
+    },
     "fileName" : "indoor_air_quality_dashboard_widget_sensors_map_marker_image.svg",
     "id" : {
       "entityType" : "TB_RESOURCE",

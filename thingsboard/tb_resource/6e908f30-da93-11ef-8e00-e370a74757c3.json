@@ -17,7 +17,10 @@
       }
     },
     "etag" : "ef50965eca5bce0d986e8582e00a88016095b8926f0c44dc786095f64d96a2d0",
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "6e908f30-da93-11ef-8e00-e370a74757c3"
+    },
     "fileName" : "ev_charging_stations_dashboard_widget_new_openstreetmap_marker_image_0.svg",
     "id" : {
       "entityType" : "TB_RESOURCE",

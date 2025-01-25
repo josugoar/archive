@@ -1102,7 +1102,7 @@
               "dataKeys" : [ {
                 "name" : "samplingRate",
                 "type" : "attribute",
-                "label" : "samplingRate",
+                "label" : "Sampling rate, Hz",
                 "color" : "#2196f3",
                 "settings" : {
                   "dataKeyHidden" : false,
@@ -1216,7 +1216,7 @@
             "main" : {
               "widgets" : {
                 "bc0597c2-9294-be92-8122-f8dc0b24d920" : {
-                  "sizeX" : 9,
+                  "sizeX" : 10,
                   "sizeY" : 6,
                   "mobileOrder" : 3,
                   "mobileHeight" : 5,
@@ -1224,32 +1224,32 @@
                   "col" : 0
                 },
                 "a2c64664-9a68-0795-59cc-78bfa166f3d4" : {
-                  "sizeX" : 15,
+                  "sizeX" : 14,
                   "sizeY" : 6,
                   "mobileOrder" : 1,
                   "mobileHeight" : 6,
                   "row" : 0,
-                  "col" : 9
+                  "col" : 10
                 },
                 "cfdef995-b5b5-deb5-840a-4d240252f5e0" : {
-                  "sizeX" : 15,
+                  "sizeX" : 14,
                   "sizeY" : 6,
                   "mobileOrder" : 2,
                   "mobileHeight" : 6,
                   "row" : 6,
-                  "col" : 9
+                  "col" : 10
                 },
                 "61b8d1c8-583f-d775-1ef8-3640b9133bd7" : {
-                  "sizeX" : 9,
-                  "sizeY" : 3,
+                  "sizeX" : 5,
+                  "sizeY" : 6,
                   "row" : 6,
                   "col" : 0
                 },
                 "a4288e58-4886-ff4f-2d53-537c94873eae" : {
-                  "sizeX" : 9,
-                  "sizeY" : 3,
-                  "row" : 9,
-                  "col" : 0
+                  "sizeX" : 5,
+                  "sizeY" : 6,
+                  "row" : 6,
+                  "col" : 5
                 }
               },
               "gridSettings" : {
@@ -1355,7 +1355,10 @@
       "title" : "Demo Customer",
       "public" : false
     } ],
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "DASHBOARD",
+      "id" : "6e6bc920-da93-11ef-8e00-e370a74757c3"
+    },
     "id" : {
       "entityType" : "DASHBOARD",
       "id" : "6e6bc920-da93-11ef-8e00-e370a74757c3"

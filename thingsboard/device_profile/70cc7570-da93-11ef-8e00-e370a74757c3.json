@@ -13,7 +13,10 @@
       "id" : "a1833e90-da95-11ef-8e00-e370a74757c3"
     },
     "description" : "",
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "DEVICE_PROFILE",
+      "id" : "70cc7570-da93-11ef-8e00-e370a74757c3"
+    },
     "firmwareId" : {
       "entityType" : "OTA_PACKAGE",
       "id" : "0f24e670-da9a-11ef-8e00-e370a74757c3"

@@ -19,7 +19,10 @@
                 "realtimeType" : 1,
                 "interval" : 1000,
                 "timewindowMs" : 86400000,
-                "quickInterval" : "CURRENT_DAY"
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideQuickInterval" : false
               },
               "history" : {
                 "historyType" : 0,
@@ -29,7 +32,11 @@
                   "startTimeMs" : 1694102720479,
                   "endTimeMs" : 1694189120479
                 },
-                "quickInterval" : "CURRENT_DAY"
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideFixedInterval" : false,
+                "hideQuickInterval" : false
               },
               "aggregation" : {
                 "type" : "NONE",
@@ -215,7 +222,6 @@
           "sizeY" : 5,
           "config" : {
             "timewindow" : {
-              "hideInterval" : false,
               "hideAggregation" : false,
               "hideAggInterval" : false,
               "hideTimezone" : false,
@@ -389,7 +395,10 @@
                 "realtimeType" : 1,
                 "interval" : 1000,
                 "timewindowMs" : 60000,
-                "quickInterval" : "CURRENT_DAY"
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideQuickInterval" : false
               },
               "history" : {
                 "historyType" : 0,
@@ -399,7 +408,11 @@
                   "startTimeMs" : 1694102720479,
                   "endTimeMs" : 1694189120479
                 },
-                "quickInterval" : "CURRENT_DAY"
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideFixedInterval" : false,
+                "hideQuickInterval" : false
               },
               "aggregation" : {
                 "type" : "AVG",
@@ -544,7 +557,10 @@
                 "realtimeType" : 1,
                 "interval" : 1000,
                 "timewindowMs" : 60000,
-                "quickInterval" : "CURRENT_DAY"
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideQuickInterval" : false
               },
               "history" : {
                 "historyType" : 0,
@@ -554,7 +570,11 @@
                   "startTimeMs" : 1694102720479,
                   "endTimeMs" : 1694189120479
                 },
-                "quickInterval" : "CURRENT_DAY"
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideFixedInterval" : false,
+                "hideQuickInterval" : false
               },
               "aggregation" : {
                 "type" : "AVG",
@@ -696,7 +716,10 @@
                 "realtimeType" : 1,
                 "interval" : 1000,
                 "timewindowMs" : 60000,
-                "quickInterval" : "CURRENT_DAY"
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideQuickInterval" : false
               },
               "history" : {
                 "historyType" : 0,
@@ -706,7 +729,11 @@
                   "startTimeMs" : 1694102720479,
                   "endTimeMs" : 1694189120479
                 },
-                "quickInterval" : "CURRENT_DAY"
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideFixedInterval" : false,
+                "hideQuickInterval" : false
               },
               "aggregation" : {
                 "type" : "AVG",
@@ -795,7 +822,6 @@
           "sizeY" : 5,
           "config" : {
             "timewindow" : {
-              "hideInterval" : false,
               "hideAggregation" : false,
               "hideAggInterval" : false,
               "hideTimezone" : false,
@@ -920,7 +946,10 @@
                 "realtimeType" : 1,
                 "interval" : 1000,
                 "timewindowMs" : 86400000,
-                "quickInterval" : "CURRENT_DAY"
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideQuickInterval" : false
               },
               "history" : {
                 "historyType" : 0,
@@ -930,7 +959,11 @@
                   "startTimeMs" : 1694102720479,
                   "endTimeMs" : 1694189120479
                 },
-                "quickInterval" : "CURRENT_DAY"
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideFixedInterval" : false,
+                "hideQuickInterval" : false
               },
               "aggregation" : {
                 "type" : "NONE",
@@ -1120,7 +1153,6 @@
           "sizeY" : 6.5,
           "config" : {
             "timewindow" : {
-              "hideInterval" : false,
               "hideAggregation" : false,
               "hideAggInterval" : false,
               "hideTimezone" : false,
@@ -1308,7 +1340,10 @@
                 "realtimeType" : 1,
                 "interval" : 1000,
                 "timewindowMs" : 60000,
-                "quickInterval" : "CURRENT_DAY"
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideQuickInterval" : false
               },
               "history" : {
                 "historyType" : 0,
@@ -1318,7 +1353,11 @@
                   "startTimeMs" : 1694102720479,
                   "endTimeMs" : 1694189120479
                 },
-                "quickInterval" : "CURRENT_DAY"
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideFixedInterval" : false,
+                "hideQuickInterval" : false
               },
               "aggregation" : {
                 "type" : "AVG",
@@ -1485,9 +1524,6 @@
               "latestDataKeys" : [ ]
             } ],
             "timewindow" : {
-              "hideInterval" : false,
-              "hideLastInterval" : false,
-              "hideQuickInterval" : false,
               "hideAggregation" : false,
               "hideAggInterval" : false,
               "hideTimezone" : false,
@@ -1863,9 +1899,6 @@
               "latestDataKeys" : [ ]
             } ],
             "timewindow" : {
-              "hideInterval" : false,
-              "hideLastInterval" : false,
-              "hideQuickInterval" : false,
               "hideAggregation" : false,
               "hideAggInterval" : false,
               "hideTimezone" : false,
@@ -2152,6 +2185,129 @@
           "row" : 0,
           "col" : 0,
           "id" : "b8c5b050-a2a8-d339-d29f-ef536fd210e9"
+        },
+        "2d6887f0-c403-5876-fe75-d252d646044d" : {
+          "typeFullFqn" : "system.input_widgets.update_multiple_attributes",
+          "type" : "latest",
+          "sizeX" : 7.5,
+          "sizeY" : 3,
+          "config" : {
+            "datasources" : [ {
+              "type" : "entity",
+              "name" : "",
+              "entityAliasId" : "12ae98c7-1ea2-52cf-64d5-763e9d993547",
+              "dataKeys" : [ {
+                "name" : "samplingRate",
+                "type" : "attribute",
+                "label" : "Sampling rate, Hz",
+                "color" : "#2196f3",
+                "settings" : {
+                  "dataKeyHidden" : false,
+                  "dataKeyType" : "shared",
+                  "dataKeyValueType" : "integer",
+                  "required" : false,
+                  "isEditable" : "editable",
+                  "disabledOnDataKey" : "",
+                  "appearance" : "outline",
+                  "subscriptSizing" : "fixed",
+                  "slideToggleLabelPosition" : "after",
+                  "selectOptions" : [ ],
+                  "step" : 1,
+                  "minValue" : null,
+                  "maxValue" : null,
+                  "requiredErrorMessage" : "",
+                  "minValueErrorMessage" : "",
+                  "maxValueErrorMessage" : "",
+                  "invalidDateErrorMessage" : "",
+                  "invalidJsonErrorMessage" : "",
+                  "dialogTitle" : "",
+                  "saveButtonLabel" : "",
+                  "cancelButtonLabel" : "",
+                  "useCustomIcon" : false,
+                  "icon" : "",
+                  "customIcon" : "",
+                  "useGetValueFunction" : false,
+                  "getValueFunctionBody" : "",
+                  "useSetValueFunction" : false,
+                  "setValueFunctionBody" : ""
+                },
+                "_hash" : 0.9435144306739225,
+                "aggregationType" : null,
+                "units" : null,
+                "decimals" : null,
+                "funcBody" : null,
+                "usePostProcessing" : null,
+                "postFuncBody" : null
+              } ],
+              "alarmFilterConfig" : {
+                "statusList" : [ "ACTIVE" ]
+              }
+            } ],
+            "timewindow" : {
+              "displayValue" : "",
+              "selectedTab" : 0,
+              "realtime" : {
+                "realtimeType" : 1,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideQuickInterval" : false
+              },
+              "history" : {
+                "historyType" : 0,
+                "interval" : 1000,
+                "timewindowMs" : 60000,
+                "fixedTimewindow" : {
+                  "startTimeMs" : 1737740459648,
+                  "endTimeMs" : 1737826859648
+                },
+                "quickInterval" : "CURRENT_DAY",
+                "hideInterval" : false,
+                "hideLastInterval" : false,
+                "hideFixedInterval" : false,
+                "hideQuickInterval" : false
+              },
+              "aggregation" : {
+                "type" : "AVG",
+                "limit" : 2500
+              }
+            },
+            "showTitle" : true,
+            "backgroundColor" : "#fff",
+            "color" : "rgba(0, 0, 0, 0.87)",
+            "padding" : "8px",
+            "settings" : {
+              "groupTitle" : "${entityName}",
+              "showActionButtons" : true,
+              "fieldsAlignment" : "row",
+              "fieldsInRow" : 2,
+              "columnGap" : 10,
+              "rowGap" : 5
+            },
+            "title" : "Sensor Settings",
+            "dropShadow" : true,
+            "enableFullscreen" : false,
+            "enableDataExport" : false,
+            "widgetStyle" : { },
+            "titleStyle" : {
+              "fontSize" : "16px",
+              "fontWeight" : 400
+            },
+            "useDashboardTimewindow" : true,
+            "showLegend" : false,
+            "actions" : { },
+            "displayTimewindow" : true,
+            "showTitleIcon" : false,
+            "titleTooltip" : "",
+            "widgetCss" : "",
+            "pageSize" : 1024,
+            "noDataDisplayMessage" : ""
+          },
+          "row" : 0,
+          "col" : 0,
+          "id" : "2d6887f0-c403-5876-fe75-d252d646044d"
         }
       },
       "states" : {
@@ -2178,7 +2334,8 @@
                 "mobileRowHeight" : 70,
                 "margin" : 10,
                 "backgroundImageUrl" : null,
-                "outerMargin" : true
+                "outerMargin" : true,
+                "layoutType" : "default"
               }
             }
           }
@@ -2190,7 +2347,7 @@
             "main" : {
               "widgets" : {
                 "181424bc-7051-1cac-3583-b959bddceca2" : {
-                  "sizeX" : 9,
+                  "sizeX" : 5,
                   "sizeY" : 6,
                   "row" : 6,
                   "col" : 0,
@@ -2198,7 +2355,7 @@
                   "mobileHeight" : 5
                 },
                 "c82915da-d868-d5ad-f4eb-3f36cc05fa83" : {
-                  "sizeX" : 9,
+                  "sizeX" : 10,
                   "sizeY" : 6,
                   "mobileOrder" : 3,
                   "mobileHeight" : 5,
@@ -2206,20 +2363,26 @@
                   "col" : 0
                 },
                 "e6dabb3b-d6f7-1208-2a9d-46c1ba9d4c2e" : {
-                  "sizeX" : 15,
+                  "sizeX" : 14,
                   "sizeY" : 6,
                   "mobileOrder" : 1,
                   "mobileHeight" : 6,
                   "row" : 0,
-                  "col" : 9
+                  "col" : 10
                 },
                 "b8c5b050-a2a8-d339-d29f-ef536fd210e9" : {
-                  "sizeX" : 15,
+                  "sizeX" : 14,
                   "sizeY" : 6,
                   "mobileOrder" : 2,
                   "mobileHeight" : 6,
                   "row" : 6,
-                  "col" : 9
+                  "col" : 10
+                },
+                "2d6887f0-c403-5876-fe75-d252d646044d" : {
+                  "sizeX" : 5,
+                  "sizeY" : 6,
+                  "row" : 6,
+                  "col" : 5
                 }
               },
               "gridSettings" : {
@@ -2232,7 +2395,8 @@
                 "mobileRowHeight" : 70,
                 "margin" : 10,
                 "backgroundImageUrl" : null,
-                "outerMargin" : true
+                "outerMargin" : true,
+                "layoutType" : "default"
               }
             }
           }
@@ -2277,7 +2441,8 @@
                 "backgroundImageUrl" : null,
                 "mobileAutoFillHeight" : false,
                 "mobileRowHeight" : 70,
-                "outerMargin" : true
+                "outerMargin" : true,
+                "layoutType" : "default"
               }
             }
           }
@@ -2323,7 +2488,8 @@
                 "mobileRowHeight" : 70,
                 "margin" : 10,
                 "backgroundImageUrl" : null,
-                "outerMargin" : true
+                "outerMargin" : true,
+                "layoutType" : "default"
               }
             }
           }
@@ -2341,7 +2507,7 @@
             "defaultStateEntity" : null,
             "rootEntity" : {
               "entityType" : "ASSET",
-              "id" : "dc4b7540-1498-11ec-ae40-37d2df2b0dc3"
+              "id" : "692e62b0-da93-11ef-8e00-e370a74757c3"
             },
             "direction" : "FROM",
             "maxLevel" : 1,
@@ -2391,7 +2557,6 @@
       "timewindow" : {
         "displayValue" : "",
         "selectedTab" : 0,
-        "hideInterval" : false,
         "hideAggregation" : false,
         "hideAggInterval" : false,
         "realtime" : {
@@ -2439,7 +2604,10 @@
       "title" : "Demo Customer",
       "public" : false
     } ],
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "DASHBOARD",
+      "id" : "6e5a3cf0-da93-11ef-8e00-e370a74757c3"
+    },
     "id" : {
       "entityType" : "DASHBOARD",
       "id" : "6e5a3cf0-da93-11ef-8e00-e370a74757c3"

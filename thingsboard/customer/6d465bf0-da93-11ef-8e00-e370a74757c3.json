@@ -7,7 +7,10 @@
     "city" : "Berlin",
     "country" : "Germany",
     "email" : null,
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "CUSTOMER",
+      "id" : "6d465bf0-da93-11ef-8e00-e370a74757c3"
+    },
     "id" : {
       "entityType" : "CUSTOMER",
       "id" : "6d465bf0-da93-11ef-8e00-e370a74757c3"

@@ -17,7 +17,10 @@
       }
     },
     "etag" : "3a4a142d474ac6a5b9f031e63e7793e1298a54a90f803a8044ff8410c16aa750",
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "6de756e0-da93-11ef-8e00-e370a74757c3"
+    },
     "fileName" : "sensors_dashboard_image.svg",
     "id" : {
       "entityType" : "TB_RESOURCE",

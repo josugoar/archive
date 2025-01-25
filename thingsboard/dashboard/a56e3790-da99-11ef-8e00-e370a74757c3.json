@@ -2530,8 +2530,11 @@
     },
     "name" : "Firmware",
     "resources" : null,
-    "assignedCustomers" : null,
-    "externalId" : null,
+    "assignedCustomers" : [ ],
+    "externalId" : {
+      "entityType" : "DASHBOARD",
+      "id" : "a56e3790-da99-11ef-8e00-e370a74757c3"
+    },
     "id" : {
       "entityType" : "DASHBOARD",
       "id" : "a56e3790-da99-11ef-8e00-e370a74757c3"

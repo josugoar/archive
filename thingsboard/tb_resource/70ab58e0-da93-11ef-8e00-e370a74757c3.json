@@ -17,7 +17,10 @@
       }
     },
     "etag" : "481157e3d261a92d93002bb64fd09f6cca139864741628c0bf10a12259a6305a",
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "70ab58e0-da93-11ef-8e00-e370a74757c3"
+    },
     "fileName" : "temperature_sensor_device_profile_image.svg",
     "id" : {
       "entityType" : "TB_RESOURCE",

@@ -17,7 +17,10 @@
       }
     },
     "etag" : "4d9de54f79a1e5c67cd677d2b7ccc8ec52659fa546568f68b962d0061841b40b",
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "6d8ba250-da93-11ef-8e00-e370a74757c3"
+    },
     "fileName" : "environmental_monitoring_dashboard_image.svg",
     "id" : {
       "entityType" : "TB_RESOURCE",

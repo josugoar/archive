@@ -17,7 +17,10 @@
       }
     },
     "etag" : "c33a99457dd894a6b31b20a5ceea30a1935d40ac163681134cde0ba26c2a2aa9",
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "6e29b710-da93-11ef-8e00-e370a74757c3"
+    },
     "fileName" : "indoor_air_quality_dashboard_image.svg",
     "id" : {
       "entityType" : "TB_RESOURCE",

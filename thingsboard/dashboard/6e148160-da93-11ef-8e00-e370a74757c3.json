@@ -1204,7 +1204,10 @@
       "title" : "Demo Customer",
       "public" : false
     } ],
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "DASHBOARD",
+      "id" : "6e148160-da93-11ef-8e00-e370a74757c3"
+    },
     "id" : {
       "entityType" : "DASHBOARD",
       "id" : "6e148160-da93-11ef-8e00-e370a74757c3"

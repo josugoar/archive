@@ -17,7 +17,10 @@
       }
     },
     "etag" : "d67cdcf0ad19f9be768353d1dd10e3d323e9521b5cd31fce2c111ab17f2a0130",
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "70c0b5a0-da93-11ef-8e00-e370a74757c3"
+    },
     "fileName" : "air_quality_sensor_device_profile_image.svg",
     "id" : {
       "entityType" : "TB_RESOURCE",

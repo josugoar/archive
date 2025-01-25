@@ -17,7 +17,10 @@
       }
     },
     "etag" : "5bee49aa6c7e514ce4da5e57bddaa9048d81c9702282ab0e6bbef6401959f376",
-    "externalId" : null,
+    "externalId" : {
+      "entityType" : "TB_RESOURCE",
+      "id" : "6d99fa30-da93-11ef-8e00-e370a74757c3"
+    },
     "fileName" : "environmental_monitoring_dashboard_widget_sensors_map_marker_image_0.svg",
     "id" : {
       "entityType" : "TB_RESOURCE",
