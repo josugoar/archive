@@ -12,7 +12,7 @@
     },
     "firstRuleNodeId" : {
       "entityType" : "RULE_NODE",
-      "id" : "c52774c0-da9e-11ef-8e00-e370a74757c3"
+      "id" : "61b9c0f0-db43-11ef-9dbc-834dadad7dd9"
     },
     "id" : {
       "entityType" : "RULE_CHAIN",
@@ -34,11 +34,11 @@
     }, {
       "fromIndex" : 2,
       "toIndex" : 3,
-      "type" : "Disconnect Event"
+      "type" : "Inactivity Event"
     }, {
       "fromIndex" : 2,
       "toIndex" : 4,
-      "type" : "Connect Event"
+      "type" : "Activity Event"
     }, {
       "fromIndex" : 5,
       "toIndex" : 2,
@@ -59,7 +59,7 @@
       "externalId" : null,
       "id" : {
         "entityType" : "RULE_NODE",
-        "id" : "a1a4f760-da95-11ef-8e00-e370a74757c3"
+        "id" : "61b8af80-db43-11ef-9dbc-834dadad7dd9"
       },
       "name" : "Save Timeseries",
       "queueName" : null,
@@ -83,7 +83,7 @@
       "externalId" : null,
       "id" : {
         "entityType" : "RULE_NODE",
-        "id" : "a1a51e70-da95-11ef-8e00-e370a74757c3"
+        "id" : "61b8af81-db43-11ef-9dbc-834dadad7dd9"
       },
       "name" : "Save Server Attributes",
       "queueName" : null,
@@ -104,7 +104,7 @@
       "externalId" : null,
       "id" : {
         "entityType" : "RULE_NODE",
-        "id" : "a1a51e71-da95-11ef-8e00-e370a74757c3"
+        "id" : "61b8af82-db43-11ef-9dbc-834dadad7dd9"
       },
       "name" : "Message Type Switch",
       "queueName" : null,
@@ -137,9 +137,9 @@
       "externalId" : null,
       "id" : {
         "entityType" : "RULE_NODE",
-        "id" : "a1a51e72-da95-11ef-8e00-e370a74757c3"
+        "id" : "61b8d690-db43-11ef-9dbc-834dadad7dd9"
       },
-      "name" : "Create Disconnected Alarm",
+      "name" : "Create Inactivity Alarm",
       "queueName" : null,
       "ruleChainId" : null,
       "singletonMode" : false,
@@ -160,9 +160,9 @@
       "externalId" : null,
       "id" : {
         "entityType" : "RULE_NODE",
-        "id" : "a1a51e73-da95-11ef-8e00-e370a74757c3"
+        "id" : "61b999e0-db43-11ef-9dbc-834dadad7dd9"
       },
-      "name" : "Clear Disconnected Alarm",
+      "name" : "Clear Inactivity Alarm",
       "queueName" : null,
       "ruleChainId" : null,
       "singletonMode" : false,
@@ -183,7 +183,7 @@
       "externalId" : null,
       "id" : {
         "entityType" : "RULE_NODE",
-        "id" : "c52774c0-da9e-11ef-8e00-e370a74757c3"
+        "id" : "61b9c0f0-db43-11ef-9dbc-834dadad7dd9"
       },
       "name" : "Device Profile Node",
       "queueName" : null,

@@ -114,15 +114,15 @@
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "fw_checksum",
-      "lastUpdateTs" : 1737754131181,
+      "lastUpdateTs" : 1737903276009,
       "longValue" : null,
-      "strValue" : "995a891a0a04ed3706431ec77fcf6812cc5607de4e7e42e948f56d50f68b58e7"
+      "strValue" : "58371b03482af5bf2838bcacf1b0a8bc09f4204460e5da7b6ee1e64a2a788fa4"
     }, {
       "booleanValue" : null,
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "fw_checksum_algorithm",
-      "lastUpdateTs" : 1737754131181,
+      "lastUpdateTs" : 1737903276009,
       "longValue" : null,
       "strValue" : "SHA256"
     }, {
@@ -130,25 +130,25 @@
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "fw_size",
-      "lastUpdateTs" : 1737754131181,
-      "longValue" : 174624,
+      "lastUpdateTs" : 1737903276009,
+      "longValue" : 179344,
       "strValue" : null
     }, {
       "booleanValue" : null,
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "fw_title",
-      "lastUpdateTs" : 1737754131181,
+      "lastUpdateTs" : 1737903276009,
       "longValue" : null,
-      "strValue" : "Air Quality Sensor"
+      "strValue" : "hello_world"
     }, {
       "booleanValue" : null,
       "doubleValue" : null,
       "jsonValue" : null,
       "key" : "fw_version",
-      "lastUpdateTs" : 1737754131181,
+      "lastUpdateTs" : 1737903276009,
       "longValue" : null,
-      "strValue" : "0.0.0"
+      "strValue" : "1.0.0"
     } ]
   }
 }
