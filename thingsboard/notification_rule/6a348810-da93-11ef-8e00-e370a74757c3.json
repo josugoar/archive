@@ -26,7 +26,7 @@
       "triggerType" : "DEVICE_ACTIVITY",
       "deviceProfiles" : null,
       "devices" : null,
-      "notifyOn" : [ "ACTIVE", "INACTIVE" ],
+      "notifyOn" : [ "INACTIVE", "ACTIVE" ],
       "triggerType" : "DEVICE_ACTIVITY"
     },
     "triggerType" : "DEVICE_ACTIVITY"

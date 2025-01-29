@@ -2204,7 +2204,7 @@
                 "settings" : {
                   "dataKeyHidden" : false,
                   "dataKeyType" : "shared",
-                  "dataKeyValueType" : "integer",
+                  "dataKeyValueType" : "double",
                   "required" : false,
                   "isEditable" : "editable",
                   "disabledOnDataKey" : "",

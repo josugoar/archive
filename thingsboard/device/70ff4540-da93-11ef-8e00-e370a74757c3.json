@@ -101,46 +101,6 @@
       "longValue" : null,
       "strValue" : null
     } ],
-    "SHARED_SCOPE" : [ {
-      "booleanValue" : null,
-      "doubleValue" : null,
-      "jsonValue" : null,
-      "key" : "fw_checksum",
-      "lastUpdateTs" : 1737903276009,
-      "longValue" : null,
-      "strValue" : "58371b03482af5bf2838bcacf1b0a8bc09f4204460e5da7b6ee1e64a2a788fa4"
-    }, {
-      "booleanValue" : null,
-      "doubleValue" : null,
-      "jsonValue" : null,
-      "key" : "fw_checksum_algorithm",
-      "lastUpdateTs" : 1737903276009,
-      "longValue" : null,
-      "strValue" : "SHA256"
-    }, {
-      "booleanValue" : null,
-      "doubleValue" : null,
-      "jsonValue" : null,
-      "key" : "fw_size",
-      "lastUpdateTs" : 1737903276009,
-      "longValue" : 179344,
-      "strValue" : null
-    }, {
-      "booleanValue" : null,
-      "doubleValue" : null,
-      "jsonValue" : null,
-      "key" : "fw_title",
-      "lastUpdateTs" : 1737903276009,
-      "longValue" : null,
-      "strValue" : "hello_world"
-    }, {
-      "booleanValue" : null,
-      "doubleValue" : null,
-      "jsonValue" : null,
-      "key" : "fw_version",
-      "lastUpdateTs" : 1737903276009,
-      "longValue" : null,
-      "strValue" : "1.0.0"
-    } ]
+    "SHARED_SCOPE" : [ ]
   }
 }
