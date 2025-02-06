@@ -12,6 +12,7 @@
 #define CIC_SPACE_MIN 1200
 
 // INFO: if size == exp2(n) then (idx & (size - 1)) == (idx % size)
+// EXPLANATION: https://csresources.github.io/SystemProgrammingWiki/SystemProgramming/Synchronization,-Part-8:-Ring-Buffer-Example/
 
 #define CIRC_CNT(head, tail, size) (((head) - (tail)) & ((size) - 1))
 
