@@ -30,7 +30,11 @@
 #include <protocol_examples_common.h>
 #endif
 
+#ifdef WITH_WOLFSSL
 static const char *TAG = "tls_tcp_client";
+#else
+static const char *TAG = "tcp_client";
+#endif
 
 #ifdef WITH_WOLFSSL
 void wolfSSL_log(int log_level, const char *log_message)
@@ -47,14 +51,14 @@ void app_main(void)
 int main(void)
 #endif
 {
-    int errnum = 0;
-
     struct addrinfo *ais = NULL;
     int client_fd = -1;
 #ifdef WITH_WOLFSSL
     WOLFSSL_CTX *ctx = NULL;
     WOLFSSL *ssl = NULL;
 #endif
+
+    int errnum = 0;
 
 #ifdef ESP_PLATFORM
     ESP_ERROR_CHECK(nvs_flash_init());

@@ -32,7 +32,11 @@
 #include <protocol_examples_common.h>
 #endif
 
+#ifdef WITH_WOLFSSL
+static const char *TAG = "tls_tcp_server";
+#else
 static const char *TAG = "tcp_server";
+#endif
 
 #ifdef WITH_WOLFSSL
 void wolfSSL_log(int log_level, const char *log_message)
@@ -49,8 +53,6 @@ void app_main(void)
 int main(void)
 #endif
 {
-    int errnum = 0;
-
     struct addrinfo *ais = NULL;
     int server_fd = -1;
     int client_fds[CLIENTS_LEN] = {0};
@@ -64,6 +66,8 @@ int main(void)
     WOLFSSL *ssls[CLIENTS_LEN] = {0};
     size_t ssls_len = sizeof(ssls) / sizeof(*ssls);
 #endif
+
+    int errnum = 0;
 
 #ifdef ESP_PLATFORM
     ESP_ERROR_CHECK(nvs_flash_init());
@@ -249,7 +253,7 @@ int main(void)
     size_t nwrite = 0;
 
     // TODO: dont quit if socket error
-    // goto cleanup scoed to loop (maybe if cond goto cleanup)
+    // goto cleanup scoped to loop (maybe if cond goto cleanup)
 
     FD_SET(acceptfd, &next_readfd_set);
 
