@@ -9,10 +9,6 @@
 * PERF
 * MD5
 
-## NGTCP2
-
-* client also calls readpkt
-
 ## NOTES
 
 * when connection timeout is updated, SET TIMEOUT VALUE OF SELECT TO NEW TIMEOUT IF NEW TIMEOUT IS SMALLER AND UPDATE TIMEOUTS EACH TIME SELECT RETURNS timeouts recommended
@@ -32,8 +28,3 @@
 # MULTIPROCESSING
 
 * 1 READ CIRC BUFFER PER CLIENT AND 1 WRITE BUFFER FOR MAIN THREAD (or 1 per client?)
-
-NO MQ NEEDED WITH THIS APPROACH??
-* hash map [connection id] -> (thread, queue)
-* 1 MQ PER THREAD AND 1 MQ FOR MAIN THREAD
-    * Send number of bytes read and connection id (and stream id if applicable)
