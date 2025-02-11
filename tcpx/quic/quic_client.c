@@ -395,7 +395,6 @@ int main(void)
         }
     }
 
-
 cleanup:
     if (conn)
     {
