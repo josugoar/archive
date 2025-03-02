@@ -1,12 +1,3 @@
-#define WITH_WOLFSSL
-#define NAME "localhost"
-#define SERVICE "1025"
-#define CTX_SERVER_CERT server_cert_der_1024
-#define CTX_SERVER_KEY server_key_der_1024
-#define CLIENTS_LEN 4096
-#define BUF_LEN 1200
-
-#undef DEBUG_WOLFSSL
 #define USE_CERT_BUFFERS_1024
 #define WC_NO_HARDEN
 #define WOLFSSL_TLS13
@@ -20,89 +11,72 @@
 #include <sys/select.h>
 #include <sys/socket.h>
 #include <unistd.h>
-#ifdef WITH_WOLFSSL
 #include <wolfssl/wolfcrypt/settings.h>
 #include <wolfssl/certs_test.h>
 #include <wolfssl/ssl.h>
-#endif
-#ifdef ESP_PLATFORM
-#include <esp_event.h>
-#include <esp_netif.h>
-#include <nvs_flash.h>
-#include <protocol_examples_common.h>
-#endif
 
-#ifdef WITH_WOLFSSL
-static const char *TAG = "tls_tcp_server";
-#else
-static const char *TAG = "tcp_server";
-#endif
+#undef DEBUG_WOLFSSL
+#define NAME "localhost"
+#define SERVICE "1025"
+#define CTX_SERVER_CERT server_cert_der_1024
+#define CTX_SERVER_KEY server_key_der_1024
+#define CLIENTS_LEN 4096
+#define BUF_LEN 1200
 
-#ifdef WITH_WOLFSSL
+static const char *TAG = "tls_server";
+
 void wolfSSL_log(int log_level, const char *log_message)
 {
     (void)log_level;
 
-    fprintf(stderr, "%s %s: %s\n", "V", "wolfssl", log_message);
+    fprintf(stderr, "V %s: %s\n", "wolfssl", log_message);
 }
-#endif
 
-#ifdef ESP_PLATFORM
-void app_main(void)
-#else
 int main(void)
-#endif
 {
     struct addrinfo *ais = NULL;
-    int server_fd = -1;
     int client_fds[CLIENTS_LEN] = {0};
     size_t client_fds_len = sizeof(client_fds) / sizeof(*client_fds);
     for (size_t i = 0; i < client_fds_len; ++i)
     {
         client_fds[i] = -1;
     }
-#ifdef WITH_WOLFSSL
+    int server_fd = -1;
     WOLFSSL_CTX *ctx = NULL;
     WOLFSSL *ssls[CLIENTS_LEN] = {0};
     size_t ssls_len = sizeof(ssls) / sizeof(*ssls);
-#endif
+    for (size_t i = 0; i < ssls_len; ++i)
+    {
+        ssls[i] = NULL;
+    }
 
     int errnum = 0;
 
-#ifdef ESP_PLATFORM
-    ESP_ERROR_CHECK(nvs_flash_init());
-    ESP_ERROR_CHECK(esp_netif_init());
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
-    ESP_ERROR_CHECK(example_connect());
-#endif
-
-#ifdef WITH_WOLFSSL
 #ifdef DEBUG_WOLFSSL
     errnum = wolfSSL_Debugging_ON();
     if (errnum != 0)
     {
-        fprintf(stderr, "%s %s: wolfSSL_Debugging_ON: %s\n", "V", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        fprintf(stderr, "V %s: wolfSSL_Debugging_ON: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
     }
 
     errnum = wolfSSL_SetLoggingCb(wolfSSL_log);
     if (errnum != 0)
     {
-        fprintf(stderr, "%s %s: wolfSSL_SetLoggingCb: %s\n", "V", TAG, wolfSSL_ERR_reason_error_string(errnum));
+        fprintf(stderr, "V %s: wolfSSL_SetLoggingCb: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
     }
-#endif
 #endif
 
     struct addrinfo req = {
         .ai_flags = AI_PASSIVE,
         .ai_family = AF_UNSPEC,
         .ai_socktype = SOCK_STREAM,
+        .ai_protocol = 0,
     };
 
     errnum = getaddrinfo(NAME, SERVICE, &req, &ais);
     if (errnum != 0)
     {
-        fprintf(stderr, "%s %s: getaddrinfo name=%s service=%s: %d\n", "E", TAG, NAME, SERVICE, errnum);
-
+        fprintf(stderr, "E %s: getaddrinfo: %d\n", TAG, errnum);
         goto cleanup;
     }
 
@@ -119,12 +93,11 @@ int main(void)
         {
             if (!ai->ai_next)
             {
-                fprintf(stderr, "%s %s: socket domain=%d type=%d protocol=%d: %s\n", "E", TAG, ai->ai_family, ai->ai_socktype, ai->ai_protocol, strerror(errno));
-
+                fprintf(stderr, "E %s: socket: %s\n", TAG, strerror(errno));
                 goto cleanup;
             }
 
-            fprintf(stderr, "%s %s: socket domain=%d type=%d protocol=%d: %s\n", "W", TAG, ai->ai_family, ai->ai_socktype, ai->ai_protocol, strerror(errno));
+            fprintf(stderr, "W %s: socket: %s\n", TAG, strerror(errno));
 
             continue;
         }
@@ -133,17 +106,17 @@ int main(void)
         {
             if (!ai->ai_next)
             {
-                fprintf(stderr, "%s %s: bind fd=%d: %s\n", "E", TAG, fd, strerror(errno));
-
+                fprintf(stderr, "E %s: bind: %s\n", TAG, strerror(errno));
                 goto cleanup;
             }
 
-            fprintf(stderr, "%s %s: bind fd=%d: %s\n", "W", TAG, fd, strerror(errno));
+            fprintf(stderr, "W %s: bind: %s\n", TAG, strerror(errno));
 
             if (close(fd) != 0)
             {
-                fprintf(stderr, "%s %s: close fd=%d: %s\n", "W", TAG, fd, strerror(errno));
+                fprintf(stderr, "W %s: close: %s\n", TAG, strerror(errno));
             }
+            fd = -1;
 
             continue;
         }
@@ -156,12 +129,9 @@ int main(void)
         break;
     }
 
-    fprintf(stderr, "%s %s: server_fd=%d\n", "I", TAG, server_fd);
-
     if (listen(server_fd, SOMAXCONN) != 0)
     {
-        fprintf(stderr, "%s %s: listen fd=%d: %s\n", "E", TAG, server_fd, strerror(errno));
-
+        fprintf(stderr, "E %s: listen: %s\n", TAG, strerror(errno));
         goto cleanup;
     }
 
@@ -170,44 +140,38 @@ int main(void)
 
     if (getnameinfo((struct sockaddr *)&local_addr, local_addr_len, local_host, sizeof(local_host), local_serv, sizeof(local_serv), NI_NUMERICHOST | NI_NUMERICSERV) != 0)
     {
-        fprintf(stderr, "%s %s: getnameinfo: %s\n", "W", TAG, strerror(errno));
+        fprintf(stderr, "W %s: getnameinfo: %s\n", TAG, strerror(errno));
     }
 
-    fprintf(stderr, "%s %s: local_host=%s local_serv=%s\n", "I", TAG, local_host, local_serv);
+    fprintf(stderr, "I %s: local_host=%s local_serv=%s\n", TAG, local_host, local_serv);
 
-#ifdef WITH_WOLFSSL
     ctx = wolfSSL_CTX_new(wolfTLSv1_3_server_method());
     if (!ctx)
     {
-        fprintf(stderr, "%s %s: wolfSSL_CTX_new\n", "E", TAG);
-
+        fprintf(stderr, "E %s: wolfSSL_CTX_new\n", TAG);
         goto cleanup;
     }
 
     errnum = wolfSSL_CTX_use_certificate_chain_buffer_format(ctx, CTX_SERVER_CERT, sizeof(CTX_SERVER_CERT), WOLFSSL_FILETYPE_ASN1);
     if (errnum != WOLFSSL_SUCCESS)
     {
-        fprintf(stderr, "%s %s: wolfSSL_CTX_use_certificate_chain_buffer_format: %s\n", "E", TAG, wolfSSL_ERR_reason_error_string(errnum));
-
+        fprintf(stderr, "E %s: wolfSSL_CTX_use_certificate_chain_buffer_format: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
         goto cleanup;
     }
 
     errnum = wolfSSL_CTX_use_PrivateKey_buffer(ctx, CTX_SERVER_KEY, sizeof(CTX_SERVER_KEY), WOLFSSL_FILETYPE_ASN1);
     if (errnum != WOLFSSL_SUCCESS)
     {
-        fprintf(stderr, "%s %s: wolfSSL_CTX_use_PrivateKey_buffer: %s\n", "E", TAG, wolfSSL_ERR_reason_error_string(errnum));
-
+        fprintf(stderr, "E %s: wolfSSL_CTX_use_PrivateKey_buffer: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
         goto cleanup;
     }
 
     errnum = wolfSSL_CTX_check_private_key(ctx);
     if (errnum != WOLFSSL_SUCCESS)
     {
-        fprintf(stderr, "%s %s: wolfSSL_CTX_check_private_key: %s\n", "E", TAG, wolfSSL_ERR_reason_error_string(errnum));
-
+        fprintf(stderr, "E %s: wolfSSL_CTX_check_private_key: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
         goto cleanup;
     }
-#endif
 
     int acceptfd = server_fd;
 
@@ -225,17 +189,15 @@ int main(void)
     {
         int fd = fds[i];
 
-        if (fcntl(fd, F_SETFL, fcntl(fd, F_GETFL) | O_NONBLOCK) != 0)
+        if (fd >= FD_SETSIZE)
         {
-            fprintf(stderr, "%s %s: fcntl fd=%d: %s\n", "E", TAG, fd, strerror(errno));
-
+            fprintf(stderr, "E %s: fd=%d >= FD_SETSIZE\n", TAG, fd);
             goto cleanup;
         }
 
-        if (fd >= FD_SETSIZE)
+        if (fcntl(fd, F_SETFL, fcntl(fd, F_GETFL) | O_NONBLOCK) != 0)
         {
-            fprintf(stderr, "%s %s: fd=%d >= FD_SETSIZE\n", "E", TAG, fd);
-
+            fprintf(stderr, "E %s: fcntl: %s\n", TAG, strerror(errno));
             goto cleanup;
         }
 
@@ -270,8 +232,7 @@ int main(void)
                 continue;
             }
 
-            fprintf(stderr, "%s %s: select: %s\n", "E", TAG, strerror(errno));
-
+            fprintf(stderr, "E %s: select: %s\n", TAG, strerror(errno));
             goto cleanup;
         }
 
@@ -310,62 +271,52 @@ int main(void)
                         break;
                     }
 
-                    fprintf(stderr, "%s %s: accept fd=%d: %s\n", "E", TAG, acceptfd, strerror(errno));
-
+                    fprintf(stderr, "E %s: accept: %s\n", TAG, strerror(errno));
                     goto cleanup;
                 }
-
-                fprintf(stderr, "%s %s: client_fd=%d\n", "I", TAG, client_fd);
 
                 char remote_host[NI_MAXHOST] = "";
                 char remote_serv[NI_MAXSERV] = "";
 
                 if (getnameinfo((struct sockaddr *)&remote_addr, remote_addr_len, remote_host, sizeof(remote_host), remote_serv, sizeof(remote_serv), NI_NUMERICHOST | NI_NUMERICSERV) != 0)
                 {
-                    fprintf(stderr, "%s %s: getnameinfo: %s\n", "W", TAG, strerror(errno));
+                    fprintf(stderr, "W %s: getnameinfo: %s\n", TAG, strerror(errno));
                 }
 
-                fprintf(stderr, "%s %s: remote_host=%s remote_serv=%s\n", "I", TAG, remote_host, remote_serv);
+                fprintf(stderr, "I %s: remote_host=%s remote_serv=%s\n", TAG, remote_host, remote_serv);
 
-#ifdef WITH_WOLFSSL
                 WOLFSSL *ssl = wolfSSL_new(ctx);
                 if (!ssl)
                 {
-                    fprintf(stderr, "%s %s: wolfSSL_new\n", "E", TAG);
-
+                    fprintf(stderr, "E %s: wolfSSL_new\n", TAG);
                     goto cleanup;
                 }
 
                 errnum = wolfSSL_set_fd(ssl, client_fd);
                 if (errnum != WOLFSSL_SUCCESS)
                 {
-                    fprintf(stderr, "%s %s: wolfSSL_set_fd fd=%d: %s\n", "E", TAG, client_fd, wolfSSL_ERR_reason_error_string(errnum));
-
+                    fprintf(stderr, "E %s: wolfSSL_set_fd: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
                     goto cleanup;
                 }
 
                 errnum = wolfSSL_accept(ssl);
                 if (errnum != WOLFSSL_SUCCESS)
                 {
-                    fprintf(stderr, "%s %s: wolfSSL_accept fd=%d: %s\n", "E", TAG, client_fd, wolfSSL_ERR_reason_error_string(wolfSSL_get_error(ssl, errnum)));
-
+                    fprintf(stderr, "E %s: wolfSSL_accept: %s\n", TAG, wolfSSL_ERR_reason_error_string(wolfSSL_get_error(ssl, errnum)));
                     goto cleanup;
                 }
-#endif
 
                 int readfd = client_fd;
 
                 if (readfd >= FD_SETSIZE)
                 {
-                    fprintf(stderr, "%s %s: fd=%d >= FD_SETSIZE\n", "E", TAG, readfd);
-
+                    fprintf(stderr, "E %s: fd=%d >= FD_SETSIZE\n", TAG, readfd);
                     goto cleanup;
                 }
 
                 if (fcntl(readfd, F_SETFL, fcntl(readfd, F_GETFL) | O_NONBLOCK) != 0)
                 {
-                    fprintf(stderr, "%s %s: fcntl fd=%d: %s\n", "E", TAG, readfd, strerror(errno));
-
+                    fprintf(stderr, "E %s: fcntl: %s\n", TAG, strerror(errno));
                     goto cleanup;
                 }
 
@@ -373,9 +324,7 @@ int main(void)
 
                 readfds[i] = readfd;
 
-#ifdef WITH_WOLFSSL
                 ssls[i] = ssl;
-#endif
 
                 FD_SET(readfd, &next_readfd_set);
             }
@@ -385,9 +334,7 @@ int main(void)
         {
             int readfd = readfds[i];
 
-#ifdef WITH_WOLFSSL
             WOLFSSL *ssl = ssls[i];
-#endif
 
             if (FD_ISSET(readfd, &readfd_set) != 0)
             {
@@ -400,7 +347,6 @@ int main(void)
                         break;
                     }
 
-#ifdef WITH_WOLFSSL
                     ssize_t n = wolfSSL_read(ssl, buf + nread, sizeof(buf) - nread);
                     if (n == -1)
                     {
@@ -411,45 +357,27 @@ int main(void)
                             break;
                         }
 
-                        fprintf(stderr, "%s %s: wolfSSL_read fd=%d: %s\n", "E", TAG, readfd, wolfSSL_ERR_reason_error_string(errnum));
-
+                        fprintf(stderr, "E %s: wolfSSL_read: %s\n", TAG, wolfSSL_ERR_reason_error_string(errnum));
                         goto cleanup;
                     }
-#else
-                    ssize_t n = read(readfd, buf + nread, sizeof(buf) - nread);
-                    if (n == -1)
-                    {
-                        if (errno == EAGAIN || errno == EWOULDBLOCK)
-                        {
-                            break;
-                        }
-
-                        fprintf(stderr, "%s %s: read fd=%d: %s\n", "E", TAG, readfd, strerror(errno));
-
-                        goto cleanup;
-                    }
-#endif
 
                     if (n == 0)
                     {
-#ifdef WITH_WOLFSSL
-                        wolfSSL_free(ssl);
-#endif
-
-                        if (close(readfd) != 0)
-                        {
-                            fprintf(stderr, "%s %s: close fd=%d: %s\n", "W", TAG, readfd, strerror(errno));
-                        }
-
-                        readfds[i] = -1;
-
-#ifdef WITH_WOLFSSL
-                        ssls[i] = NULL;
-#endif
 
                         FD_SET(acceptfd, &next_readfd_set);
 
                         FD_CLR(readfd, &next_readfd_set);
+
+                        wolfSSL_free(ssl);
+                        ssl = NULL;
+                        ssls[i] = NULL;
+
+                        if (close(readfd) != 0)
+                        {
+                            fprintf(stderr, "W %s: close: %s\n", TAG, strerror(errno));
+                        }
+                        readfd = -1;
+                        readfds[i] = -1;
 
                         break;
                     }
@@ -518,8 +446,7 @@ int main(void)
                         break;
                     }
 
-                    fprintf(stderr, "%s %s: write fd=%d: %s\n", "E", TAG, writefd, strerror(errno));
-
+                    fprintf(stderr, "E %s: write: %s\n", TAG, strerror(errno));
                     goto cleanup;
                 }
 
@@ -529,7 +456,6 @@ int main(void)
     }
 
 cleanup:
-#ifdef WITH_WOLFSSL
     for (size_t i = 0; i < ssls_len; ++i)
     {
         WOLFSSL *ssl = ssls[i];
@@ -538,15 +464,15 @@ cleanup:
         {
             wolfSSL_free(ssl);
         }
+        ssl = NULL;
+        ssls[i] = NULL;
     }
-#endif
 
-#ifdef WITH_WOLFSSL
     if (ctx)
     {
         wolfSSL_CTX_free(ctx);
+        ctx = NULL;
     }
-#endif
 
     for (size_t i = 0; i < client_fds_len; ++i)
     {
@@ -559,20 +485,24 @@ cleanup:
 
         if (close(client_fd) != 0)
         {
-            fprintf(stderr, "%s %s: close fd=%d: %s\n", "W", TAG, client_fd, strerror(errno));
+            fprintf(stderr, "W %s: close: %s\n", TAG, strerror(errno));
         }
+        client_fd = -1;
+        client_fds[i] = -1;
     }
 
     if (server_fd != -1)
     {
         if (close(server_fd) != 0)
         {
-            fprintf(stderr, "%s %s: close fd=%d: %s\n", "W", TAG, server_fd, strerror(errno));
+            fprintf(stderr, "W %s: close: %s\n", TAG, strerror(errno));
         }
+        server_fd = -1;
     }
 
     if (ais)
     {
         freeaddrinfo(ais);
+        ais = NULL;
     }
 }
