@@ -214,6 +214,9 @@ int main(void)
     size_t nread = 0;
     size_t nwrite = 0;
 
+    // TODO: dont quit if socket error
+    // goto cleanup scoped to loop (maybe if cond goto cleanup)
+
     FD_SET(acceptfd, &next_readfd_set);
 
     while (true)
