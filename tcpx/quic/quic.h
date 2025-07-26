@@ -150,7 +150,7 @@ int acked_stream_data_offset_cb(ngtcp2_conn *conn, int64_t stream_id, uint64_t o
     fprintf(stderr, "D %s acked_stream_data_offset_cb\n", "quic");
 
     // TODO: sender frees data passed to write stream data (consume circular buffer or reset normal buffer index)
-    // should write buffer be a global? (i think so)
+    // should write buffer be a global?
 
     return 0;
 }
