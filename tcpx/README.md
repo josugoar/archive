@@ -1,6 +1,6 @@
 # QUIC
 
-## PROTOCOL IDEAS
+## Protocol ideas
 
 * DISCARD
 * ECHO
@@ -9,7 +9,7 @@
 * PERF
 * MD5
 
-## NOTES
+## Notes
 
 * when connection timeout is updated, SET TIMEOUT VALUE OF SELECT TO NEW TIMEOUT IF NEW TIMEOUT IS SMALLER AND UPDATE TIMEOUTS EACH TIME SELECT RETURNS timeouts recommended
 
@@ -25,6 +25,6 @@
 
 * when sending packets call **ngtcp2_conn_writev_stream** or **ngtcp2_conn_writev_datagram** and AFTER call ONLY FOR STREAMS **ngtcp2_conn_update_pkt_tx_time**
 
-# MULTIPROCESSING
+# Multiprocessing
 
 * 1 READ CIRC BUFFER PER CLIENT AND 1 WRITE BUFFER FOR MAIN THREAD (or 1 per client?)
