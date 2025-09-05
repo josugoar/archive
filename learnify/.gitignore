@@ -1,0 +1,21 @@
+bin/
+target/
+*.log
+
+.vscode/*
+.settings/
+.classPath
+.project
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+.DS_Store
+
+GRANT
+
+docs/html/
+docs/latex/
+docs/Doxygen/docs/
