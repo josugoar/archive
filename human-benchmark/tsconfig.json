@@ -1,0 +1,13 @@
+// Vetur workaround: https://github.com/vuejs/vetur/issues/423#issuecomment-384255018
+{
+  "compilerOptions": {
+    "types": [
+      "./src/client/@types",
+      "./src/client/node_modules/@nuxtjs/axios",
+      "./src/client/node_modules/@nuxt/types",
+      "./src/client/node_modules/@nuxt/vue-app",
+      "./src/client/node_modules/vuetify/types"
+    ]
+  },
+  "extends": "./src/client/tsconfig.json"
+}

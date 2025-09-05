@@ -1,0 +1,106 @@
+{
+  "extensions": {
+    "recommendations": [
+      "coenraads.bracket-pair-colorizer-2",
+      "msjsdiag.debugger-for-chrome",
+      "batisteo.vscode-django",
+      "mikestead.dotenv",
+      "editorconfig.editorconfig",
+      "dbaeumer.vscode-eslint",
+      "davidanson.vscode-markdownlint",
+      "christian-kohler.path-intellisense",
+      "jakeboone02.pgn",
+      "esbenp.prettier-vscode",
+      "ms-python.python",
+      "njpwerner.autodocstring",
+      "humao.rest-client",
+      "octref.vetur",
+      "sdras.vue-vscode-snippets"
+    ]
+  },
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "launch": {
+    "compounds": [
+      {
+        "name": "Human-Benchmark: Nuxt.js, Django",
+        "configurations": [
+          "Python: Django Server",
+          "Node: Nuxt.js Server",
+          "Node: Nuxt.js Client"
+        ]
+      }
+    ],
+    "configurations": [
+      {
+        "name": "Node: Nuxt.js Client",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:3000"
+      },
+      {
+        "name": "Node: Nuxt.js Server",
+        "type": "node",
+        "request": "launch",
+        "args": ["dev"],
+        "cwd": "${workspaceFolder}/src/client",
+        "osx": {
+          "program": "${workspaceFolder}/src/client/node_modules/.bin/nuxt"
+        },
+        "linux": {
+          "program": "${workspaceFolder}/src/client/node_modules/.bin/nuxt"
+        },
+        "windows": {
+          "program": "${workspaceFolder}/src/client/node_modules/nuxt/bin/nuxt.js"
+        }
+      },
+      {
+        "name": "Python: Django Server",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/src/server/manage.py",
+        "args": ["runserver", "--noreload"],
+        "cwd": "${workspaceFolder}/src/server",
+        "django": true
+      },
+      {
+        "name": "Node: Current File",
+        "type": "node",
+        "request": "launch",
+        "program": "${file}",
+        "console": "integratedTerminal"
+      },
+      {
+        "name": "Python: Current File",
+        "type": "python",
+        "request": "launch",
+        "program": "${file}",
+        "console": "integratedTerminal",
+        "justMyCode": false
+      }
+    ],
+    "version": "0.2.0"
+  },
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.largeFileOptimizations": false,
+    "eslint.workingDirectories": ["./src/client", "./src/server"],
+    "python.formatting.autopep8Args": [
+      "--ignore=E731",
+      "--max-line-length=100"
+    ],
+    "python.pythonPath": "src\\server\\.venv\\Scripts\\python.exe",
+    "python.testing.unittestArgs": [
+      "-v",
+      "-s",
+      "./src/server",
+      "-p",
+      "test_*.py"
+    ],
+    "python.testing.unittestEnabled": true,
+    "vetur.format.enable": false
+  }
+}

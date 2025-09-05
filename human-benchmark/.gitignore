@@ -1,0 +1,14 @@
+coverage/
+data/
+dist/
+h5/
+lib/
+node_modules/
+__pycache__/
+.nuxt/
+.venv/
+report.*
+sw.*
+*.snap
+.env
+.vscode/
