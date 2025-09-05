@@ -1,0 +1,105 @@
+form {
+  border: 1px solid #eaecef;
+  border-radius: 7.5px;
+  padding: 20px;
+}
+
+fieldset {
+  border: none;
+}
+
+fieldset legend {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+fieldset p {
+  color: #71717a;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+label {
+  color: #18181b;
+  margin-bottom: 10px;
+}
+
+input,
+textarea,
+select {
+  border: 1px solid #eaecef;
+  border-radius: 7.5px;
+  color: #71717a;
+  padding: 15px 10px;
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.select-wrapper {
+  min-width: 350px;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::before,
+.select-wrapper::after {
+  --size: 0.3rem;
+  position: absolute;
+  content: "";
+  right: 1rem;
+  pointer-events: none;
+}
+
+.select-wrapper::before {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-bottom: var(--size) solid black;
+  top: 40%;
+}
+
+.select-wrapper::after {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-top: var(--size) solid black;
+  top: 55%;
+}
+
+select {
+  appearance: none;
+  width: 100%;
+  background: none;
+}
+
+option {
+  margin: 100px;
+}
+
+form button {
+  background-color: #18181b;
+  border-radius: 7.5px;
+  color: #fafafa;
+  font-size: medium;
+  font-weight: bold;
+  padding: 15px;
+  transition: 0.5s;
+  width: 100%;
+}
