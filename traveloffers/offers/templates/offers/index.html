@@ -1,0 +1,175 @@
+{% extends "offers/base_generic.html" %}
+{% load i18n %}
+{% block content %}
+  <section>
+    <search class="container px-4 md:px-6">
+    <script>
+      function checkEmpty() {
+        const offer = document.getElementById("offer");
+        if (offer.value === "") {
+          offer.disabled = true;
+        }
+      }
+    </script>
+    <form onsubmit="checkEmpty()"
+          action="{% url 'offers:offer-list' %}"
+          class="grid gap-6">
+      <div class="flex gap-6">
+        <input id="offer"
+               name="offer"
+               class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full"
+               placeholder="{% translate "Search for Offers" %}"
+               type="text" />
+        <button class="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-white h-10 px-4 py-2 flex items-center space-x-2">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               width="24"
+               height="24"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2"
+               stroke-linecap="round"
+               stroke-linejoin="round"
+               class="w-5 h-5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <span>{% translate "Search" %}</span>
+        </button>
+      </div>
+      <div class="grid grid-cols-2 gap-6">
+        <select id="country"
+                name="country"
+                tabindex="-1"
+                class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-white px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+          >
+          <option value="" disabled selected hidden>{% translate "Choose destination" %}</option>
+          {% for country in country_list %}<option value="{{ country.id }}">{{ country.name }}</option>{% endfor %}
+        </select>
+        <div class="flex gap-2 overflow-y-auto">
+          {% for category in category_list %}
+            <div class="relative grid select-none items-center whitespace-nowrap rounded-lg bg-gray-400/20 py-1.5 px-3 font-sans text-xs font-bold uppercase text-gray-900">
+              <div class="absolute top-2/4 left-1.5 h-5 w-5 -translate-y-2/4">
+                <div class="inline-flex items-center">
+                  <label class="relative flex items-center p-0 rounded-full cursor-pointer"
+                         htmlFor="offline">
+                    <input name="categories"
+                           value="{{ category.id }}"
+                           type="checkbox"
+                           class="before:content[''] peer relative -ml-px h-5 w-5 cursor-pointer appearance-none rounded-md border-2 border-gray-900 transition-all before:absolute before:top-2/4 before:left-2/4 before:hidden before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-400 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-gray-400 hover:before:opacity-10" />
+                    <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                      <svg xmlns="http://www.w3.org/2000/svg"
+                           class="h-3.5 w-3.5"
+                           viewBox="0 0 20 20"
+                           fill="currentColor"
+                           stroke="currentColor"
+                           stroke-width="1">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd">
+                        </path>
+                      </svg>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <span class="ml-[18px]">{{ category.name }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </form>
+    </search>
+  </section>
+  <section>
+    <h2 class="text-2xl font-bold text-gray-900">{% translate "Featured Offers" %}</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+      {% for offer in featured_offer_list %}
+        <div class="bg-white rounded-md shadow-md p-4 transform transition duration-500 ease-in-out hover:scale-105 flex flex-col">
+          <img alt="{{ offer.name }}"
+               class="w-full h-48 object-cover mb-2 rounded-md"
+               height="200"
+               src="{{ offer.image }}"
+               width="200" />
+          <h3 class="text-xl font-bold text-gray-900">{{ offer.name }}</h3>
+          <p class="h-full py-2 text-gray-700">{{ offer.description|truncatechars:50 }}</p>
+          <p class="text-gray-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="24"
+                 height="24"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 class="w-4 h-4 mr-2">
+              <line x1="12" x2="12" y1="2" y2="22"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            {% blocktranslate with price=offer.price %}Price: {{ price }}€{% endblocktranslate %}
+          </p>
+          <p class="text-gray-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="24"
+                 height="24"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 class="w-4 h-4 mr-2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            {% blocktranslate with days=offer.days %}Duration: {{ days }} days{% endblocktranslate %}
+          </p>
+          <form action="{% url 'offers:offer-detail' pk=offer.id %}" method="get">
+            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-blue-500 transition-all h-10 px-4 py-2 mt-4">
+              {% translate "Book Now" %}
+            </button>
+          </form>
+        </div>
+      {% empty %}
+        <p class="text-gray-700">{% translate "No offers available" %}</p>
+      {% endfor %}
+    </div>
+  </section>
+  <section>
+    <h2 class="text-2xl font-bold text-gray-900">{% translate "Countries" %}</h2>
+    <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+      {% for country in country_list %}
+        <li class="text-center transform transition duration-500 ease-in-out hover:scale-105">
+          <a href="{% url 'offers:country-detail' pk=country.id %}">
+            <img alt="{{ country.name }}"
+                 class="mx-auto w-24 h-24 object-cover rounded-full mb-2"
+                 height="100"
+                 src="{{ country.image }}"
+                 width="100" />
+            <p class="text-gray-700">{{ country.name }}</p>
+          </a>
+        </li>
+      {% empty %}
+        <p class="text-gray-700">{% translate "No countries available" %}</p>
+      {% endfor %}
+    </ul>
+  </section>
+  <section>
+    <h2 class="text-2xl font-bold text-gray-900">{% translate "Categories" %}</h2>
+    <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+      {% for category in category_list %}
+        <li class="text-center transform transition duration-500 ease-in-out hover:scale-105">
+          <a href="{% url 'offers:category-detail' pk=category.id %}">
+            <img alt="{{ category.name }}"
+                 class="mx-auto w-24 h-24 object-cover rounded-full mb-2"
+                 height="100"
+                 src="{{ category.image }}"
+                 width="100" />
+            <p class="text-gray-700">{{ category.name }}</p>
+          </a>
+        </li>
+      {% empty %}
+        <p class="text-gray-700">{% translate "No categories available" %}</p>
+      {% endfor %}
+    </ul>
+  </section>
+{% endblock content %}

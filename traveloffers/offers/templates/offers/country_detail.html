@@ -1,0 +1,70 @@
+{% extends "offers/base_generic.html" %}
+{% load i18n %}
+{% block content %}
+  <section class="relative">
+    <img alt="{{ country.name }}"
+         class="w-full h-64 object-cover"
+         height="256"
+         src="{{ country.image }}"
+         width="256" />
+    <div class="foreground-blur absolute bottom-4 left-4 m-4 p-4 rounded-md">
+      <h2 class="text-2xl font-bold text-gray-100">{{ country.name }}</h2>
+      <p class="text-gray-100">{{ country.description }}</p>
+    </div>
+  </section>
+  <section>
+    <h2 class="text-2xl font-bold text-gray-900">{% translate "Offers" %}</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+      {% for offer in country.offer_set.all %}
+        <div class="bg-white rounded-md shadow-md p-4 transform transition duration-500 ease-in-out hover:scale-105">
+          <img alt="{{ offer.name }}"
+               class="w-full h-48 object-cover mb-2 rounded-md"
+               height="200"
+               src="{{ offer.image }}"
+               width="200" />
+          <h3 class="text-xl font-bold text-gray-900">{{ offer.name }}</h3>
+          <p class="my-2 text-gray-700">{{ offer.description|truncatechars:50 }}</p>
+          <p class="text-gray-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="24"
+                 height="24"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 class="w-4 h-4 mr-2">
+              <line x1="12" x2="12" y1="2" y2="22"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            {% blocktranslate with price=offer.price %}Price: {{ price }}€{% endblocktranslate %}
+          </p>
+          <p class="text-gray-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="24"
+                 height="24"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 class="w-4 h-4 mr-2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            {% blocktranslate with days=offers.days %}Duration: {{ days }} days{% endblocktranslate %}
+          </p>
+          <form action="{% url 'offers:offer-detail' pk=offer.id %}" method="get">
+            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-blue-500 transition-all h-10 px-4 py-2 mt-4">
+              <span class="font-bold ">{% translate "Book Now" %}</span>
+            </button>
+          </form>
+        </div>
+      {% empty %}
+        <p class="text-gray-700">{% translate "No offers available" %}</p>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock content %}
