@@ -1,0 +1,16 @@
+{
+    "folders": [
+        {
+            "path": "Strava_Client"
+        },
+        {
+            "path": "Strava_Facebook"
+        },
+        {
+            "path": "Strava_Google"
+        },
+        {
+            "path": "Strava_Server"
+        }
+    ]
+}
