@@ -1,3 +1,3 @@
 # koch-fractal
 
->  Hard coded Koch Fractal visualization 
+>  Hard coded Koch fractal visualization 
