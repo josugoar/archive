@@ -1,3 +1,3 @@
 # kNN
 
-> kNN algorithm Python implementation & decision boundary visualization from scratch
+> kNN algorithm Python implementation and decision boundary visualization from scratch
