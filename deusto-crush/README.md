@@ -1,3 +1,3 @@
 # deusto-crush
 
-> CandyCrush-like game CL implementation 
+> CandyCrush-like game implementation 
