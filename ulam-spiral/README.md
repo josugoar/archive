@@ -1,3 +1,3 @@
 # ulam-spiral
 
->  Hard coded Ulam Spiral visualization 
+>  Hardcoded Ulam spiral visualization 
