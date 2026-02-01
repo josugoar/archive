@@ -1,0 +1,4 @@
+bioacoustics-model-zoo[birdnet]
+openpyxl
+pandas
+streamlit
