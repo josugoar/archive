@@ -1,3 +1,3 @@
 # binary-tree
 
-> Binary Tree class Python visual implementation
+> Binary tree visual implementation
