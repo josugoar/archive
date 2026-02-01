@@ -1,3 +1,3 @@
 # binary-search
 
-> Basic Binary Search in sorted array
+> Basic binary search for sorted arrays
