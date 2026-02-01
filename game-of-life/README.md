@@ -1,6 +1,6 @@
 # game-of-life
 
-> Simple Game of Life visualization
+> Simple game of life visualization
 
 **CODE EXPLANATION**
 
