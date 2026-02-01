@@ -1,3 +1,3 @@
 # p5.js
 
-> Small & fun visual shenanigans
+> Small and fun visual shenanigans
