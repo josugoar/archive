@@ -1,5 +1,6 @@
-Learnify
-========
+# Learnify
+
+> Education management
 
 Run the following command to compile all classes and launch the unit tests:
 
