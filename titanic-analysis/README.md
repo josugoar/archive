@@ -1,3 +1,3 @@
 # titanic-analysis
 
-> Titanic dataset exploratory data analysis & machine learning survival predictor
+> Titanic dataset exploratory data analysis and machine learning survival predictor
