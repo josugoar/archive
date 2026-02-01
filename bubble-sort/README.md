@@ -1,3 +1,3 @@
 # bubble-sort
 
-> Simple Bubble Sort in Java
+> Simple bubble sort implementation
