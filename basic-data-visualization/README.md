@@ -1,3 +1,3 @@
 # basic-data-visualization
 
-> Small & fun data visualization of various datasets
+> Small and fun data visualization of various datasets
