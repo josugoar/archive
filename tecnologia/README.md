@@ -1,6 +1,6 @@
 # tecnologia
 
-ESP32-based IoT project for monitoring environmental parameters using CO2 sensors and ThingsBoard integration.
+> ESP32-based IoT project for monitoring environmental parameters using CO2 sensors and ThingsBoard integration.
 
 ## Features
 
