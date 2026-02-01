@@ -1,6 +1,6 @@
 # traveloffers
 
-> https://github.com/josugoar/traveloffers
+> Travel offer management
 
 ## Setup
 
