@@ -1,3 +1,3 @@
 # fibonacci
 
-> Basic Java Fibonacci sequence implementation
+> Basic Java fibonacci sequence implementation
