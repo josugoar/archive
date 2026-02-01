@@ -1,3 +1,3 @@
 # langton-ant
 
-> Simple & multiple Langton Ant visualization
+> Single and multiple Langton ant visualization
